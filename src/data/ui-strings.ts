@@ -27,6 +27,7 @@ export interface UiStrings {
 		noEvents: string;
 		unavailable: string;
 		viewFullCalendar: string;
+		subscribe: string;
 		allDay: string;
 		prevMonth: string;
 		nextMonth: string;
@@ -76,6 +77,7 @@ const IT: UiStrings = {
 		noEvents: 'Nessun evento in programma al momento.',
 		unavailable: 'Calendario momentaneamente non disponibile.',
 		viewFullCalendar: 'Vedi il calendario completo →',
+		subscribe: '+ Iscriviti al calendario',
 		allDay: 'Tutto il giorno',
 		prevMonth: 'Mese precedente',
 		nextMonth: 'Mese successivo',
@@ -125,6 +127,7 @@ const EN: UiStrings = {
 		noEvents: 'No events scheduled at the moment.',
 		unavailable: 'Calendar temporarily unavailable.',
 		viewFullCalendar: 'View full calendar →',
+		subscribe: '+ Subscribe to calendar',
 		allDay: 'All day',
 		prevMonth: 'Previous month',
 		nextMonth: 'Next month',

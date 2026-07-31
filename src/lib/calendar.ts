@@ -3,6 +3,7 @@ import type { ParameterValue } from 'node-ical';
 
 const ICS_URL = 'https://calendar.google.com/calendar/ical/admin%40rotaract2050.org/public/basic.ics';
 export const CALENDAR_VIEW_URL = 'https://calendar.google.com/calendar/embed?src=admin%40rotaract2050.org&ctz=Europe%2FRome';
+export const CALENDAR_SUBSCRIBE_URL = 'https://calendar.google.com/calendar/render?cid=admin%40rotaract2050.org';
 
 export interface DistrictEvent {
 	uid: string;

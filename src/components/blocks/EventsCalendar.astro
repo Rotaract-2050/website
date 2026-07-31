@@ -1,6 +1,6 @@
 ---
 import { uiStrings, type Lang } from '../../data/ui-strings';
-import { getDistrictEvents, eventDateKey, CALENDAR_VIEW_URL, type DistrictEvent } from '../../lib/calendar';
+import { getDistrictEvents, eventDateKey, CALENDAR_VIEW_URL, CALENDAR_SUBSCRIBE_URL, type DistrictEvent } from '../../lib/calendar';
 
 interface Props {
 	lang: Lang;
@@ -102,7 +102,10 @@ const monthTabId = `cal-month-${uid}`;
 	<div class="section-inner">
 		<div class="calendar-header">
 			<h2 class="section-title">{title}</h2>
-			<a class="view-full" href={CALENDAR_VIEW_URL} target="_blank" rel="noopener">{t.viewFullCalendar}</a>
+			<div class="calendar-actions">
+				<a class="view-full" href={CALENDAR_VIEW_URL} target="_blank" rel="noopener">{t.viewFullCalendar}</a>
+				<a class="subscribe-btn" href={CALENDAR_SUBSCRIBE_URL} target="_blank" rel="noopener">{t.subscribe}</a>
+			</div>
 		</div>
 
 		{!result.ok && <p class="calendar-status">{t.unavailable}</p>}
@@ -207,11 +210,36 @@ const monthTabId = `cal-month-${uid}`;
 		margin: 0;
 	}
 
+	.calendar-actions {
+		display: flex;
+		align-items: center;
+		gap: 20px;
+		flex-wrap: wrap;
+	}
+
 	.view-full {
 		font-size: 13px;
 		font-weight: 600;
 		color: var(--color-pink);
 		white-space: nowrap;
+	}
+
+	.subscribe-btn {
+		background: var(--color-pink);
+		color: #fff;
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 13px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		padding: 10px 20px;
+		border-radius: 999px;
+		white-space: nowrap;
+	}
+
+	.subscribe-btn:hover {
+		background: var(--color-pink-dark);
+		color: #fff;
 	}
 
 	.calendar-status {
