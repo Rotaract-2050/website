@@ -64,6 +64,8 @@ npm run dev
 3. Verify with `npx astro check` and `npm run dev` before opening a PR
 4. Open a Pull Request against `main` — Netlify deploy runs automatically after merge (see badge at the top)
 
+PRs written with AI assistance (Claude, Copilot, ChatGPT, etc.) are welcome — just make sure you've reviewed and tested the changes yourself before opening the PR.
+
 ### Where to find things
 
 - Content/block structure, brand palette, Tina/Astro best practices → [`.claude/skills/rotaract2050-site/`](.claude/skills/rotaract2050-site/)
