@@ -11,7 +11,7 @@ Due percorsi ufficiali per integrare Tina in Astro (fonte: tina.io/docs/framewor
 
 **Decisione presa: hosting su Netlify.** Netlify supporta entrambi i path (`@astrojs/netlify` fa da adapter sia per `output: 'static'` che `output: 'server'`/edge functions), quindi l'hosting non è più il vincolo — usare lo **starter Astro-first con editing visuale** (opzione preferita per soci non tecnici), con `output: 'server'` + `@astrojs/netlify`. Deploy automatico su Netlify a ogni push del branch collegato (git-backed, coerente col workflow Tina).
 
-**Stato reale in `astro/astro.config.mjs`**: `output: 'server'` è già impostato correttamente, ma l'adapter è ancora `@astrojs/node({ mode: 'standalone' })` (lasciato così dal refactor iniziale, prima di questa decisione). Va sostituito con `@astrojs/netlify` prima del primo deploy Netlify — vedi anche `astro/README.md`.
+**Stato reale in `astro/astro.config.mjs`**: `output: 'server'` + adapter `@astrojs/netlify()`. `netlify.toml` alla root del repo punta Netlify a `base = "astro"` (il progetto Astro vive in una sottocartella, non alla root del repo).
 
 ## Account Tina Cloud — vincolo utenti
 

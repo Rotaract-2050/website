@@ -34,4 +34,4 @@ Aggiungere una pagina = nuova entry in `src/content/pages/{it,en}/` con i blocch
 
 ## Hosting
 
-Netlify (deciso — vedi `references/tina.md` nella skill). L'adapter in `astro.config.mjs` va allineato a `@astrojs/netlify` prima del primo deploy: attualmente è ancora `@astrojs/node` (standalone), lasciato così dal refactor iniziale.
+Netlify. Adapter `@astrojs/netlify` in `astro.config.mjs`, `netlify.toml` alla root del repo (`base = "astro"`, il progetto vive in sottocartella). Env richieste sul sito Netlify: `TINA_CLIENT_ID`, `TINA_TOKEN` (stessi valori del `.env` locale, presi dal progetto Tina Cloud).

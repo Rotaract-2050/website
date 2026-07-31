@@ -1,6 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import node from '@astrojs/node';
+import netlify from '@astrojs/netlify';
 import sitemap from '@astrojs/sitemap';
 import tina from '@tinacms/astro/integration';
 
@@ -14,7 +14,7 @@ const customPages = PAGE_SLUGS.flatMap((slug) => [`${SITE}/${slug}`, `${SITE}/en
 export default defineConfig({
 	site: SITE,
 	output: 'server',
-	adapter: node({ mode: 'standalone' }),
+	adapter: netlify(),
 	i18n: {
 		locales: ['it', 'en'],
 		defaultLocale: 'it',
