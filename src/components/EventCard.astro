@@ -1,0 +1,123 @@
+---
+import { Image } from 'astro:assets';
+import ImageSlot from './ImageSlot.astro';
+
+interface Props {
+	id: string;
+	image?: string | null;
+	imageLabel: string;
+	title: string;
+	dateLabel: string;
+	location?: string | null;
+	excerpt?: string | null;
+	photoAlbumUrl?: string | null;
+	photoButtonLabel: string;
+	tinaFieldAttr?: string;
+}
+
+const { id, image, imageLabel, title, dateLabel, location, excerpt, photoAlbumUrl, photoButtonLabel, tinaFieldAttr } =
+	Astro.props;
+---
+
+<article class="event-entry" id={id} data-tina-field={tinaFieldAttr}>
+	<div class="event-media">
+		{image ? (
+			<Image src={image} alt={imageLabel} width={480} height={270} class="event-image" />
+		) : (
+			<ImageSlot label={imageLabel} class="event-image" />
+		)}
+	</div>
+	<div class="event-content">
+		<h2 class="event-title">{title}</h2>
+		<div class="event-meta">
+			{dateLabel}
+			{location ? ` · ${location}` : ''}
+		</div>
+		{excerpt && <p class="event-excerpt">{excerpt}</p>}
+		{photoAlbumUrl && (
+			<a class="event-photo-btn" href={photoAlbumUrl} target="_blank" rel="noopener">
+				{photoButtonLabel}
+			</a>
+		)}
+	</div>
+</article>
+
+<style>
+	.event-entry {
+		display: grid;
+		grid-template-columns: 320px 1fr;
+		gap: 32px;
+		padding: 36px 0;
+		border-bottom: 1px solid var(--color-border);
+		scroll-margin-top: 90px;
+	}
+
+	.event-entry:first-child {
+		padding-top: 0;
+	}
+
+	.event-entry:last-child {
+		border-bottom: 0;
+	}
+
+	.event-entry :global(.event-image) {
+		width: 100%;
+		height: 200px;
+		object-fit: cover;
+		border-radius: 12px;
+	}
+
+	.event-content {
+		min-width: 0;
+	}
+
+	.event-title {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 22px;
+		color: var(--color-navy);
+		text-transform: uppercase;
+		margin: 0 0 8px;
+	}
+
+	.event-meta {
+		font-size: 14px;
+		color: var(--color-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.4px;
+		margin-bottom: 14px;
+	}
+
+	.event-excerpt {
+		font-size: 15px;
+		color: var(--color-text);
+		line-height: 1.6;
+		margin: 0 0 16px;
+	}
+
+	.event-photo-btn {
+		display: inline-block;
+		background: var(--color-pink);
+		color: #fff;
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 13px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		padding: 10px 20px;
+		border-radius: 999px;
+	}
+
+	.event-photo-btn:hover {
+		background: var(--color-pink-dark);
+		color: #fff;
+	}
+
+	@media (max-width: 720px) {
+		.event-entry {
+			grid-template-columns: 1fr;
+			gap: 18px;
+			padding: 28px 0;
+		}
+	}
+</style>
