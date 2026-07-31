@@ -105,17 +105,7 @@ const { lang, blocks } = Astro.props;
 			/>
 		)}
 		{block.__typename === 'PagesBlocksNewsGrid' && (
-			<NewsGrid
-				title={block.title}
-				items={(block.items ?? []).filter(nonNull).map((i) => ({
-					tag: i.tag ?? '',
-					title: i.title ?? '',
-					excerpt: i.excerpt ?? '',
-					date: i.date ?? '',
-					image: i.image ?? undefined,
-					imageLabel: i.imageLabel,
-				}))}
-			/>
+			<NewsGrid lang={lang} title={block.title} limit={block.limit ?? undefined} />
 		)}
 		{block.__typename === 'PagesBlocksCtaBanner' && (
 			<CtaBanner

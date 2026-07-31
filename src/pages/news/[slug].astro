@@ -1,0 +1,160 @@
+---
+import { requestWithMetadata, tinaField } from '@tinacms/astro';
+import { StaticTinaMarkdown } from 'tinacms/dist/rich-text/static';
+import client from '../../../tina/__generated__/client';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageBanner from '../../components/PageBanner.astro';
+import { Image } from 'astro:assets';
+import ImageSlot from '../../components/ImageSlot.astro';
+import { uiStrings } from '../../data/ui-strings';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { newsTagLabels, rotaryYearLabel, tagPillStyle } from '../../lib/news';
+
+const lang = 'it' as const;
+const t = uiStrings[lang];
+const slug = Astro.params.slug ?? '';
+const relativePath = `it/${slug}.md`;
+
+const result = await requestWithMetadata(client.queries.news({ relativePath }), { priority: 'primary' });
+const article = result.data.news;
+
+if (!article) {
+	return Astro.redirect(getRelativeLocaleUrl(lang, 'news'));
+}
+
+const dateFormatter = new Intl.DateTimeFormat('it-IT', { day: 'numeric', month: 'short', year: 'numeric' });
+const tags = newsTagLabels(article);
+---
+
+<BaseLayout lang={lang} current="news" title={article.title} description={article.excerpt}>
+	<PageBanner
+		lang={lang}
+		eyebrow={t.news.archiveEyebrow}
+		title={article.title}
+		breadcrumbCurrent={t.nav.news}
+		titleField={tinaField(article, 'title')}
+	/>
+	<article class="news-article">
+		<div class="article-inner">
+			<a href={getRelativeLocaleUrl(lang, 'news')} class="back-link">{t.news.backToArchive}</a>
+			<div class="article-meta">
+				{tags.length > 0 && (
+					<div class="article-tags" data-tina-field={tinaField(article, 'scope')}>
+						{tags.map((tag) => (
+							<span class="article-tag" style={tagPillStyle(tag.color)}>{tag.label}</span>
+						))}
+					</div>
+				)}
+				<span class="article-date" data-tina-field={tinaField(article, 'date')}>
+					{dateFormatter.format(new Date(article.date)).toUpperCase()} · {rotaryYearLabel(article.date)}
+				</span>
+			</div>
+			<div data-tina-field={tinaField(article, 'image')}>
+				{article.image ? (
+					<Image src={article.image} alt={article.imageLabel} width={960} height={420} class="article-image" />
+				) : (
+					<ImageSlot label={article.imageLabel} class="article-image" />
+				)}
+			</div>
+			<div class="article-body" data-tina-field={tinaField(article, 'body')}>
+				<StaticTinaMarkdown content={article.body} />
+			</div>
+		</div>
+	</article>
+</BaseLayout>
+
+<style>
+	.news-article {
+		background: #fff;
+		padding: 50px 40px 90px;
+	}
+
+	.article-inner {
+		max-width: 760px;
+		margin: 0 auto;
+	}
+
+	.back-link {
+		display: inline-block;
+		margin-bottom: 24px;
+		color: var(--color-pink);
+		font-weight: 700;
+		font-size: 14px;
+	}
+
+	.back-link:hover {
+		text-decoration: underline;
+	}
+
+	.article-meta {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 10px 14px;
+		margin-bottom: 20px;
+	}
+
+	.article-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+	}
+
+	.article-tag {
+		display: inline-block;
+		background: var(--tag-bg, rgba(212, 19, 103, 0.1));
+		color: var(--tag-color, var(--color-pink));
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.5px;
+		text-transform: uppercase;
+		padding: 4px 10px;
+		border-radius: 999px;
+	}
+
+	.article-date {
+		font-size: 12px;
+		color: var(--color-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+
+	.article-inner :global(.article-image) {
+		width: 100%;
+		height: 340px;
+		object-fit: cover;
+		border-radius: 14px;
+		margin-bottom: 30px;
+	}
+
+	.article-body {
+		font-size: 16px;
+		color: var(--color-text);
+		line-height: 1.75;
+	}
+
+	.article-body :global(p) {
+		margin: 0 0 20px;
+	}
+
+	.article-body :global(h2),
+	.article-body :global(h3) {
+		font-family: var(--font-heading);
+		color: var(--color-navy);
+		margin: 32px 0 14px;
+	}
+
+	.article-body :global(a) {
+		color: var(--color-pink);
+	}
+
+	@media (max-width: 720px) {
+		.news-article {
+			padding: 40px 20px 60px;
+		}
+
+		.article-inner :global(.article-image) {
+			height: 220px;
+		}
+	}
+</style>
