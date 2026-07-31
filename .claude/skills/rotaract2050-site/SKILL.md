@@ -13,6 +13,16 @@ description: Sviluppo e manutenzione del sito Rotaract Distretto 2050 (Astro + T
 - **Sito bilingue obbligatorio, italiano (default) + inglese**: ogni pagina, blocco e stringa editoriale esiste in entrambe le lingue, nessuna pagina solo-IT o solo-EN. Routing e convenzioni in `references/astro.md` (sezione Internazionalizzazione).
 - **Hosting: Netlify** (piano free), deploy automatico da git push. Adapter `@astrojs/netlify`. Dettagli setup Tina+Netlify e vincolo utenti Tina Cloud free (2 editor) in `references/tina.md`.
 
+## Avviare il sito in locale
+
+Non lanciare `astro dev` da solo: salta il server GraphQL/admin di TinaCMS (`:4001`) da cui dipende il layer dati del sito. Usare lo script del progetto, in background:
+
+```
+bash scripts/dev.sh
+```
+
+Avvia insieme TinaCMS e Astro (`:4321`) e li ferma entrambi all'uscita. Essendo uno script foreground con trap su Ctrl+C, lanciarlo come processo in background dalla shell dell'agente invece di mettere in background `astro dev` direttamente. Gestire il server Astro sottostante con `astro dev stop`/`astro dev status`/`astro dev logs`; i log di TinaCMS sono in `/tmp/rotaract2050-tinacms-dev.log`.
+
 ## Stato attuale del repo
 
 Il progetto Astro+Tina **reale e funzionante vive alla root del repo** (non in una sottocartella) — non è più solo un mockup. È già stato implementato seguendo il pattern a blocchi descritto sotto: `tina/config.ts` (schema), `src/pages/[...slug].astro` + `src/pages/en/[...slug].astro` (route), `src/components/BlockRenderer.astro` + `src/components/blocks/*.astro` (11 blocchi), `src/content/{pages,zones,clubs,settings}/` (contenuti git-backed). Leggere questi file **prima** di aggiungere qualcosa di nuovo: sono l'esempio concreto da estendere, più affidabile di qualunque descrizione astratta in questa skill. Il `README.md` alla root riassume struttura e comandi.

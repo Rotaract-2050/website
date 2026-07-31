@@ -1,12 +1,14 @@
 ## Development
 
-When starting the dev server, use background mode:
+Don't run plain `astro dev` — it skips the TinaCMS GraphQL/admin server (`:4001`) that the site's data layer depends on. Use the project's own script instead, in background mode:
 
 ```
-astro dev --background
+bash scripts/dev.sh
 ```
 
-Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
+It starts TinaCMS and Astro (`:4321`) together and stops both on exit. Since it runs in the foreground with a Ctrl+C trap, launch it as a background process from the agent shell rather than backgrounding `astro dev` directly.
+
+Manage the underlying Astro server with `astro dev stop`, `astro dev status`, and `astro dev logs`; TinaCMS logs go to `/tmp/rotaract2050-tinacms-dev.log`.
 
 ## Documentation
 
