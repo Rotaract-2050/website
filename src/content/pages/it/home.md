@@ -47,15 +47,19 @@ blocks:
       - title: Francigena
         meta: 5 club
         href: club
+        color: '#009739'
       - title: Leonessa
         meta: 8 club
         href: club
+        color: '#00ADBB'
       - title: Navigli
         meta: 8 club
         href: club
+        color: '#FF7600'
       - title: Padana
         meta: 7 club
         href: club
+        color: '#901F93'
     _template: CardGrid
   - title: EVENTI DISTRETTUALI
     _template: EventsCalendar

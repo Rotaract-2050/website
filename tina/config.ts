@@ -87,6 +87,17 @@ const cardGridTemplate = {
 				{ type: 'string' as const, name: 'title', label: 'Titolo' },
 				{ type: 'string' as const, name: 'meta', label: 'Sottotitolo' },
 				{ type: 'string' as const, name: 'href', label: 'Link (slug pagina)' },
+				{
+					type: 'string' as const,
+					name: 'color',
+					label: 'Colore tag (badge zona)',
+					options: [
+						{ value: '#00ADBB', label: 'Turquoise' },
+						{ value: '#901F93', label: 'Violet' },
+						{ value: '#FF7600', label: 'Orange' },
+						{ value: '#009739', label: 'Grass' },
+					],
+				},
 			],
 		},
 	],
