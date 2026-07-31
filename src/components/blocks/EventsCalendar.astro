@@ -35,6 +35,14 @@ function formatFullDate(key: string): string {
 	}).format(new Date(y, m - 1, d));
 }
 
+function formatWeekday(key: string): string {
+	const [y, m, d] = key.split('-').map(Number);
+	const label = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-GB', { weekday: 'long' }).format(
+		new Date(y, m - 1, d)
+	);
+	return label.charAt(0).toUpperCase() + label.slice(1);
+}
+
 const eventsByDay = new Map<string, DistrictEvent[]>();
 for (const event of events) {
 	const key = eventDateKey(event);
@@ -151,7 +159,7 @@ const monthTabId = `cal-month-${uid}`;
 									<div class="event-body">
 										<div class="event-title">{ev.summary}</div>
 										<div class="event-meta">
-											{formatTime(ev)}
+											{formatWeekday(eventDateKey(ev))} · {formatTime(ev)}
 											{ev.location ? ` · ${ev.location}` : ''}
 										</div>
 									</div>
@@ -176,7 +184,7 @@ const monthTabId = `cal-month-${uid}`;
 									<div class="event-body">
 										<div class="event-title">{ev.summary}</div>
 										<div class="event-meta">
-											{formatTime(ev)}
+											{formatWeekday(eventDateKey(ev))} · {formatTime(ev)}
 											{ev.location ? ` · ${ev.location}` : ''}
 										</div>
 									</div>
