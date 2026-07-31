@@ -12,11 +12,13 @@ interface Props {
 	current: PageKey;
 	title: string;
 	description: string;
+	/** Override the auto-computed hreflang alternate, e.g. for a dynamic sub-page like a club detail. */
+	alternateHref?: string;
 }
 
-const { lang, current, title, description } = Astro.props;
+const { lang, current, title, description, alternateHref: alternateHrefProp } = Astro.props;
 const otherLang: Lang = lang === 'it' ? 'en' : 'it';
-const alternateHref = getRelativeLocaleUrl(otherLang, pageSlugs[current]);
+const alternateHref = alternateHrefProp ?? getRelativeLocaleUrl(otherLang, pageSlugs[current]);
 ---
 
 <!doctype html>

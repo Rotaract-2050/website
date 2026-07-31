@@ -278,9 +278,12 @@ export default defineConfig({
 				fields: [
 					{ type: 'string', name: 'name', label: 'Nome club', isTitle: true, required: true },
 					{ type: 'reference', name: 'zone', label: 'Zona', collections: ['zones'], required: true },
+					{ type: 'image', name: 'photo', label: 'Foto club' },
 					{ type: 'string', name: 'email', label: 'Email' },
 					{ type: 'string', name: 'website', label: 'Sito web' },
 					{ type: 'string', name: 'instagram', label: 'Instagram' },
+					{ type: 'string', name: 'facebook', label: 'Facebook' },
+					{ type: 'string', name: 'story', label: 'Storia del club', ui: { component: 'textarea' } },
 				],
 			},
 			{

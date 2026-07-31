@@ -119,6 +119,7 @@ const { lang, blocks } = Astro.props;
 		{block.__typename === 'PagesBlocksPagePlaceholder' && <PagePlaceholder message={block.message ?? ''} />}
 		{block.__typename === 'PagesBlocksClubDirectory' && (
 			<ClubDirectory
+				lang={lang}
 				intro={block.intro ?? ''}
 				disclaimer={block.disclaimer ?? ''}
 				contactLabel={block.contactLabel ?? ''}

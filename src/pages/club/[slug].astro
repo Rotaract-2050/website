@@ -1,0 +1,33 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { requestWithMetadata } from '@tinacms/astro';
+import client from '../../../tina/__generated__/client';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageBanner from '../../components/PageBanner.astro';
+import ClubDetail from '../../components/ClubDetail.astro';
+import { uiStrings } from '../../data/ui-strings';
+
+const lang = 'it' as const;
+const slug = Astro.params.slug;
+const relativePath = `${slug}.md`;
+
+const result = await requestWithMetadata(client.queries.clubs({ relativePath }), { priority: 'primary' });
+const club = result.data.clubs;
+
+if (!club) {
+	return Astro.redirect(getRelativeLocaleUrl(lang, 'club'));
+}
+
+const t = uiStrings[lang].clubDetail;
+---
+
+<BaseLayout
+	lang={lang}
+	current="club"
+	title={club.name}
+	description={`${t.seoDescriptionPrefix} ${club.name}`}
+	alternateHref={getRelativeLocaleUrl('en', `club/${slug}`)}
+>
+	<PageBanner lang={lang} eyebrow={t.eyebrow} title={club.name} breadcrumbCurrent={club.name} />
+	<ClubDetail lang={lang} club={club} />
+</BaseLayout>

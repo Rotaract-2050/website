@@ -25,12 +25,17 @@ function newsSlugs(/** @type {string} */ locale) {
 	}
 }
 
+const clubSlugs = readdirSync(fileURLToPath(new URL('./src/content/clubs', import.meta.url)))
+	.filter((file) => file.endsWith('.md'))
+	.map((file) => file.replace(/\.md$/, ''));
+
 const customPages = [
 	...PAGE_SLUGS.flatMap((slug) => [`${SITE}/${slug}`, `${SITE}/en/${slug}`]),
 	`${SITE}/news`,
 	`${SITE}/en/news`,
 	...newsSlugs('it').map((slug) => `${SITE}/news/${slug}`),
 	...newsSlugs('en').map((slug) => `${SITE}/en/news/${slug}`),
+	...clubSlugs.flatMap((slug) => [`${SITE}/club/${slug}`, `${SITE}/en/club/${slug}`]),
 ];
 
 // https://astro.build/config

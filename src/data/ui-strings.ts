@@ -52,6 +52,19 @@ export interface UiStrings {
 		archiveTitle: string;
 		backToArchive: string;
 	};
+	clubDetail: {
+		eyebrow: string;
+		zoneLabel: string;
+		emailLabel: string;
+		websiteLabel: string;
+		instagramLabel: string;
+		facebookLabel: string;
+		storyTitle: string;
+		backToList: string;
+		photoAltPrefix: string;
+		photoMissing: string;
+		seoDescriptionPrefix: string;
+	};
 }
 
 export type SocialName = 'instagram' | 'linkedin';
@@ -131,6 +144,19 @@ const IT: UiStrings = {
 		archiveTitle: 'NEWS DAL DISTRETTO',
 		backToArchive: '← Tutte le news',
 	},
+	clubDetail: {
+		eyebrow: 'I CLUB',
+		zoneLabel: 'Zona',
+		emailLabel: 'Email',
+		websiteLabel: 'Sito web',
+		instagramLabel: 'Instagram',
+		facebookLabel: 'Facebook',
+		storyTitle: 'La nostra storia',
+		backToList: '← Tutti i club',
+		photoAltPrefix: 'Foto di',
+		photoMissing: 'Foto non disponibile',
+		seoDescriptionPrefix: 'Scheda del club Rotaract Distretto 2050:',
+	},
 };
 
 const EN: UiStrings = {
@@ -197,6 +223,19 @@ const EN: UiStrings = {
 		archiveEyebrow: 'FROM THE DISTRICT',
 		archiveTitle: 'DISTRICT NEWS',
 		backToArchive: '← All news',
+	},
+	clubDetail: {
+		eyebrow: 'CLUBS',
+		zoneLabel: 'Zone',
+		emailLabel: 'Email',
+		websiteLabel: 'Website',
+		instagramLabel: 'Instagram',
+		facebookLabel: 'Facebook',
+		storyTitle: 'Our story',
+		backToList: '← All clubs',
+		photoAltPrefix: 'Photo of',
+		photoMissing: 'Photo not available',
+		seoDescriptionPrefix: 'Rotaract District 2050 club page:',
 	},
 };
 
