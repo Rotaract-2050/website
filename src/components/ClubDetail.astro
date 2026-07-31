@@ -37,6 +37,12 @@ const storyFieldName = lang === 'en' && club.storyEn ? 'storyEn' : 'story';
 						<span class="info-value">{club.zone.name}</span>
 					</div>
 				)}
+				{club.foundationYear && (
+					<div class="info-row" data-tina-field={tinaField(club, 'foundationYear')}>
+						<span class="info-label">{t.foundationYearLabel}</span>
+						<span class="info-value">{club.foundationYear}</span>
+					</div>
+				)}
 				{club.email && (
 					<div class="info-row">
 						<span class="info-label">{t.emailLabel}</span>

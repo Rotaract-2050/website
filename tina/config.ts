@@ -277,6 +277,7 @@ export default defineConfig({
 				fields: [
 					{ type: 'string', name: 'name', label: 'Nome club', isTitle: true, required: true },
 					{ type: 'reference', name: 'zone', label: 'Zona', collections: ['zones'], required: true },
+					{ type: 'number', name: 'foundationYear', label: 'Anno di fondazione' },
 					{ type: 'image', name: 'photo', label: 'Foto club' },
 					{ type: 'string', name: 'email', label: 'Email' },
 					{ type: 'string', name: 'website', label: 'Sito web' },

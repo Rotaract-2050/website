@@ -55,6 +55,7 @@ export interface UiStrings {
 	clubDetail: {
 		eyebrow: string;
 		zoneLabel: string;
+		foundationYearLabel: string;
 		emailLabel: string;
 		websiteLabel: string;
 		instagramLabel: string;
@@ -147,6 +148,7 @@ const IT: UiStrings = {
 	clubDetail: {
 		eyebrow: 'I CLUB',
 		zoneLabel: 'Zona',
+		foundationYearLabel: 'Anno di fondazione',
 		emailLabel: 'Email',
 		websiteLabel: 'Sito web',
 		instagramLabel: 'Instagram',
@@ -227,6 +229,7 @@ const EN: UiStrings = {
 	clubDetail: {
 		eyebrow: 'CLUBS',
 		zoneLabel: 'Zone',
+		foundationYearLabel: 'Founded in',
 		emailLabel: 'Email',
 		websiteLabel: 'Website',
 		instagramLabel: 'Instagram',
