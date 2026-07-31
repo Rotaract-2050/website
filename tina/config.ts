@@ -264,7 +264,9 @@ export default defineConfig({
 				fields: [
 					{ type: 'string', name: 'name', label: 'Nome club', isTitle: true, required: true },
 					{ type: 'reference', name: 'zone', label: 'Zona', collections: ['zones'], required: true },
-					{ type: 'string', name: 'contactUrl', label: 'Link di contatto' },
+					{ type: 'string', name: 'email', label: 'Email' },
+					{ type: 'string', name: 'website', label: 'Sito web' },
+					{ type: 'string', name: 'instagram', label: 'Instagram' },
 				],
 			},
 			{

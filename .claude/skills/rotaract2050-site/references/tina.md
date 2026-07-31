@@ -58,16 +58,15 @@ const page = result.data.pages;
 - `tinaField(obj, 'campo')` sull'elemento che deve diventare cliccabile in editing.
 - Relazioni Tina (club → zona) tramite campo schema `{ type: 'reference', collections: ['zones'] }`, risolte con due query separate (`zonesConnection`, `clubsConnection`) unite lato componente — non un'unica query annidata.
 
-## Nota operativa per sessioni Claude Code (dev locale)
+## Dev locale: `npm run dev` → `scripts/dev.sh`
 
-`npm run dev` = `tinacms dev -c "astro dev"`. In ambiente Claude Code (sandbox con gestione automatica dei processi in background per i comandi `astro dev`), `astro dev` come figlio di `tinacms -c` ritorna il controllo subito invece di restare in foreground: `tinacms dev` vede il "comando web" finire e chiude anche sé stesso, portandosi via il proprio server locale (GraphQL/asset admin, porta 4001) — Astro resta su come demone indipendente, ma l'ammin Tina risulta rotto (asset `main.tsx` con `ERR_CONNECTION_REFUSED`). **Non è un bug del progetto** — un contributor umano su un terminale normale non lo incontra, `astro dev --help` conferma che senza `--background` esplicito il comando dovrebbe restare in foreground.
+Il comando combinato `tinacms dev -c "astro dev"` è fragile: in alcuni ambienti (sandbox Claude Code inclusi) `astro dev` come figlio di `tinacms -c` ritorna il controllo subito invece di restare in foreground, `tinacms dev` vede il "comando web" finire e chiude anche sé stesso, portandosi via il proprio server locale (GraphQL/asset admin, porta 4001) — Astro resta su come demone indipendente, ma l'ammin Tina risulta rotto (asset `main.tsx` con `ERR_CONNECTION_REFUSED`).
 
-Se serve verificare l'editing Tina in locale da una sessione Claude Code, avviare i due processi separati invece di `npm run dev`:
-```
-npx tinacms dev            # in background — server Tina (GraphQL + asset admin, :4001), lasciarlo residente
-npx astro dev --background # sito Astro (:4321)
-```
-Ricordarsi di fermarli (`pkill -f "tinacms dev"`, `astro dev stop`) prima di lanciare `npm run build`/`netlify deploy --build`: tengono occupate le porte 4001/9000 e il build fallisce con "Datalayer server is busy".
+Per questo `npm run dev` esegue `scripts/dev.sh` invece del comando combinato: avvia `tinacms dev` e `astro dev` come **due processi separati** (backgroundati dallo script stesso), attende che il GraphQL di Tina (`:4001/graphql`) risponda prima di avviare Astro, stampa gli URL, e alla pressione di Ctrl+C ferma entrambi (`kill` sui PID + `astro dev stop` come fallback). Verificato funzionante end-to-end (home/admin/asset tutti 200) sia in sessione Claude Code che da lanciare a mano.
+
+Il comando combinato originale resta disponibile come `npm run dev:raw`, solo per debug — non usarlo come workflow normale.
+
+**Prima di un build** (`npm run build` / `netlify deploy --build`): fermare eventuali dev server residenti (`npx astro dev stop`, `pkill -f "tinacms dev"`) — tengono occupate le porte 4001/9000 e il build fallisce con "Datalayer server is busy".
 
 ## Fonti
 
