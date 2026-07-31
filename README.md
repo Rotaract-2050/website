@@ -1,4 +1,4 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/9d9c9baa-eabf-4992-b6e2-85925a2f4055/deploy-status)](https://app.netlify.com/projects/graceful-gnome-8d8615/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/0391b886-dc34-4a1c-b2cf-42b9a99934e3/deploy-status)](https://app.netlify.com/projects/rotaract2050/deploys)
 
 # Rotaract District 2050 Website
 
