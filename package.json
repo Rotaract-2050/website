@@ -17,6 +17,7 @@
     "@astrojs/sitemap": "^3.7.3",
     "@tinacms/astro": "^0.6.1",
     "astro": "^7.1.6",
+    "node-ical": "^0.27.1",
     "tinacms": "^3.11.0"
   },
   "devDependencies": {

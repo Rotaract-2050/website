@@ -8,7 +8,7 @@ import SplitSection from './blocks/SplitSection.astro';
 import CardGrid from './blocks/CardGrid.astro';
 import ValuesGrid from './blocks/ValuesGrid.astro';
 import RoleGrid from './blocks/RoleGrid.astro';
-import EventsList from './blocks/EventsList.astro';
+import EventsCalendar from './blocks/EventsCalendar.astro';
 import NewsGrid from './blocks/NewsGrid.astro';
 import CtaBanner from './blocks/CtaBanner.astro';
 import PagePlaceholder from './blocks/PagePlaceholder.astro';
@@ -94,18 +94,7 @@ const { lang, blocks } = Astro.props;
 				}))}
 			/>
 		)}
-		{block.__typename === 'PagesBlocksEventsList' && (
-			<EventsList
-				title={block.title}
-				items={(block.items ?? []).filter(nonNull).map((i) => ({
-					day: i.day ?? '',
-					month: i.month ?? '',
-					title: i.title ?? '',
-					time: i.time ?? '',
-					location: i.location ?? '',
-				}))}
-			/>
-		)}
+		{block.__typename === 'PagesBlocksEventsCalendar' && <EventsCalendar lang={lang} title={block.title} />}
 		{block.__typename === 'PagesBlocksNewsGrid' && (
 			<NewsGrid
 				title={block.title}

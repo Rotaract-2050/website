@@ -126,25 +126,12 @@ const roleGridTemplate = {
 	],
 };
 
-const eventsListTemplate = {
-	name: 'EventsList',
-	label: 'Elenco eventi',
-	fields: [
-		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
-		{
-			type: 'object' as const,
-			name: 'items',
-			label: 'Eventi',
-			list: true,
-			fields: [
-				{ type: 'string' as const, name: 'day', label: 'Giorno' },
-				{ type: 'string' as const, name: 'month', label: 'Mese' },
-				{ type: 'string' as const, name: 'title', label: 'Titolo evento' },
-				{ type: 'string' as const, name: 'time', label: 'Orario' },
-				{ type: 'string' as const, name: 'location', label: 'Luogo' },
-			],
-		},
-	],
+// Events themselves are not Tina content: EventsCalendar.astro fetches them live from the
+// district's public Google Calendar (src/lib/calendar.ts). Only the section title is editorial.
+const eventsCalendarTemplate = {
+	name: 'EventsCalendar',
+	label: 'Calendario eventi',
+	fields: [{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true }],
 };
 
 const newsGridTemplate = {
@@ -240,7 +227,7 @@ export default defineConfig({
 							cardGridTemplate,
 							valuesGridTemplate,
 							roleGridTemplate,
-							eventsListTemplate,
+							eventsCalendarTemplate,
 							newsGridTemplate,
 							ctaBannerTemplate,
 							pagePlaceholderTemplate,

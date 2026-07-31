@@ -37,7 +37,7 @@ Non presumere il numero di editor: è una decisione dell'utente, non tecnica.
 
 ## Pattern "Blocks" (website builder)
 
-Fonte: tina.io/docs/editing/blocks. Un campo `object` con `list: true` e `templates: [...]` permette agli editor di aggiungere/riordinare/rimuovere sezioni di pagina (Hero, StatsBar, SplitSection, CardGrid, EventsList, NewsGrid, CtaBanner, ValuesGrid, RoleGrid, PagePlaceholder, ClubDirectory) senza scrivere codice. Ogni template Tina ha un componente Astro corrispondente con lo stesso nome in `src/components/blocks/`, renderizzato da `BlockRenderer.astro`.
+Fonte: tina.io/docs/editing/blocks. Un campo `object` con `list: true` e `templates: [...]` permette agli editor di aggiungere/riordinare/rimuovere sezioni di pagina (Hero, StatsBar, SplitSection, CardGrid, EventsCalendar, NewsGrid, CtaBanner, ValuesGrid, RoleGrid, PagePlaceholder, ClubDirectory) senza scrivere codice. Ogni template Tina ha un componente Astro corrispondente con lo stesso nome in `src/components/blocks/`, renderizzato da `BlockRenderer.astro`.
 
 **Discriminazione del blocco**: il match nel renderer avviene su **`block.__typename`**, non su un campo `_template` custom — `__typename` è generato dalla GraphQL API di Tina come `<Collection>Blocks<NomeTemplate>` (es. template `Hero` nella collection `pages` → `PagesBlocksHero`). Vedi `BlockRenderer.astro` reale in `src/components/BlockRenderer.astro` per il pattern esatto (uno `{block.__typename === '...' && <Componente .../>}` per template, dentro un wrapper con `data-tina-field={tinaField(block)}`).
 

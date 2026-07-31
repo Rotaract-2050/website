@@ -20,6 +20,20 @@ export interface UiStrings {
 		copyright: string;
 		underRotary: string;
 	};
+	calendar: {
+		agendaTab: string;
+		monthTab: string;
+		viewToggleLabel: string;
+		noEvents: string;
+		unavailable: string;
+		viewFullCalendar: string;
+		allDay: string;
+		prevMonth: string;
+		nextMonth: string;
+		weekdaysShort: string[];
+		monthsShort: string[];
+		monthsFull: string[];
+	};
 }
 
 export const SOCIAL_LINKS = [
@@ -55,6 +69,33 @@ const IT: UiStrings = {
 		copyright: '© Rotaract Distretto 2050',
 		underRotary: 'Sostenuto dal Rotary Distretto 2050',
 	},
+	calendar: {
+		agendaTab: 'Agenda',
+		monthTab: 'Mese',
+		viewToggleLabel: 'Vista calendario',
+		noEvents: 'Nessun evento in programma al momento.',
+		unavailable: 'Calendario momentaneamente non disponibile.',
+		viewFullCalendar: 'Vedi il calendario completo →',
+		allDay: 'Tutto il giorno',
+		prevMonth: 'Mese precedente',
+		nextMonth: 'Mese successivo',
+		weekdaysShort: ['LUN', 'MAR', 'MER', 'GIO', 'VEN', 'SAB', 'DOM'],
+		monthsShort: ['GEN', 'FEB', 'MAR', 'APR', 'MAG', 'GIU', 'LUG', 'AGO', 'SET', 'OTT', 'NOV', 'DIC'],
+		monthsFull: [
+			'Gennaio',
+			'Febbraio',
+			'Marzo',
+			'Aprile',
+			'Maggio',
+			'Giugno',
+			'Luglio',
+			'Agosto',
+			'Settembre',
+			'Ottobre',
+			'Novembre',
+			'Dicembre',
+		],
+	},
 };
 
 const EN: UiStrings = {
@@ -76,6 +117,33 @@ const EN: UiStrings = {
 		socialTitle: 'FOLLOW US',
 		copyright: '© Rotaract District 2050',
 		underRotary: 'Sponsored by Rotary District 2050',
+	},
+	calendar: {
+		agendaTab: 'Agenda',
+		monthTab: 'Month',
+		viewToggleLabel: 'Calendar view',
+		noEvents: 'No events scheduled at the moment.',
+		unavailable: 'Calendar temporarily unavailable.',
+		viewFullCalendar: 'View full calendar →',
+		allDay: 'All day',
+		prevMonth: 'Previous month',
+		nextMonth: 'Next month',
+		weekdaysShort: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
+		monthsShort: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+		monthsFull: [
+			'January',
+			'February',
+			'March',
+			'April',
+			'May',
+			'June',
+			'July',
+			'August',
+			'September',
+			'October',
+			'November',
+			'December',
+		],
 	},
 };
 

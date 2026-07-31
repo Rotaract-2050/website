@@ -54,28 +54,7 @@ blocks:
         href: club
     _template: CardGrid
   - title: EVENTI DISTRETTUALI
-    items:
-      - day: '12'
-        month: SET
-        title: Assemblea Distrettuale 2026-27
-        time: '09:30 - 13:00'
-        location: Piacenza
-      - day: '03'
-        month: OTT
-        title: Seminario Leadership & Service
-        time: '15:00 - 18:00'
-        location: Cremona
-      - day: '24'
-        month: OTT
-        title: Giornata Mondiale della Polio
-        time: Tutto il giorno
-        location: Distretto 2050
-      - day: '14'
-        month: NOV
-        title: Congresso Distrettuale Rotaract Distretto 2050
-        time: '09:00 - 19:00'
-        location: Brescia
-    _template: EventsList
+    _template: EventsCalendar
   - title: NEWS DAL DISTRETTO
     items:
       - tag: PROGETTI
