@@ -9,7 +9,15 @@ Due percorsi ufficiali per integrare Tina in Astro (fonte: tina.io/docs/framewor
 - **Starter Astro-first di Tina** (`create-tina-app --template tina-astro-starter` o `@tinacms/astro`): editing visuale in-context (click-to-edit) tramite `<TinaIsland>` + `tinaField()`, senza React nell'albero pagina. Richiede `output: 'server'` (o isole server-side) e un adapter SSR (Vercel/Netlify/Cloudflare/Node) — **non è compatibile con hosting puramente statico**. È l'opzione migliore per l'esperienza dei soci non tecnici (vedono la pagina vera mentre editano), da preferire se l'hosting scelto supporta SSR.
 - **Setup "Other framework"** (`@tinacms/cli init`, framework "Other"): Tina scrive/legge file markdown/mdx in `src/content/...`, editing tramite form in `/admin/index.html` senza preview live. Compatibile con output statico puro. Più semplice da hostare, meno immediato da usare per chi non è tecnico.
 
-Scegliere in base all'hosting disponibile (verificare con l'utente prima di impostare `output: 'server'`); se non ancora deciso, favorire comunque lo starter con editing visuale per il beneficio ai soci, segnalando il requisito SSR come conseguenza.
+**Decisione presa: hosting su Netlify.** Netlify supporta entrambi i path (`@astrojs/netlify` fa da adapter sia per `output: 'static'` che `output: 'server'`/edge functions), quindi l'hosting non è più il vincolo — usare lo **starter Astro-first con editing visuale** (opzione preferita per soci non tecnici), con `output: 'server'` + `@astrojs/netlify`. Deploy automatico su Netlify a ogni push del branch collegato (git-backed, coerente col workflow Tina).
+
+## Account Tina Cloud — vincolo utenti
+
+Piano **Free** di Tina Cloud (tina.io/pricing): **2 utenti/editor**, 1 progetto, documenti illimitati, 100MB limite per asset. Prima di attivare l'account, confermare con l'utente quante persone del direttivo/comitati devono editare autonomamente da Tina:
+- se restano 1-2 persone → piano Free sufficiente, nessuna azione.
+- se servono più editor indipendenti → serve piano Team (da $24/mese, base 3 utenti espandibile a 10) fin dall'inizio, altrimenti si scontrerà il limite non appena si aggiunge un terzo account.
+
+Non presumere il numero di editor: è una decisione dell'utente, non tecnica.
 
 ## Convenzioni schema
 
@@ -27,4 +35,4 @@ Fonte: tina.io/docs/editing/blocks. Un campo `object` con `list: true` e `templa
 
 ## Fonti
 
-[Tina + Astro](https://tina.io/docs/frameworks/astro), [Astro + TinaCMS (Astro docs)](https://docs.astro.build/en/guides/cms/tina-cms/), [Content Modeling / Schema](https://tina.io/docs/schema), [Blocks / website builder](https://tina.io/docs/editing/blocks).
+[Tina + Astro](https://tina.io/docs/frameworks/astro), [Astro + TinaCMS (Astro docs)](https://docs.astro.build/en/guides/cms/tina-cms/), [Content Modeling / Schema](https://tina.io/docs/schema), [Blocks / website builder](https://tina.io/docs/editing/blocks), [Tina Pricing](https://tina.io/pricing).
