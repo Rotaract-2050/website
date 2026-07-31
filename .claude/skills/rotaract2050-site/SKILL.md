@@ -38,6 +38,7 @@ Il dettaglio non sta in questo file: leggere la reference pertinente **prima** d
 - **`references/astro.md`** — prima di definire content collections, routing i18n, o convenzioni componenti `.astro`. Fonte: docs.astro.build.
 - **`references/astro-standards.md`** — checklist qualità **obbligatoria** su ogni componente/pagina: niente `set:html` su contenuto non sanificato, niente stili inline sparsi, sempre `<Image>`/`<Picture>` con `alt`, TypeScript strict, HTML semantico (no `<div onClick>`), SEO/sitemap. Da rileggere prima di dichiarare un componente "finito", non solo alla creazione del progetto.
 - **`references/tina.md`** — prima di impostare o modificare `tina/config.ts`, scegliere il setup Tina+Astro (visual editing vs static), o definire il pattern a blocchi. Fonte: tina.io/docs.
+- **`references/news-tags.md`** — prima di toccare i tag della collection `news` (club, ambito Distretto/MDIO, anno rotariano): cosa sostituisce il vecchio campo `tag`, perché il tag club è una lista di oggetti e non un `reference` con `list: true`, perché l'anno rotariano è calcolato e non un campo.
 
 **Nessuna scorciatoia silenziosa**: se per fare prima si vuole saltare una best practice (in queste reference o note nel resto della skill), non farlo senza dirlo esplicitamente all'utente. "Più veloce così" non è mai un motivo sufficiente da solo per introdurre HTML iniettato non sanificato, markup non semantico, stili inline sparsi o `any` non tipizzato.
 
