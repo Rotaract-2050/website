@@ -38,7 +38,10 @@ Il dettaglio non sta in questo file: leggere la reference pertinente **prima** d
 
 - **`references/rotary-brand.md`** — prima di toccare colori, font, tono di voce, loghi/emblemi, foto/video o naming "Rotary"/"Rotaract": palette ufficiale (con discrepanze note del mockup), tipografia ufficiale, voce di brand, regole loghi, regole fotografia/video, regole sul nome. Fonte: brandcenter.rotary.org.
 - **`references/astro.md`** — prima di definire content collections, routing i18n, o convenzioni componenti `.astro`. Fonte: docs.astro.build.
+- **`references/astro-standards.md`** — checklist qualità **obbligatoria** su ogni componente/pagina: niente `set:html` su contenuto non sanificato, niente stili inline sparsi, sempre `<Image>`/`<Picture>` con `alt`, TypeScript strict, HTML semantico (no `<div onClick>`), SEO/sitemap. Da rileggere prima di dichiarare un componente "finito", non solo alla creazione del progetto.
 - **`references/tina.md`** — prima di impostare o modificare `tina/config.ts`, scegliere il setup Tina+Astro (visual editing vs static), o definire il pattern a blocchi. Fonte: tina.io/docs.
+
+**Nessuna scorciatoia silenziosa**: se per fare prima si vuole saltare una best practice (in queste reference o note nel resto della skill), non farlo senza dirlo esplicitamente all'utente. "Più veloce così" non è mai un motivo sufficiente da solo per introdurre HTML iniettato non sanificato, markup non semantico, stili inline sparsi o `any` non tipizzato.
 
 ## Da evitare
 
@@ -49,3 +52,5 @@ Il dettaglio non sta in questo file: leggere la reference pertinente **prima** d
 - Non rompere il pattern IT/EN (routing i18n + contenuti Tina per lingua, vedi `references/astro.md`).
 - Non usare componenti framework (`client:*`) dove basterebbe HTML statico: mantenere il sito zero-JS di default.
 - Non rimuovere i disclaimer sui dati placeholder finché non sono sostituiti da dati reali confermati dal distretto.
+- Non usare `set:html` su contenuto non sanificato "per fare prima" — vedi `references/astro-standards.md`.
+- Non usare `<div onClick>` al posto di `<a>`/`<button>` semantici, non riempire il markup di `style="..."` inline, non lasciare `Astro.props` non tipizzato: vedi `references/astro-standards.md` per la checklist completa.
