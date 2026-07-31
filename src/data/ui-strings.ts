@@ -9,6 +9,7 @@ export interface UiStrings {
 		delegati: string;
 		commissioni: string;
 		club: string;
+		news: string;
 		join: string;
 		materials: string;
 	};
@@ -43,6 +44,14 @@ export interface UiStrings {
 		pauseToggle: string;
 		opensInNewTab: string;
 	};
+	news: {
+		readMore: string;
+		viewAll: string;
+		empty: string;
+		archiveEyebrow: string;
+		archiveTitle: string;
+		backToArchive: string;
+	};
 }
 
 export const SOCIAL_LINKS = [
@@ -67,6 +76,7 @@ const IT: UiStrings = {
 		delegati: 'DELEGATI DI ZONA',
 		commissioni: 'COMMISSIONI DISTRETTUALI',
 		club: 'I CLUB',
+		news: 'NEWS',
 		join: 'ENTRA IN ROTARACT',
 		materials: 'MATERIALI DISTRETTUALI',
 	},
@@ -114,6 +124,14 @@ const IT: UiStrings = {
 		pauseToggle: 'Metti in pausa o riprendi lo scorrimento delle notizie',
 		opensInNewTab: 'si apre in una nuova scheda',
 	},
+	news: {
+		readMore: 'Leggi tutto →',
+		viewAll: 'Tutte le news →',
+		empty: 'Nessuna news pubblicata al momento.',
+		archiveEyebrow: 'DAL DISTRETTO',
+		archiveTitle: 'NEWS DAL DISTRETTO',
+		backToArchive: '← Tutte le news',
+	},
 };
 
 const EN: UiStrings = {
@@ -125,6 +143,7 @@ const EN: UiStrings = {
 		delegati: 'ZONE DELEGATES',
 		commissioni: 'DISTRICT COMMITTEES',
 		club: 'CLUBS',
+		news: 'NEWS',
 		join: 'JOIN ROTARACT',
 		materials: 'DISTRICT MATERIALS',
 	},
@@ -171,6 +190,14 @@ const EN: UiStrings = {
 		unavailable: 'News temporarily unavailable.',
 		pauseToggle: 'Pause or resume the news scroll',
 		opensInNewTab: 'opens in a new tab',
+	},
+	news: {
+		readMore: 'Read more →',
+		viewAll: 'All news →',
+		empty: 'No news published at the moment.',
+		archiveEyebrow: 'FROM THE DISTRICT',
+		archiveTitle: 'DISTRICT NEWS',
+		backToArchive: '← All news',
 	},
 };
 

@@ -1,0 +1,77 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { tinaField } from '@tinacms/astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageBanner from '../../components/PageBanner.astro';
+import NewsCard from '../../components/NewsCard.astro';
+import { getDistrictNews, newsSlug, newsTagLabels, rotaryYearLabel } from '../../lib/news';
+import { uiStrings } from '../../data/ui-strings';
+
+const lang = 'it' as const;
+const t = uiStrings[lang];
+
+const articles = await getDistrictNews(lang);
+const dateFormatter = new Intl.DateTimeFormat('it-IT', { day: 'numeric', month: 'short', year: 'numeric' });
+---
+
+<BaseLayout lang={lang} current="news" title={t.news.archiveTitle} description={t.news.archiveTitle}>
+	<PageBanner lang={lang} eyebrow={t.news.archiveEyebrow} title={t.news.archiveTitle} breadcrumbCurrent={t.nav.news} />
+	<section class="archive">
+		<div class="archive-inner">
+			{articles.length > 0 ? (
+				<div class="news-grid">
+					{articles.map((article) => (
+						<NewsCard
+							href={getRelativeLocaleUrl(lang, `news/${newsSlug(article)}`)}
+							image={article.image}
+							imageLabel={article.imageLabel}
+							tags={newsTagLabels(article)}
+							title={article.title}
+							excerpt={article.excerpt}
+							dateLabel={dateFormatter.format(new Date(article.date)).toUpperCase()}
+							yearLabel={rotaryYearLabel(article.date)}
+							tinaFieldAttr={tinaField(article)}
+						/>
+					))}
+				</div>
+			) : (
+				<p class="news-empty">{t.news.empty}</p>
+			)}
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.archive {
+		padding: 70px 40px 90px;
+	}
+
+	.archive-inner {
+		max-width: var(--content-max);
+		margin: 0 auto;
+	}
+
+	.news-empty {
+		font-size: 14px;
+		color: var(--color-muted);
+		font-style: italic;
+	}
+
+	.news-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 28px;
+	}
+
+	@media (max-width: 900px) {
+		.news-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 720px) {
+		.archive {
+			padding: 50px 20px 70px;
+		}
+	}
+</style>

@@ -7,6 +7,12 @@ const pageRouter = ({ document }: { document: { _sys: { breadcrumbs: string[] } 
 	return locale === 'it' ? `/${path}` : `/en/${path}`;
 };
 
+const newsRouter = ({ document }: { document: { _sys: { breadcrumbs: string[] } } }) => {
+	const [locale, ...rest] = document._sys.breadcrumbs;
+	const slug = rest.join('/');
+	return locale === 'it' ? `/news/${slug}` : `/en/news/${slug}`;
+};
+
 const heroTemplate = {
 	name: 'Hero',
 	label: 'Hero (Carosello)',
@@ -148,25 +154,15 @@ const newsTickerTemplate = {
 	],
 };
 
+// News items are not authored inline on the page: they live in the dedicated `news`
+// collection (like clubs/zones) so that adding an article anywhere shows up here
+// automatically. Only the section title and how many to show are editorial.
 const newsGridTemplate = {
 	name: 'NewsGrid',
 	label: 'Griglia news',
 	fields: [
 		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
-		{
-			type: 'object' as const,
-			name: 'items',
-			label: 'News',
-			list: true,
-			fields: [
-				{ type: 'string' as const, name: 'tag', label: 'Tag' },
-				{ type: 'string' as const, name: 'title', label: 'Titolo' },
-				{ type: 'string' as const, name: 'excerpt', label: 'Estratto', ui: { component: 'textarea' } },
-				{ type: 'string' as const, name: 'date', label: 'Data' },
-				{ type: 'image' as const, name: 'image', label: 'Immagine' },
-				{ type: 'string' as const, name: 'imageLabel', label: 'Didascalia segnaposto immagine', required: true },
-			],
-		},
+		{ type: 'number' as const, name: 'limit', label: 'Numero massimo di notizie mostrate' },
 	],
 };
 
@@ -256,7 +252,23 @@ export default defineConfig({
 				label: 'Zone',
 				path: 'src/content/zones',
 				format: 'md',
-				fields: [{ type: 'string', name: 'name', label: 'Nome zona', isTitle: true, required: true }],
+				fields: [
+					{ type: 'string', name: 'name', label: 'Nome zona', isTitle: true, required: true },
+					{
+						type: 'string',
+						name: 'color',
+						label: 'Colore zona (badge club/news)',
+						// Palette "secondaria" ufficiale Rotary riservata a tag/categorizzazione — vedi
+						// references/rotary-brand.md. Cranberry/Gold/Azure/Royal Blue restano fuori: sono i
+						// colori primari di brand (CTA, link, sfondi scuri), non vanno riusati per i tag.
+						options: [
+							{ value: '#00ADBB', label: 'Turquoise' },
+							{ value: '#901F93', label: 'Violet' },
+							{ value: '#FF7600', label: 'Orange' },
+							{ value: '#009739', label: 'Grass' },
+						],
+					},
+				],
 			},
 			{
 				name: 'clubs',
@@ -269,6 +281,37 @@ export default defineConfig({
 					{ type: 'string', name: 'email', label: 'Email' },
 					{ type: 'string', name: 'website', label: 'Sito web' },
 					{ type: 'string', name: 'instagram', label: 'Instagram' },
+				],
+			},
+			{
+				name: 'news',
+				label: 'News dal distretto',
+				path: 'src/content/news',
+				format: 'md',
+				ui: { router: newsRouter },
+				fields: [
+					{ type: 'string', name: 'title', label: 'Titolo', isTitle: true, required: true },
+					{
+						type: 'string',
+						name: 'scope',
+						label: 'Ambito',
+						list: true,
+						options: ['Distretto', 'MDIO'],
+					},
+					// Tina's `reference` field doesn't support `list: true` directly (tina.io/docs/r/content-fields/#list-fields):
+					// wrap each reference in a repeatable object, one club per row, as the documented workaround.
+					{
+						type: 'object',
+						name: 'clubs',
+						label: 'Club taggati',
+						list: true,
+						fields: [{ type: 'reference', name: 'club', label: 'Club', collections: ['clubs'], required: true }],
+					},
+					{ type: 'string', name: 'excerpt', label: 'Estratto', ui: { component: 'textarea' }, required: true },
+					{ type: 'datetime', name: 'date', label: 'Data pubblicazione', required: true, ui: { dateFormat: 'DD MMMM YYYY' } },
+					{ type: 'image', name: 'image', label: 'Immagine' },
+					{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine', required: true },
+					{ type: 'rich-text', name: 'body', label: 'Corpo articolo', isBody: true },
 				],
 			},
 			{

@@ -60,22 +60,7 @@ blocks:
   - title: EVENTI DISTRETTUALI
     _template: EventsCalendar
   - title: NEWS DAL DISTRETTO
-    items:
-      - tag: PROGETTI
-        title: Raccolta fondi per la Fondazione Rotary
-        excerpt: I club del distretto superano l'obiettivo annuale di raccolta.
-        date: 18 LUG 2026
-        imageLabel: Foto news
-      - tag: FORMAZIONE
-        title: Al via l'Academy 2050 per i nuovi socie
-        excerpt: Un percorso formativo per i giovani leader del distretto.
-        date: 05 LUG 2026
-        imageLabel: Foto news
-      - tag: SERVIZIO
-        title: 'NGSE: scambio internazionale di servizio'
-        excerpt: Sei club coinvolti nel nuovo programma di service exchange.
-        date: 22 GIU 2026
-        imageLabel: Foto news
+    limit: 3
     _template: NewsGrid
   - title: DIVENTA SOCIO ROTARACT
     body: Hai tra 18 e 30 anni? Scopri il club più vicino a te e inizia il tuo percorso di leadership e servizio.
