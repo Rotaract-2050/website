@@ -253,6 +253,8 @@ export default defineConfig({
 				format: 'md',
 				fields: [
 					{ type: 'string', name: 'name', label: 'Nome zona', isTitle: true, required: true },
+					{ type: 'string', name: 'description', label: 'Descrizione zona (IT)', ui: { component: 'textarea' } },
+					{ type: 'string', name: 'descriptionEn', label: 'Descrizione zona (EN)', ui: { component: 'textarea' } },
 					{
 						type: 'string',
 						name: 'color',
