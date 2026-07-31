@@ -10,6 +10,7 @@ export interface UiStrings {
 		commissioni: string;
 		club: string;
 		news: string;
+		eventi: string;
 		join: string;
 		materials: string;
 	};
@@ -65,6 +66,13 @@ export interface UiStrings {
 		photoMissing: string;
 		seoDescriptionPrefix: string;
 	};
+	events: {
+		archiveEyebrow: string;
+		archiveTitle: string;
+		empty: string;
+		yearFilterLabel: string;
+		photoButtonPrefix: string;
+	};
 }
 
 export type SocialName = 'instagram' | 'linkedin';
@@ -89,6 +97,7 @@ const IT: UiStrings = {
 		commissioni: 'COMMISSIONI DISTRETTUALI',
 		club: 'I CLUB',
 		news: 'NEWS',
+		eventi: 'EVENTI',
 		join: 'ENTRA IN ROTARACT',
 		materials: 'MATERIALI DISTRETTUALI',
 	},
@@ -157,6 +166,13 @@ const IT: UiStrings = {
 		photoMissing: 'Foto non disponibile',
 		seoDescriptionPrefix: 'Scheda del club Rotaract Distretto 2050:',
 	},
+	events: {
+		archiveEyebrow: 'EVENTI DEL DISTRETTO',
+		archiveTitle: 'ARCHIVIO EVENTI',
+		empty: 'Nessun evento passato pubblicato al momento.',
+		yearFilterLabel: 'Filtra per anno rotariano',
+		photoButtonPrefix: 'Foto',
+	},
 };
 
 const EN: UiStrings = {
@@ -169,6 +185,7 @@ const EN: UiStrings = {
 		commissioni: 'DISTRICT COMMITTEES',
 		club: 'CLUBS',
 		news: 'NEWS',
+		eventi: 'EVENTS',
 		join: 'JOIN ROTARACT',
 		materials: 'DISTRICT MATERIALS',
 	},
@@ -236,6 +253,13 @@ const EN: UiStrings = {
 		photoAltPrefix: 'Photo of',
 		photoMissing: 'Photo not available',
 		seoDescriptionPrefix: 'Rotaract District 2050 club page:',
+	},
+	events: {
+		archiveEyebrow: 'DISTRICT EVENTS',
+		archiveTitle: 'EVENTS ARCHIVE',
+		empty: 'No past events published yet.',
+		yearFilterLabel: 'Filter by Rotary year',
+		photoButtonPrefix: 'Photos:',
 	},
 };
 
