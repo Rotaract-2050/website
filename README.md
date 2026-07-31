@@ -1,41 +1,71 @@
-# Sito Rotaract Distretto 2050
+[![Netlify Status](https://api.netlify.com/api/v1/badges/9d9c9baa-eabf-4992-b6e2-85925a2f4055/deploy-status)](https://app.netlify.com/projects/graceful-gnome-8d8615/deploys)
 
-Astro + TinaCMS, bilingue IT/EN. Vedi `.claude/skills/rotaract2050-site/` (nella root del repo) per stack, palette di brand, pattern architetturale e best practice — leggere quello prima di modificare il progetto.
+# Rotaract District 2050 Website
 
-## Struttura
+## What this is
+
+This is the official website of **Rotaract District 2050** (Lombardy, Italy), live in Italian and English.
+
+It tells visitors who we are, what we do, and how to reach us: district pages, the list of clubs with their zones, events, news, and board roles. All content — text, images, pages — is edited through a visual editing panel (no code required), designed to be usable by non-developers too. Edits made there are saved straight into the repository and published automatically.
+
+## Tech stack
+
+- **[Astro](https://astro.build)** — framework that generates the site as fast static pages
+- **[TinaCMS](https://tina.io)** — headless CMS with in-page visual editing, stores content as Markdown/JSON files inside the repo (no external database)
+- **TypeScript** — typing across config and components
+- **[Netlify](https://www.netlify.com)** — hosting and automatic deploy on every push to `main`
+
+Block-based architecture: each page in `src/content/pages/{it,en}/` is a list of blocks (Hero, StatsBar, CardGrid, EventsList, etc.), each defined once in `tina/config.ts` and rendered by a component in `src/components/blocks/`. Adding a page requires no new code; adding a new section type does (Tina template + component + a line in `BlockRenderer.astro`).
 
 ```text
-tina/config.ts          schema collections Tina (pages, zones, clubs, settings)
-src/content/pages/it|en  una entry per pagina, con blocks[] (_template Tina + campi)
-src/content/zones/       le 4 zone del distretto
-src/content/clubs/       i club, ognuno con campo Tina type:'reference' alla propria zona
-src/content/settings/    testi footer/contatti, per lingua
-src/components/blocks/   un componente per ogni template Tina (Hero, StatsBar, SplitSection, CardGrid, ValuesGrid, RoleGrid, EventsList, NewsGrid, CtaBanner, PagePlaceholder, ClubDirectory)
-src/components/BlockRenderer.astro   fa match su block.__typename (generato da Tina, es. PagesBlocksHero) e monta il componente giusto
-src/pages/[...slug].astro            route IT (default, senza prefisso) — legge content via client GraphQL Tina, non astro:content
-src/pages/en/[...slug].astro         route EN
+tina/config.ts          Tina collections schema (pages, zones, clubs, settings)
+src/content/pages/it|en  one entry per page, with blocks[] (Tina _template + fields)
+src/content/zones/       the district's 4 zones
+src/content/clubs/       clubs, each with a Tina type:'reference' field to its zone
+src/content/settings/    footer/contact text, per language
+src/components/blocks/   one component per Tina template
+src/components/BlockRenderer.astro   matches on block.__typename and mounts the right component
+src/pages/[...slug].astro            IT route (default, no prefix)
+src/pages/en/[...slug].astro         EN route
 ```
 
-Aggiungere una pagina = nuova entry in `src/content/pages/{it,en}/` con i blocchi voluti, nessun codice nuovo. Aggiungere un tipo di sezione riusabile = nuovo template in `tina/config.ts` + componente corrispondente in `src/components/blocks/` + riga in `BlockRenderer.astro`.
+For full detail (Rotary brand palette, Tina conventions, architectural pattern) see [`.claude/skills/rotaract2050-site/`](.claude/skills/rotaract2050-site/) — read it before modifying the project.
 
-## Comandi
+## Contributing
 
-| Comando | Azione |
+### Requirements
+
+- Node.js ≥ 22.12.0
+- A local `.env` with `TINA_CLIENT_ID` and `TINA_TOKEN` (the district's Tina Cloud project — never commit this file)
+
+### Setup
+
+```bash
+npm ci
+npm run dev
+```
+
+`npm run dev` starts Tina + Astro together; the site runs on `localhost:4321`, the editing panel on `/admin/index.html`.
+
+### Useful commands
+
+| Command | Action |
 | :--- | :--- |
-| `npm ci` | Installa le dipendenze (usa il lockfile) |
-| `npm run dev` | `tinacms dev -c "astro dev"` — server locale + editing visuale Tina su `/admin/index.html` |
-| `npm run build` | `tinacms build -c "astro build"` — richiede `TINA_CLIENT_ID`/`TINA_TOKEN` in env |
-| `npx astro check` | Type-check + validazione contenuti |
-| `npx astro dev --background` / `astro dev stop|status|logs` | server in background |
+| `npm ci` | Install dependencies (uses the lockfile) |
+| `npm run dev` | Local server + Tina visual editing |
+| `npm run build` | Production build (requires `TINA_CLIENT_ID`/`TINA_TOKEN` in env) |
+| `npx astro check` | Type-check + content validation |
+| `astro dev --background` / `astro dev stop\|status\|logs` | run server in background |
 
-## Env richieste
+### Workflow
 
-`.env` (mai committato, vedi `.gitignore`): `TINA_CLIENT_ID`, `TINA_TOKEN` (progetto Tina Cloud del distretto).
+1. Branch off `main`
+2. Content changes → via the Tina panel (`/admin`) or directly on files in `src/content/`; code/component changes → regular editor
+3. Verify with `npx astro check` and `npm run dev` before opening a PR
+4. Open a Pull Request against `main` — Netlify deploy runs automatically after merge (see badge at the top)
 
-## Hosting
+### Where to find things
 
-Netlify. Adapter `@astrojs/netlify` in `astro.config.mjs`, `netlify.toml` alla root del repo (progetto Astro alla root, nessun `base` da impostare). Env richieste sul sito Netlify: `TINA_CLIENT_ID`, `TINA_TOKEN` (stessi valori del `.env` locale, presi dal progetto Tina Cloud).
-
-## Progetto Tina Cloud
-
-https://app.tina.io/projects/45ced600-56cb-4e98-a4eb-26f93b147dcf — GitHub App collegato a `Rotaract-2050/website`, branch `main`. `TINA_CLIENT_ID` è pubblico (finisce nel bundle browser); `TINA_TOKEN` è il segreto, mai committato.
+- Content/block structure, brand palette, Tina/Astro best practices → [`.claude/skills/rotaract2050-site/`](.claude/skills/rotaract2050-site/)
+- Tina Cloud project (user management, tokens) → https://app.tina.io/projects/45ced600-56cb-4e98-a4eb-26f93b147dcf
+- Netlify config → [`netlify.toml`](netlify.toml)
