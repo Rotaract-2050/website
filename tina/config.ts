@@ -189,7 +189,6 @@ const clubDirectoryTemplate = {
 	fields: [
 		{ type: 'string' as const, name: 'intro', label: 'Introduzione', ui: { component: 'textarea' } },
 		{ type: 'string' as const, name: 'disclaimer', label: 'Disclaimer', ui: { component: 'textarea' } },
-		{ type: 'string' as const, name: 'contactLabel', label: 'Testo link contatto' },
 	],
 };
 

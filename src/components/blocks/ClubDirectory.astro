@@ -11,10 +11,9 @@ interface Props {
 	lang: Lang;
 	intro: string;
 	disclaimer: string;
-	contactLabel: string;
 }
 
-const { lang, intro, disclaimer, contactLabel } = Astro.props;
+const { lang, intro, disclaimer } = Astro.props;
 const t = uiStrings[lang].clubDetail;
 
 const { data: zonesData } = await requestWithMetadata(client.queries.zonesConnection());
@@ -52,7 +51,6 @@ const zoneGroups = zones.map((zone) => ({
 							<div class="club-body">
 								<div class="club-name">{club.name}</div>
 								<div class="club-zone">{zone.name}</div>
-								<div class="club-contact">{contactLabel} →</div>
 							</div>
 						</a>
 					))}
@@ -145,12 +143,6 @@ const zoneGroups = zones.map((zone) => ({
 		font-size: 13px;
 		color: var(--color-text);
 		margin-bottom: 10px;
-	}
-
-	.club-contact {
-		color: var(--color-pink);
-		font-size: 13px;
-		font-weight: 600;
 	}
 
 	@media (max-width: 900px) {
