@@ -31,6 +31,9 @@ export interface UiStrings {
 		allDay: string;
 		prevMonth: string;
 		nextMonth: string;
+		dayFilterPrefix: string;
+		dayFilterEmpty: string;
+		dayFilterReset: string;
 		weekdaysShort: string[];
 		monthsShort: string[];
 		monthsFull: string[];
@@ -86,6 +89,9 @@ const IT: UiStrings = {
 		allDay: 'Tutto il giorno',
 		prevMonth: 'Mese precedente',
 		nextMonth: 'Mese successivo',
+		dayFilterPrefix: 'Eventi del',
+		dayFilterEmpty: 'Nessun evento in questo giorno.',
+		dayFilterReset: '× Mostra i prossimi eventi',
 		weekdaysShort: ['LUN', 'MAR', 'MER', 'GIO', 'VEN', 'SAB', 'DOM'],
 		monthsShort: ['GEN', 'FEB', 'MAR', 'APR', 'MAG', 'GIU', 'LUG', 'AGO', 'SET', 'OTT', 'NOV', 'DIC'],
 		monthsFull: [
@@ -141,6 +147,9 @@ const EN: UiStrings = {
 		allDay: 'All day',
 		prevMonth: 'Previous month',
 		nextMonth: 'Next month',
+		dayFilterPrefix: 'Events on',
+		dayFilterEmpty: 'No events on this day.',
+		dayFilterReset: '× Show upcoming events',
 		weekdaysShort: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
 		monthsShort: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
 		monthsFull: [

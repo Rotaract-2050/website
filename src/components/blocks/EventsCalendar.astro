@@ -20,6 +20,24 @@ const upcomingEvents = events.filter((ev) => eventDateKey(ev) >= todayKey);
 const AGENDA_LIMIT = 6;
 const agendaEvents = upcomingEvents.slice(0, AGENDA_LIMIT);
 
+// Clicking a day cell in the month view jumps to Agenda filtered to just that day (searches
+// all events, not just upcoming — a past day clicked while browsing an earlier month should
+// still show what was there). The "reset" link clears `day` to get back to the normal list.
+const dayFilter = Astro.url.searchParams.get('day')?.match(/^\d{4}-\d{2}-\d{2}$/)?.[0] ?? null;
+const dayFilterEvents = dayFilter
+	? events.filter((ev) => eventDateKey(ev) === dayFilter).sort((a, b) => a.start.getTime() - b.start.getTime())
+	: null;
+const displayedAgendaEvents = dayFilterEvents ?? agendaEvents;
+
+function formatFullDate(key: string): string {
+	const [y, m, d] = key.split('-').map(Number);
+	return new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-GB', {
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric',
+	}).format(new Date(y, m - 1, d));
+}
+
 const eventsByDay = new Map<string, DistrictEvent[]>();
 for (const event of events) {
 	const key = eventDateKey(event);
@@ -71,7 +89,7 @@ function monthParamFor(year: number, month: number): string {
 }
 
 const monthParamMatch = Astro.url.searchParams.get('month')?.match(/^(\d{4})-(\d{2})$/);
-const monthTabActive = Boolean(monthParamMatch);
+const monthTabActive = Boolean(monthParamMatch) && !dayFilter;
 const viewYear = monthParamMatch ? Number(monthParamMatch[1]) : now.getFullYear();
 const viewMonth = monthParamMatch ? Number(monthParamMatch[2]) - 1 : now.getMonth();
 const activeMonthKey = monthParamFor(viewYear, viewMonth);
@@ -121,8 +139,16 @@ const monthTabId = `cal-month-${uid}`;
 				<label for={monthTabId}>{t.monthTab}</label>
 
 				<div class="view-panel agenda-panel">
-					{agendaEvents.length === 0 && <p class="calendar-status">{t.noEvents}</p>}
-					{agendaEvents.map((ev) => {
+					{dayFilter && (
+						<div class="day-filter-bar">
+							<span class="day-filter-label">{t.dayFilterPrefix} {formatFullDate(dayFilter)}</span>
+							<a class="day-filter-reset" href="?#eventi-calendario">{t.dayFilterReset}</a>
+						</div>
+					)}
+					{displayedAgendaEvents.length === 0 && (
+						<p class="calendar-status">{dayFilter ? t.dayFilterEmpty : t.noEvents}</p>
+					)}
+					{displayedAgendaEvents.map((ev) => {
 						const { day, month } = dateParts(eventDateKey(ev));
 						return (
 							<div class="event-row">
@@ -157,11 +183,11 @@ const monthTabId = `cal-month-${uid}`;
 								))}
 							</div>
 							<div class="day-grid">
-								{month.cells.map((cell) =>
-									cell === null ? (
-										<div class="day-cell empty" />
-									) : (
-										<div class={`day-cell${cell.key === todayKey ? ' today' : ''}`}>
+								{month.cells.map((cell) => {
+									if (cell === null) return <div class="day-cell empty" />;
+									const cellClass = `day-cell${cell.key === todayKey ? ' today' : ''}`;
+									const cellContent = (
+										<>
 											<span class="day-number">{cell.day}</span>
 											{cell.events.slice(0, 3).map((ev) => (
 												<span class="day-event" title={`${ev.summary}${ev.location ? ' · ' + ev.location : ''}`}>
@@ -169,9 +195,16 @@ const monthTabId = `cal-month-${uid}`;
 												</span>
 											))}
 											{cell.events.length > 3 && <span class="day-event-more">+{cell.events.length - 3}</span>}
-										</div>
-									)
-								)}
+										</>
+									);
+									return cell.events.length > 0 ? (
+										<a class={cellClass} href={`?day=${cell.key}#eventi-calendario`}>
+											{cellContent}
+										</a>
+									) : (
+										<div class={cellClass}>{cellContent}</div>
+									);
+								})}
 							</div>
 						</div>
 					))}
@@ -247,6 +280,33 @@ const monthTabId = `cal-month-${uid}`;
 		font-size: 15px;
 		color: var(--color-text);
 		font-style: italic;
+	}
+
+	.day-filter-bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 8px 16px;
+		background: var(--color-bg);
+		border-radius: 10px;
+		padding: 12px 18px;
+		margin-bottom: 18px;
+	}
+
+	.day-filter-label {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 14px;
+		color: var(--color-navy);
+		text-transform: capitalize;
+	}
+
+	.day-filter-reset {
+		font-size: 13px;
+		font-weight: 600;
+		color: var(--color-pink);
+		white-space: nowrap;
 	}
 
 	.sr-only {
@@ -452,6 +512,14 @@ const monthTabId = `cal-month-${uid}`;
 		gap: 3px;
 		background: var(--color-bg);
 		margin: -0.5px;
+	}
+
+	a.day-cell {
+		cursor: pointer;
+	}
+
+	a.day-cell:hover {
+		border-color: var(--color-pink);
 	}
 
 	.day-cell.empty {
