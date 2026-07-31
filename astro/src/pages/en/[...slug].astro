@@ -1,0 +1,34 @@
+---
+import { requestWithMetadata, tinaField } from '@tinacms/astro';
+import client from '../../../tina/__generated__/client';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageBanner from '../../components/PageBanner.astro';
+import BlockRenderer from '../../components/BlockRenderer.astro';
+import type { PageKey } from '../../data/routes';
+
+const lang = 'en' as const;
+const slug = Astro.params.slug ?? 'home';
+const relativePath = `en/${slug}.md`;
+
+const result = await requestWithMetadata(client.queries.pages({ relativePath }), { priority: 'primary' });
+const page = result.data.pages;
+
+if (!page) {
+	return Astro.redirect('/en');
+}
+
+const current = slug as PageKey;
+---
+
+<BaseLayout lang={lang} current={current} title={page.title} description={page.seo?.description ?? ''}>
+	{slug !== 'home' && page.eyebrow && page.breadcrumbCurrent && (
+		<PageBanner
+			lang={lang}
+			eyebrow={page.eyebrow}
+			title={page.title}
+			breadcrumbCurrent={page.breadcrumbCurrent}
+			titleField={tinaField(page, 'title')}
+		/>
+	)}
+	<BlockRenderer lang={lang} blocks={page.blocks ?? []} />
+</BaseLayout>

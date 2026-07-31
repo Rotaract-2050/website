@@ -1,0 +1,110 @@
+---
+interface Props {
+	title: string;
+	items: { day: string; month: string; title: string; time: string; location: string }[];
+}
+
+const { title, items } = Astro.props;
+---
+
+<section class="events">
+	<div class="section-inner">
+		<h2 class="section-title">{title}</h2>
+		{items.map((ev) => (
+			<div class="event-row">
+				<div class="event-date">
+					<div class="event-day">{ev.day}</div>
+					<div class="event-month">{ev.month}</div>
+				</div>
+				<div class="event-body">
+					<div class="event-title">{ev.title}</div>
+					<div class="event-meta">{ev.time} · {ev.location}</div>
+				</div>
+				<div class="event-arrow" aria-hidden="true">→</div>
+			</div>
+		))}
+	</div>
+</section>
+
+<style>
+	.events {
+		background: #fff;
+		padding: 80px 40px;
+	}
+
+	.section-inner {
+		max-width: var(--content-max);
+		margin: 0 auto;
+	}
+
+	.section-title {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 34px;
+		color: var(--color-navy);
+		text-transform: uppercase;
+		margin: 0 0 34px;
+	}
+
+	.event-row {
+		display: flex;
+		align-items: center;
+		gap: 24px;
+		border-bottom: 1px solid var(--color-border);
+		padding: 22px 0;
+	}
+
+	.event-date {
+		flex: 0 0 auto;
+		width: 64px;
+		background: var(--color-navy);
+		border-radius: 10px;
+		text-align: center;
+		padding: 10px 0;
+	}
+
+	.event-day {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 22px;
+		color: var(--color-gold);
+		line-height: 1;
+	}
+
+	.event-month {
+		font-size: 11px;
+		color: #fff;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		margin-top: 2px;
+	}
+
+	.event-body {
+		flex: 1;
+	}
+
+	.event-title {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 18px;
+		color: var(--color-navy);
+		margin-bottom: 4px;
+	}
+
+	.event-meta {
+		font-size: 13px;
+		color: var(--color-text);
+	}
+
+	.event-arrow {
+		color: var(--color-pink);
+		font-size: 20px;
+	}
+
+	@media (max-width: 720px) {
+		.events {
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+	}
+</style>
