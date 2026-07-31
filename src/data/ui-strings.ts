@@ -54,17 +54,16 @@ export interface UiStrings {
 	};
 }
 
-export const SOCIAL_LINKS = [
-	{ label: 'f', href: '#' },
-	{ label: 'in', href: '#' },
-	{ label: 'ig', href: '#' },
-	{ label: 'yt', href: '#' },
+export type SocialName = 'instagram' | 'linkedin';
+
+export const SOCIAL_LINKS: { name: SocialName; label: string; href: string }[] = [
+	{ name: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/rotaract2050/' },
+	{ name: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/company/distretto-rotaract-club-2050' },
 ];
 
 export const UTILITY_LINKS = [
-	{ label: 'ROTARY DISTRETTO 2050', href: '#' },
-	{ label: 'ROTARY INTERNATIONAL', href: '#' },
-	{ label: 'INTERACT 2050', href: '#' },
+	{ label: 'ROTARY DISTRETTO 2050', href: 'https://www.rotary2050.org/site/' },
+	{ label: 'ROTARY INTERNATIONAL', href: 'https://www.rotary.org/' },
 ];
 
 const IT: UiStrings = {
