@@ -11,7 +11,7 @@ Due percorsi ufficiali per integrare Tina in Astro (fonte: tina.io/docs/framewor
 
 **Decisione presa: hosting su Netlify.** Netlify supporta entrambi i path (`@astrojs/netlify` fa da adapter sia per `output: 'static'` che `output: 'server'`/edge functions), quindi l'hosting non è più il vincolo — usare lo **starter Astro-first con editing visuale** (opzione preferita per soci non tecnici), con `output: 'server'` + `@astrojs/netlify`. Deploy automatico su Netlify a ogni push del branch collegato (git-backed, coerente col workflow Tina).
 
-**Stato reale in `astro/astro.config.mjs`**: `output: 'server'` + adapter `@astrojs/netlify()`. `netlify.toml` alla root del repo punta Netlify a `base = "astro"` (il progetto Astro vive in una sottocartella, non alla root del repo).
+**Stato reale in `astro.config.mjs`**: `output: 'server'` + adapter `@astrojs/netlify()`. Il progetto Astro vive alla root del repo (non in sottocartella), `netlify.toml` alla root non ha bisogno di `base`.
 
 ## Account Tina Cloud — vincolo utenti
 
@@ -35,11 +35,11 @@ Non presumere il numero di editor: è una decisione dell'utente, non tecnica.
 
 Fonte: tina.io/docs/editing/blocks. Un campo `object` con `list: true` e `templates: [...]` permette agli editor di aggiungere/riordinare/rimuovere sezioni di pagina (Hero, StatsBar, SplitSection, CardGrid, EventsList, NewsGrid, CtaBanner, ValuesGrid, RoleGrid, PagePlaceholder, ClubDirectory) senza scrivere codice. Ogni template Tina ha un componente Astro corrispondente con lo stesso nome in `src/components/blocks/`, renderizzato da `BlockRenderer.astro`.
 
-**Discriminazione del blocco**: il match nel renderer avviene su **`block.__typename`**, non su un campo `_template` custom — `__typename` è generato dalla GraphQL API di Tina come `<Collection>Blocks<NomeTemplate>` (es. template `Hero` nella collection `pages` → `PagesBlocksHero`). Vedi `BlockRenderer.astro` reale in `astro/src/components/BlockRenderer.astro` per il pattern esatto (uno `{block.__typename === '...' && <Componente .../>}` per template, dentro un wrapper con `data-tina-field={tinaField(block)}`).
+**Discriminazione del blocco**: il match nel renderer avviene su **`block.__typename`**, non su un campo `_template` custom — `__typename` è generato dalla GraphQL API di Tina come `<Collection>Blocks<NomeTemplate>` (es. template `Hero` nella collection `pages` → `PagesBlocksHero`). Vedi `BlockRenderer.astro` reale in `src/components/BlockRenderer.astro` per il pattern esatto (uno `{block.__typename === '...' && <Componente .../>}` per template, dentro un wrapper con `data-tina-field={tinaField(block)}`).
 
 ## Query e visual editing — pattern reale
 
-Ogni route/blocco che legge contenuto Tina segue questo schema (vedi `astro/src/pages/[...slug].astro`, `astro/src/components/blocks/ClubDirectory.astro`):
+Ogni route/blocco che legge contenuto Tina segue questo schema (vedi `src/pages/[...slug].astro`, `src/components/blocks/ClubDirectory.astro`):
 
 ```ts
 import { requestWithMetadata, tinaField } from '@tinacms/astro';

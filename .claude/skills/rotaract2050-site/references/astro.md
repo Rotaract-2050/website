@@ -4,7 +4,7 @@ Convenzioni ufficiali Astro (docs.astro.build) applicate al sito.
 
 ## Niente Astro Content Collections per i contenuti Tina
 
-**Il progetto non usa `astro:content`/`src/content.config.ts`.** Non aggiungerlo per "seguire le best practice generiche di Astro" — non è il pattern scelto qui. I contenuti editoriali (pagine, zone, club, settings) vivono come file markdown in `astro/src/content/{pages,zones,clubs,settings}/` ma vengono letti **a runtime via il client GraphQL generato da Tina** (`astro/tina/__generated__/client`), non tramite le API `astro:content`. Pattern reale, da replicare per qualunque nuova query:
+**Il progetto non usa `astro:content`/`src/content.config.ts`.** Non aggiungerlo per "seguire le best practice generiche di Astro" — non è il pattern scelto qui. I contenuti editoriali (pagine, zone, club, settings) vivono come file markdown in `src/content/{pages,zones,clubs,settings}/` ma vengono letti **a runtime via il client GraphQL generato da Tina** (`tina/__generated__/client`), non tramite le API `astro:content`. Pattern reale, da replicare per qualunque nuova query:
 
 ```ts
 import { requestWithMetadata, tinaField } from '@tinacms/astro';

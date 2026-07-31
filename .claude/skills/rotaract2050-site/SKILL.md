@@ -15,7 +15,7 @@ description: Sviluppo e manutenzione del sito Rotaract Distretto 2050 (Astro + T
 
 ## Stato attuale del repo
 
-Il progetto Astro+Tina **reale e funzionante vive in `astro/`** — non è più solo un mockup. È già stato implementato seguendo il pattern a blocchi descritto sotto: `astro/tina/config.ts` (schema), `astro/src/pages/[...slug].astro` + `astro/src/pages/en/[...slug].astro` (route), `astro/src/components/BlockRenderer.astro` + `astro/src/components/blocks/*.astro` (11 blocchi), `astro/src/content/{pages,zones,clubs,settings}/` (contenuti git-backed). Leggere questi file **prima** di aggiungere qualcosa di nuovo: sono l'esempio concreto da estendere, più affidabile di qualunque descrizione astratta in questa skill. `astro/README.md` riassume struttura e comandi.
+Il progetto Astro+Tina **reale e funzionante vive alla root del repo** (non in una sottocartella) — non è più solo un mockup. È già stato implementato seguendo il pattern a blocchi descritto sotto: `tina/config.ts` (schema), `src/pages/[...slug].astro` + `src/pages/en/[...slug].astro` (route), `src/components/BlockRenderer.astro` + `src/components/blocks/*.astro` (11 blocchi), `src/content/{pages,zones,clubs,settings}/` (contenuti git-backed). Leggere questi file **prima** di aggiungere qualcosa di nuovo: sono l'esempio concreto da estendere, più affidabile di qualunque descrizione astratta in questa skill. Il `README.md` alla root riassume struttura e comandi.
 
 Il vecchio mockup HTML statico di prototipazione (`Rotaract Distretto 2050.dc.html`, `support.js`, `image-slot.js`) non è più nel repo: è stato superato dall'implementazione reale. Se compare ancora un riferimento a `sc-for`/`sc-if`/`x-dc`/`DCLogic` da qualche parte è un residuo da correggere, non un pattern da seguire.
 
