@@ -1,0 +1,26 @@
+---
+interface Props {
+	message: string;
+}
+
+const { message } = Astro.props;
+---
+
+<section class="empty">
+	<p class="placeholder">{message}</p>
+</section>
+
+<style>
+	.empty {
+		background: #fff;
+		padding: 120px 40px;
+		text-align: center;
+	}
+
+	.placeholder {
+		font-size: 17px;
+		color: var(--color-text);
+		max-width: 480px;
+		margin: 0 auto;
+	}
+</style>

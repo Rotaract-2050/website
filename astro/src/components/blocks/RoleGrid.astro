@@ -1,0 +1,117 @@
+---
+interface Props {
+	title: string;
+	showDisclaimer?: boolean;
+	disclaimerText?: string;
+	items: { initials: string; name: string; role: string }[];
+}
+
+const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
+---
+
+<section class="governance">
+	<div class="section-inner">
+		<h2 class="section-title center tight">{title}</h2>
+		{showDisclaimer && disclaimerText && <p class="disclaimer">{disclaimerText}</p>}
+		<div class="roles-grid">
+			{items.map((role) => (
+				<div class="role-card">
+					<div class="role-initials">{role.initials}</div>
+					<div class="role-name">{role.name}</div>
+					<div class="role-title">{role.role}</div>
+				</div>
+			))}
+		</div>
+	</div>
+</section>
+
+<style>
+	.governance {
+		background: #fff;
+		padding: 80px 40px;
+	}
+
+	.section-inner {
+		max-width: var(--content-max);
+		margin: 0 auto;
+	}
+
+	.section-title {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 28px;
+		color: var(--color-navy);
+		text-transform: uppercase;
+		margin: 0 0 34px;
+	}
+
+	.section-title.center {
+		text-align: center;
+	}
+
+	.section-title.tight {
+		margin-bottom: 14px;
+	}
+
+	.disclaimer {
+		font-size: 12px;
+		color: var(--color-muted);
+		font-style: italic;
+		text-align: center;
+		margin: 0 0 34px;
+	}
+
+	.roles-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 24px;
+	}
+
+	.role-card {
+		background: var(--color-bg);
+		border-radius: 14px;
+		padding: 26px 18px;
+		text-align: center;
+	}
+
+	.role-initials {
+		width: 56px;
+		height: 56px;
+		border-radius: 50%;
+		background: var(--color-navy);
+		color: #fff;
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 18px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0 auto 14px;
+	}
+
+	.role-name {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 15px;
+		color: var(--color-navy);
+		margin-bottom: 4px;
+	}
+
+	.role-title {
+		font-size: 12px;
+		color: var(--color-text);
+	}
+
+	@media (max-width: 900px) {
+		.roles-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (max-width: 720px) {
+		.governance {
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+	}
+</style>

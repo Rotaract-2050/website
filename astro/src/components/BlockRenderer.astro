@@ -1,0 +1,140 @@
+---
+import { tinaField } from '@tinacms/astro';
+import type { PagesQuery } from '../../tina/__generated__/types';
+import type { Lang } from '../data/ui-strings';
+import Hero from './blocks/Hero.astro';
+import StatsBar from './blocks/StatsBar.astro';
+import SplitSection from './blocks/SplitSection.astro';
+import CardGrid from './blocks/CardGrid.astro';
+import ValuesGrid from './blocks/ValuesGrid.astro';
+import RoleGrid from './blocks/RoleGrid.astro';
+import EventsList from './blocks/EventsList.astro';
+import NewsGrid from './blocks/NewsGrid.astro';
+import CtaBanner from './blocks/CtaBanner.astro';
+import PagePlaceholder from './blocks/PagePlaceholder.astro';
+import ClubDirectory from './blocks/ClubDirectory.astro';
+
+function nonNull<T>(value: T | null | undefined): value is T {
+	return value != null;
+}
+
+interface Props {
+	lang: Lang;
+	blocks: NonNullable<PagesQuery['pages']['blocks']>;
+}
+
+const { lang, blocks } = Astro.props;
+---
+
+{blocks.filter(nonNull).map((block) => (
+	<div data-tina-field={tinaField(block)}>
+		{block.__typename === 'PagesBlocksHero' && (
+			<Hero
+				lang={lang}
+				ctaHref={block.ctaHref ?? ''}
+				slides={(block.slides ?? []).filter(nonNull).map((s) => ({
+					eyebrow: s.eyebrow ?? '',
+					title: s.title ?? '',
+					subtitle: s.subtitle ?? '',
+					ctaLabel: s.ctaLabel ?? '',
+				}))}
+			/>
+		)}
+		{block.__typename === 'PagesBlocksStatsBar' && (
+			<StatsBar
+				items={(block.items ?? []).filter(nonNull).map((i) => ({ value: i.value ?? '', label: i.label ?? '' }))}
+			/>
+		)}
+		{block.__typename === 'PagesBlocksSplitSection' && (
+			<SplitSection
+				lang={lang}
+				kicker={block.kicker ?? undefined}
+				title={block.title}
+				quote={block.quote ?? undefined}
+				body={block.body ?? ''}
+				subhead={block.subhead ?? undefined}
+				body2={block.body2 ?? undefined}
+				ctaLabel={block.ctaLabel ?? undefined}
+				ctaHref={block.ctaHref ?? undefined}
+				image={block.image ?? undefined}
+				imageLabel={block.imageLabel}
+				imageSide={block.imageSide === 'left' ? 'left' : 'right'}
+			/>
+		)}
+		{block.__typename === 'PagesBlocksCardGrid' && (
+			<CardGrid
+				lang={lang}
+				title={block.title}
+				items={(block.items ?? []).filter(nonNull).map((i) => ({
+					title: i.title ?? '',
+					meta: i.meta ?? '',
+					href: i.href ?? '',
+				}))}
+			/>
+		)}
+		{block.__typename === 'PagesBlocksValuesGrid' && (
+			<ValuesGrid
+				title={block.title}
+				items={(block.items ?? []).filter(nonNull).map((i) => ({
+					letter: i.letter ?? '',
+					title: i.title ?? '',
+					description: i.description ?? '',
+				}))}
+			/>
+		)}
+		{block.__typename === 'PagesBlocksRoleGrid' && (
+			<RoleGrid
+				title={block.title}
+				showDisclaimer={block.showDisclaimer ?? false}
+				disclaimerText={block.disclaimerText ?? undefined}
+				items={(block.items ?? []).filter(nonNull).map((i) => ({
+					initials: i.initials ?? '',
+					name: i.name ?? '',
+					role: i.role ?? '',
+				}))}
+			/>
+		)}
+		{block.__typename === 'PagesBlocksEventsList' && (
+			<EventsList
+				title={block.title}
+				items={(block.items ?? []).filter(nonNull).map((i) => ({
+					day: i.day ?? '',
+					month: i.month ?? '',
+					title: i.title ?? '',
+					time: i.time ?? '',
+					location: i.location ?? '',
+				}))}
+			/>
+		)}
+		{block.__typename === 'PagesBlocksNewsGrid' && (
+			<NewsGrid
+				title={block.title}
+				items={(block.items ?? []).filter(nonNull).map((i) => ({
+					tag: i.tag ?? '',
+					title: i.title ?? '',
+					excerpt: i.excerpt ?? '',
+					date: i.date ?? '',
+					image: i.image ?? undefined,
+					imageLabel: i.imageLabel,
+				}))}
+			/>
+		)}
+		{block.__typename === 'PagesBlocksCtaBanner' && (
+			<CtaBanner
+				lang={lang}
+				title={block.title}
+				body={block.body ?? ''}
+				buttonLabel={block.buttonLabel ?? ''}
+				buttonHref={block.buttonHref ?? ''}
+			/>
+		)}
+		{block.__typename === 'PagesBlocksPagePlaceholder' && <PagePlaceholder message={block.message ?? ''} />}
+		{block.__typename === 'PagesBlocksClubDirectory' && (
+			<ClubDirectory
+				intro={block.intro ?? ''}
+				disclaimer={block.disclaimer ?? ''}
+				contactLabel={block.contactLabel ?? ''}
+			/>
+		)}
+	</div>
+))}

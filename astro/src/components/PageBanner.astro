@@ -1,7 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import type { Lang } from '../data/copy';
-import { translations } from '../data/copy';
+import type { Lang } from '../data/ui-strings';
+import { uiStrings } from '../data/ui-strings';
 import { pageSlugs } from '../data/routes';
 
 interface Props {
@@ -9,10 +9,11 @@ interface Props {
 	eyebrow: string;
 	title: string;
 	breadcrumbCurrent: string;
+	titleField?: string;
 }
 
-const { lang, eyebrow, title, breadcrumbCurrent } = Astro.props;
-const t = translations[lang];
+const { lang, eyebrow, title, breadcrumbCurrent, titleField } = Astro.props;
+const t = uiStrings[lang];
 const homeHref = getRelativeLocaleUrl(lang, pageSlugs.home);
 ---
 
@@ -22,7 +23,7 @@ const homeHref = getRelativeLocaleUrl(lang, pageSlugs.home);
 			<a href={homeHref}>{t.breadcrumbHome}</a> / {breadcrumbCurrent}
 		</div>
 		<div class="eyebrow">{eyebrow}</div>
-		<h1 class="title">{title}</h1>
+		<h1 class="title" data-tina-field={titleField}>{title}</h1>
 	</div>
 </div>
 

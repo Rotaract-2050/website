@@ -1,0 +1,28 @@
+---
+import type { Lang } from '../data/ui-strings';
+
+interface Props {
+	lang: Lang;
+	title: string;
+	description: string;
+	alternateHref: string;
+}
+
+const { lang, title, description, alternateHref } = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const alternateUrl = new URL(alternateHref, Astro.site);
+const otherLang: Lang = lang === 'it' ? 'en' : 'it';
+---
+
+<link rel="canonical" href={canonicalUrl} />
+<link rel="alternate" hreflang={lang} href={canonicalUrl} />
+<link rel="alternate" hreflang={otherLang} href={alternateUrl} />
+<link rel="alternate" hreflang="x-default" href={new URL('/', Astro.site)} />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Rotaract Distretto 2050" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:locale" content={lang === 'it' ? 'it_IT' : 'en_US'} />

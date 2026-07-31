@@ -1,0 +1,135 @@
+---
+import { requestWithMetadata, tinaField } from '@tinacms/astro';
+import client from '../../../tina/__generated__/client';
+
+interface Props {
+	intro: string;
+	disclaimer: string;
+	contactLabel: string;
+}
+
+const { intro, disclaimer, contactLabel } = Astro.props;
+
+const { data: zonesData } = await requestWithMetadata(client.queries.zonesConnection());
+const { data: clubsData } = await requestWithMetadata(client.queries.clubsConnection());
+
+const zones = (zonesData.zonesConnection.edges ?? []).map((edge) => edge?.node).filter((z) => z != null);
+const clubs = (clubsData.clubsConnection.edges ?? []).map((edge) => edge?.node).filter((c) => c != null);
+
+const zoneGroups = zones.map((zone) => ({
+	name: zone.name,
+	clubs: clubs.filter((club) => club.zone?.name === zone.name),
+}));
+---
+
+<section class="club-list">
+	<div class="section-inner">
+		<p class="intro">{intro}</p>
+		<p class="disclaimer">{disclaimer}</p>
+
+		{zoneGroups.map((zone) => (
+			<div class="zone-block">
+				<h2 class="zone-heading">{zone.name}</h2>
+				<div class="club-grid">
+					{zone.clubs.map((club) => (
+						<div class="club-card" data-tina-field={tinaField(club)}>
+							<div class="club-name">{club.name}</div>
+							<div class="club-zone">{zone.name}</div>
+							<div class="club-contact">{contactLabel} →</div>
+						</div>
+					))}
+				</div>
+			</div>
+		))}
+	</div>
+</section>
+
+<style>
+	.club-list {
+		background: #fff;
+		padding: 70px 40px 90px;
+	}
+
+	.section-inner {
+		max-width: var(--content-max);
+		margin: 0 auto;
+	}
+
+	.intro {
+		font-size: 16px;
+		color: var(--color-text);
+		line-height: 1.7;
+		max-width: 720px;
+		margin: 0 0 8px;
+	}
+
+	.disclaimer {
+		font-size: 12px;
+		color: var(--color-muted);
+		font-style: italic;
+		margin: 0 0 40px;
+	}
+
+	.zone-block {
+		margin-bottom: 36px;
+	}
+
+	.zone-heading {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 20px;
+		color: var(--color-navy);
+		border-bottom: 3px solid var(--color-pink);
+		display: inline-block;
+		padding-bottom: 6px;
+		margin: 0 0 18px;
+	}
+
+	.club-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 18px;
+	}
+
+	.club-card {
+		background: var(--color-bg);
+		border-radius: 12px;
+		padding: 20px;
+	}
+
+	.club-name {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 16px;
+		color: var(--color-navy);
+		margin-bottom: 4px;
+	}
+
+	.club-zone {
+		font-size: 13px;
+		color: var(--color-text);
+		margin-bottom: 10px;
+	}
+
+	.club-contact {
+		color: var(--color-pink);
+		font-size: 13px;
+		font-weight: 600;
+	}
+
+	@media (max-width: 900px) {
+		.club-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (max-width: 600px) {
+		.club-list {
+			padding: 50px 20px 70px;
+		}
+
+		.club-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

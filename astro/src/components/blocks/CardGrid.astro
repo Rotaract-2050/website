@@ -1,0 +1,94 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { Lang } from '../../data/ui-strings';
+
+interface Props {
+	lang: Lang;
+	title: string;
+	items: { title: string; meta: string; href: string }[];
+}
+
+const { lang, title, items } = Astro.props;
+---
+
+<section class="card-grid">
+	<div class="section-inner">
+		<h2 class="section-title center">{title}</h2>
+		<div class="card-row">
+			{items.map((item) => (
+				<a href={getRelativeLocaleUrl(lang, item.href)} class="card">
+					<div class="card-title">{item.title}</div>
+					<div class="card-meta">{item.meta}</div>
+				</a>
+			))}
+		</div>
+	</div>
+</section>
+
+<style>
+	.card-grid {
+		background: var(--color-bg);
+		padding: 80px 40px;
+	}
+
+	.section-inner {
+		max-width: var(--content-max);
+		margin: 0 auto;
+	}
+
+	.section-title {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 34px;
+		color: var(--color-navy);
+		text-transform: uppercase;
+		margin: 0 0 34px;
+	}
+
+	.section-title.center {
+		text-align: center;
+		font-size: 28px;
+	}
+
+	.card-row {
+		display: flex;
+		gap: 20px;
+		overflow-x: auto;
+		padding-bottom: 10px;
+	}
+
+	.card {
+		flex: 0 0 auto;
+		min-width: 200px;
+		background: #fff;
+		border-radius: 14px;
+		box-shadow: 0 4px 16px rgba(11, 37, 69, 0.07);
+		padding: 24px 20px;
+		text-align: center;
+		color: inherit;
+	}
+
+	.card:hover {
+		box-shadow: 0 8px 24px rgba(11, 37, 69, 0.12);
+	}
+
+	.card-title {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 17px;
+		color: var(--color-navy);
+		margin-bottom: 4px;
+	}
+
+	.card-meta {
+		font-size: 13px;
+		color: var(--color-text);
+	}
+
+	@media (max-width: 720px) {
+		.card-grid {
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+	}
+</style>

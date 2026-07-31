@@ -1,7 +1,9 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import type { Lang } from '../data/copy';
-import { translations, SOCIAL_LINKS } from '../data/copy';
+import { requestWithMetadata, tinaField } from '@tinacms/astro';
+import client from '../../tina/__generated__/client';
+import type { Lang } from '../data/ui-strings';
+import { uiStrings, SOCIAL_LINKS } from '../data/ui-strings';
 import { pageSlugs, type PageKey } from '../data/routes';
 
 interface Props {
@@ -9,7 +11,9 @@ interface Props {
 }
 
 const { lang } = Astro.props;
-const t = translations[lang];
+const t = uiStrings[lang];
+const { data } = await requestWithMetadata(client.queries.settings({ relativePath: `${lang}.md` }));
+const settings = data.settings;
 const href = (page: PageKey) => getRelativeLocaleUrl(lang, pageSlugs[page]);
 ---
 
@@ -17,7 +21,7 @@ const href = (page: PageKey) => getRelativeLocaleUrl(lang, pageSlugs[page]);
 	<div class="footer-grid">
 		<div>
 			<div class="footer-title">ROTARACT DISTRETTO 2050</div>
-			<p class="footer-about">{t.footer.about}</p>
+			<p class="footer-about" data-tina-field={tinaField(settings, 'about')}>{settings.about}</p>
 		</div>
 		<div>
 			<div class="footer-heading">{t.footer.linksTitle}</div>
@@ -32,7 +36,7 @@ const href = (page: PageKey) => getRelativeLocaleUrl(lang, pageSlugs[page]);
 		</div>
 		<div>
 			<div class="footer-heading">{t.footer.contactTitle}</div>
-			<p class="footer-contact">{t.footer.address}<br />{t.footer.email}</p>
+			<p class="footer-contact" data-tina-field={tinaField(settings, 'address')}>{settings.address}<br />{settings.email}</p>
 		</div>
 		<div>
 			<div class="footer-heading">{t.footer.socialTitle}</div>

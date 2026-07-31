@@ -8,8 +8,8 @@
 	--color-border: #e4e7ee;
 	--color-muted: #9aa3b2;
 
-	--font-body: 'Barlow', Helvetica, Arial, sans-serif;
-	--font-heading: 'Barlow Condensed', Helvetica, Arial, sans-serif;
+	--font-body: Georgia, 'Times New Roman', serif;
+	--font-heading: 'Open Sans', Helvetica, Arial, sans-serif;
 
 	--content-max: 1200px;
 }

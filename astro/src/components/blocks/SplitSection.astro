@@ -1,0 +1,148 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { Image } from 'astro:assets';
+import ImageSlot from '../ImageSlot.astro';
+import type { Lang } from '../../data/ui-strings';
+
+interface Props {
+	lang: Lang;
+	kicker?: string;
+	title: string;
+	quote?: string;
+	body: string;
+	subhead?: string;
+	body2?: string;
+	ctaLabel?: string;
+	ctaHref?: string;
+	image?: string;
+	imageLabel: string;
+	imageSide?: 'left' | 'right';
+}
+
+const { lang, kicker, title, quote, body, subhead, body2, ctaLabel, ctaHref, image, imageLabel, imageSide = 'right' } = Astro.props;
+const resolvedCtaHref = ctaHref ? getRelativeLocaleUrl(lang, ctaHref) : undefined;
+---
+
+<section class="split" data-side={imageSide}>
+	<div class="split-inner">
+		<div class="split-media">
+			{image ? <Image src={image} alt={imageLabel} width={800} height={420} class="split-image" /> : <ImageSlot label={imageLabel} shape="rounded" class="split-image" />}
+		</div>
+		<div class="split-copy">
+			{kicker && <div class="eyebrow">{kicker}</div>}
+			<h2 class="split-title">{title}</h2>
+			{quote && <blockquote class="split-quote">{quote}</blockquote>}
+			<p class="body-text">{body}</p>
+			{subhead && <h3 class="subhead">{subhead}</h3>}
+			{body2 && <p class="body-text no-margin">{body2}</p>}
+			{ctaLabel && resolvedCtaHref && (
+				<a href={resolvedCtaHref} class="text-link">{ctaLabel} →</a>
+			)}
+		</div>
+	</div>
+</section>
+
+<style>
+	.split {
+		background: #fff;
+		padding: 90px 40px;
+	}
+
+	.split-inner {
+		max-width: var(--content-max);
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: 0.9fr 1.1fr;
+		gap: 60px;
+		align-items: center;
+	}
+
+	.split[data-side='right'] .split-inner {
+		grid-template-columns: 1.1fr 0.9fr;
+	}
+
+	.split[data-side='right'] .split-media {
+		order: 2;
+	}
+
+	.split-media :global(.split-image) {
+		width: 100%;
+		height: 420px;
+		border-radius: 16px;
+		object-fit: cover;
+	}
+
+	.eyebrow {
+		color: var(--color-pink);
+		font-weight: 700;
+		font-size: 13px;
+		letter-spacing: 1.5px;
+		text-transform: uppercase;
+		margin-bottom: 10px;
+	}
+
+	.split-title {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 34px;
+		color: var(--color-navy);
+		text-transform: uppercase;
+		margin: 0 0 20px;
+	}
+
+	.split-quote {
+		font-size: 17px;
+		color: var(--color-navy);
+		font-style: italic;
+		border-left: 3px solid var(--color-pink);
+		padding-left: 16px;
+		margin: 0 0 22px;
+		line-height: 1.6;
+	}
+
+	.body-text {
+		font-size: 16px;
+		color: var(--color-text);
+		line-height: 1.7;
+		margin: 0 0 22px;
+	}
+
+	.body-text.no-margin {
+		margin-bottom: 0;
+	}
+
+	.subhead {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 18px;
+		color: var(--color-navy);
+		margin: 0 0 8px;
+	}
+
+	.text-link {
+		display: inline-block;
+		color: var(--color-pink);
+		font-weight: 700;
+		font-size: 14px;
+		letter-spacing: 0.5px;
+		text-transform: uppercase;
+	}
+
+	@media (max-width: 900px) {
+		.split-inner,
+		.split[data-side='right'] .split-inner {
+			grid-template-columns: 1fr;
+		}
+
+		.split[data-side='right'] .split-media {
+			order: 0;
+		}
+	}
+
+	@media (max-width: 720px) {
+		.split {
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+	}
+</style>

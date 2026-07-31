@@ -1,0 +1,104 @@
+---
+interface Props {
+	title: string;
+	items: { letter: string; title: string; description: string }[];
+}
+
+const { title, items } = Astro.props;
+---
+
+<section class="values">
+	<div class="section-inner">
+		<h2 class="section-title center">{title}</h2>
+		<div class="values-grid">
+			{items.map((val) => (
+				<div class="value-card">
+					<div class="value-letter">{val.letter}</div>
+					<div class="value-title">{val.title}</div>
+					<div class="value-desc">{val.description}</div>
+				</div>
+			))}
+		</div>
+	</div>
+</section>
+
+<style>
+	.values {
+		background: var(--color-bg);
+		padding: 80px 40px;
+	}
+
+	.section-inner {
+		max-width: var(--content-max);
+		margin: 0 auto;
+	}
+
+	.section-title {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 28px;
+		color: var(--color-navy);
+		text-transform: uppercase;
+		margin: 0 0 34px;
+	}
+
+	.section-title.center {
+		text-align: center;
+	}
+
+	.values-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 24px;
+	}
+
+	.value-card {
+		background: #fff;
+		border-radius: 14px;
+		padding: 28px 22px;
+		text-align: center;
+		box-shadow: 0 4px 16px rgba(11, 37, 69, 0.06);
+	}
+
+	.value-letter {
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		background: var(--color-pink);
+		color: #fff;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0 auto 14px;
+	}
+
+	.value-title {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 16px;
+		color: var(--color-navy);
+		margin-bottom: 8px;
+	}
+
+	.value-desc {
+		font-size: 13px;
+		color: var(--color-text);
+		line-height: 1.5;
+	}
+
+	@media (max-width: 900px) {
+		.values-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (max-width: 720px) {
+		.values {
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+	}
+</style>
