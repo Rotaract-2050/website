@@ -13,6 +13,14 @@ const newsRouter = ({ document }: { document: { _sys: { breadcrumbs: string[] } 
 	return locale === 'it' ? `/news/${slug}` : `/en/news/${slug}`;
 };
 
+// Past events have no dedicated detail page (single archive page, per district decision):
+// the router jumps straight to the event's anchor on the archive list instead of a route.
+const eventsRouter = ({ document }: { document: { _sys: { breadcrumbs: string[] } } }) => {
+	const [locale, ...rest] = document._sys.breadcrumbs;
+	const slug = rest.join('/');
+	return locale === 'it' ? `/eventi#${slug}` : `/en/eventi#${slug}`;
+};
+
 const heroTemplate = {
 	name: 'Hero',
 	label: 'Hero (Carosello)',
@@ -315,6 +323,27 @@ export default defineConfig({
 					{ type: 'image', name: 'image', label: 'Immagine' },
 					{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine', required: true },
 					{ type: 'rich-text', name: 'body', label: 'Corpo articolo', isBody: true },
+				],
+			},
+			{
+				name: 'events',
+				label: 'Archivio eventi (passati)',
+				path: 'src/content/events',
+				format: 'md',
+				ui: { router: eventsRouter },
+				fields: [
+					{ type: 'string', name: 'title', label: 'Titolo', isTitle: true, required: true },
+					{ type: 'datetime', name: 'date', label: 'Data evento', required: true, ui: { dateFormat: 'DD MMMM YYYY' } },
+					{ type: 'string', name: 'location', label: 'Luogo' },
+					{ type: 'string', name: 'excerpt', label: 'Descrizione', ui: { component: 'textarea' } },
+					{ type: 'image', name: 'image', label: 'Immagine' },
+					{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine', required: true },
+					{
+						type: 'string',
+						name: 'photoAlbumUrl',
+						label: 'Link album foto (Google Drive/Photos)',
+						description: 'Se compilato, mostra un bottone "Foto" che apre questo link in una nuova scheda.',
+					},
 				],
 			},
 			{
