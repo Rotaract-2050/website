@@ -13,6 +13,10 @@ Due percorsi ufficiali per integrare Tina in Astro (fonte: tina.io/docs/framewor
 
 **Stato reale in `astro.config.mjs`**: `output: 'server'` + adapter `@astrojs/netlify()`. Il progetto Astro vive alla root del repo (non in sottocartella), `netlify.toml` alla root non ha bisogno di `base`.
 
+**Pipeline verificata funzionante end-to-end**: dev locale → push GitHub (`Rotaract-2050/website`, branch `main`) → Tina Cloud (progetto `45ced600-56cb-4e98-a4eb-26f93b147dcf`, indicizza da GitHub) → Netlify (sito `rotaract2050`, https://rotaract2050.netlify.app, deploy automatico ad ogni push su `main`, env `TINA_CLIENT_ID`/`TINA_TOKEN` impostate). Login Tina Cloud e salvataggio con commit su GitHub testati con successo sul sito live — **non sul dev locale**: `tinacms dev` in locale gira sempre in "local mode" (nessun login, nessun account Tina Cloud, editing su filesystem locale) per design, il vero login esiste solo su un build che parla con Tina Cloud (sito deployato, o `npm run build && astro preview` in locale con `TINA_TOKEN` valido).
+
+**Account Netlify — SSO di default**: un account/team Netlify nuovo ha `site_sso_login: true` a livello di account (protegge *tutti* i siti del team dietro login Netlify, non solo questo). Per un sito pubblico va disattivato dalla dashboard (Team settings → Security/SSO) — non risulta scrivibile via `netlify api updateAccount` (write silenziosamente ignorato, campo probabilmente non esposto in scrittura dall'API pubblica).
+
 ## Account Tina Cloud — vincolo utenti
 
 Piano **Free** di Tina Cloud (tina.io/pricing): **2 utenti/editor**, 1 progetto, documenti illimitati, 100MB limite per asset. Prima di attivare l'account, confermare con l'utente quante persone del direttivo/comitati devono editare autonomamente da Tina:
@@ -53,6 +57,17 @@ const page = result.data.pages;
 - `requestWithMetadata()` invece della chiamata diretta al client: abilita l'editing in-context.
 - `tinaField(obj, 'campo')` sull'elemento che deve diventare cliccabile in editing.
 - Relazioni Tina (club → zona) tramite campo schema `{ type: 'reference', collections: ['zones'] }`, risolte con due query separate (`zonesConnection`, `clubsConnection`) unite lato componente — non un'unica query annidata.
+
+## Nota operativa per sessioni Claude Code (dev locale)
+
+`npm run dev` = `tinacms dev -c "astro dev"`. In ambiente Claude Code (sandbox con gestione automatica dei processi in background per i comandi `astro dev`), `astro dev` come figlio di `tinacms -c` ritorna il controllo subito invece di restare in foreground: `tinacms dev` vede il "comando web" finire e chiude anche sé stesso, portandosi via il proprio server locale (GraphQL/asset admin, porta 4001) — Astro resta su come demone indipendente, ma l'ammin Tina risulta rotto (asset `main.tsx` con `ERR_CONNECTION_REFUSED`). **Non è un bug del progetto** — un contributor umano su un terminale normale non lo incontra, `astro dev --help` conferma che senza `--background` esplicito il comando dovrebbe restare in foreground.
+
+Se serve verificare l'editing Tina in locale da una sessione Claude Code, avviare i due processi separati invece di `npm run dev`:
+```
+npx tinacms dev            # in background — server Tina (GraphQL + asset admin, :4001), lasciarlo residente
+npx astro dev --background # sito Astro (:4321)
+```
+Ricordarsi di fermarli (`pkill -f "tinacms dev"`, `astro dev stop`) prima di lanciare `npm run build`/`netlify deploy --build`: tengono occupate le porte 4001/9000 e il build fallisce con "Datalayer server is busy".
 
 ## Fonti
 
