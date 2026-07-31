@@ -4,7 +4,8 @@ Generato confrontando questo sito con il sito attuale in produzione ([rotaract20
 
 ## Pagine con dati segnaposto da sostituire con dati reali
 
-- [ ] **Home — statistiche**: attuali `28 club / 350+ soci / 4 zone / 40+ progetti` sono placeholder del mockup iniziale. Sito attuale riporta `4 zone, 30 club, 403 soci` — verificare i numeri corretti col distretto (28 vs 30 club è una discrepanza da chiarire, non solo da aggiornare).
+- [x] **Home — statistiche club/soci/zone**: corretto a `30 club / 403 soci / 4 zone` (numeri reali da rotaract2050.org).
+- [ ] **Home — statistica "progetti attivi"**: resta `40+`, placeholder — il sito attuale non riporta questo dato, chiedere il numero reale al distretto.
 - [ ] **Home — tema dell'anno**: sito attuale ha un motto sociale in evidenza ("Formiamoci per non fermarci mai" per l'anno in corso) — il nuovo sito non ha questo elemento, valutare se aggiungerlo come blocco/eyebrow in home.
 - [ ] **Il Distretto — box Rappresentante Distrettuale**: sostituire "Nome Cognome" con dato reale (Rappresentante Distrettuale attuale: Lorenzo Pancini, rd@rotaract2050.org) + quote reale.
 - [ ] **Il Distretto — Direttivo Distrettuale (RoleGrid)**: lo schema attuale ha 4 ruoli fissi placeholder (RD, VR, SD, TD). Il direttivo reale ha 9 persone e ruoli diversi — rivedere lo schema del blocco `RoleGrid`/i dati, non solo compilare i nomi:

@@ -19,9 +19,9 @@ blocks:
         ctaLabel: ENTRA IN ROTARACT
     _template: Hero
   - items:
-      - value: '28'
+      - value: '30'
         label: CLUB ROTARACT
-      - value: 350+
+      - value: '403'
         label: SOCI
       - value: '4'
         label: ZONE

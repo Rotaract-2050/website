@@ -20,9 +20,9 @@ blocks:
         ctaLabel: "JOIN ROTARACT"
   - _template: "StatsBar"
     items:
-      - value: "28"
+      - value: "30"
         label: "ROTARACT CLUBS"
-      - value: "350+"
+      - value: "403"
         label: "MEMBERS"
       - value: "4"
         label: "ZONES"
