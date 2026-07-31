@@ -1,6 +1,6 @@
 ---
 name: rotaract2050-site
-description: Sviluppo e manutenzione del sito Rotaract Distretto 2050 (Astro + TinaCMS). Usare per creare/modificare pagine, componenti, collection Tina, palette colori, loghi o tono del sito. Indice verso le regole di brand Rotary ufficiali, le best practice Astro e TinaCMS, e il pattern a blocchi per pagine generiche editabili da soci non tecnici.
+description: Sviluppo e manutenzione del sito Rotaract Distretto 2050 (Astro + TinaCMS), bilingue italiano/inglese. Usare per creare/modificare pagine, componenti, collection Tina, palette colori, loghi o tono del sito. Indice verso le regole di brand Rotary ufficiali, le best practice Astro e TinaCMS, e il pattern a blocchi per pagine generiche editabili da soci non tecnici.
 ---
 
 # Sito Rotaract Distretto 2050
@@ -10,6 +10,7 @@ description: Sviluppo e manutenzione del sito Rotaract Distretto 2050 (Astro + T
 - **Astro** (content collections + islands architecture) per pagine/componenti.
 - **TinaCMS** come CMS git-backed: ogni contenuto che un socio non tecnico deve poter modificare va esposto come collection/field Tina, mai come testo hardcoded nel componente.
 - Zero-JS di default (principio Astro): niente framework component (`.tsx`/`.vue`) a meno che serva vera interattività client. La maggior parte del sito è HTML statico a build time.
+- **Sito bilingue obbligatorio, italiano (default) + inglese**: ogni pagina, blocco e stringa editoriale esiste in entrambe le lingue, nessuna pagina solo-IT o solo-EN. Routing e convenzioni in `references/astro.md` (sezione Internazionalizzazione).
 
 ## Stato attuale del repo
 
