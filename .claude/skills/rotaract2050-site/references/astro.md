@@ -2,22 +2,32 @@
 
 Convenzioni ufficiali Astro (docs.astro.build) applicate al sito.
 
-## Content Collections — convenzioni
+## Niente Astro Content Collections per i contenuti Tina
 
-- Schema in `src/content.config.ts` (build-time, contenuto relativamente statico — il caso di questo sito). Definire ogni collection con `defineCollection` + schema **Zod**: campi obbligatori sempre validati, niente `any`.
-- Usare il loader `glob()` per collection a più file (una entry = una pagina/evento/news/club) e `file()` solo per liste compatte a file singolo (es. `zones.json`).
-- Relazioni (club → zona, news → autore) tramite `reference()`, non stringhe libere duplicate.
-- Immagini nei frontmatter tramite lo schema immagine di Astro (`image()` helper in Zod) per ottenere ottimizzazione automatica in build; mai URL hardcoded o `<img>` senza `astro:assets`.
-- Mantenere la struttura Tina (`tina/config.ts` collections) e la struttura Astro (`src/content.config.ts`) **allineate 1:1** per nome/campi: Tina scrive nei file che Astro legge, non due modelli paralleli.
+**Il progetto non usa `astro:content`/`src/content.config.ts`.** Non aggiungerlo per "seguire le best practice generiche di Astro" — non è il pattern scelto qui. I contenuti editoriali (pagine, zone, club, settings) vivono come file markdown in `astro/src/content/{pages,zones,clubs,settings}/` ma vengono letti **a runtime via il client GraphQL generato da Tina** (`astro/tina/__generated__/client`), non tramite le API `astro:content`. Pattern reale, da replicare per qualunque nuova query:
+
+```ts
+import { requestWithMetadata, tinaField } from '@tinacms/astro';
+import client from '../../tina/__generated__/client';
+
+const result = await requestWithMetadata(client.queries.pages({ relativePath: `it/${slug}.md` }), { priority: 'primary' });
+const page = result.data.pages;
+```
+
+- `requestWithMetadata()` (da `@tinacms/astro`) invece di chiamare `client.queries.*` direttamente: è quello che abilita l'editing visuale in-context lato client.
+- `tinaField(objectOrRecord, 'campo')` produce l'attributo `data-tina-field` che rende un elemento cliccabile per l'editing (vedi uso in `PageBanner`/`BlockRenderer`/`ClubDirectory` reali).
+- Relazioni (club → zona) tramite campo Tina `type: 'reference'` nello schema (`tina/config.ts`), risolte a runtime con due query separate (`zonesConnection`, `clubsConnection`) unite lato componente — non con `reference()` di Astro (quella è un'API di `astro:content`, non usata qui).
+- Immagini da Tina: comunque tramite `astro:assets` (`<Image>`/`<Picture>`) una volta ottenuto l'URL dal campo `image` della query — vedi `references/astro-standards.md`.
+- Se in futuro serve un dataset **non gestito da Tina** (es. una lista statica che non ha senso rendere editabile), lì sì è corretto usare Astro Content Collections con `defineCollection` + Zod in `src/content.config.ts`: sono due sistemi che possono coesistere, ma non duplicare in Astro Content Collections dati che Tina gestisce già.
 
 ## Internazionalizzazione (IT default / EN)
 
-Il mockup incorpora IT/EN come oggetto unico dentro ogni componente (`IT = {...}`, `EN = {...}`). Per il sito reale, preferire il **routing i18n nativo di Astro** (`astro:i18n`), più scalabile e allineato alle best practice ufficiali:
+Implementato con **due file di route separati** (non un'unica route dinamica per-locale): `src/pages/[...slug].astro` (IT, `lang = 'it' as const`, legge `it/${slug}.md`) e `src/pages/en/[...slug].astro` (EN, legge `en/${slug}.md`). `[...slug]` è un rest parameter Astro reale (cattura qualunque slug, inclusa stringa vuota per la home), non un placeholder da sostituire.
 
-- `astro.config.mjs`: `i18n.locales = ['it','en']`, `defaultLocale: 'it'`, `prefixDefaultLocale: false` → IT senza prefisso (`/distretto`), EN con prefisso (`/en/distretto`).
-- Contenuti per lingua come entry separate nella stessa collection (una per IT, una per EN, stesso slug) oppure sotto-cartelle locale in `src/content/<collection>/it/`, `.../en/` — decidere una convenzione la prima volta e restare coerenti.
-- Usare `getRelativeLocaleUrl()` per generare link interni invece di stringhe hardcoded.
-- Stringhe di interfaccia fisse (nav, footer, bottoni ricorrenti) in un piccolo dizionario per-locale (non serve Tina per queste, sono di sistema); i **contenuti editoriali** (titoli, testi, eventi, news) restano sempre su Tina, in entrambe le lingue.
+- `astro.config.mjs`: `i18n.locales = ['it','en']`, `defaultLocale: 'it'`, `routing.prefixDefaultLocale: false` → IT senza prefisso (`/distretto`), EN con prefisso (`/en/distretto`).
+- Contenuti per lingua come sotto-cartelle nella collection Tina: `src/content/pages/it/*.md`, `src/content/pages/en/*.md` (stesso slug di file, cartella diversa) — non un unico oggetto `{IT: {...}, EN: {...}}` come nel vecchio mockup.
+- Usare `getRelativeLocaleUrl()` (da `astro:i18n`) per generare link interni invece di stringhe hardcoded — usato in `Header.astro`/`Footer.astro`/`PageBanner.astro` reali.
+- Stringhe di interfaccia fisse (nav, footer) in `src/data/ui-strings.ts`, un dizionario `Record<Lang, UiStrings>` per-locale — non servono a Tina, sono di sistema. I **contenuti editoriali** (titoli, testi, eventi, news) restano sempre su Tina, in entrambe le lingue.
 
 ## Componenti Astro — convenzioni
 

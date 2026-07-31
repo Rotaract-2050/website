@@ -15,21 +15,18 @@ description: Sviluppo e manutenzione del sito Rotaract Distretto 2050 (Astro + T
 
 ## Stato attuale del repo
 
-Il repo contiene solo un **mockup statico di riferimento**, non codice reale:
+Il progetto Astro+Tina **reale e funzionante vive in `astro/`** — non è più solo un mockup. È già stato implementato seguendo il pattern a blocchi descritto sotto: `astro/tina/config.ts` (schema), `astro/src/pages/[...slug].astro` + `astro/src/pages/en/[...slug].astro` (route), `astro/src/components/BlockRenderer.astro` + `astro/src/components/blocks/*.astro` (11 blocchi), `astro/src/content/{pages,zones,clubs,settings}/` (contenuti git-backed). Leggere questi file **prima** di aggiungere qualcosa di nuovo: sono l'esempio concreto da estendere, più affidabile di qualunque descrizione astratta in questa skill. `astro/README.md` riassume struttura e comandi.
 
-- [`Rotaract Distretto 2050.dc.html`](../../../Rotaract%20Distretto%202050.dc.html) — wireframe interattivo (bindings `{{ }}`, `sc-for`, `sc-if`, classe `DCLogic`) con contenuti IT/EN completi e realistici.
-- `support.js`, `image-slot.js` — runtime del tool di prototipazione che ha generato il mockup. **Non portare questo runtime in Astro.**
-
-Il mockup resta la fonte di verità per gerarchia visiva, copy IT/EN e spaziature, ma va **generalizzato**: non ricreare 1:1 una pagina per "Home", una per "Distretto", ecc. con markup diverso ognuna. Vedi pattern a blocchi sotto.
+Il vecchio mockup HTML statico di prototipazione (`Rotaract Distretto 2050.dc.html`, `support.js`, `image-slot.js`) non è più nel repo: è stato superato dall'implementazione reale. Se compare ancora un riferimento a `sc-for`/`sc-if`/`x-dc`/`DCLogic` da qualche parte è un residuo da correggere, non un pattern da seguire.
 
 ## Pattern architetturale: pagine come sequenza di blocchi
 
 Per restare generici su **tutte** le pagine (non solo le 7 del mockup) e permettere ai soci di comporre pagine nuove senza scrivere Astro, modellare ogni pagina come **elenco ordinato di blocchi**, seguendo il pattern ufficiale Tina "website builder" (`templates` + blocks — dettagli in `references/tina.md`):
 
-1. **Collection Tina `page`** (`tina/config.ts`): campo `title`, `slug`, `seo`, e un campo `blocks` di tipo `object` con `list: true` e `templates: [...]` — un template per ogni tipo di sezione riusabile (Hero, StatsBar, SplitSection, CardGrid, EventsList, NewsGrid, CtaBanner, ValuesGrid/RoleGrid, PagePlaceholder...).
-2. **Componente Astro `BlockRenderer.astro`**: riceve l'array `blocks` e fa match su `_template` per renderizzare il componente Astro corrispondente (un componente `.astro` per ogni template Tina, stesso nome). Un socio che aggiunge un blocco da Tina ottiene automaticamente la sezione renderizzata, senza deploy di codice.
-3. **Route generica** `src/pages/[...slug].astro` (o per-locale, vedi `references/astro.md`) che carica l'entry `page` dalla collection Astro corrispondente e passa `blocks` a `BlockRenderer`.
-4. Pagine con logica non componibile a blocchi (es. elenco club per zona con dati relazionali) restano collection dedicate (`clubs`, `zones`) referenziate da un blocco `ClubDirectory` che le interroga via `reference()`.
+1. **Collection Tina `pages`** (`tina/config.ts`): campo `title`, `eyebrow`, `breadcrumbCurrent`, `seo`, e un campo `blocks` di tipo `object` con `list: true` e `templates: [...]` — un template per ogni tipo di sezione riusabile (Hero, StatsBar, SplitSection, CardGrid, EventsList, NewsGrid, CtaBanner, ValuesGrid, RoleGrid, PagePlaceholder, ClubDirectory...).
+2. **Componente Astro `BlockRenderer.astro`**: riceve l'array `blocks` e fa match su **`block.__typename`** (non su un campo `_template` custom: `__typename` è generato automaticamente dalla GraphQL API di Tina come `<Collection><Blocks><NomeTemplate>`, es. `PagesBlocksHero` per il template `Hero` nella collection `pages`) per renderizzare il componente Astro corrispondente. Un socio che aggiunge un blocco da Tina ottiene automaticamente la sezione renderizzata, senza deploy di codice.
+3. **Route** `src/pages/[...slug].astro` (IT) e `src/pages/en/[...slug].astro` (EN) — rest parameter Astro, non un placeholder: cattura qualunque slug. Ognuna interroga il client GraphQL generato da Tina (`requestWithMetadata(client.queries.pages({ relativePath: 'it/${slug}.md' }), { priority: 'primary' })`) per ottenere la entry `page`, poi passa `page.blocks` a `BlockRenderer`. Vedi `references/tina.md` per i dettagli di questo pattern (niente Astro Content Collections qui, i dati arrivano dal client Tina).
+4. Pagine con logica non componibile a blocchi (es. elenco club per zona con dati relazionali) restano collection Tina dedicate (`zones`, `clubs`, con un campo Tina `type: 'reference'` da club a zona) interrogate da un blocco `ClubDirectory` che fa due query GraphQL (`zonesConnection`, `clubsConnection`) e le unisce lato componente.
 
 Questo sostituisce l'approccio del mockup (una pagina fissa per `isHome`/`isDistretto`/`isClub`/...): i **blocchi** del mockup (hero carousel, stats bar, split mission, values grid, role grid, events list, news grid, cta banner, empty placeholder) diventano i **template Tina + componenti Astro** riusabili su qualunque pagina futura (nuova pagina evento, nuovo comitato, nuova zona) senza toccare codice.
 
