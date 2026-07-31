@@ -3,6 +3,7 @@ import { getRelativeLocaleUrl } from 'astro:i18n';
 import type { Lang } from '../data/ui-strings';
 import { uiStrings, SOCIAL_LINKS, UTILITY_LINKS } from '../data/ui-strings';
 import { pageSlugs, type PageKey } from '../data/routes';
+import SocialIcon from './SocialIcon.astro';
 
 interface Props {
 	lang: Lang;
@@ -22,7 +23,7 @@ const distrettoActive = (['distretto', 'esecutivo', 'delegati', 'commissioni'] a
 <div class="utility-bar">
 	<div class="utility-links">
 		{UTILITY_LINKS.map((link) => (
-			<a href={link.href}>{link.label}</a>
+			<a href={link.href} target="_blank" rel="noopener">{link.label}</a>
 		))}
 	</div>
 	<div class="utility-right">
@@ -37,7 +38,9 @@ const distrettoActive = (['distretto', 'esecutivo', 'delegati', 'commissioni'] a
 		<div class="divider" aria-hidden="true"></div>
 		<div class="social-icons">
 			{SOCIAL_LINKS.map((soc) => (
-				<a href={soc.href} class="social-icon" aria-label={soc.label}>{soc.label}</a>
+				<a href={soc.href} target="_blank" rel="noopener" class="social-icon" aria-label={soc.label}>
+					<SocialIcon name={soc.name} />
+				</a>
 			))}
 		</div>
 	</div>
@@ -69,6 +72,7 @@ const distrettoActive = (['distretto', 'esecutivo', 'delegati', 'commissioni'] a
 
 		<a href={href('club')} class:list={['nav-link', { active: current === 'club' }]}>{t.nav.club}</a>
 		<a href={href('news')} class:list={['nav-link', { active: current === 'news' }]}>{t.nav.news}</a>
+		{/* TODO: real materials URL not available yet — placeholder kept intentionally per district request */}
 		<a href="#" target="_blank" rel="noopener" class="materials-link">⬇ {t.nav.materials}</a>
 		<a href={href('club')} class="join-btn">{t.nav.join}</a>
 	</nav>
@@ -147,8 +151,8 @@ const distrettoActive = (['distretto', 'esecutivo', 'delegati', 'commissioni'] a
 		border-radius: 50%;
 		background: rgba(255, 255, 255, 0.12);
 		color: #fff;
-		font-size: 10px;
-		font-weight: 700;
+		padding: 5px;
+		box-sizing: border-box;
 		display: flex;
 		align-items: center;
 		justify-content: center;
