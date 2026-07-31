@@ -243,8 +243,16 @@ const duration = Math.max(24, items.length * 5);
 	}
 
 	@media (max-width: 560px) {
+		.ticker-row {
+			flex-wrap: wrap;
+		}
+
 		.ticker-label {
-			display: none;
+			flex-basis: 100%;
+		}
+
+		.ticker-viewport {
+			flex-basis: 100%;
 		}
 	}
 </style>
