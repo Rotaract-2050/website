@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ClubView from '../views/ClubView.astro';
+import { translations } from '../data/copy';
+
+const lang = 'it';
+const t = translations[lang];
+---
+
+<BaseLayout lang={lang} current="club" title={`${t.club.title} · Rotaract Distretto 2050`} description={t.club.intro}>
+	<ClubView lang={lang} />
+</BaseLayout>

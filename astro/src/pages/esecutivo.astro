@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EmptyView from '../views/EmptyView.astro';
+import { translations } from '../data/copy';
+
+const lang = 'it';
+const t = translations[lang];
+---
+
+<BaseLayout lang={lang} current="esecutivo" title={`${t.pagesEmpty.esecutivo.title} · Rotaract Distretto 2050`}>
+	<EmptyView lang={lang} pageKey="esecutivo" />
+</BaseLayout>

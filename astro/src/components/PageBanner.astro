@@ -1,0 +1,71 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { Lang } from '../data/copy';
+import { translations } from '../data/copy';
+import { pageSlugs } from '../data/routes';
+
+interface Props {
+	lang: Lang;
+	eyebrow: string;
+	title: string;
+	breadcrumbCurrent: string;
+}
+
+const { lang, eyebrow, title, breadcrumbCurrent } = Astro.props;
+const t = translations[lang];
+const homeHref = getRelativeLocaleUrl(lang, pageSlugs.home);
+---
+
+<div class="page-banner">
+	<div class="banner-inner">
+		<div class="breadcrumb">
+			<a href={homeHref}>{t.breadcrumbHome}</a> / {breadcrumbCurrent}
+		</div>
+		<div class="eyebrow">{eyebrow}</div>
+		<h1 class="title">{title}</h1>
+	</div>
+</div>
+
+<style>
+	.page-banner {
+		background: var(--color-navy);
+		padding: 56px 40px;
+	}
+
+	.banner-inner {
+		max-width: var(--content-max);
+		margin: 0 auto;
+	}
+
+	.breadcrumb {
+		font-size: 13px;
+		color: rgba(255, 255, 255, 0.6);
+		margin-bottom: 16px;
+	}
+
+	.breadcrumb a {
+		color: inherit;
+	}
+
+	.breadcrumb a:hover {
+		color: #fff;
+	}
+
+	.eyebrow {
+		color: var(--color-gold);
+		font-weight: 700;
+		font-size: 13px;
+		letter-spacing: 1.5px;
+		text-transform: uppercase;
+		margin-bottom: 8px;
+	}
+
+	.title {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 42px;
+		color: #fff;
+		text-transform: uppercase;
+		margin: 0;
+	}
+</style>

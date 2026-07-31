@@ -1,0 +1,327 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { Lang } from '../data/copy';
+import { translations, SOCIAL_LINKS, UTILITY_LINKS } from '../data/copy';
+import { pageSlugs, type PageKey } from '../data/routes';
+
+interface Props {
+	lang: Lang;
+	current: PageKey;
+}
+
+const { lang, current } = Astro.props;
+const t = translations[lang];
+
+const href = (page: PageKey) => getRelativeLocaleUrl(lang, pageSlugs[page]);
+const otherLang: Lang = lang === 'it' ? 'en' : 'it';
+const langSwitchHref = getRelativeLocaleUrl(otherLang, pageSlugs[current]);
+
+const distrettoActive = (['distretto', 'esecutivo', 'delegati', 'commissioni'] as PageKey[]).includes(current);
+---
+
+<div class="utility-bar">
+	<div class="utility-links">
+		{UTILITY_LINKS.map((link) => (
+			<a href={link.href}>{link.label}</a>
+		))}
+	</div>
+	<div class="utility-right">
+		<div class="lang-switch">
+			{lang === 'it'
+				? <span class="lang-btn active" aria-current="true">IT</span>
+				: <a href={langSwitchHref} class="lang-btn" hreflang="it">IT</a>}
+			{lang === 'en'
+				? <span class="lang-btn active" aria-current="true">EN</span>
+				: <a href={langSwitchHref} class="lang-btn" hreflang="en">EN</a>}
+		</div>
+		<div class="divider" aria-hidden="true"></div>
+		<div class="social-icons">
+			{SOCIAL_LINKS.map((soc) => (
+				<a href={soc.href} class="social-icon" aria-label={soc.label}>{soc.label}</a>
+			))}
+		</div>
+	</div>
+</div>
+
+<header class="main-nav">
+	<a href={href('home')} class="brand">
+		<span class="brand-mark">R</span>
+		<span class="brand-text">
+			<span class="brand-name">ROTARACT</span>
+			<span class="brand-sub">DISTRETTO 2050</span>
+		</span>
+	</a>
+
+	<nav class="nav-links" aria-label="Main">
+		<a href={href('home')} class:list={['nav-link', { active: current === 'home' }]}>{t.nav.home}</a>
+
+		<div class="nav-dropdown">
+			<a href={href('distretto')} class:list={['nav-link', { active: distrettoActive }]}>
+				{t.nav.distrettoMenu} <span aria-hidden="true">▾</span>
+			</a>
+			<div class="dropdown-panel">
+				<a href={href('distretto')}>{t.nav.distrettoSub}</a>
+				<a href={href('esecutivo')}>{t.nav.esecutivo}</a>
+				<a href={href('delegati')}>{t.nav.delegati}</a>
+				<a href={href('commissioni')}>{t.nav.commissioni}</a>
+			</div>
+		</div>
+
+		<a href={href('club')} class:list={['nav-link', { active: current === 'club' }]}>{t.nav.club}</a>
+		<a href="#" target="_blank" rel="noopener" class="materials-link">⬇ {t.nav.materials}</a>
+		<a href={href('club')} class="join-btn">{t.nav.join}</a>
+	</nav>
+</header>
+
+<style>
+	.utility-bar {
+		background: var(--color-navy);
+		padding: 8px 40px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 10px;
+	}
+
+	.utility-links {
+		display: flex;
+		gap: 20px;
+		flex-wrap: wrap;
+	}
+
+	.utility-links a {
+		color: #b9c6e0;
+		font-size: 12px;
+		letter-spacing: 0.4px;
+		text-transform: uppercase;
+		font-weight: 500;
+	}
+
+	.utility-links a:hover {
+		color: #fff;
+	}
+
+	.utility-right {
+		display: flex;
+		gap: 16px;
+		align-items: center;
+	}
+
+	.lang-switch {
+		display: flex;
+		gap: 6px;
+	}
+
+	.lang-btn {
+		font-size: 12px;
+		font-weight: 700;
+		letter-spacing: 0.5px;
+		padding: 2px 6px;
+		color: rgba(255, 255, 255, 0.55);
+	}
+
+	.lang-btn.active {
+		color: var(--color-gold);
+	}
+
+	a.lang-btn:hover {
+		color: #fff;
+	}
+
+	.divider {
+		width: 1px;
+		height: 14px;
+		background: rgba(255, 255, 255, 0.2);
+	}
+
+	.social-icons {
+		display: flex;
+		gap: 8px;
+	}
+
+	.social-icon {
+		width: 22px;
+		height: 22px;
+		border-radius: 50%;
+		background: rgba(255, 255, 255, 0.12);
+		color: #fff;
+		font-size: 10px;
+		font-weight: 700;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.social-icon:hover {
+		background: rgba(255, 255, 255, 0.22);
+		color: #fff;
+	}
+
+	.main-nav {
+		background: #fff;
+		padding: 14px 40px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 16px;
+		box-shadow: 0 2px 10px rgba(11, 37, 69, 0.06);
+		position: sticky;
+		top: 0;
+		z-index: 50;
+	}
+
+	.brand {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
+	.brand-mark {
+		width: 44px;
+		height: 44px;
+		border-radius: 50%;
+		background: var(--color-pink);
+		color: #fff;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 22px;
+		flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.brand-text {
+		display: flex;
+		flex-direction: column;
+		line-height: 1;
+	}
+
+	.brand-name {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 20px;
+		color: var(--color-navy);
+		letter-spacing: 0.5px;
+	}
+
+	.brand-sub {
+		font-weight: 600;
+		font-size: 11px;
+		color: var(--color-pink);
+		letter-spacing: 2px;
+		margin-top: 4px;
+	}
+
+	.nav-links {
+		display: flex;
+		align-items: center;
+		gap: 26px;
+		flex-wrap: wrap;
+	}
+
+	.nav-link {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 15px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		color: var(--color-navy);
+		padding: 8px 2px;
+		border-bottom: 3px solid transparent;
+	}
+
+	.nav-link:hover {
+		color: var(--color-pink);
+	}
+
+	.nav-link.active {
+		color: var(--color-pink);
+		border-bottom-color: var(--color-pink);
+	}
+
+	.nav-dropdown {
+		position: relative;
+	}
+
+	.dropdown-panel {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		background: #fff;
+		box-shadow: 0 10px 30px rgba(11, 37, 69, 0.15);
+		border-radius: 10px;
+		min-width: 230px;
+		padding: 10px;
+		z-index: 60;
+		display: none;
+		flex-direction: column;
+	}
+
+	.nav-dropdown:hover .dropdown-panel,
+	.nav-dropdown:focus-within .dropdown-panel {
+		display: flex;
+	}
+
+	.dropdown-panel a {
+		font-size: 14px;
+		color: var(--color-navy);
+		padding: 10px 12px;
+		border-radius: 6px;
+	}
+
+	.dropdown-panel a:hover {
+		background: var(--color-bg);
+		color: var(--color-pink);
+	}
+
+	.materials-link {
+		color: var(--color-navy);
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 13px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		padding: 10px 18px;
+		border-radius: 999px;
+		border: 2px solid var(--color-navy);
+	}
+
+	.materials-link:hover {
+		background: var(--color-navy);
+		color: #fff;
+	}
+
+	.join-btn {
+		background: var(--color-pink);
+		color: #fff;
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 13px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		padding: 11px 22px;
+		border-radius: 999px;
+	}
+
+	.join-btn:hover {
+		background: var(--color-pink-dark);
+		color: #fff;
+	}
+
+	@media (max-width: 860px) {
+		.main-nav {
+			padding: 14px 20px;
+		}
+
+		.utility-bar {
+			padding: 8px 20px;
+		}
+
+		.nav-links {
+			gap: 14px;
+		}
+	}
+</style>

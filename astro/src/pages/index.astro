@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HomeView from '../views/HomeView.astro';
+
+const lang = 'it';
+---
+
+<BaseLayout lang={lang} current="home" title="Rotaract Distretto 2050" description="Il Distretto Rotaract 2050 riunisce i club Rotaract di Lombardia orientale ed Emilia occidentale.">
+	<HomeView lang={lang} />
+</BaseLayout>

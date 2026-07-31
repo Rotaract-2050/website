@@ -1,0 +1,35 @@
+---
+import PageBanner from '../components/PageBanner.astro';
+import type { Lang } from '../data/copy';
+import { translations } from '../data/copy';
+
+interface Props {
+	lang: Lang;
+	pageKey: 'esecutivo' | 'delegati' | 'commissioni';
+}
+
+const { lang, pageKey } = Astro.props;
+const t = translations[lang];
+const p = t.pagesEmpty[pageKey];
+---
+
+<PageBanner lang={lang} eyebrow={p.eyebrow} title={p.title} breadcrumbCurrent={p.breadcrumbCurrent} />
+
+<section class="empty">
+	<p class="placeholder">{p.placeholder}</p>
+</section>
+
+<style>
+	.empty {
+		background: #fff;
+		padding: 120px 40px;
+		text-align: center;
+	}
+
+	.placeholder {
+		font-size: 17px;
+		color: var(--color-text);
+		max-width: 480px;
+		margin: 0 auto;
+	}
+</style>
