@@ -1,0 +1,168 @@
+---
+import { tinaField } from '@tinacms/astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageBanner from '../../components/PageBanner.astro';
+import EventCard from '../../components/EventCard.astro';
+import { getPastDistrictEvents, groupEventsByYear, eventSlug } from '../../lib/events';
+import { uiStrings } from '../../data/ui-strings';
+
+const lang = 'it' as const;
+const t = uiStrings[lang];
+
+const events = await getPastDistrictEvents(lang);
+const yearGroups = groupEventsByYear(events);
+const dateFormatter = new Intl.DateTimeFormat('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
+
+// Server-rendered default: most recent Rotary year, or whichever `?anno=` names (must match a
+// real group — otherwise falls back). The <script> below swaps panels client-side afterwards;
+// this is only what a no-JS / first-paint request sees, same pattern as EventsCalendar's `?month=`.
+const yearParam = Astro.url.searchParams.get('anno');
+const activeYear = yearGroups.find((g) => g.yearLabel === yearParam)?.yearLabel ?? yearGroups[0]?.yearLabel ?? null;
+---
+
+<BaseLayout lang={lang} current="eventi" title={t.events.archiveTitle} description={t.events.archiveTitle}>
+	<PageBanner lang={lang} eyebrow={t.events.archiveEyebrow} title={t.events.archiveTitle} breadcrumbCurrent={t.nav.eventi} />
+	<section class="archive" id="archivio-eventi">
+		<div class="archive-inner">
+			{yearGroups.length === 0 ? (
+				<p class="events-empty">{t.events.empty}</p>
+			) : (
+				<div data-events-archive>
+					<div class="year-tabs" role="tablist" aria-label={t.events.yearFilterLabel}>
+						{yearGroups.map((group) => (
+							<a
+								href={`?anno=${encodeURIComponent(group.yearLabel)}#archivio-eventi`}
+								class:list={['year-tab', { active: group.yearLabel === activeYear }]}
+								data-year-tab={group.yearLabel}
+							>
+								{group.yearLabel}
+							</a>
+						))}
+					</div>
+					{yearGroups.map((group) => (
+						<div class="year-panel" data-year-panel={group.yearLabel} hidden={group.yearLabel !== activeYear}>
+							{group.events.map((event) => (
+								<EventCard
+									id={eventSlug(event)}
+									image={event.image}
+									imageLabel={event.imageLabel}
+									title={event.title}
+									dateLabel={dateFormatter.format(new Date(event.date))}
+									location={event.location}
+									excerpt={event.excerpt}
+									photoAlbumUrl={event.photoAlbumUrl}
+									photoButtonLabel={`${t.events.photoButtonPrefix} ${event.title}`}
+									tinaFieldAttr={tinaField(event)}
+								/>
+							))}
+						</div>
+					))}
+				</div>
+			)}
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.archive {
+		padding: 70px 40px 90px;
+		scroll-margin-top: 90px;
+	}
+
+	.archive-inner {
+		max-width: var(--content-max);
+		margin: 0 auto;
+	}
+
+	.events-empty {
+		font-size: 14px;
+		color: var(--color-muted);
+		font-style: italic;
+	}
+
+	.year-tabs {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+		margin-bottom: 20px;
+	}
+
+	.year-tab {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 13px;
+		letter-spacing: 0.4px;
+		text-transform: uppercase;
+		color: var(--color-navy);
+		background: var(--color-bg);
+		border: 1px solid var(--color-border);
+		border-radius: 999px;
+		padding: 8px 22px;
+	}
+
+	.year-tab:hover {
+		border-color: var(--color-pink);
+	}
+
+	.year-tab.active {
+		background: var(--color-navy);
+		border-color: var(--color-navy);
+		color: #fff;
+	}
+
+	@media (max-width: 720px) {
+		.archive {
+			padding: 50px 20px 70px;
+		}
+	}
+</style>
+
+<script>
+	// Progressive enhancement over the plain `?anno=...` links: swap the visible year panel in
+	// place instead of reloading the page. Mirrors the `?month=`/`?day=` pattern in
+	// EventsCalendar.astro. If a target year has no panel (shouldn't happen, tabs are generated
+	// from the same data), the click falls through to a real navigation.
+	function initArchive(root: HTMLElement) {
+		const tabs = Array.from(root.querySelectorAll<HTMLAnchorElement>('[data-year-tab]'));
+		const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-year-panel]'));
+
+		function showYear(year: string): boolean {
+			const panel = panels.find((p) => p.dataset.yearPanel === year);
+			if (!panel) return false;
+			panels.forEach((p) => {
+				p.hidden = p !== panel;
+			});
+			tabs.forEach((tab) => {
+				tab.classList.toggle('active', tab.dataset.yearTab === year);
+			});
+			return true;
+		}
+
+		root.addEventListener('click', (event) => {
+			const link = (event.target as HTMLElement).closest<HTMLAnchorElement>('[data-year-tab]');
+			if (!link) return;
+			const year = link.dataset.yearTab;
+			if (!year || !showYear(year)) return;
+			event.preventDefault();
+			const url = new URL(link.href);
+			history.pushState(null, '', url.pathname + url.search + url.hash);
+		});
+	}
+
+	window.addEventListener('popstate', () => {
+		const year = new URLSearchParams(location.search).get('anno');
+		if (!year) return;
+		document.querySelectorAll<HTMLElement>('[data-events-archive]').forEach((root) => {
+			const panel = root.querySelector<HTMLElement>(`[data-year-panel="${CSS.escape(year)}"]`);
+			if (!panel) return;
+			root.querySelectorAll<HTMLElement>('[data-year-panel]').forEach((p) => {
+				p.hidden = p !== panel;
+			});
+			root.querySelectorAll<HTMLAnchorElement>('[data-year-tab]').forEach((tab) => {
+				tab.classList.toggle('active', tab.dataset.yearTab === year);
+			});
+		});
+	});
+
+	document.querySelectorAll<HTMLElement>('[data-events-archive]').forEach(initArchive);
+</script>
