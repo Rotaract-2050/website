@@ -283,7 +283,8 @@ export default defineConfig({
 					{ type: 'string', name: 'website', label: 'Sito web' },
 					{ type: 'string', name: 'instagram', label: 'Instagram' },
 					{ type: 'string', name: 'facebook', label: 'Facebook' },
-					{ type: 'string', name: 'story', label: 'Storia del club', ui: { component: 'textarea' } },
+					{ type: 'string', name: 'story', label: 'Storia del club (IT)', ui: { component: 'textarea' } },
+					{ type: 'string', name: 'storyEn', label: 'Storia del club (EN)', ui: { component: 'textarea' } },
 				],
 			},
 			{

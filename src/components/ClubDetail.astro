@@ -15,6 +15,8 @@ interface Props {
 const { lang, club } = Astro.props;
 const t = uiStrings[lang].clubDetail;
 const backHref = getRelativeLocaleUrl(lang, 'club');
+const story = lang === 'en' ? club.storyEn || club.story : club.story;
+const storyFieldName = lang === 'en' && club.storyEn ? 'storyEn' : 'story';
 ---
 
 <section class="club-detail">
@@ -42,10 +44,10 @@ const backHref = getRelativeLocaleUrl(lang, 'club');
 					</div>
 				)}
 
-				{club.story && (
-					<div class="club-story" data-tina-field={tinaField(club, 'story')}>
+				{story && (
+					<div class="club-story" data-tina-field={tinaField(club, storyFieldName)}>
 						<h2 class="story-title">{t.storyTitle}</h2>
-						<p>{club.story}</p>
+						<p>{story}</p>
 					</div>
 				)}
 
