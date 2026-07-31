@@ -23,11 +23,8 @@ const agendaEvents = upcomingEvents.slice(0, AGENDA_LIMIT);
 // Clicking a day cell in the month view jumps to Agenda filtered to just that day (searches
 // all events, not just upcoming — a past day clicked while browsing an earlier month should
 // still show what was there). The "reset" link clears `day` to get back to the normal list.
-const dayFilter = Astro.url.searchParams.get('day')?.match(/^\d{4}-\d{2}-\d{2}$/)?.[0] ?? null;
-const dayFilterEvents = dayFilter
-	? events.filter((ev) => eventDateKey(ev) === dayFilter).sort((a, b) => a.start.getTime() - b.start.getTime())
-	: null;
-const displayedAgendaEvents = dayFilterEvents ?? agendaEvents;
+// Validated against eventsByDay below (a day with no events never gets its own panel/link).
+const dayFilterParam = Astro.url.searchParams.get('day')?.match(/^\d{4}-\d{2}-\d{2}$/)?.[0] ?? null;
 
 function formatFullDate(key: string): string {
 	const [y, m, d] = key.split('-').map(Number);
@@ -45,6 +42,8 @@ for (const event of events) {
 	if (bucket) bucket.push(event);
 	else eventsByDay.set(key, [event]);
 }
+
+const dayFilter = dayFilterParam && eventsByDay.has(dayFilterParam) ? dayFilterParam : null;
 
 function dateParts(key: string) {
 	const [, month, day] = key.split('-').map(Number);
@@ -130,7 +129,7 @@ const monthTabId = `cal-month-${uid}`;
 		{!result.ok && <p class="calendar-status">{t.unavailable}</p>}
 
 		{result.ok && (
-			<fieldset class="view-switch">
+			<fieldset class="view-switch" data-calendar data-default-month={activeMonthKey}>
 				<legend class="sr-only">{t.viewToggleLabel}</legend>
 
 				<input type="radio" name={`calendar-view-${uid}`} id={agendaTabId} checked={!monthTabActive} />
@@ -139,37 +138,56 @@ const monthTabId = `cal-month-${uid}`;
 				<label for={monthTabId}>{t.monthTab}</label>
 
 				<div class="view-panel agenda-panel">
-					{dayFilter && (
-						<div class="day-filter-bar">
-							<span class="day-filter-label">{t.dayFilterPrefix} {formatFullDate(dayFilter)}</span>
-							<a class="day-filter-reset" href="?#eventi-calendario">{t.dayFilterReset}</a>
-						</div>
-					)}
-					{displayedAgendaEvents.length === 0 && (
-						<p class="calendar-status">{dayFilter ? t.dayFilterEmpty : t.noEvents}</p>
-					)}
-					{displayedAgendaEvents.map((ev) => {
-						const { day, month } = dateParts(eventDateKey(ev));
-						return (
-							<div class="event-row">
-								<div class="event-date">
-									<div class="event-day">{String(day).padStart(2, '0')}</div>
-									<div class="event-month">{t.monthsShort[month]}</div>
-								</div>
-								<div class="event-body">
-									<div class="event-title">{ev.summary}</div>
-									<div class="event-meta">
-										{formatTime(ev)}
-										{ev.location ? ` · ${ev.location}` : ''}
+					<div class="agenda-content" data-day-agenda="default" hidden={dayFilter !== null}>
+						{agendaEvents.length === 0 && <p class="calendar-status">{t.noEvents}</p>}
+						{agendaEvents.map((ev) => {
+							const { day, month } = dateParts(eventDateKey(ev));
+							return (
+								<div class="event-row">
+									<div class="event-date">
+										<div class="event-day">{String(day).padStart(2, '0')}</div>
+										<div class="event-month">{t.monthsShort[month]}</div>
 									</div>
+									<div class="event-body">
+										<div class="event-title">{ev.summary}</div>
+										<div class="event-meta">
+											{formatTime(ev)}
+											{ev.location ? ` · ${ev.location}` : ''}
+										</div>
+									</div>
+									<div class="event-arrow" aria-hidden="true">→</div>
 								</div>
-								<div class="event-arrow" aria-hidden="true">→</div>
+							);
+						})}
+					</div>
+
+					{Array.from(eventsByDay.entries()).map(([key, dayEvents]) => (
+						<div class="agenda-content" data-day-agenda={key} hidden={dayFilter !== key}>
+							<div class="day-filter-bar">
+								<span class="day-filter-label">{t.dayFilterPrefix} {formatFullDate(key)}</span>
+								<a class="day-filter-reset" href="?#eventi-calendario">{t.dayFilterReset}</a>
 							</div>
-						);
-					})}
+							{dayEvents.map((ev) => (
+								<div class="event-row">
+									<div class="event-date">
+										<div class="event-day">{String(dateParts(key).day).padStart(2, '0')}</div>
+										<div class="event-month">{t.monthsShort[dateParts(key).month]}</div>
+									</div>
+									<div class="event-body">
+										<div class="event-title">{ev.summary}</div>
+										<div class="event-meta">
+											{formatTime(ev)}
+											{ev.location ? ` · ${ev.location}` : ''}
+										</div>
+									</div>
+									<div class="event-arrow" aria-hidden="true">→</div>
+								</div>
+							))}
+						</div>
+					))}
 				</div>
 
-				<div class="view-panel month-panel" data-calendar data-default-month={activeMonthKey}>
+				<div class="view-panel month-panel">
 					{monthWindow.map((month) => (
 						<div class="month-single" data-month={month.key} hidden={month.key !== activeMonthKey}>
 							<div class="month-nav">
@@ -614,40 +632,74 @@ const monthTabId = `cal-month-${uid}`;
 </style>
 
 <script>
-	// Progressive enhancement over the plain `?month=` links: swap between pre-rendered
-	// month panels in place instead of reloading the page. If the target month wasn't
-	// pre-rendered (outside the server's preloaded window), the click falls through to a
-	// real navigation — which lands back on this component, re-centered on that month.
-	function initCalendarMonthNav(root: HTMLElement) {
-		const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-month]'));
-		if (panels.length === 0) return;
+	// Progressive enhancement over the plain `?month=`/`?day=` links: swap between
+	// pre-rendered panels in place instead of reloading the page. If a target wasn't
+	// pre-rendered (month outside the server's preloaded window, or a day with no events —
+	// which never gets a panel or a link), the click falls through to a real navigation,
+	// which lands back on this component correctly re-rendered for that target.
+	function initCalendar(root: HTMLElement) {
+		const monthPanels = Array.from(root.querySelectorAll<HTMLElement>('[data-month]'));
+		const dayPanels = Array.from(root.querySelectorAll<HTMLElement>('[data-day-agenda]'));
+		const agendaRadio = root.querySelector<HTMLInputElement>('input[id^="cal-agenda-"]');
 
 		function showMonth(key: string): boolean {
-			const panel = panels.find((p) => p.dataset.month === key);
+			const panel = monthPanels.find((p) => p.dataset.month === key);
 			if (!panel) return false;
-			panels.forEach((p) => {
+			monthPanels.forEach((p) => {
+				p.hidden = p !== panel;
+			});
+			return true;
+		}
+
+		function showDay(key: string | null): boolean {
+			const panel = dayPanels.find((p) => p.dataset.dayAgenda === (key ?? 'default'));
+			if (!panel) return false;
+			dayPanels.forEach((p) => {
 				p.hidden = p !== panel;
 			});
 			return true;
 		}
 
 		root.addEventListener('click', (event) => {
-			const link = (event.target as HTMLElement).closest<HTMLAnchorElement>('.month-nav-btn');
-			if (!link) return;
+			const target = event.target as HTMLElement;
 
-			const url = new URL(link.href);
-			const month = url.searchParams.get('month');
-			if (!month || !showMonth(month)) return;
+			const monthLink = target.closest<HTMLAnchorElement>('.month-nav-btn');
+			if (monthLink) {
+				const url = new URL(monthLink.href);
+				const month = url.searchParams.get('month');
+				if (!month || !showMonth(month)) return;
+				event.preventDefault();
+				history.pushState(null, '', url.pathname + url.search + url.hash);
+				return;
+			}
 
-			event.preventDefault();
-			history.pushState(null, '', url.pathname + url.search + url.hash);
+			const dayLink = target.closest<HTMLAnchorElement>('a.day-cell');
+			if (dayLink) {
+				const url = new URL(dayLink.href);
+				const day = url.searchParams.get('day');
+				if (!day || !showDay(day)) return;
+				event.preventDefault();
+				if (agendaRadio) agendaRadio.checked = true;
+				history.pushState(null, '', url.pathname + url.search + url.hash);
+				return;
+			}
+
+			const resetLink = target.closest<HTMLAnchorElement>('.day-filter-reset');
+			if (resetLink) {
+				if (!showDay(null)) return;
+				event.preventDefault();
+				const url = new URL(resetLink.href);
+				history.pushState(null, '', url.pathname + url.hash);
+			}
 		});
 
 		window.addEventListener('popstate', () => {
-			const month = new URLSearchParams(location.search).get('month') ?? root.dataset.defaultMonth;
+			const params = new URLSearchParams(location.search);
+			const month = params.get('month') ?? root.dataset.defaultMonth;
 			if (month) showMonth(month);
+			showDay(params.get('day'));
 		});
 	}
 
-	document.querySelectorAll<HTMLElement>('[data-calendar]').forEach(initCalendarMonthNav);
+	document.querySelectorAll<HTMLElement>('[data-calendar]').forEach(initCalendar);
 </script>
