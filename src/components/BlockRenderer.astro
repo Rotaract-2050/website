@@ -9,6 +9,7 @@ import CardGrid from './blocks/CardGrid.astro';
 import ValuesGrid from './blocks/ValuesGrid.astro';
 import RoleGrid from './blocks/RoleGrid.astro';
 import EventsCalendar from './blocks/EventsCalendar.astro';
+import NewsTicker from './blocks/NewsTicker.astro';
 import NewsGrid from './blocks/NewsGrid.astro';
 import CtaBanner from './blocks/CtaBanner.astro';
 import PagePlaceholder from './blocks/PagePlaceholder.astro';
@@ -95,6 +96,14 @@ const { lang, blocks } = Astro.props;
 			/>
 		)}
 		{block.__typename === 'PagesBlocksEventsCalendar' && <EventsCalendar lang={lang} title={block.title} />}
+		{block.__typename === 'PagesBlocksNewsTicker' && (
+			<NewsTicker
+				lang={lang}
+				label={block.label}
+				feedUrl={block.feedUrl || 'https://www.rotary.org/rss.xml'}
+				limit={block.limit ?? 12}
+			/>
+		)}
 		{block.__typename === 'PagesBlocksNewsGrid' && (
 			<NewsGrid
 				title={block.title}

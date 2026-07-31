@@ -35,6 +35,11 @@ export interface UiStrings {
 		monthsShort: string[];
 		monthsFull: string[];
 	};
+	newsTicker: {
+		unavailable: string;
+		pauseToggle: string;
+		opensInNewTab: string;
+	};
 }
 
 export const SOCIAL_LINKS = [
@@ -98,6 +103,11 @@ const IT: UiStrings = {
 			'Dicembre',
 		],
 	},
+	newsTicker: {
+		unavailable: 'Notizie momentaneamente non disponibili.',
+		pauseToggle: 'Metti in pausa o riprendi lo scorrimento delle notizie',
+		opensInNewTab: 'si apre in una nuova scheda',
+	},
 };
 
 const EN: UiStrings = {
@@ -147,6 +157,11 @@ const EN: UiStrings = {
 			'November',
 			'December',
 		],
+	},
+	newsTicker: {
+		unavailable: 'News temporarily unavailable.',
+		pauseToggle: 'Pause or resume the news scroll',
+		opensInNewTab: 'opens in a new tab',
 	},
 };
 

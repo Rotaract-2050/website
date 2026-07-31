@@ -18,6 +18,10 @@ blocks:
         subtitle: 'Rotaract è la community di giovani 18-30 anni che unisce crescita personale, amicizia e service.'
         ctaLabel: ENTRA IN ROTARACT
     _template: Hero
+  - label: NOTIZIE ROTARY INTERNATIONAL
+    feedUrl: https://www.rotary.org/rss.xml
+    limit: 12
+    _template: NewsTicker
   - items:
       - value: '30'
         label: CLUB ROTARACT
