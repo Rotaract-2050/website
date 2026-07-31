@@ -53,7 +53,6 @@ trap cleanup INT TERM
 
 echo ""
 echo "Sito:   http://localhost:4321"
-echo "Admin:  http://localhost:4321/admin/index.html"
 echo "Log Tina: /tmp/rotaract2050-tinacms-dev.log"
 echo ""
 echo "Ctrl+C per fermare tutto."
