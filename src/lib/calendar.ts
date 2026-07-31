@@ -41,10 +41,17 @@ async function fetchEvents(): Promise<DistrictEvent[]> {
 	return events.sort((a, b) => a.start.getTime() - b.start.getTime());
 }
 
-/** All district events (past and future) from the public Google Calendar (admin@rotaract2050.org), fetched per-request and cached briefly to avoid hammering Google on every homepage view. Callers filter for "upcoming" themselves — a month view still needs past days of the current month. */
-export async function getDistrictEvents(): Promise<CalendarResult> {
+/**
+ * All district events (past and future) from the public Google Calendar (admin@rotaract2050.org),
+ * fetched per-request and cached briefly to avoid hammering Google on every homepage view. Callers
+ * filter for "upcoming" themselves — a month view still needs past days of the current month.
+ *
+ * Pass `forceRefresh: true` to bypass the cache (EventsCalendar.astro does this for `?refresh` in
+ * the URL) — handy right after editing the calendar, instead of waiting out the TTL.
+ */
+export async function getDistrictEvents(options?: { forceRefresh?: boolean }): Promise<CalendarResult> {
 	const now = Date.now();
-	if (cache && now - cache.fetchedAt < CACHE_TTL_MS) {
+	if (!options?.forceRefresh && cache && now - cache.fetchedAt < CACHE_TTL_MS) {
 		return { ok: true, events: cache.events };
 	}
 

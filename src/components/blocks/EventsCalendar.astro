@@ -10,7 +10,8 @@ interface Props {
 const { lang, title } = Astro.props;
 const t = uiStrings[lang].calendar;
 
-const result = await getDistrictEvents();
+const forceRefresh = Astro.url.searchParams.has('refresh');
+const result = await getDistrictEvents({ forceRefresh });
 const events = result.ok ? result.events : [];
 
 const todayKey = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Rome' }).format(new Date());
