@@ -1,6 +1,8 @@
 ---
 name: Rotaract Club Abbiategrasso
 zone: src/content/zones/navigli.md
+lat: 45.3987330
+lng: 8.9162299
 email: segreteria@rotaractabbiategrasso.it
 website: 'https://www.rotaractabbiategrasso.it'
 instagram: 'https://www.instagram.com/rotaractabbiategrasso'

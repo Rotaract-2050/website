@@ -358,6 +358,18 @@ export default defineConfig({
 					{ type: 'string', name: 'name', label: 'Nome club', isTitle: true, required: true },
 					{ type: 'reference', name: 'zone', label: 'Zona', collections: ['zones'], required: true },
 					{ type: 'number', name: 'foundationYear', label: 'Anno di fondazione' },
+					{
+						type: 'number',
+						name: 'lat',
+						label: 'Latitudine (mappa club)',
+						description: 'Coordinate approssimative del comune sede del club, da OpenStreetMap. Compilare insieme a Longitudine.',
+					},
+					{
+						type: 'number',
+						name: 'lng',
+						label: 'Longitudine (mappa club)',
+						description: 'Coordinate approssimative del comune sede del club, da OpenStreetMap. Compilare insieme a Latitudine.',
+					},
 					{ type: 'image', name: 'photo', label: 'Foto club' },
 					{ type: 'string', name: 'email', label: 'Email' },
 					{ type: 'string', name: 'website', label: 'Sito web' },
