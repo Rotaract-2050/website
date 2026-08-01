@@ -32,6 +32,12 @@ export function currentRotaryYearLabel(): string {
 	return rotaryYearLabel(new Date().toISOString());
 }
 
+/** URL-friendly id for a Rotary-year label, e.g. `AR 2026/2027` -> `2026-2027` (for `?anno=`). */
+export function yearLabelSlug(yearLabel: string): string {
+	const match = yearLabel.match(/^AR (\d{4})\/(\d{4})$/);
+	return match ? `${match[1]}-${match[2]}` : yearLabel;
+}
+
 /**
  * All district events for a locale (past and upcoming — e.g. a Distrettuale event with a ticket
  * link needs to be visible before it happens). Backed by the `events` Tina collection (like

@@ -8,6 +8,7 @@ import {
 	eventTags,
 	isUpcomingEvent,
 	currentRotaryYearLabel,
+	yearLabelSlug,
 } from '../../lib/events';
 import { uiStrings, type Lang } from '../../data/ui-strings';
 
@@ -30,10 +31,11 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-GB',
 // Server-rendered default: whichever `?anno=` names (if it matches a real group), else today's
 // Rotary year, else the newest group with any events (e.g. the current year has none yet). The
 // <script> below swaps panels client-side afterwards; this is only what a no-JS / first-paint
-// request sees, same pattern as EventsCalendar's `?month=`.
+// request sees, same pattern as EventsCalendar's `?month=`. `?anno=` itself takes the short slug
+// form (`2026-2027`, not the encoded display label `AR%202026%2F2027`) — friendlier to read/share.
 const yearParam = Astro.url.searchParams.get('anno');
 const activeYear =
-	yearGroups.find((g) => g.yearLabel === yearParam)?.yearLabel ??
+	yearGroups.find((g) => yearLabelSlug(g.yearLabel) === yearParam)?.yearLabel ??
 	yearGroups.find((g) => g.yearLabel === currentRotaryYearLabel())?.yearLabel ??
 	yearGroups[0]?.yearLabel ??
 	null;
@@ -48,16 +50,16 @@ const activeYear =
 				<div class="year-tabs" role="tablist" aria-label={t.events.yearFilterLabel}>
 					{yearGroups.map((group) => (
 						<a
-							href={`?anno=${encodeURIComponent(group.yearLabel)}#archivio-eventi`}
+							href={`?anno=${yearLabelSlug(group.yearLabel)}#archivio-eventi`}
 							class:list={['year-tab', { active: group.yearLabel === activeYear }]}
-							data-year-tab={group.yearLabel}
+							data-year-tab={yearLabelSlug(group.yearLabel)}
 						>
 							{group.yearLabel}
 						</a>
 					))}
 				</div>
 				{yearGroups.map((group) => (
-					<div class="year-panel" data-year-panel={group.yearLabel} hidden={group.yearLabel !== activeYear}>
+					<div class="year-panel" data-year-panel={yearLabelSlug(group.yearLabel)} hidden={group.yearLabel !== activeYear}>
 						{group.events.map((event) => (
 							<EventCard
 								id={eventSlug(event)}
