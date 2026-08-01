@@ -2,6 +2,9 @@
 title: Academy 2050 Training Weekend
 date: '2026-03-10T09:00:00.000Z'
 location: Casa del Volontariato, Brescia
+clubs:
+  - club: src/content/clubs/rotaract-club-brescia-franciacorta.md
+  - club: src/content/clubs/rotaract-club-pavia.md
 excerpt: Two days of leadership and project management training for Academy 2050 members, with hands-on workshops led by zone clubs.
 imageLabel: Photo of the Academy 2050 training weekend
 ---
