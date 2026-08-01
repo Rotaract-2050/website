@@ -5,6 +5,7 @@ export interface UiStrings {
 		home: string;
 		distrettoMenu: string;
 		distrettoSub: string;
+		story: string;
 		esecutivo: string;
 		delegati: string;
 		commissioni: string;
@@ -13,6 +14,8 @@ export interface UiStrings {
 		eventi: string;
 		join: string;
 		materials: string;
+		menuOpen: string;
+		menuClose: string;
 	};
 	breadcrumbHome: string;
 	footer: {
@@ -93,6 +96,7 @@ const IT: UiStrings = {
 		home: 'HOME',
 		distrettoMenu: 'IL DISTRETTO',
 		distrettoSub: 'Panoramica',
+		story: 'LA STORIA',
 		esecutivo: 'ESECUTIVO DISTRETTUALE',
 		delegati: 'DELEGATI DI ZONA',
 		commissioni: 'COMMISSIONI DISTRETTUALI',
@@ -101,6 +105,8 @@ const IT: UiStrings = {
 		eventi: 'EVENTI',
 		join: 'ENTRA IN ROTARACT',
 		materials: 'MATERIALI DISTRETTUALI',
+		menuOpen: 'Apri il menu di navigazione',
+		menuClose: 'Chiudi il menu di navigazione',
 	},
 	breadcrumbHome: 'HOME',
 	footer: {
@@ -182,6 +188,7 @@ const EN: UiStrings = {
 		home: 'HOME',
 		distrettoMenu: 'THE DISTRICT',
 		distrettoSub: 'Overview',
+		story: 'OUR STORY',
 		esecutivo: 'DISTRICT EXECUTIVE',
 		delegati: 'ZONE DELEGATES',
 		commissioni: 'DISTRICT COMMITTEES',
@@ -190,6 +197,8 @@ const EN: UiStrings = {
 		eventi: 'EVENTS',
 		join: 'JOIN ROTARACT',
 		materials: 'DISTRICT MATERIALS',
+		menuOpen: 'Open navigation menu',
+		menuClose: 'Close navigation menu',
 	},
 	breadcrumbHome: 'HOME',
 	footer: {
