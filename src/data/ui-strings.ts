@@ -5,6 +5,7 @@ export interface UiStrings {
 		home: string;
 		distrettoMenu: string;
 		distrettoSub: string;
+		story: string;
 		esecutivo: string;
 		delegati: string;
 		commissioni: string;
@@ -93,6 +94,7 @@ const IT: UiStrings = {
 		home: 'HOME',
 		distrettoMenu: 'IL DISTRETTO',
 		distrettoSub: 'Panoramica',
+		story: 'LA STORIA',
 		esecutivo: 'ESECUTIVO DISTRETTUALE',
 		delegati: 'DELEGATI DI ZONA',
 		commissioni: 'COMMISSIONI DISTRETTUALI',
@@ -182,6 +184,7 @@ const EN: UiStrings = {
 		home: 'HOME',
 		distrettoMenu: 'THE DISTRICT',
 		distrettoSub: 'Overview',
+		story: 'OUR STORY',
 		esecutivo: 'DISTRICT EXECUTIVE',
 		delegati: 'ZONE DELEGATES',
 		commissioni: 'DISTRICT COMMITTEES',
