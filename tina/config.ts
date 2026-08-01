@@ -335,6 +335,16 @@ export default defineConfig({
 					{ type: 'string', name: 'title', label: 'Titolo', isTitle: true, required: true },
 					{ type: 'datetime', name: 'date', label: 'Data evento', required: true, ui: { dateFormat: 'DD MMMM YYYY' } },
 					{ type: 'string', name: 'location', label: 'Luogo' },
+					// Same reference-list workaround as `news.clubs` (Tina's `reference` field doesn't
+					// support `list: true` directly, tina.io/docs/r/content-fields/#list-fields): one
+					// club per row. Badge shown on the event card, colored by the club's zone.
+					{
+						type: 'object',
+						name: 'clubs',
+						label: 'Club ospitanti',
+						list: true,
+						fields: [{ type: 'reference', name: 'club', label: 'Club', collections: ['clubs'], required: true }],
+					},
 					{ type: 'string', name: 'excerpt', label: 'Descrizione', ui: { component: 'textarea' } },
 					{ type: 'image', name: 'image', label: 'Immagine' },
 					{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine', required: true },
