@@ -327,27 +327,47 @@ export default defineConfig({
 			},
 			{
 				name: 'events',
-				label: 'Archivio eventi (passati)',
+				label: 'Archivio eventi',
 				path: 'src/content/events',
 				format: 'md',
 				ui: { router: eventsRouter },
 				fields: [
 					{ type: 'string', name: 'title', label: 'Titolo', isTitle: true, required: true },
 					{ type: 'datetime', name: 'date', label: 'Data evento', required: true, ui: { dateFormat: 'DD MMMM YYYY' } },
-					{ type: 'string', name: 'location', label: 'Luogo' },
+					{
+						type: 'string',
+						name: 'eventType',
+						label: 'Tipo evento',
+						options: ['Distrettuale', 'Altro'],
+						required: true,
+					},
+					{ type: 'string', name: 'locationLavori', label: 'Luogo (lavori)' },
+					{
+						type: 'string',
+						name: 'locationCena',
+						label: 'Luogo (cena)',
+						description: 'Compila solo se l\'evento ha una seconda sede (es. cena di gala dopo i lavori).',
+					},
 					// Same reference-list workaround as `news.clubs` (Tina's `reference` field doesn't
 					// support `list: true` directly, tina.io/docs/r/content-fields/#list-fields): one
-					// club per row. Badge shown on the event card, colored by the club's zone.
+					// club per row. For eventi Distrettuali rappresenta il/i Club Host; badge sulla
+					// scheda evento, colorato in base alla zona del club.
 					{
 						type: 'object',
 						name: 'clubs',
-						label: 'Club ospitanti',
+						label: 'Club Host',
 						list: true,
 						fields: [{ type: 'reference', name: 'club', label: 'Club', collections: ['clubs'], required: true }],
 					},
 					{ type: 'string', name: 'excerpt', label: 'Descrizione', ui: { component: 'textarea' } },
 					{ type: 'image', name: 'image', label: 'Immagine' },
 					{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine', required: true },
+					{
+						type: 'string',
+						name: 'ticketsUrl',
+						label: 'Link info e biglietti',
+						description: 'Se compilato, mostra un bottone "Info e biglietti" che apre questo link in una nuova scheda.',
+					},
 					{
 						type: 'string',
 						name: 'photoAlbumUrl',
