@@ -14,6 +14,7 @@ import NewsGrid from './blocks/NewsGrid.astro';
 import CtaBanner from './blocks/CtaBanner.astro';
 import PagePlaceholder from './blocks/PagePlaceholder.astro';
 import ClubDirectory from './blocks/ClubDirectory.astro';
+import EventsArchive from './blocks/EventsArchive.astro';
 
 function nonNull<T>(value: T | null | undefined): value is T {
 	return value != null;
@@ -119,6 +120,9 @@ const { lang, blocks } = Astro.props;
 		{block.__typename === 'PagesBlocksPagePlaceholder' && <PagePlaceholder message={block.message ?? ''} />}
 		{block.__typename === 'PagesBlocksClubDirectory' && (
 			<ClubDirectory lang={lang} intro={block.intro ?? ''} disclaimer={block.disclaimer ?? ''} />
+		)}
+		{block.__typename === 'PagesBlocksEventsArchive' && (
+			<EventsArchive lang={lang} emptyMessage={block.emptyMessage ?? undefined} />
 		)}
 	</div>
 ))}
