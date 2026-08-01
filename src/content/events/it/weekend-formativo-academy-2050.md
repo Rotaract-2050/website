@@ -1,7 +1,8 @@
 ---
 title: Weekend Formativo Academy 2050
 date: '2026-03-10T09:00:00.000Z'
-location: Casa del Volontariato, Brescia
+eventType: Altro
+locationLavori: Casa del Volontariato, Brescia
 clubs:
   - club: src/content/clubs/rotaract-club-brescia-franciacorta.md
   - club: src/content/clubs/rotaract-club-pavia.md

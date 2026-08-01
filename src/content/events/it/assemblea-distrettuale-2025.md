@@ -1,7 +1,8 @@
 ---
 title: Assemblea Distrettuale
 date: '2025-10-05T10:00:00.000Z'
-location: Auditorium San Barnaba, Brescia
+eventType: Distrettuale
+locationLavori: Auditorium San Barnaba, Brescia
 excerpt: Assemblea annuale del Distretto 2050, con presentazione degli obiettivi dell'anno rotariano e degli incarichi delle commissioni distrettuali.
 imageLabel: Foto assemblea distrettuale 2025
 ---

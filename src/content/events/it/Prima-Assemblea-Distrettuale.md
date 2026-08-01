@@ -1,7 +1,8 @@
 ---
 title: Prima Assemblea Distrettuale
 date: '2024-09-14T09:00:00.000Z'
-location: Sala Consiliare, Piacenza
+eventType: Distrettuale
+locationLavori: Sala Consiliare, Piacenza
 excerpt: La prima assemblea del Distretto 2050, con i club delle quattro zone riuniti per avviare il primo anno rotariano del distretto.
 imageLabel: Foto prima assemblea distrettuale
 ---
