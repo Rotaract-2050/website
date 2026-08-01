@@ -67,8 +67,6 @@ export interface UiStrings {
 		seoDescriptionPrefix: string;
 	};
 	events: {
-		archiveEyebrow: string;
-		archiveTitle: string;
 		empty: string;
 		yearFilterLabel: string;
 		upcomingBadge: string;
@@ -170,8 +168,6 @@ const IT: UiStrings = {
 		seoDescriptionPrefix: 'Scheda del club Rotaract Distretto 2050:',
 	},
 	events: {
-		archiveEyebrow: 'EVENTI DEL DISTRETTO',
-		archiveTitle: 'ARCHIVIO EVENTI',
 		empty: 'Nessun evento pubblicato al momento.',
 		yearFilterLabel: 'Filtra per anno rotariano',
 		upcomingBadge: 'IN ARRIVO',
@@ -261,8 +257,6 @@ const EN: UiStrings = {
 		seoDescriptionPrefix: 'Rotaract District 2050 club page:',
 	},
 	events: {
-		archiveEyebrow: 'DISTRICT EVENTS',
-		archiveTitle: 'EVENTS ARCHIVE',
 		empty: 'No events published yet.',
 		yearFilterLabel: 'Filter by Rotary year',
 		upcomingBadge: 'UPCOMING',
