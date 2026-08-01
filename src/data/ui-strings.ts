@@ -71,6 +71,9 @@ export interface UiStrings {
 		archiveTitle: string;
 		empty: string;
 		yearFilterLabel: string;
+		upcomingBadge: string;
+		dinnerLocationLabel: string;
+		ticketsButtonLabel: string;
 		photoButtonPrefix: string;
 	};
 }
@@ -169,8 +172,11 @@ const IT: UiStrings = {
 	events: {
 		archiveEyebrow: 'EVENTI DEL DISTRETTO',
 		archiveTitle: 'ARCHIVIO EVENTI',
-		empty: 'Nessun evento passato pubblicato al momento.',
+		empty: 'Nessun evento pubblicato al momento.',
 		yearFilterLabel: 'Filtra per anno rotariano',
+		upcomingBadge: 'IN ARRIVO',
+		dinnerLocationLabel: 'Cena',
+		ticketsButtonLabel: 'Info e biglietti',
 		photoButtonPrefix: 'Foto',
 	},
 };
@@ -257,8 +263,11 @@ const EN: UiStrings = {
 	events: {
 		archiveEyebrow: 'DISTRICT EVENTS',
 		archiveTitle: 'EVENTS ARCHIVE',
-		empty: 'No past events published yet.',
+		empty: 'No events published yet.',
 		yearFilterLabel: 'Filter by Rotary year',
+		upcomingBadge: 'UPCOMING',
+		dinnerLocationLabel: 'Dinner',
+		ticketsButtonLabel: 'Info & tickets',
 		photoButtonPrefix: 'Photos:',
 	},
 };
