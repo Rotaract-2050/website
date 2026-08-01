@@ -2,10 +2,15 @@ import { requestWithMetadata } from '@tinacms/astro';
 import client from '../../tina/__generated__/client';
 import type { EventsConnectionQuery } from '../../tina/__generated__/types';
 import type { Lang } from '../data/ui-strings';
-import { rotaryYearLabel } from './news';
+import { clubTagLabels, rotaryYearLabel, type NewsTag } from './news';
 
 type EventEdge = NonNullable<EventsConnectionQuery['eventsConnection']['edges']>[number];
 export type DistrictPastEvent = NonNullable<NonNullable<EventEdge>['node']>;
+
+/** Badge labels for an event's "Club ospitanti" tags — same shape/coloring as news club tags. */
+export function eventClubTags(event: Pick<DistrictPastEvent, 'clubs'>): NewsTag[] {
+	return clubTagLabels(event.clubs);
+}
 
 /** Slug relative to the locale folder, e.g. `it/passaggio-consegne-2026.md` -> `passaggio-consegne-2026`. */
 export function eventSlug(event: Pick<DistrictPastEvent, '_sys'>): string {

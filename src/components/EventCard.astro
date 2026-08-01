@@ -1,11 +1,13 @@
 ---
 import { Image } from 'astro:assets';
 import ImageSlot from './ImageSlot.astro';
+import { tagPillStyle, type NewsTag } from '../lib/news';
 
 interface Props {
 	id: string;
 	image?: string | null;
 	imageLabel: string;
+	tags?: NewsTag[];
 	title: string;
 	dateLabel: string;
 	location?: string | null;
@@ -15,8 +17,19 @@ interface Props {
 	tinaFieldAttr?: string;
 }
 
-const { id, image, imageLabel, title, dateLabel, location, excerpt, photoAlbumUrl, photoButtonLabel, tinaFieldAttr } =
-	Astro.props;
+const {
+	id,
+	image,
+	imageLabel,
+	tags = [],
+	title,
+	dateLabel,
+	location,
+	excerpt,
+	photoAlbumUrl,
+	photoButtonLabel,
+	tinaFieldAttr,
+} = Astro.props;
 ---
 
 <article class="event-entry" id={id} data-tina-field={tinaFieldAttr}>
@@ -28,6 +41,13 @@ const { id, image, imageLabel, title, dateLabel, location, excerpt, photoAlbumUr
 		)}
 	</div>
 	<div class="event-content">
+		{tags.length > 0 && (
+			<div class="event-tags">
+				{tags.map((tag) => (
+					<span class="event-tag" style={tagPillStyle(tag.color)}>{tag.label}</span>
+				))}
+			</div>
+		)}
 		<h2 class="event-title">{title}</h2>
 		<div class="event-meta">
 			{dateLabel}
@@ -69,6 +89,25 @@ const { id, image, imageLabel, title, dateLabel, location, excerpt, photoAlbumUr
 
 	.event-content {
 		min-width: 0;
+	}
+
+	.event-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin-bottom: 12px;
+	}
+
+	.event-tag {
+		display: inline-block;
+		background: var(--tag-bg, rgba(212, 19, 103, 0.1));
+		color: var(--tag-color, var(--color-pink));
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.5px;
+		text-transform: uppercase;
+		padding: 4px 10px;
+		border-radius: 999px;
 	}
 
 	.event-title {
