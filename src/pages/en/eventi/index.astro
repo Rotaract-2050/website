@@ -3,13 +3,13 @@ import { tinaField } from '@tinacms/astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import PageBanner from '../../../components/PageBanner.astro';
 import EventCard from '../../../components/EventCard.astro';
-import { getPastDistrictEvents, groupEventsByYear, eventSlug, eventClubTags } from '../../../lib/events';
+import { getDistrictEvents, groupEventsByYear, eventSlug, eventTags, isUpcomingEvent } from '../../../lib/events';
 import { uiStrings } from '../../../data/ui-strings';
 
 const lang = 'en' as const;
 const t = uiStrings[lang];
 
-const events = await getPastDistrictEvents(lang);
+const events = await getDistrictEvents(lang);
 const yearGroups = groupEventsByYear(events);
 const dateFormatter = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
@@ -46,11 +46,17 @@ const activeYear = yearGroups.find((g) => g.yearLabel === yearParam)?.yearLabel 
 									id={eventSlug(event)}
 									image={event.image}
 									imageLabel={event.imageLabel}
-									tags={eventClubTags(event)}
+									tags={eventTags(event)}
 									title={event.title}
 									dateLabel={dateFormatter.format(new Date(event.date))}
-									location={event.location}
+									upcoming={isUpcomingEvent(event.date)}
+									upcomingLabel={t.events.upcomingBadge}
+									locationLavori={event.locationLavori}
+									locationCena={event.locationCena}
+									dinnerLocationLabel={t.events.dinnerLocationLabel}
 									excerpt={event.excerpt}
+									ticketsUrl={event.ticketsUrl}
+									ticketsButtonLabel={t.events.ticketsButtonLabel}
 									photoAlbumUrl={event.photoAlbumUrl}
 									photoButtonLabel={`${t.events.photoButtonPrefix} ${event.title}`}
 									tinaFieldAttr={tinaField(event)}
