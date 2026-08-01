@@ -1,7 +1,15 @@
 ---
 import { tinaField } from '@tinacms/astro';
 import EventCard from '../EventCard.astro';
-import { getArchiveEvents, groupEventsByYear, eventSlug, eventTags, isUpcomingEvent } from '../../lib/events';
+import {
+	getArchiveEvents,
+	groupEventsByYear,
+	eventSlug,
+	eventTags,
+	isUpcomingEvent,
+	currentRotaryYearLabel,
+	yearLabelSlug,
+} from '../../lib/events';
 import { uiStrings, type Lang } from '../../data/ui-strings';
 
 interface Props {
@@ -20,11 +28,17 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-GB',
 	year: 'numeric',
 });
 
-// Server-rendered default: most recent Rotary year, or whichever `?anno=` names (must match a
-// real group — otherwise falls back). The <script> below swaps panels client-side afterwards;
-// this is only what a no-JS / first-paint request sees, same pattern as EventsCalendar's `?month=`.
+// Server-rendered default: whichever `?anno=` names (if it matches a real group), else today's
+// Rotary year, else the newest group with any events (e.g. the current year has none yet). The
+// <script> below swaps panels client-side afterwards; this is only what a no-JS / first-paint
+// request sees, same pattern as EventsCalendar's `?month=`. `?anno=` itself takes the short slug
+// form (`2026-2027`, not the encoded display label `AR%202026%2F2027`) — friendlier to read/share.
 const yearParam = Astro.url.searchParams.get('anno');
-const activeYear = yearGroups.find((g) => g.yearLabel === yearParam)?.yearLabel ?? yearGroups[0]?.yearLabel ?? null;
+const activeYear =
+	yearGroups.find((g) => yearLabelSlug(g.yearLabel) === yearParam)?.yearLabel ??
+	yearGroups.find((g) => g.yearLabel === currentRotaryYearLabel())?.yearLabel ??
+	yearGroups[0]?.yearLabel ??
+	null;
 ---
 
 <section class="archive" id="archivio-eventi">
@@ -33,19 +47,22 @@ const activeYear = yearGroups.find((g) => g.yearLabel === yearParam)?.yearLabel 
 			<p class="events-empty">{emptyMessage || t.events.empty}</p>
 		) : (
 			<div data-events-archive>
-				<div class="year-tabs" role="tablist" aria-label={t.events.yearFilterLabel}>
+				{/* Empty data-tina-field stops Tina's quick-edit click-capture here (BlockRenderer wraps
+					the whole block in one), so a tab-pill click isn't swallowed as "select this block"
+					before it reaches the tab-switch script below — EventCard's own field wins inside a panel. */}
+				<div class="year-tabs" role="tablist" aria-label={t.events.yearFilterLabel} data-tina-field="">
 					{yearGroups.map((group) => (
 						<a
-							href={`?anno=${encodeURIComponent(group.yearLabel)}#archivio-eventi`}
+							href={`?anno=${yearLabelSlug(group.yearLabel)}#archivio-eventi`}
 							class:list={['year-tab', { active: group.yearLabel === activeYear }]}
-							data-year-tab={group.yearLabel}
+							data-year-tab={yearLabelSlug(group.yearLabel)}
 						>
 							{group.yearLabel}
 						</a>
 					))}
 				</div>
 				{yearGroups.map((group) => (
-					<div class="year-panel" data-year-panel={group.yearLabel} hidden={group.yearLabel !== activeYear}>
+					<div class="year-panel" data-year-panel={yearLabelSlug(group.yearLabel)} hidden={group.yearLabel !== activeYear}>
 						{group.events.map((event) => (
 							<EventCard
 								id={eventSlug(event)}
@@ -63,7 +80,7 @@ const activeYear = yearGroups.find((g) => g.yearLabel === yearParam)?.yearLabel 
 								ticketsUrl={event.ticketsUrl}
 								ticketsButtonLabel={t.events.ticketsButtonLabel}
 								photoAlbumUrl={event.photoAlbumUrl}
-								photoButtonLabel={`${t.events.photoButtonPrefix} ${event.title}`}
+								photoButtonLabel={t.events.photoButtonLabel}
 								tinaFieldAttr={tinaField(event)}
 							/>
 						))}

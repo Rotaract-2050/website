@@ -52,6 +52,10 @@ Il dettaglio non sta in questo file: leggere la reference pertinente **prima** d
 
 **Nessuna scorciatoia silenziosa**: se per fare prima si vuole saltare una best practice (in queste reference o note nel resto della skill), non farlo senza dirlo esplicitamente all'utente. "Più veloce così" non è mai un motivo sufficiente da solo per introdurre HTML iniettato non sanificato, markup non semantico, stili inline sparsi o `any` non tipizzato.
 
+## Manutenzione di questa skill
+
+Se durante un task emerge una scoperta utile per agent futuri su questo progetto (bug non ovvio, limite di Tina/Astro, comportamento sorprendente, workaround non documentato altrove), **chiedere esplicitamente all'utente** se aggiungerla a questa skill (qui o nella reference pertinente) prima di chiudere il task — non aggiornarla di nascosto senza dirlo, ma non lasciarla nemmeno persa senza nemmeno proporlo.
+
 ## Da evitare
 
 - Non copiare `sc-for`/`sc-if`/`x-dc`/`DCLogic` in Astro: sono sintassi del tool di prototipazione, non pattern Astro.

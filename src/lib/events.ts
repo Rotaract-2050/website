@@ -27,6 +27,17 @@ export function isUpcomingEvent(dateIso: string): boolean {
 	return new Date(dateIso).getTime() >= Date.now();
 }
 
+/** Today's Rotary year label (server clock) — the archive's default active tab. */
+export function currentRotaryYearLabel(): string {
+	return rotaryYearLabel(new Date().toISOString());
+}
+
+/** URL-friendly id for a Rotary-year label, e.g. `AR 2026/2027` -> `2026-2027` (for `?anno=`). */
+export function yearLabelSlug(yearLabel: string): string {
+	const match = yearLabel.match(/^AR (\d{4})\/(\d{4})$/);
+	return match ? `${match[1]}-${match[2]}` : yearLabel;
+}
+
 /**
  * All district events for a locale (past and upcoming — e.g. a Distrettuale event with a ticket
  * link needs to be visible before it happens). Backed by the `events` Tina collection (like
@@ -43,7 +54,9 @@ export async function getArchiveEvents(lang: Lang): Promise<DistrictEvent[]> {
 	const events = edges
 		.map((edge) => edge?.node)
 		.filter((node): node is DistrictEvent => node != null)
-		.filter((node) => node._sys.breadcrumbs[0] === lang);
+		.filter((node) => node._sys.breadcrumbs[0] === lang)
+		// `visible` defaults to shown — only an explicit "Mostra evento" = off hides a draft event.
+		.filter((node) => node.visible ?? true);
 
 	const upcoming = events.filter((event) => isUpcomingEvent(event.date)).sort((a, b) => a.date.localeCompare(b.date));
 	const past = events
@@ -58,18 +71,49 @@ export interface EventYearGroup {
 	events: DistrictEvent[];
 }
 
+/** True for S.I.D.E. events ("SIDE 2024", "S.I.D.E. 2026", ...), matched on title since there's no dedicated series field. */
+function isSideEvent(title: string): boolean {
+	return title.replace(/[.\s]/g, '').toUpperCase().startsWith('SIDE');
+}
+
+/** Shifts a `rotaryYearLabel` output ("AR 2024/2025") one Rotary year forward ("AR 2025/2026"). */
+function nextRotaryYearLabel(label: string): string {
+	const match = label.match(/^AR (\d{4})\/(\d{4})$/);
+	if (!match) return label;
+	const startYear = Number(match[1]) + 1;
+	return `AR ${startYear}/${startYear + 1}`;
+}
+
 /**
- * Buckets events into Rotary-year groups, preserving each event's position within its group and
- * each group's first-seen order (upcoming events can put a later Rotary year before an earlier
- * one still has past events listed, so groups are keyed by label rather than assumed contiguous).
+ * An event's Rotary-year bucket, normally the plain `rotaryYearLabel` of its date — except
+ * S.I.D.E., which trains incoming officers and so counts as the opening event of the *next*
+ * Rotary year even though it's held in May, before the 1 July cutoff.
+ */
+function eventYearLabel(event: Pick<DistrictEvent, 'date' | 'title'>): string {
+	const label = rotaryYearLabel(event.date);
+	return isSideEvent(event.title) ? nextRotaryYearLabel(label) : label;
+}
+
+/** Start year parsed out of a `rotaryYearLabel`/`eventYearLabel` output ("AR 2025/2026" -> 2025). */
+function yearLabelStartYear(yearLabel: string): number {
+	return Number(yearLabel.match(/^AR (\d{4})\//)?.[1] ?? 0);
+}
+
+/**
+ * Buckets events into Rotary-year groups (preserving each event's position within its group),
+ * with groups ordered most recent Rotary year first — upcoming events can put a later Rotary
+ * year before an earlier one still has past events listed, so groups are keyed by label rather
+ * than assumed contiguous, and explicitly sorted rather than left in first-seen order.
  */
 export function groupEventsByYear(events: DistrictEvent[]): EventYearGroup[] {
 	const groups = new Map<string, DistrictEvent[]>();
 	for (const event of events) {
-		const yearLabel = rotaryYearLabel(event.date);
+		const yearLabel = eventYearLabel(event);
 		const bucket = groups.get(yearLabel);
 		if (bucket) bucket.push(event);
 		else groups.set(yearLabel, [event]);
 	}
-	return Array.from(groups, ([yearLabel, events]) => ({ yearLabel, events }));
+	return Array.from(groups, ([yearLabel, events]) => ({ yearLabel, events })).sort(
+		(a, b) => yearLabelStartYear(b.yearLabel) - yearLabelStartYear(a.yearLabel),
+	);
 }

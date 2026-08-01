@@ -72,7 +72,7 @@ export interface UiStrings {
 		upcomingBadge: string;
 		dinnerLocationLabel: string;
 		ticketsButtonLabel: string;
-		photoButtonPrefix: string;
+		photoButtonLabel: string;
 	};
 }
 
@@ -173,7 +173,7 @@ const IT: UiStrings = {
 		upcomingBadge: 'IN ARRIVO',
 		dinnerLocationLabel: 'Cena',
 		ticketsButtonLabel: 'Info e biglietti',
-		photoButtonPrefix: 'Foto',
+		photoButtonLabel: 'Guarda le foto',
 	},
 };
 
@@ -262,7 +262,7 @@ const EN: UiStrings = {
 		upcomingBadge: 'UPCOMING',
 		dinnerLocationLabel: 'Dinner',
 		ticketsButtonLabel: 'Info & tickets',
-		photoButtonPrefix: 'Photos:',
+		photoButtonLabel: 'View the photos',
 	},
 };
 

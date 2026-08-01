@@ -58,6 +58,13 @@ const page = result.data.pages;
 - `tinaField(obj, 'campo')` sull'elemento che deve diventare cliccabile in editing.
 - Relazioni Tina (club → zona) tramite campo schema `{ type: 'reference', collections: ['zones'] }`, risolte con due query separate (`zonesConnection`, `clubsConnection`) unite lato componente — non un'unica query annidata.
 
+## Visual editing — limiti noti e workaround
+
+Due comportamenti non documentati di `@tinacms/astro`/`@tinacms/bridge`, scoperti lavorando sulla collection `events` (router condiviso con la pagina `/eventi` + blocco `EventsArchive` con UI interattiva client-side):
+
+- **Collection con `ui.router` che punta allo stesso path per più documenti** (es. eventi senza pagina dedicata, tutti su `/eventi#slug`, solo l'hash cambia): Tina identifica il documento in preview dal **path**, non dall'hash. Cliccare un documento nella lista collection apre quindi il form del documento che possiede quel path (es. la pagina `pages/it/eventi.md`), non quello cliccato. Le collection con path unico per documento (`news`, `/news/<slug>`) non hanno questo problema. **Workaround**: nell'anteprima live, cliccare direttamente sul campo/testo del documento specifico (usa `data-tina-field`, non il router) invece che sulla riga nella lista collection.
+- **Il click-capture del quick-edit inghiotte i click su UI interattiva dentro un blocco**: `BlockRenderer.astro` avvolge ogni blocco in `<div data-tina-field={tinaField(block)}>`. Il listener globale di `@tinacms/bridge` (`click`, capture phase, `stopPropagation`) risolve il campo cliccato con `element.closest('[data-tina-field]')` e intercetta il click anche per elementi **senza un field proprio** (es. tab/filtri client-side dentro il blocco), impedendo a script custom del componente di ricevere l'evento. Un `data-tina-field=""` (vuoto, non omesso) su quell'elemento ferma la risalita più vicino: Tina lo trova, lo valuta falsy, lascia passare il click normalmente — vedi il contenitore `.year-tabs` in `EventsArchive.astro`. Serve solo su UI interattiva dentro un blocco che non ha già un field più specifico su cui "atterrare" il click (gli articoli `EventCard`, con un `data-tina-field` reale, non ne hanno bisogno).
+
 ## Dev locale: `npm run dev` → `scripts/dev.sh`
 
 Il comando combinato `tinacms dev -c "astro dev"` è fragile: in alcuni ambienti (sandbox Claude Code inclusi) `astro dev` come figlio di `tinacms -c` ritorna il controllo subito invece di restare in foreground, `tinacms dev` vede il "comando web" finire e chiude anche sé stesso, portandosi via il proprio server locale (GraphQL/asset admin, porta 4001) — Astro resta su come demone indipendente, ma l'ammin Tina risulta rotto (asset `main.tsx` con `ERR_CONNECTION_REFUSED`).
@@ -67,6 +74,8 @@ Per questo `npm run dev` esegue `scripts/dev.sh` invece del comando combinato: a
 Il comando combinato originale resta disponibile come `npm run dev:raw`, solo per debug — non usarlo come workflow normale.
 
 **Prima di un build** (`npm run build` / `netlify deploy --build`): fermare eventuali dev server residenti (`npx astro dev stop`, `pkill -f "tinacms dev"`) — tengono occupate le porte 4001/9000 e il build fallisce con "Datalayer server is busy".
+
+**Cartelle/documenti fantasma o duplicati nella lista collection dell'admin** (es. due voci `it` nella stessa collection): visto dopo diverse modifiche live a `tina/config.ts` nella stessa sessione dev (ogni salvataggio fa "Config change detected, rebuilding" + re-index a caldo). Il refresh della tab browser da solo non basta. Fix verificato: fermare del tutto sia Astro (`npx astro dev stop`) che il processo `tinacms dev` (kill sul PID in ascolto su `:4001`), poi rilanciare `bash scripts/dev.sh` da zero — non un bug nei dati (verificato via query GraphQL diretta: nessun duplicato reale), solo stato in-memory dell'indexer rimasto sporco dopo troppi hot-reload dello schema.
 
 ## Fonti
 

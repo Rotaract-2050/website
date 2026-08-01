@@ -1,13 +1,9 @@
 ---
 title: Passaggio delle Consegne 2026
-date: '2026-07-15T19:00:00.000Z'
+date: '2026-06-27T19:00:00.000Z'
 eventType: Distrettuale
-locationLavori: Sala Congressi, Club Rotaract Host, Milano
-locationCena: Cena di gala, Villa Litta, Milano
-clubs:
-  - club: src/content/clubs/rotaract-club-brescia.md
-excerpt: Cerimonia di passaggio delle consegne tra il Governatore Distrettuale uscente e quello entrante, con la partecipazione dei presidenti di club del Distretto 2050.
-imageLabel: Foto passaggio delle consegne 2026
+locationLavori: Spazio Belvedere, Via Mantova 86, Cremona (CR)
+image: /uploads/events/2025-2026/Passaggio-delle-Consegne.jpg
+imageLabel: Foto Passaggio delle Consegne 2026
+photoAlbumUrl: https://drive.google.com/drive/u/5/folders/1FHF6EUhgaRW0Ono5s9WRtptb1EE8SIkD
 ---
-
-Il Distretto si è riunito per il tradizionale Passaggio delle Consegne, momento simbolico di chiusura dell'anno rotariano e apertura del nuovo mandato distrettuale.
