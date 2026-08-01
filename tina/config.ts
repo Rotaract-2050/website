@@ -200,6 +200,24 @@ const clubDirectoryTemplate = {
 	],
 };
 
+// Events themselves are not authored inline: they live in the dedicated `events` collection
+// (like NewsGrid/`news`), so adding one anywhere shows up on the /eventi archive automatically.
+// The page's own title/eyebrow (from the `pages` collection) already serve as the archive's
+// banner — GraphQL requires an object type to define at least one field, so the only editorial
+// field here is the (optional) empty-state message, overriding the default system copy.
+const eventsArchiveTemplate = {
+	name: 'EventsArchive',
+	label: 'Archivio eventi (elenco)',
+	fields: [
+		{
+			type: 'string' as const,
+			name: 'emptyMessage',
+			label: 'Messaggio se non ci sono eventi (opzionale)',
+			ui: { component: 'textarea' },
+		},
+	],
+};
+
 export default defineConfig({
 	branch: process.env.HEAD || process.env.VERCEL_GIT_COMMIT_REF || 'main',
 	clientId: process.env.TINA_CLIENT_ID || null,
@@ -250,6 +268,7 @@ export default defineConfig({
 							ctaBannerTemplate,
 							pagePlaceholderTemplate,
 							clubDirectoryTemplate,
+							eventsArchiveTemplate,
 						],
 					},
 				],
