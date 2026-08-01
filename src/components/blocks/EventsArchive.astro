@@ -47,7 +47,10 @@ const activeYear =
 			<p class="events-empty">{emptyMessage || t.events.empty}</p>
 		) : (
 			<div data-events-archive>
-				<div class="year-tabs" role="tablist" aria-label={t.events.yearFilterLabel}>
+				{/* Empty data-tina-field stops Tina's quick-edit click-capture here (BlockRenderer wraps
+					the whole block in one), so a tab-pill click isn't swallowed as "select this block"
+					before it reaches the tab-switch script below — EventCard's own field wins inside a panel. */}
+				<div class="year-tabs" role="tablist" aria-label={t.events.yearFilterLabel} data-tina-field="">
 					{yearGroups.map((group) => (
 						<a
 							href={`?anno=${yearLabelSlug(group.yearLabel)}#archivio-eventi`}
