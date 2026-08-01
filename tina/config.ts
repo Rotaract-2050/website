@@ -13,6 +13,14 @@ const newsRouter = ({ document }: { document: { _sys: { breadcrumbs: string[] } 
 	return locale === 'it' ? `/news/${slug}` : `/en/news/${slug}`;
 };
 
+// Past events have no dedicated detail page (single archive page, per district decision):
+// the router jumps straight to the event's anchor on the archive list instead of a route.
+const eventsRouter = ({ document }: { document: { _sys: { breadcrumbs: string[] } } }) => {
+	const [locale, ...rest] = document._sys.breadcrumbs;
+	const slug = rest.join('/');
+	return locale === 'it' ? `/eventi#${slug}` : `/en/eventi#${slug}`;
+};
+
 const heroTemplate = {
 	name: 'Hero',
 	label: 'Hero (Carosello)',
@@ -225,6 +233,40 @@ const clubDirectoryTemplate = {
 	],
 };
 
+// Events themselves are not authored inline: they live in the dedicated `events` collection
+// (like NewsGrid/`news`), so adding one anywhere shows up on the /eventi archive automatically.
+// The page's own title/eyebrow (from the `pages` collection) already serve as the archive's
+// banner — GraphQL requires an object type to define at least one field, so the only editorial
+// field here is the (optional) empty-state message, overriding the default system copy.
+const eventsArchiveTemplate = {
+	name: 'EventsArchive',
+	label: 'Archivio eventi (elenco)',
+	fields: [
+		{
+			type: 'string' as const,
+			name: 'emptyMessage',
+			label: 'Messaggio se non ci sono eventi (opzionale)',
+			ui: { component: 'textarea' },
+		},
+	],
+};
+
+// Same reasoning/shape as EventsArchive above: articles live in the dedicated `news` collection,
+// the page's own title/eyebrow serve as the banner, and the one editorial field is an optional
+// empty-state override (also required so the block's GraphQL object type isn't fieldless).
+const newsArchiveTemplate = {
+	name: 'NewsArchive',
+	label: 'Archivio news (elenco)',
+	fields: [
+		{
+			type: 'string' as const,
+			name: 'emptyMessage',
+			label: 'Messaggio se non ci sono news (opzionale)',
+			ui: { component: 'textarea' },
+		},
+	],
+};
+
 export default defineConfig({
 	branch: process.env.HEAD || process.env.VERCEL_GIT_COMMIT_REF || 'main',
 	clientId: process.env.TINA_CLIENT_ID || null,
@@ -276,6 +318,8 @@ export default defineConfig({
 							pagePlaceholderTemplate,
 							clubDirectoryTemplate,
 							rrdTimelineTemplate,
+							eventsArchiveTemplate,
+							newsArchiveTemplate,
 						],
 					},
 				],
@@ -352,6 +396,57 @@ export default defineConfig({
 					{ type: 'image', name: 'image', label: 'Immagine' },
 					{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine', required: true },
 					{ type: 'rich-text', name: 'body', label: 'Corpo articolo', isBody: true },
+				],
+			},
+			{
+				name: 'events',
+				label: 'Archivio eventi',
+				path: 'src/content/events',
+				format: 'md',
+				ui: { router: eventsRouter },
+				fields: [
+					{ type: 'string', name: 'title', label: 'Titolo', isTitle: true, required: true },
+					{ type: 'datetime', name: 'date', label: 'Data evento', required: true, ui: { dateFormat: 'DD MMMM YYYY' } },
+					{
+						type: 'string',
+						name: 'eventType',
+						label: 'Tipo evento',
+						options: ['Distrettuale', 'Altro'],
+						required: true,
+					},
+					{ type: 'string', name: 'locationLavori', label: 'Luogo (lavori)' },
+					{
+						type: 'string',
+						name: 'locationCena',
+						label: 'Luogo (cena)',
+						description: 'Compila solo se l\'evento ha una seconda sede (es. cena di gala dopo i lavori).',
+					},
+					// Same reference-list workaround as `news.clubs` (Tina's `reference` field doesn't
+					// support `list: true` directly, tina.io/docs/r/content-fields/#list-fields): one
+					// club per row. For eventi Distrettuali rappresenta il/i Club Host; badge sulla
+					// scheda evento, colorato in base alla zona del club.
+					{
+						type: 'object',
+						name: 'clubs',
+						label: 'Club Host',
+						list: true,
+						fields: [{ type: 'reference', name: 'club', label: 'Club', collections: ['clubs'], required: true }],
+					},
+					{ type: 'string', name: 'excerpt', label: 'Descrizione', ui: { component: 'textarea' } },
+					{ type: 'image', name: 'image', label: 'Immagine' },
+					{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine', required: true },
+					{
+						type: 'string',
+						name: 'ticketsUrl',
+						label: 'Link info e biglietti',
+						description: 'Se compilato, mostra un bottone "Info e biglietti" che apre questo link in una nuova scheda.',
+					},
+					{
+						type: 'string',
+						name: 'photoAlbumUrl',
+						label: 'Link album foto (Google Drive/Photos)',
+						description: 'Se compilato, mostra un bottone "Foto" che apre questo link in una nuova scheda.',
+					},
 				],
 			},
 			{

@@ -1,0 +1,75 @@
+import { requestWithMetadata } from '@tinacms/astro';
+import client from '../../tina/__generated__/client';
+import type { EventsConnectionQuery } from '../../tina/__generated__/types';
+import type { Lang } from '../data/ui-strings';
+import { clubTagLabels, rotaryYearLabel, type NewsTag } from './news';
+
+type EventEdge = NonNullable<EventsConnectionQuery['eventsConnection']['edges']>[number];
+export type DistrictEvent = NonNullable<NonNullable<EventEdge>['node']>;
+
+/**
+ * Badge labels for an event card: the "Distrettuale" type tag first (Altro events get no type
+ * badge, same as untagged news), then the tagged "Club Host" club(s) — same shape/coloring as
+ * news club tags.
+ */
+export function eventTags(event: Pick<DistrictEvent, 'clubs' | 'eventType'>): NewsTag[] {
+	const typeTag: NewsTag[] = event.eventType === 'Distrettuale' ? [{ label: event.eventType }] : [];
+	return [...typeTag, ...clubTagLabels(event.clubs)];
+}
+
+/** Slug relative to the locale folder, e.g. `it/passaggio-consegne-2026.md` -> `passaggio-consegne-2026`. */
+export function eventSlug(event: Pick<DistrictEvent, '_sys'>): string {
+	return event._sys.breadcrumbs.slice(1).join('/');
+}
+
+/** True once a district event's date is now or in the future. */
+export function isUpcomingEvent(dateIso: string): boolean {
+	return new Date(dateIso).getTime() >= Date.now();
+}
+
+/**
+ * All district events for a locale (past and upcoming — e.g. a Distrettuale event with a ticket
+ * link needs to be visible before it happens). Backed by the `events` Tina collection (like
+ * news/clubs/zones), so any event a socio adds shows up here without touching code.
+ *
+ * Order: upcoming events first (soonest first, so the next flagship event surfaces at the top),
+ * then past events (most recent first). Separate from the live Google Calendar
+ * (EventsCalendar.astro / src/lib/calendar.ts), which stays the lightweight upcoming-agenda widget.
+ */
+export async function getArchiveEvents(lang: Lang): Promise<DistrictEvent[]> {
+	const result = await requestWithMetadata(client.queries.eventsConnection({ sort: 'date' }));
+	const edges = result.data.eventsConnection.edges ?? [];
+
+	const events = edges
+		.map((edge) => edge?.node)
+		.filter((node): node is DistrictEvent => node != null)
+		.filter((node) => node._sys.breadcrumbs[0] === lang);
+
+	const upcoming = events.filter((event) => isUpcomingEvent(event.date)).sort((a, b) => a.date.localeCompare(b.date));
+	const past = events
+		.filter((event) => !isUpcomingEvent(event.date))
+		.sort((a, b) => b.date.localeCompare(a.date));
+
+	return [...upcoming, ...past];
+}
+
+export interface EventYearGroup {
+	yearLabel: string;
+	events: DistrictEvent[];
+}
+
+/**
+ * Buckets events into Rotary-year groups, preserving each event's position within its group and
+ * each group's first-seen order (upcoming events can put a later Rotary year before an earlier
+ * one still has past events listed, so groups are keyed by label rather than assumed contiguous).
+ */
+export function groupEventsByYear(events: DistrictEvent[]): EventYearGroup[] {
+	const groups = new Map<string, DistrictEvent[]>();
+	for (const event of events) {
+		const yearLabel = rotaryYearLabel(event.date);
+		const bucket = groups.get(yearLabel);
+		if (bucket) bucket.push(event);
+		else groups.set(yearLabel, [event]);
+	}
+	return Array.from(groups, ([yearLabel, events]) => ({ yearLabel, events }));
+}

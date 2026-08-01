@@ -28,16 +28,25 @@ export interface NewsTag {
 	color?: string | null;
 }
 
-/** Badge labels for a news card/detail page: tagged club names (colored by their zone), then fixed scope tags (Distretto/MDIO). */
-export function newsTagLabels(article: Pick<NewsArticle, 'clubs' | 'scope'>): NewsTag[] {
-	const clubTags: NewsTag[] = (article.clubs ?? [])
+type ClubTagRef = { club?: { name: string; zone?: { color?: string | null } | null } | null } | null;
+
+/**
+ * Badge labels for tagged clubs (colored by their zone) — shared shape between `news.clubs` and
+ * `events.clubs` ("Club ospitanti"), both the same Tina reference-list workaround (see below).
+ */
+export function clubTagLabels(clubs: ClubTagRef[] | null | undefined): NewsTag[] {
+	return (clubs ?? [])
 		.map((entry) => entry?.club)
 		.filter((club): club is NonNullable<typeof club> => club != null)
 		.map((club) => ({ label: club.name, color: club.zone?.color ?? null }));
+}
+
+/** Badge labels for a news card/detail page: tagged club names (colored by their zone), then fixed scope tags (Distretto/MDIO). */
+export function newsTagLabels(article: Pick<NewsArticle, 'clubs' | 'scope'>): NewsTag[] {
 	const scopeTags: NewsTag[] = (article.scope ?? [])
 		.filter((s): s is string => Boolean(s))
 		.map((label) => ({ label }));
-	return [...clubTags, ...scopeTags];
+	return [...clubTagLabels(article.clubs), ...scopeTags];
 }
 
 /**

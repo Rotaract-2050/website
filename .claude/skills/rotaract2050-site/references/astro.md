@@ -31,11 +31,15 @@ Implementato con **due file di route separati** (non un'unica route dinamica per
 
 ## Componenti Astro — convenzioni
 
-- `.astro` per tutto ciò che non richiede interattività client (praticamente tutto in questo sito: card, griglie, hero statico, footer). Framework component + `client:*` solo per casi reali (es. un carosello che deve girare lato client): scegliere la direttiva di hydration più leggera possibile (`client:visible` per componenti sotto la piega, `client:idle` per non bloccanti, `client:load` solo se serve subito).
+- `.astro` per tutto ciò che non richiede interattività client (praticamente tutto in questo sito: card, griglie, hero, footer, calendario). Per interattività client leggera (toggle, carousel, filtri) usare **`<script>` vanilla in fondo al componente `.astro`** (pattern reale: `Hero.astro` per il carosello, `EventsCalendar.astro` per lo swap agenda/mese) — non è un island, non richiede `client:*`, resta zero-JS lato framework. Framework component + `client:*` solo per casi con vero stato client complesso che uno script vanilla non gestirebbe bene (nessun caso reale nel sito finora); se mai serve, scegliere la direttiva di hydration più leggera possibile (`client:visible` per componenti sotto la piega, `client:idle` per non bloccanti, `client:load` solo se serve subito).
 - Props tipizzate con `interface Props` in ogni componente `.astro`, con default sensati via destructuring.
 - Usare `<slot />` (anche named slot) per layout/wrapper condivisi invece di duplicare markup.
 - Un componente Astro per template Tina (vedi pattern a blocchi in SKILL.md) — 1 nome, 1 file, mappatura diretta.
 - Zero-JS di default: niente framework component a meno che serva vera interattività client.
+
+## Avviso dev toolbar "no interactive component islands"
+
+L'Astro dev toolbar (app "Inspect"/X-ray, `node_modules/astro/dist/runtime/client/dev-toolbar/apps/xray.js`) mostra "It looks like there are no interactive component islands on this page. Did you forget to add a client directive?" ogni volta che la pagina ha **zero elementi `<astro-island>`** nel DOM — cioè zero componenti framework con `client:*`. Su questo sito è **atteso su ogni pagina**, sempre: essendo zero-JS di default, l'interattività (carosello hero, calendario) è fatta con `<script>` vanilla, non con island. Non è un bug da inseguire e **non è un motivo per convertire `Hero.astro`/`EventsCalendar.astro` (o altri) in componenti React/`client:*`** — vedi punto sopra.
 
 ## Fonti
 

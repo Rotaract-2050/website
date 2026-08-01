@@ -10,6 +10,7 @@ export interface UiStrings {
 		commissioni: string;
 		club: string;
 		news: string;
+		eventi: string;
 		join: string;
 		materials: string;
 	};
@@ -48,8 +49,7 @@ export interface UiStrings {
 		readMore: string;
 		viewAll: string;
 		empty: string;
-		archiveEyebrow: string;
-		archiveTitle: string;
+		articleEyebrow: string;
 		backToArchive: string;
 	};
 	clubDetail: {
@@ -65,6 +65,14 @@ export interface UiStrings {
 		photoAltPrefix: string;
 		photoMissing: string;
 		seoDescriptionPrefix: string;
+	};
+	events: {
+		empty: string;
+		yearFilterLabel: string;
+		upcomingBadge: string;
+		dinnerLocationLabel: string;
+		ticketsButtonLabel: string;
+		photoButtonPrefix: string;
 	};
 }
 
@@ -90,6 +98,7 @@ const IT: UiStrings = {
 		commissioni: 'COMMISSIONI DISTRETTUALI',
 		club: 'I CLUB',
 		news: 'NEWS',
+		eventi: 'EVENTI',
 		join: 'ENTRA IN ROTARACT',
 		materials: 'MATERIALI DISTRETTUALI',
 	},
@@ -141,8 +150,7 @@ const IT: UiStrings = {
 		readMore: 'Leggi tutto →',
 		viewAll: 'Tutte le news →',
 		empty: 'Nessuna news pubblicata al momento.',
-		archiveEyebrow: 'DAL DISTRETTO',
-		archiveTitle: 'NEWS DAL DISTRETTO',
+		articleEyebrow: 'DAL DISTRETTO',
 		backToArchive: '← Tutte le news',
 	},
 	clubDetail: {
@@ -159,6 +167,14 @@ const IT: UiStrings = {
 		photoMissing: 'Foto non disponibile',
 		seoDescriptionPrefix: 'Scheda del club Rotaract Distretto 2050:',
 	},
+	events: {
+		empty: 'Nessun evento pubblicato al momento.',
+		yearFilterLabel: 'Filtra per anno rotariano',
+		upcomingBadge: 'IN ARRIVO',
+		dinnerLocationLabel: 'Cena',
+		ticketsButtonLabel: 'Info e biglietti',
+		photoButtonPrefix: 'Foto',
+	},
 };
 
 const EN: UiStrings = {
@@ -171,6 +187,7 @@ const EN: UiStrings = {
 		commissioni: 'DISTRICT COMMITTEES',
 		club: 'CLUBS',
 		news: 'NEWS',
+		eventi: 'EVENTS',
 		join: 'JOIN ROTARACT',
 		materials: 'DISTRICT MATERIALS',
 	},
@@ -222,8 +239,7 @@ const EN: UiStrings = {
 		readMore: 'Read more →',
 		viewAll: 'All news →',
 		empty: 'No news published at the moment.',
-		archiveEyebrow: 'FROM THE DISTRICT',
-		archiveTitle: 'DISTRICT NEWS',
+		articleEyebrow: 'FROM THE DISTRICT',
 		backToArchive: '← All news',
 	},
 	clubDetail: {
@@ -239,6 +255,14 @@ const EN: UiStrings = {
 		photoAltPrefix: 'Photo of',
 		photoMissing: 'Photo not available',
 		seoDescriptionPrefix: 'Rotaract District 2050 club page:',
+	},
+	events: {
+		empty: 'No events published yet.',
+		yearFilterLabel: 'Filter by Rotary year',
+		upcomingBadge: 'UPCOMING',
+		dinnerLocationLabel: 'Dinner',
+		ticketsButtonLabel: 'Info & tickets',
+		photoButtonPrefix: 'Photos:',
 	},
 };
 

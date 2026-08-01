@@ -1,0 +1,81 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { tinaField } from '@tinacms/astro';
+import NewsCard from '../NewsCard.astro';
+import { getDistrictNews, newsSlug, newsTagLabels, rotaryYearLabel } from '../../lib/news';
+import { uiStrings, type Lang } from '../../data/ui-strings';
+
+interface Props {
+	lang: Lang;
+	emptyMessage?: string;
+}
+
+const { lang, emptyMessage } = Astro.props;
+const t = uiStrings[lang];
+
+const articles = await getDistrictNews(lang);
+const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-US', {
+	day: 'numeric',
+	month: 'short',
+	year: 'numeric',
+});
+---
+
+<section class="archive">
+	<div class="archive-inner">
+		{articles.length > 0 ? (
+			<div class="news-grid">
+				{articles.map((article) => (
+					<NewsCard
+						href={getRelativeLocaleUrl(lang, `news/${newsSlug(article)}`)}
+						image={article.image}
+						imageLabel={article.imageLabel}
+						tags={newsTagLabels(article)}
+						title={article.title}
+						excerpt={article.excerpt}
+						dateLabel={dateFormatter.format(new Date(article.date)).toUpperCase()}
+						yearLabel={rotaryYearLabel(article.date)}
+						tinaFieldAttr={tinaField(article)}
+					/>
+				))}
+			</div>
+		) : (
+			<p class="news-empty">{emptyMessage || t.news.empty}</p>
+		)}
+	</div>
+</section>
+
+<style>
+	.archive {
+		padding: 70px 40px 90px;
+	}
+
+	.archive-inner {
+		max-width: var(--content-max);
+		margin: 0 auto;
+	}
+
+	.news-empty {
+		font-size: 14px;
+		color: var(--color-muted);
+		font-style: italic;
+	}
+
+	.news-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 28px;
+	}
+
+	@media (max-width: 900px) {
+		.news-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 720px) {
+		.archive {
+			padding: 50px 20px 70px;
+		}
+	}
+</style>
