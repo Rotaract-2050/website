@@ -406,6 +406,12 @@ export default defineConfig({
 				ui: { router: eventsRouter },
 				fields: [
 					{ type: 'string', name: 'title', label: 'Titolo', isTitle: true, required: true },
+					{
+						type: 'boolean',
+						name: 'visible',
+						label: 'Mostra evento',
+						description: 'Disattiva per preparare un evento senza pubblicarlo ancora nell\'archivio eventi del sito.',
+					},
 					{ type: 'datetime', name: 'date', label: 'Data evento', required: true, ui: { dateFormat: 'DD MMMM YYYY' } },
 					{
 						type: 'string',

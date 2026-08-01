@@ -54,7 +54,9 @@ export async function getArchiveEvents(lang: Lang): Promise<DistrictEvent[]> {
 	const events = edges
 		.map((edge) => edge?.node)
 		.filter((node): node is DistrictEvent => node != null)
-		.filter((node) => node._sys.breadcrumbs[0] === lang);
+		.filter((node) => node._sys.breadcrumbs[0] === lang)
+		// `visible` defaults to shown — only an explicit "Mostra evento" = off hides a draft event.
+		.filter((node) => node.visible ?? true);
 
 	const upcoming = events.filter((event) => isUpcomingEvent(event.date)).sort((a, b) => a.date.localeCompare(b.date));
 	const past = events
