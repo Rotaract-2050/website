@@ -36,7 +36,7 @@ export function isUpcomingEvent(dateIso: string): boolean {
  * then past events (most recent first). Separate from the live Google Calendar
  * (EventsCalendar.astro / src/lib/calendar.ts), which stays the lightweight upcoming-agenda widget.
  */
-export async function getDistrictEvents(lang: Lang): Promise<DistrictEvent[]> {
+export async function getArchiveEvents(lang: Lang): Promise<DistrictEvent[]> {
 	const result = await requestWithMetadata(client.queries.eventsConnection({ sort: 'date' }));
 	const edges = result.data.eventsConnection.edges ?? [];
 
