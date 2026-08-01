@@ -14,6 +14,7 @@ import NewsGrid from './blocks/NewsGrid.astro';
 import CtaBanner from './blocks/CtaBanner.astro';
 import PagePlaceholder from './blocks/PagePlaceholder.astro';
 import ClubDirectory from './blocks/ClubDirectory.astro';
+import RrdTimeline from './blocks/RrdTimeline.astro';
 
 function nonNull<T>(value: T | null | undefined): value is T {
 	return value != null;
@@ -120,6 +121,19 @@ const { lang, blocks } = Astro.props;
 		{block.__typename === 'PagesBlocksPagePlaceholder' && <PagePlaceholder message={block.message ?? ''} />}
 		{block.__typename === 'PagesBlocksClubDirectory' && (
 			<ClubDirectory lang={lang} intro={block.intro ?? ''} disclaimer={block.disclaimer ?? ''} />
+		)}
+		{block.__typename === 'PagesBlocksRrdTimeline' && (
+			<RrdTimeline
+				title={block.title}
+				showDisclaimer={block.showDisclaimer ?? false}
+				disclaimerText={block.disclaimerText ?? undefined}
+				items={(block.items ?? []).filter(nonNull).map((i) => ({
+					yearRange: i.yearRange ?? '',
+					name: i.name ?? '',
+					surname: i.surname ?? '',
+					motto: i.motto ?? '',
+				}))}
+			/>
 		)}
 	</div>
 ))}

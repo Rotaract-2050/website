@@ -194,6 +194,28 @@ const pagePlaceholderTemplate = {
 	fields: [{ type: 'string' as const, name: 'message', label: 'Messaggio', ui: { component: 'textarea' } }],
 };
 
+const rrdTimelineTemplate = {
+	name: 'RrdTimeline',
+	label: 'Timeline RRD (Rappresentanti Rotaract Distrettuali)',
+	fields: [
+		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
+		{ type: 'boolean' as const, name: 'showDisclaimer', label: 'Mostra disclaimer' },
+		{ type: 'string' as const, name: 'disclaimerText', label: 'Testo disclaimer' },
+		{
+			type: 'object' as const,
+			name: 'items',
+			label: 'Annate (dalla più recente alla più antica)',
+			list: true,
+			fields: [
+				{ type: 'string' as const, name: 'yearRange', label: 'Anno rotariano (es. 2026/2027)' },
+				{ type: 'string' as const, name: 'name', label: 'Nome' },
+				{ type: 'string' as const, name: 'surname', label: 'Cognome' },
+				{ type: 'string' as const, name: 'motto', label: 'Motto dell’anno' },
+			],
+		},
+	],
+};
+
 const clubDirectoryTemplate = {
 	name: 'ClubDirectory',
 	label: 'Elenco club (per zona)',
@@ -253,6 +275,7 @@ export default defineConfig({
 							ctaBannerTemplate,
 							pagePlaceholderTemplate,
 							clubDirectoryTemplate,
+							rrdTimelineTemplate,
 						],
 					},
 				],
