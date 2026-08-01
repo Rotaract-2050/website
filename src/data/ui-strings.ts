@@ -14,6 +14,8 @@ export interface UiStrings {
 		eventi: string;
 		join: string;
 		materials: string;
+		menuOpen: string;
+		menuClose: string;
 	};
 	breadcrumbHome: string;
 	footer: {
@@ -103,6 +105,8 @@ const IT: UiStrings = {
 		eventi: 'EVENTI',
 		join: 'ENTRA IN ROTARACT',
 		materials: 'MATERIALI DISTRETTUALI',
+		menuOpen: 'Apri il menu di navigazione',
+		menuClose: 'Chiudi il menu di navigazione',
 	},
 	breadcrumbHome: 'HOME',
 	footer: {
@@ -193,6 +197,8 @@ const EN: UiStrings = {
 		eventi: 'EVENTS',
 		join: 'JOIN ROTARACT',
 		materials: 'DISTRICT MATERIALS',
+		menuOpen: 'Open navigation menu',
+		menuClose: 'Close navigation menu',
 	},
 	breadcrumbHome: 'HOME',
 	footer: {
