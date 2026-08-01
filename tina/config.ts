@@ -218,6 +218,22 @@ const eventsArchiveTemplate = {
 	],
 };
 
+// Same reasoning/shape as EventsArchive above: articles live in the dedicated `news` collection,
+// the page's own title/eyebrow serve as the banner, and the one editorial field is an optional
+// empty-state override (also required so the block's GraphQL object type isn't fieldless).
+const newsArchiveTemplate = {
+	name: 'NewsArchive',
+	label: 'Archivio news (elenco)',
+	fields: [
+		{
+			type: 'string' as const,
+			name: 'emptyMessage',
+			label: 'Messaggio se non ci sono news (opzionale)',
+			ui: { component: 'textarea' },
+		},
+	],
+};
+
 export default defineConfig({
 	branch: process.env.HEAD || process.env.VERCEL_GIT_COMMIT_REF || 'main',
 	clientId: process.env.TINA_CLIENT_ID || null,
@@ -269,6 +285,7 @@ export default defineConfig({
 							pagePlaceholderTemplate,
 							clubDirectoryTemplate,
 							eventsArchiveTemplate,
+							newsArchiveTemplate,
 						],
 					},
 				],
