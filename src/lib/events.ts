@@ -81,10 +81,16 @@ function eventYearLabel(event: Pick<DistrictEvent, 'date' | 'title'>): string {
 	return isSideEvent(event.title) ? nextRotaryYearLabel(label) : label;
 }
 
+/** Start year parsed out of a `rotaryYearLabel`/`eventYearLabel` output ("AR 2025/2026" -> 2025). */
+function yearLabelStartYear(yearLabel: string): number {
+	return Number(yearLabel.match(/^AR (\d{4})\//)?.[1] ?? 0);
+}
+
 /**
- * Buckets events into Rotary-year groups, preserving each event's position within its group and
- * each group's first-seen order (upcoming events can put a later Rotary year before an earlier
- * one still has past events listed, so groups are keyed by label rather than assumed contiguous).
+ * Buckets events into Rotary-year groups (preserving each event's position within its group),
+ * with groups ordered most recent Rotary year first — upcoming events can put a later Rotary
+ * year before an earlier one still has past events listed, so groups are keyed by label rather
+ * than assumed contiguous, and explicitly sorted rather than left in first-seen order.
  */
 export function groupEventsByYear(events: DistrictEvent[]): EventYearGroup[] {
 	const groups = new Map<string, DistrictEvent[]>();
@@ -94,5 +100,7 @@ export function groupEventsByYear(events: DistrictEvent[]): EventYearGroup[] {
 		if (bucket) bucket.push(event);
 		else groups.set(yearLabel, [event]);
 	}
-	return Array.from(groups, ([yearLabel, events]) => ({ yearLabel, events }));
+	return Array.from(groups, ([yearLabel, events]) => ({ yearLabel, events })).sort(
+		(a, b) => yearLabelStartYear(b.yearLabel) - yearLabelStartYear(a.yearLabel),
+	);
 }
