@@ -3,7 +3,7 @@ import { tinaField } from '@tinacms/astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageBanner from '../../components/PageBanner.astro';
 import EventCard from '../../components/EventCard.astro';
-import { getPastDistrictEvents, groupEventsByYear, eventSlug } from '../../lib/events';
+import { getPastDistrictEvents, groupEventsByYear, eventSlug, eventClubTags } from '../../lib/events';
 import { uiStrings } from '../../data/ui-strings';
 
 const lang = 'it' as const;
@@ -46,6 +46,7 @@ const activeYear = yearGroups.find((g) => g.yearLabel === yearParam)?.yearLabel 
 									id={eventSlug(event)}
 									image={event.image}
 									imageLabel={event.imageLabel}
+									tags={eventClubTags(event)}
 									title={event.title}
 									dateLabel={dateFormatter.format(new Date(event.date))}
 									location={event.location}
