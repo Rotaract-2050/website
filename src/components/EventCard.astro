@@ -10,8 +10,14 @@ interface Props {
 	tags?: NewsTag[];
 	title: string;
 	dateLabel: string;
-	location?: string | null;
+	upcoming?: boolean;
+	upcomingLabel: string;
+	locationLavori?: string | null;
+	locationCena?: string | null;
+	dinnerLocationLabel: string;
 	excerpt?: string | null;
+	ticketsUrl?: string | null;
+	ticketsButtonLabel: string;
 	photoAlbumUrl?: string | null;
 	photoButtonLabel: string;
 	tinaFieldAttr?: string;
@@ -24,8 +30,14 @@ const {
 	tags = [],
 	title,
 	dateLabel,
-	location,
+	upcoming = false,
+	upcomingLabel,
+	locationLavori,
+	locationCena,
+	dinnerLocationLabel,
 	excerpt,
+	ticketsUrl,
+	ticketsButtonLabel,
 	photoAlbumUrl,
 	photoButtonLabel,
 	tinaFieldAttr,
@@ -50,14 +62,27 @@ const {
 		)}
 		<h2 class="event-title">{title}</h2>
 		<div class="event-meta">
+			{upcoming && <span class="event-upcoming-badge">{upcomingLabel}</span>}
 			{dateLabel}
-			{location ? ` · ${location}` : ''}
+			{locationLavori ? ` · ${locationLavori}` : ''}
 		</div>
+		{locationCena && (
+			<div class="event-meta event-meta-secondary">{dinnerLocationLabel}: {locationCena}</div>
+		)}
 		{excerpt && <p class="event-excerpt">{excerpt}</p>}
-		{photoAlbumUrl && (
-			<a class="event-photo-btn" href={photoAlbumUrl} target="_blank" rel="noopener">
-				{photoButtonLabel}
-			</a>
+		{(ticketsUrl || photoAlbumUrl) && (
+			<div class="event-actions">
+				{ticketsUrl && (
+					<a class="event-tickets-btn" href={ticketsUrl} target="_blank" rel="noopener">
+						{ticketsButtonLabel}
+					</a>
+				)}
+				{photoAlbumUrl && (
+					<a class="event-photo-btn" href={photoAlbumUrl} target="_blank" rel="noopener">
+						{photoButtonLabel}
+					</a>
+				)}
+			</div>
 		)}
 	</div>
 </article>
@@ -124,7 +149,23 @@ const {
 		color: var(--color-muted);
 		text-transform: uppercase;
 		letter-spacing: 0.4px;
+		margin-bottom: 6px;
+	}
+
+	.event-meta:last-of-type {
 		margin-bottom: 14px;
+	}
+
+	.event-upcoming-badge {
+		display: inline-block;
+		background: var(--color-gold);
+		color: var(--color-navy);
+		font-weight: 700;
+		font-size: 11px;
+		letter-spacing: 0.5px;
+		padding: 3px 9px;
+		border-radius: 999px;
+		margin-right: 8px;
 	}
 
 	.event-excerpt {
@@ -134,7 +175,13 @@ const {
 		margin: 0 0 16px;
 	}
 
-	.event-photo-btn {
+	.event-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+	}
+
+	.event-tickets-btn {
 		display: inline-block;
 		background: var(--color-pink);
 		color: #fff;
@@ -147,8 +194,27 @@ const {
 		border-radius: 999px;
 	}
 
-	.event-photo-btn:hover {
+	.event-tickets-btn:hover {
 		background: var(--color-pink-dark);
+		color: #fff;
+	}
+
+	.event-photo-btn {
+		display: inline-block;
+		background: transparent;
+		color: var(--color-navy);
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 13px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		padding: 8px 18px;
+		border-radius: 999px;
+		border: 2px solid var(--color-navy);
+	}
+
+	.event-photo-btn:hover {
+		background: var(--color-navy);
 		color: #fff;
 	}
 
