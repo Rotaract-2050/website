@@ -5,6 +5,7 @@ eventType: Distrettuale
 locationLavori: Palestra Ca' de mari
 locationCena: Villa Borghesi
 excerpt: Full-day schedule — rise at 10:00, lunch at 13:00, assembly at 15:00 (all at Palestra Ca' de mari), dinner at 19:30 at Villa Borghesi.
+image: /uploads/events/2024-2025/III-AD.png
 imageLabel: Photo of III AD 2024
 photoAlbumUrl: https://drive.google.com/drive/folders/1X6Guwb2f5IMm2CerpzF0s9MWLzQITr3_?usp=drive_link
 ---
