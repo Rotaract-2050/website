@@ -69,6 +69,12 @@ export interface UiStrings {
 		photoMissing: string;
 		seoDescriptionPrefix: string;
 	};
+	clubMap: {
+		title: string;
+		disclaimer: string;
+		viewClub: string;
+		unavailable: string;
+	};
 	events: {
 		empty: string;
 		yearFilterLabel: string;
@@ -173,6 +179,12 @@ const IT: UiStrings = {
 		photoMissing: 'Foto non disponibile',
 		seoDescriptionPrefix: 'Scheda del club Rotaract Distretto 2050:',
 	},
+	clubMap: {
+		title: 'I club sulla mappa',
+		disclaimer: 'Posizioni indicative del comune sede di ciascun club, non l\'indirizzo esatto delle riunioni.',
+		viewClub: 'Vedi scheda club →',
+		unavailable: 'Mappa non disponibile al momento.',
+	},
 	events: {
 		empty: 'Nessun evento pubblicato al momento.',
 		yearFilterLabel: 'Filtra per anno rotariano',
@@ -264,6 +276,12 @@ const EN: UiStrings = {
 		photoAltPrefix: 'Photo of',
 		photoMissing: 'Photo not available',
 		seoDescriptionPrefix: 'Rotaract District 2050 club page:',
+	},
+	clubMap: {
+		title: 'Clubs on the map',
+		disclaimer: 'Approximate location of each club\'s home town, not the exact meeting address.',
+		viewClub: 'View club →',
+		unavailable: 'Map unavailable at the moment.',
 	},
 	events: {
 		empty: 'No events published yet.',

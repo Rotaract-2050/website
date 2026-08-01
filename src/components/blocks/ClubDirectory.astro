@@ -2,6 +2,7 @@
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { requestWithMetadata, tinaField } from '@tinacms/astro';
 import client from '../../../tina/__generated__/client';
+import ClubsMap from '../ClubsMap.astro';
 import type { Lang } from '../../data/ui-strings';
 import { uiStrings } from '../../data/ui-strings';
 
@@ -27,6 +28,8 @@ const zoneGroups = zones.map((zone) => ({
 	clubs: clubs.filter((club) => club.zone?.name === zone.name),
 }));
 ---
+
+<ClubsMap lang={lang} clubs={clubs} />
 
 <section class="club-list">
 	<div class="section-inner">
