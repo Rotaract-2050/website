@@ -49,8 +49,7 @@ export interface UiStrings {
 		readMore: string;
 		viewAll: string;
 		empty: string;
-		archiveEyebrow: string;
-		archiveTitle: string;
+		articleEyebrow: string;
 		backToArchive: string;
 	};
 	clubDetail: {
@@ -150,8 +149,7 @@ const IT: UiStrings = {
 		readMore: 'Leggi tutto →',
 		viewAll: 'Tutte le news →',
 		empty: 'Nessuna news pubblicata al momento.',
-		archiveEyebrow: 'DAL DISTRETTO',
-		archiveTitle: 'NEWS DAL DISTRETTO',
+		articleEyebrow: 'DAL DISTRETTO',
 		backToArchive: '← Tutte le news',
 	},
 	clubDetail: {
@@ -239,8 +237,7 @@ const EN: UiStrings = {
 		readMore: 'Read more →',
 		viewAll: 'All news →',
 		empty: 'No news published at the moment.',
-		archiveEyebrow: 'FROM THE DISTRICT',
-		archiveTitle: 'DISTRICT NEWS',
+		articleEyebrow: 'FROM THE DISTRICT',
 		backToArchive: '← All news',
 	},
 	clubDetail: {
