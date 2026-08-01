@@ -27,6 +27,11 @@ export function isUpcomingEvent(dateIso: string): boolean {
 	return new Date(dateIso).getTime() >= Date.now();
 }
 
+/** Today's Rotary year label (server clock) — the archive's default active tab. */
+export function currentRotaryYearLabel(): string {
+	return rotaryYearLabel(new Date().toISOString());
+}
+
 /**
  * All district events for a locale (past and upcoming — e.g. a Distrettuale event with a ticket
  * link needs to be visible before it happens). Backed by the `events` Tina collection (like

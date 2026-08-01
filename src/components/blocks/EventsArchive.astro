@@ -1,7 +1,14 @@
 ---
 import { tinaField } from '@tinacms/astro';
 import EventCard from '../EventCard.astro';
-import { getArchiveEvents, groupEventsByYear, eventSlug, eventTags, isUpcomingEvent } from '../../lib/events';
+import {
+	getArchiveEvents,
+	groupEventsByYear,
+	eventSlug,
+	eventTags,
+	isUpcomingEvent,
+	currentRotaryYearLabel,
+} from '../../lib/events';
 import { uiStrings, type Lang } from '../../data/ui-strings';
 
 interface Props {
@@ -20,11 +27,16 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-GB',
 	year: 'numeric',
 });
 
-// Server-rendered default: most recent Rotary year, or whichever `?anno=` names (must match a
-// real group — otherwise falls back). The <script> below swaps panels client-side afterwards;
-// this is only what a no-JS / first-paint request sees, same pattern as EventsCalendar's `?month=`.
+// Server-rendered default: whichever `?anno=` names (if it matches a real group), else today's
+// Rotary year, else the newest group with any events (e.g. the current year has none yet). The
+// <script> below swaps panels client-side afterwards; this is only what a no-JS / first-paint
+// request sees, same pattern as EventsCalendar's `?month=`.
 const yearParam = Astro.url.searchParams.get('anno');
-const activeYear = yearGroups.find((g) => g.yearLabel === yearParam)?.yearLabel ?? yearGroups[0]?.yearLabel ?? null;
+const activeYear =
+	yearGroups.find((g) => g.yearLabel === yearParam)?.yearLabel ??
+	yearGroups.find((g) => g.yearLabel === currentRotaryYearLabel())?.yearLabel ??
+	yearGroups[0]?.yearLabel ??
+	null;
 ---
 
 <section class="archive" id="archivio-eventi">
