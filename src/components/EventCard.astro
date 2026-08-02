@@ -14,6 +14,7 @@ interface Props {
 	upcomingLabel: string;
 	locationLavori?: string | null;
 	locationCena?: string | null;
+	worksLocationLabel: string;
 	dinnerLocationLabel: string;
 	excerpt?: string | null;
 	ticketsUrl?: string | null;
@@ -34,6 +35,7 @@ const {
 	upcomingLabel,
 	locationLavori,
 	locationCena,
+	worksLocationLabel,
 	dinnerLocationLabel,
 	excerpt,
 	ticketsUrl,
@@ -64,10 +66,16 @@ const {
 		<div class="event-meta">
 			{upcoming && <span class="event-upcoming-badge">{upcomingLabel}</span>}
 			{dateLabel}
-			{locationLavori ? ` · ${locationLavori}` : ''}
 		</div>
-		{locationCena && (
-			<div class="event-meta event-meta-secondary">{dinnerLocationLabel}: {locationCena}</div>
+		{locationLavori && locationCena ? (
+			<>
+				<div class="event-meta event-location"><span class="event-location-label">{worksLocationLabel}:</span> {locationLavori}</div>
+				<div class="event-meta event-location"><span class="event-location-label">{dinnerLocationLabel}:</span> {locationCena}</div>
+			</>
+		) : (
+			(locationLavori || locationCena) && (
+				<div class="event-meta event-location">{locationLavori || locationCena}</div>
+			)
 		)}
 		{excerpt && <p class="event-excerpt">{excerpt}</p>}
 		{(ticketsUrl || photoAlbumUrl) && (
@@ -154,6 +162,11 @@ const {
 
 	.event-meta:last-of-type {
 		margin-bottom: 14px;
+	}
+
+	.event-location-label {
+		color: var(--color-pink);
+		font-weight: 700;
 	}
 
 	.event-upcoming-badge {
