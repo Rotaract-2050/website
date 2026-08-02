@@ -110,6 +110,7 @@ const { lang, blocks } = Astro.props;
 				items={(block.items ?? []).filter(nonNull).map((i) => ({
 					name: i.name ?? '',
 					leadLabel: i.leadLabel || 'Presidente',
+					membersLabel: i.membersLabel || 'Membro',
 					lead: {
 						name: i.lead?.name ?? '',
 						photo: i.lead?.photo ?? undefined,

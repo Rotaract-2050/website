@@ -171,6 +171,7 @@ const committeeGridTemplate = {
 			fields: [
 				{ type: 'string' as const, name: 'name', label: 'Nome commissione/delega' },
 				{ type: 'string' as const, name: 'leadLabel', label: 'Etichetta responsabile (es. "Presidente" o "Delegato")' },
+				{ type: 'string' as const, name: 'membersLabel', label: 'Etichetta membri (es. "Membro")' },
 				{
 					type: 'object' as const,
 					name: 'lead',

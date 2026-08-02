@@ -10,6 +10,7 @@ interface Person {
 interface CommitteeItem {
 	name: string;
 	leadLabel: string;
+	membersLabel: string;
 	lead: Person;
 	members: Person[];
 }
@@ -38,7 +39,7 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 					{item.members.length > 0 && (
 						<div class="members-row">
 							{item.members.map((member) => (
-								<PersonCard name={member.name} role="Membro" photo={member.photo} email={member.email} />
+								<PersonCard name={member.name} role={item.membersLabel} photo={member.photo} email={member.email} />
 							))}
 						</div>
 					)}
