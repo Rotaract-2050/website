@@ -7,8 +7,6 @@ seo:
 blocks:
   - _template: "RoleGrid"
     title: "District Executive 2026/2027"
-    showDisclaimer: true
-    disclaimerText: "Names and emails confirmed by the district (no email available for the Past RD). Photos not yet available, and role titles are a draft translation pending confirmation from the district."
     items:
       - initials: "RD"
         name: "Sebastiano Fortugno"
@@ -47,8 +45,6 @@ blocks:
         role: "District Representative 2025/2026 (Past RD)"
   - _template: "RoleGrid"
     title: "Zone Delegates 2026/2027"
-    showDisclaimer: true
-    disclaimerText: "Names and emails confirmed by the district. Photos not yet available — draft pending confirmation from the district."
     items:
       - initials: "DZ"
         name: "Davide Bosio"
@@ -68,8 +64,6 @@ blocks:
         email: "dz.padana@rotaract2050.org"
   - _template: "CommitteeGrid"
     title: "District Committees 2026/2027"
-    showDisclaimer: true
-    disclaimerText: "Names and emails confirmed by the district (no email available for the Interact Delegate). Photos not yet available, and committee/delegation names are a draft translation pending confirmation from the district."
     items:
       - name: "Internal Action"
         leadLabel: "Chair"

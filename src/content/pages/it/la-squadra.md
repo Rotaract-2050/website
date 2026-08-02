@@ -7,8 +7,6 @@ seo:
 blocks:
   - _template: "RoleGrid"
     title: "Esecutivo Distrettuale A.R. 2026/2027"
-    showDisclaimer: true
-    disclaimerText: "Nomi ed email confermati dal distretto (email non disponibile per il Past RD). Foto non ancora disponibili — bozza in attesa di conferma dal distretto."
     items:
       - initials: "RD"
         name: "Sebastiano Fortugno"
@@ -47,8 +45,6 @@ blocks:
         role: "Rappresentante Distrettuale A.R. 2025/2026 (Past RD)"
   - _template: "RoleGrid"
     title: "Delegati di Zona A.R. 2026/2027"
-    showDisclaimer: true
-    disclaimerText: "Nomi ed email confermati dal distretto. Foto non ancora disponibili — bozza in attesa di conferma dal distretto."
     items:
       - initials: "DZ"
         name: "Davide Bosio"
@@ -68,8 +64,6 @@ blocks:
         email: "dz.padana@rotaract2050.org"
   - _template: "CommitteeGrid"
     title: "Commissioni Distrettuali A.R. 2026/2027"
-    showDisclaimer: true
-    disclaimerText: "Nomi ed email confermati dal distretto (email non disponibile per il Delegato Interact). Foto non ancora disponibili — bozza in attesa di conferma dal distretto."
     items:
       - name: "Azione Interna"
         leadLabel: "Presidente"
