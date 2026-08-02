@@ -24,6 +24,12 @@ html {
 	-webkit-text-size-adjust: 100%;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
+}
+
 body {
 	margin: 0;
 	font-family: var(--font-body);
@@ -35,13 +41,31 @@ body {
 a {
 	color: var(--color-pink);
 	text-decoration: none;
+	transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 a:hover {
 	color: var(--color-pink-dark);
 }
 
+button {
+	transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
 img {
 	max-width: 100%;
 	display: block;
+}
+
+/* Scroll-reveal: the hiding class is added by BaseLayout's script, never by
+   default, so content stays fully visible if JS fails to load or run. */
+.reveal-init {
+	opacity: 0;
+	transform: translateY(24px);
+	transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal-init.is-visible {
+	opacity: 1;
+	transform: translateY(0);
 }

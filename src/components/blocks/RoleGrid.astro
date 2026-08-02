@@ -72,6 +72,12 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		border-radius: 14px;
 		padding: 26px 18px;
 		text-align: center;
+		transition: transform 0.25s ease, box-shadow 0.25s ease;
+	}
+
+	.role-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 10px 24px rgba(11, 37, 69, 0.12);
 	}
 
 	.role-initials {

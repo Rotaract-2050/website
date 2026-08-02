@@ -31,7 +31,7 @@ const { lang, blocks } = Astro.props;
 ---
 
 {blocks.filter(nonNull).map((block) => (
-	<div data-tina-field={tinaField(block)}>
+	<div data-tina-field={tinaField(block)} data-reveal={block.__typename === 'PagesBlocksHero' ? undefined : true}>
 		{block.__typename === 'PagesBlocksHero' && (
 			<Hero
 				lang={lang}

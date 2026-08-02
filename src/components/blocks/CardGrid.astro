@@ -68,9 +68,11 @@ const { lang, title, items } = Astro.props;
 		padding: 24px 20px;
 		text-align: center;
 		color: inherit;
+		transition: transform 0.25s ease, box-shadow 0.25s ease;
 	}
 
 	.card:hover {
+		transform: translateY(-4px);
 		box-shadow: 0 8px 24px rgba(11, 37, 69, 0.12);
 	}
 

@@ -58,6 +58,12 @@ const { title, items } = Astro.props;
 		padding: 28px 22px;
 		text-align: center;
 		box-shadow: 0 4px 16px rgba(11, 37, 69, 0.06);
+		transition: transform 0.25s ease, box-shadow 0.25s ease;
+	}
+
+	.value-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 10px 26px rgba(11, 37, 69, 0.13);
 	}
 
 	.value-letter {
