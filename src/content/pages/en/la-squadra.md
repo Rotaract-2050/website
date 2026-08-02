@@ -8,7 +8,7 @@ blocks:
   - _template: "RoleGrid"
     title: "District Executive 2026/2027"
     showDisclaimer: true
-    disclaimerText: "* Names and emails confirmed by the district (no email available for the Past RD). Photos not yet available, and role titles are a draft translation pending confirmation from the district."
+    disclaimerText: "Names and emails confirmed by the district (no email available for the Past RD). Photos not yet available, and role titles are a draft translation pending confirmation from the district."
     items:
       - initials: "RD"
         name: "Sebastiano Fortugno"
@@ -48,7 +48,7 @@ blocks:
   - _template: "RoleGrid"
     title: "Zone Delegates 2026/2027"
     showDisclaimer: true
-    disclaimerText: "* Names and emails confirmed by the district. Photos not yet available — draft pending confirmation from the district."
+    disclaimerText: "Names and emails confirmed by the district. Photos not yet available — draft pending confirmation from the district."
     items:
       - initials: "DZ"
         name: "Davide Bosio"
@@ -69,10 +69,11 @@ blocks:
   - _template: "CommitteeGrid"
     title: "District Committees 2026/2027"
     showDisclaimer: true
-    disclaimerText: "* Names and emails confirmed by the district (no email available for the Interact Delegate). Photos not yet available, and committee/delegation names are a draft translation pending confirmation from the district."
+    disclaimerText: "Names and emails confirmed by the district (no email available for the Interact Delegate). Photos not yet available, and committee/delegation names are a draft translation pending confirmation from the district."
     items:
       - name: "Internal Action"
         leadLabel: "Chair"
+        membersLabel: "Member"
         lead:
           name: "Alexander Rispo"
           email: "azione.interna@rotaract2050.org"
@@ -83,6 +84,7 @@ blocks:
           - name: "Jessica Bontempi"
       - name: "Professional Action"
         leadLabel: "Chair"
+        membersLabel: "Member"
         lead:
           name: "Giovanni Maria Tosi"
           email: "azione.professionale@rotaract2050.org"
@@ -93,6 +95,7 @@ blocks:
           - name: "Simone Costa"
       - name: "Public Interest Action"
         leadLabel: "Chair"
+        membersLabel: "Member"
         lead:
           name: "Silvia Vetturi"
           email: "azione.pubblico.interesse@rotaract2050.org"
@@ -103,6 +106,7 @@ blocks:
           - name: "Clara Brugali"
       - name: "International Action"
         leadLabel: "Chair"
+        membersLabel: "Member"
         lead:
           name: "Alessio Alberti"
           email: "azione.internazionale@rotaract2050.org"
@@ -117,6 +121,7 @@ blocks:
           email: "eric@rotaract2050.org"
       - name: "Youth Action"
         leadLabel: "Chair"
+        membersLabel: "Member"
         lead:
           name: "Maria Gloria Garavani"
           email: "azione.giovani@rotaract2050.org"
@@ -132,6 +137,7 @@ blocks:
           email: "scambio.giovani@rotaract2050.org"
       - name: "Culture"
         leadLabel: "Chair"
+        membersLabel: "Member"
         lead:
           name: "Federico Magni"
           email: "cultura@rotaract2050.org"
@@ -142,6 +148,7 @@ blocks:
           - name: "Lucrezia Giuseppina Zandon"
       - name: "Public Image"
         leadLabel: "Chair"
+        membersLabel: "Member"
         lead:
           name: "Federica Grassi"
           email: "immagine.pubblica@rotaract2050.org"
@@ -152,6 +159,7 @@ blocks:
           - name: "Filippo Cantini"
       - name: "Dispute Resolution, Bylaws and Budget"
         leadLabel: "Chair"
+        membersLabel: "Member"
         lead:
           name: "Giovanni Scielzo"
           email: "risoluzione.controversie@rotaract2050.org"
