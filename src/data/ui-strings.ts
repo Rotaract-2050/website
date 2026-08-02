@@ -6,9 +6,7 @@ export interface UiStrings {
 		distrettoMenu: string;
 		distrettoSub: string;
 		story: string;
-		esecutivo: string;
-		delegati: string;
-		commissioni: string;
+		squadra: string;
 		club: string;
 		news: string;
 		eventi: string;
@@ -107,9 +105,7 @@ const IT: UiStrings = {
 		distrettoMenu: 'IL DISTRETTO',
 		distrettoSub: 'Panoramica',
 		story: 'LA STORIA',
-		esecutivo: 'ESECUTIVO DISTRETTUALE',
-		delegati: 'DELEGATI DI ZONA',
-		commissioni: 'COMMISSIONI DISTRETTUALI',
+		squadra: 'LA SQUADRA',
 		club: 'I CLUB',
 		news: 'NEWS',
 		eventi: 'EVENTI',
@@ -207,9 +203,7 @@ const EN: UiStrings = {
 		distrettoMenu: 'THE DISTRICT',
 		distrettoSub: 'Overview',
 		story: 'OUR STORY',
-		esecutivo: 'DISTRICT EXECUTIVE',
-		delegati: 'ZONE DELEGATES',
-		commissioni: 'DISTRICT COMMITTEES',
+		squadra: 'THE TEAM',
 		club: 'CLUBS',
 		news: 'NEWS',
 		eventi: 'EVENTS',
