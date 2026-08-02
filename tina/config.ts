@@ -143,9 +143,56 @@ const roleGridTemplate = {
 			label: 'Ruoli',
 			list: true,
 			fields: [
-				{ type: 'string' as const, name: 'initials', label: 'Iniziali' },
-				{ type: 'string' as const, name: 'name', label: 'Nome' },
+				{ type: 'string' as const, name: 'initials', label: 'Iniziali (fallback se manca la foto)' },
+				{ type: 'image' as const, name: 'photo', label: 'Foto' },
+				{ type: 'string' as const, name: 'name', label: 'Nome e cognome' },
 				{ type: 'string' as const, name: 'role', label: 'Ruolo' },
+				{ type: 'string' as const, name: 'email', label: 'Email (se disponibile)' },
+			],
+		},
+	],
+};
+
+// A commission/delegation grid: each item is either a committee (president + members) or a
+// standalone delegation (president only, no members) — the "members row" simply doesn't render
+// when the list is empty, so both shapes share one template instead of two.
+const committeeGridTemplate = {
+	name: 'CommitteeGrid',
+	label: 'Griglia commissioni',
+	fields: [
+		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
+		{ type: 'boolean' as const, name: 'showDisclaimer', label: 'Mostra disclaimer' },
+		{ type: 'string' as const, name: 'disclaimerText', label: 'Testo disclaimer' },
+		{
+			type: 'object' as const,
+			name: 'items',
+			label: 'Commissioni / Deleghe',
+			list: true,
+			fields: [
+				{ type: 'string' as const, name: 'name', label: 'Nome commissione/delega' },
+				{ type: 'string' as const, name: 'leadLabel', label: 'Etichetta responsabile (es. "Presidente" o "Delegato")' },
+				{ type: 'string' as const, name: 'membersLabel', label: 'Etichetta membri (es. "Membro")' },
+				{
+					type: 'object' as const,
+					name: 'lead',
+					label: 'Responsabile',
+					fields: [
+						{ type: 'image' as const, name: 'photo', label: 'Foto' },
+						{ type: 'string' as const, name: 'name', label: 'Nome e cognome' },
+						{ type: 'string' as const, name: 'email', label: 'Email (se disponibile)' },
+					],
+				},
+				{
+					type: 'object' as const,
+					name: 'members',
+					label: 'Membri',
+					list: true,
+					fields: [
+						{ type: 'image' as const, name: 'photo', label: 'Foto' },
+						{ type: 'string' as const, name: 'name', label: 'Nome e cognome' },
+						{ type: 'string' as const, name: 'email', label: 'Email (se disponibile)' },
+					],
+				},
 			],
 		},
 	],
@@ -311,6 +358,7 @@ export default defineConfig({
 							cardGridTemplate,
 							valuesGridTemplate,
 							roleGridTemplate,
+							committeeGridTemplate,
 							eventsCalendarTemplate,
 							newsTickerTemplate,
 							newsGridTemplate,

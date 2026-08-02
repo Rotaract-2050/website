@@ -6,9 +6,7 @@ export interface UiStrings {
 		distrettoMenu: string;
 		distrettoSub: string;
 		story: string;
-		esecutivo: string;
-		delegati: string;
-		commissioni: string;
+		squadra: string;
 		club: string;
 		news: string;
 		eventi: string;
@@ -79,6 +77,8 @@ export interface UiStrings {
 		empty: string;
 		yearFilterLabel: string;
 		upcomingBadge: string;
+		locationLabel: string;
+		worksLocationLabel: string;
 		dinnerLocationLabel: string;
 		ticketsButtonLabel: string;
 		photoButtonLabel: string;
@@ -105,9 +105,7 @@ const IT: UiStrings = {
 		distrettoMenu: 'IL DISTRETTO',
 		distrettoSub: 'Panoramica',
 		story: 'LA STORIA',
-		esecutivo: 'ESECUTIVO DISTRETTUALE',
-		delegati: 'DELEGATI DI ZONA',
-		commissioni: 'COMMISSIONI DISTRETTUALI',
+		squadra: 'LA SQUADRA',
 		club: 'I CLUB',
 		news: 'NEWS',
 		eventi: 'EVENTI',
@@ -191,6 +189,8 @@ const IT: UiStrings = {
 		empty: 'Nessun evento pubblicato al momento.',
 		yearFilterLabel: 'Filtra per anno rotariano',
 		upcomingBadge: 'IN ARRIVO',
+		locationLabel: 'Location',
+		worksLocationLabel: 'Lavori',
 		dinnerLocationLabel: 'Cena',
 		ticketsButtonLabel: 'Info e biglietti',
 		photoButtonLabel: 'Guarda le foto',
@@ -203,9 +203,7 @@ const EN: UiStrings = {
 		distrettoMenu: 'THE DISTRICT',
 		distrettoSub: 'Overview',
 		story: 'OUR STORY',
-		esecutivo: 'DISTRICT EXECUTIVE',
-		delegati: 'ZONE DELEGATES',
-		commissioni: 'DISTRICT COMMITTEES',
+		squadra: 'THE TEAM',
 		club: 'CLUBS',
 		news: 'NEWS',
 		eventi: 'EVENTS',
@@ -289,6 +287,8 @@ const EN: UiStrings = {
 		empty: 'No events published yet.',
 		yearFilterLabel: 'Filter by Rotary year',
 		upcomingBadge: 'UPCOMING',
+		locationLabel: 'Location',
+		worksLocationLabel: 'Sessions',
 		dinnerLocationLabel: 'Dinner',
 		ticketsButtonLabel: 'Info & tickets',
 		photoButtonLabel: 'View the photos',

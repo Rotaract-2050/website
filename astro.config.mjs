@@ -10,7 +10,7 @@ import react from '@astrojs/react';
 const SITE = 'https://rotaract2050.org';
 // Every page is server-rendered (required for Tina's edit-mode middleware), so there
 // are no prerendered routes for @astrojs/sitemap to auto-discover — list them explicitly.
-const PAGE_SLUGS = ['', 'distretto', 'club', 'esecutivo', 'delegati', 'commissioni'];
+const PAGE_SLUGS = ['', 'distretto', 'club', 'la-squadra'];
 
 const NEWS_DIR = fileURLToPath(new URL('./src/content/news', import.meta.url));
 

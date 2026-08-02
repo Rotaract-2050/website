@@ -1,0 +1,95 @@
+---
+import { Image } from 'astro:assets';
+import ImageSlot from './ImageSlot.astro';
+
+interface Props {
+	name: string;
+	role: string;
+	photo?: string;
+	initials?: string;
+	email?: string;
+}
+
+const { name, role, photo, initials, email } = Astro.props;
+---
+
+<div class="person-card">
+	<div class="person-avatar">
+		{photo ? (
+			<Image src={photo} alt={name} width={160} height={160} class="person-photo" />
+		) : initials ? (
+			<div class="person-initials">{initials}</div>
+		) : (
+			<ImageSlot label={name} shape="circle" class="person-photo" />
+		)}
+	</div>
+	<div class="person-name">{name}</div>
+	<div class="person-role">{role}</div>
+	{email && (
+		<a class="person-email" href={`mailto:${email}`}>{email}</a>
+	)}
+</div>
+
+<style>
+	.person-card {
+		background: var(--color-bg);
+		border-radius: 14px;
+		padding: 26px 18px;
+		text-align: center;
+		transition: transform 0.25s ease, box-shadow 0.25s ease;
+	}
+
+	.person-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 10px 24px rgba(11, 37, 69, 0.12);
+	}
+
+	.person-avatar {
+		width: 88px;
+		height: 88px;
+		margin: 0 auto 14px;
+	}
+
+	.person-avatar :global(.person-photo) {
+		width: 88px;
+		height: 88px;
+		border-radius: 50%;
+		object-fit: cover;
+	}
+
+	.person-initials {
+		width: 88px;
+		height: 88px;
+		border-radius: 50%;
+		background: var(--color-navy);
+		color: #fff;
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 22px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0 auto;
+	}
+
+	.person-name {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 15px;
+		color: var(--color-navy);
+		margin-bottom: 4px;
+	}
+
+	.person-role {
+		font-size: 12px;
+		color: var(--color-text);
+	}
+
+	.person-email {
+		display: inline-block;
+		margin-top: 6px;
+		font-size: 11px;
+		color: var(--color-pink);
+		word-break: break-word;
+	}
+</style>

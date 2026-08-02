@@ -56,3 +56,29 @@ const alternateHref = alternateHrefProp ?? getRelativeLocaleUrl(otherLang, pageS
 		min-height: 100vh;
 	}
 </style>
+
+<script>
+	function initScrollReveal() {
+		const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+		if (!els.length) return;
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+
+		els.forEach((el) => el.classList.add('reveal-init'));
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('is-visible');
+						observer.unobserve(entry.target);
+					}
+				}
+			},
+			{ threshold: 0.12, rootMargin: '0px 0px -10% 0px' }
+		);
+
+		els.forEach((el) => observer.observe(el));
+	}
+
+	initScrollReveal();
+</script>

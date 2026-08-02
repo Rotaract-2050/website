@@ -1,0 +1,128 @@
+---
+import PersonCard from '../PersonCard.astro';
+
+interface Person {
+	name: string;
+	photo?: string;
+	email?: string;
+}
+
+interface CommitteeItem {
+	name: string;
+	leadLabel: string;
+	membersLabel: string;
+	lead: Person;
+	members: Person[];
+}
+
+interface Props {
+	title: string;
+	showDisclaimer?: boolean;
+	disclaimerText?: string;
+	items: CommitteeItem[];
+}
+
+const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
+---
+
+<section class="committees">
+	<div class="section-inner">
+		<h2 class="section-title center tight">{title}</h2>
+		{showDisclaimer && disclaimerText && <p class="disclaimer">{disclaimerText}</p>}
+		<div class="committee-list">
+			{items.map((item) => (
+				<div class="committee">
+					<h3 class="committee-name">{item.name}</h3>
+					<div class="lead-row">
+						<PersonCard name={item.lead.name} role={item.leadLabel} photo={item.lead.photo} email={item.lead.email} />
+					</div>
+					{item.members.length > 0 && (
+						<div class="members-row">
+							{item.members.map((member) => (
+								<PersonCard name={member.name} role={item.membersLabel} photo={member.photo} email={member.email} />
+							))}
+						</div>
+					)}
+				</div>
+			))}
+		</div>
+	</div>
+</section>
+
+<style>
+	.committees {
+		background: #fff;
+		padding: 80px 40px;
+	}
+
+	.section-inner {
+		max-width: var(--content-max);
+		margin: 0 auto;
+	}
+
+	.section-title {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 28px;
+		color: var(--color-navy);
+		text-transform: uppercase;
+		margin: 0 0 34px;
+	}
+
+	.section-title.center {
+		text-align: center;
+	}
+
+	.section-title.tight {
+		margin-bottom: 14px;
+	}
+
+	.disclaimer {
+		font-size: 12px;
+		color: var(--color-muted);
+		font-style: italic;
+		text-align: center;
+		margin: 0 0 34px;
+	}
+
+	.committee-list {
+		display: flex;
+		flex-direction: column;
+		gap: 48px;
+	}
+
+	.committee-name {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 18px;
+		color: var(--color-navy);
+		text-align: center;
+		margin: 0 0 20px;
+	}
+
+	.lead-row {
+		display: grid;
+		grid-template-columns: minmax(0, 220px);
+		justify-content: center;
+		margin-bottom: 20px;
+	}
+
+	.members-row {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 20px;
+	}
+
+	@media (max-width: 900px) {
+		.members-row {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (max-width: 720px) {
+		.committees {
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+	}
+</style>

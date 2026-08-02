@@ -8,6 +8,7 @@ import SplitSection from './blocks/SplitSection.astro';
 import CardGrid from './blocks/CardGrid.astro';
 import ValuesGrid from './blocks/ValuesGrid.astro';
 import RoleGrid from './blocks/RoleGrid.astro';
+import CommitteeGrid from './blocks/CommitteeGrid.astro';
 import EventsCalendar from './blocks/EventsCalendar.astro';
 import NewsTicker from './blocks/NewsTicker.astro';
 import NewsGrid from './blocks/NewsGrid.astro';
@@ -31,7 +32,7 @@ const { lang, blocks } = Astro.props;
 ---
 
 {blocks.filter(nonNull).map((block) => (
-	<div data-tina-field={tinaField(block)}>
+	<div data-tina-field={tinaField(block)} data-reveal={block.__typename === 'PagesBlocksHero' ? undefined : true}>
 		{block.__typename === 'PagesBlocksHero' && (
 			<Hero
 				lang={lang}
@@ -93,9 +94,33 @@ const { lang, blocks } = Astro.props;
 				showDisclaimer={block.showDisclaimer ?? false}
 				disclaimerText={block.disclaimerText ?? undefined}
 				items={(block.items ?? []).filter(nonNull).map((i) => ({
-					initials: i.initials ?? '',
+					initials: i.initials ?? undefined,
+					photo: i.photo ?? undefined,
 					name: i.name ?? '',
 					role: i.role ?? '',
+					email: i.email ?? undefined,
+				}))}
+			/>
+		)}
+		{block.__typename === 'PagesBlocksCommitteeGrid' && (
+			<CommitteeGrid
+				title={block.title}
+				showDisclaimer={block.showDisclaimer ?? false}
+				disclaimerText={block.disclaimerText ?? undefined}
+				items={(block.items ?? []).filter(nonNull).map((i) => ({
+					name: i.name ?? '',
+					leadLabel: i.leadLabel || 'Presidente',
+					membersLabel: i.membersLabel || 'Membro',
+					lead: {
+						name: i.lead?.name ?? '',
+						photo: i.lead?.photo ?? undefined,
+						email: i.lead?.email ?? undefined,
+					},
+					members: (i.members ?? []).filter(nonNull).map((m) => ({
+						name: m.name ?? '',
+						photo: m.photo ?? undefined,
+						email: m.email ?? undefined,
+					})),
 				}))}
 			/>
 		)}

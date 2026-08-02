@@ -1,9 +1,11 @@
 ---
+import PersonCard from '../PersonCard.astro';
+
 interface Props {
 	title: string;
 	showDisclaimer?: boolean;
 	disclaimerText?: string;
-	items: { initials: string; name: string; role: string }[];
+	items: { initials?: string; photo?: string; name: string; role: string; email?: string }[];
 }
 
 const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
@@ -15,11 +17,7 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		{showDisclaimer && disclaimerText && <p class="disclaimer">{disclaimerText}</p>}
 		<div class="roles-grid">
 			{items.map((role) => (
-				<div class="role-card">
-					<div class="role-initials">{role.initials}</div>
-					<div class="role-name">{role.name}</div>
-					<div class="role-title">{role.role}</div>
-				</div>
+				<PersonCard name={role.name} role={role.role} photo={role.photo} initials={role.initials} email={role.email} />
 			))}
 		</div>
 	</div>
@@ -72,6 +70,12 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		border-radius: 14px;
 		padding: 26px 18px;
 		text-align: center;
+		transition: transform 0.25s ease, box-shadow 0.25s ease;
+	}
+
+	.role-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 10px 24px rgba(11, 37, 69, 0.12);
 	}
 
 	.role-initials {
