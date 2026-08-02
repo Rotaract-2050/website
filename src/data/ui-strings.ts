@@ -95,6 +95,8 @@ export const SOCIAL_LINKS: { name: SocialName; label: string; href: string }[] =
 export const UTILITY_LINKS = [
 	{ label: 'ROTARY DISTRETTO 2050', href: 'https://www.rotary2050.org/site/' },
 	{ label: 'ROTARY INTERNATIONAL', href: 'https://www.rotary.org/' },
+	{ label: 'MY ROTARY', href: 'https://my.rotary.org/it' },
+	{ label: 'ROTARY BRAND CENTER', href: 'https://brandcenter.rotary.org/it-it/our-brand/brand-elements' },
 ];
 
 const IT: UiStrings = {
