@@ -1,30 +1,55 @@
 ---
 import PersonCard from '../PersonCard.astro';
 
+interface Person {
+	name: string;
+	photo?: string;
+	email?: string;
+}
+
+interface CommitteeItem {
+	name: string;
+	leadLabel: string;
+	lead: Person;
+	members: Person[];
+}
+
 interface Props {
 	title: string;
 	showDisclaimer?: boolean;
 	disclaimerText?: string;
-	items: { initials?: string; photo?: string; name: string; role: string; email?: string }[];
+	items: CommitteeItem[];
 }
 
 const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 ---
 
-<section class="governance">
+<section class="committees">
 	<div class="section-inner">
 		<h2 class="section-title center tight">{title}</h2>
 		{showDisclaimer && disclaimerText && <p class="disclaimer">{disclaimerText}</p>}
-		<div class="roles-grid">
-			{items.map((role) => (
-				<PersonCard name={role.name} role={role.role} photo={role.photo} initials={role.initials} email={role.email} />
+		<div class="committee-list">
+			{items.map((item) => (
+				<div class="committee">
+					<h3 class="committee-name">{item.name}</h3>
+					<div class="lead-row">
+						<PersonCard name={item.lead.name} role={item.leadLabel} photo={item.lead.photo} email={item.lead.email} />
+					</div>
+					{item.members.length > 0 && (
+						<div class="members-row">
+							{item.members.map((member) => (
+								<PersonCard name={member.name} role="Membro" photo={member.photo} email={member.email} />
+							))}
+						</div>
+					)}
+				</div>
 			))}
 		</div>
 	</div>
 </section>
 
 <style>
-	.governance {
+	.committees {
 		background: #fff;
 		padding: 80px 40px;
 	}
@@ -59,61 +84,42 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		margin: 0 0 34px;
 	}
 
-	.roles-grid {
+	.committee-list {
+		display: flex;
+		flex-direction: column;
+		gap: 48px;
+	}
+
+	.committee-name {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 18px;
+		color: var(--color-navy);
+		text-align: center;
+		margin: 0 0 20px;
+	}
+
+	.lead-row {
+		display: grid;
+		grid-template-columns: minmax(0, 220px);
+		justify-content: center;
+		margin-bottom: 20px;
+	}
+
+	.members-row {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
-		gap: 24px;
-	}
-
-	.role-card {
-		background: var(--color-bg);
-		border-radius: 14px;
-		padding: 26px 18px;
-		text-align: center;
-		transition: transform 0.25s ease, box-shadow 0.25s ease;
-	}
-
-	.role-card:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 10px 24px rgba(11, 37, 69, 0.12);
-	}
-
-	.role-initials {
-		width: 56px;
-		height: 56px;
-		border-radius: 50%;
-		background: var(--color-navy);
-		color: #fff;
-		font-family: var(--font-heading);
-		font-weight: 600;
-		font-size: 18px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin: 0 auto 14px;
-	}
-
-	.role-name {
-		font-family: var(--font-heading);
-		font-weight: 600;
-		font-size: 15px;
-		color: var(--color-navy);
-		margin-bottom: 4px;
-	}
-
-	.role-title {
-		font-size: 12px;
-		color: var(--color-text);
+		gap: 20px;
 	}
 
 	@media (max-width: 900px) {
-		.roles-grid {
+		.members-row {
 			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 
 	@media (max-width: 720px) {
-		.governance {
+		.committees {
 			padding-left: 20px;
 			padding-right: 20px;
 		}
