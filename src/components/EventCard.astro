@@ -14,6 +14,7 @@ interface Props {
 	upcomingLabel: string;
 	locationLavori?: string | null;
 	locationCena?: string | null;
+	locationLabel: string;
 	worksLocationLabel: string;
 	dinnerLocationLabel: string;
 	excerpt?: string | null;
@@ -35,6 +36,7 @@ const {
 	upcomingLabel,
 	locationLavori,
 	locationCena,
+	locationLabel,
 	worksLocationLabel,
 	dinnerLocationLabel,
 	excerpt,
@@ -74,7 +76,7 @@ const {
 			</>
 		) : (
 			(locationLavori || locationCena) && (
-				<div class="event-meta event-location">{locationLavori || locationCena}</div>
+				<div class="event-meta event-location"><span class="event-location-label">{locationLabel}:</span> {locationLavori || locationCena}</div>
 			)
 		)}
 		{excerpt && <p class="event-excerpt">{excerpt}</p>}
@@ -162,6 +164,11 @@ const {
 
 	.event-meta:last-of-type {
 		margin-bottom: 14px;
+	}
+
+	.event-location {
+		text-transform: none;
+		letter-spacing: normal;
 	}
 
 	.event-location-label {

@@ -79,6 +79,7 @@ export interface UiStrings {
 		empty: string;
 		yearFilterLabel: string;
 		upcomingBadge: string;
+		locationLabel: string;
 		worksLocationLabel: string;
 		dinnerLocationLabel: string;
 		ticketsButtonLabel: string;
@@ -192,6 +193,7 @@ const IT: UiStrings = {
 		empty: 'Nessun evento pubblicato al momento.',
 		yearFilterLabel: 'Filtra per anno rotariano',
 		upcomingBadge: 'IN ARRIVO',
+		locationLabel: 'Location',
 		worksLocationLabel: 'Lavori',
 		dinnerLocationLabel: 'Cena',
 		ticketsButtonLabel: 'Info e biglietti',
@@ -291,6 +293,7 @@ const EN: UiStrings = {
 		empty: 'No events published yet.',
 		yearFilterLabel: 'Filter by Rotary year',
 		upcomingBadge: 'UPCOMING',
+		locationLabel: 'Location',
 		worksLocationLabel: 'Sessions',
 		dinnerLocationLabel: 'Dinner',
 		ticketsButtonLabel: 'Info & tickets',
