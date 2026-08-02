@@ -10,9 +10,12 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-if [ ! -d node_modules ]; then
-  echo "node_modules mancante, eseguo npm ci..."
+LOCK_HASH="$(sha256sum package-lock.json | cut -d' ' -f1)"
+STAMP=node_modules/.package-lock.hash
+if [ ! -d node_modules ] || [ ! -f "$STAMP" ] || [ "$(cat "$STAMP" 2>/dev/null)" != "$LOCK_HASH" ]; then
+  echo "package-lock.json cambiato (o node_modules mancante), eseguo npm ci..."
   npm ci
+  echo "$LOCK_HASH" > "$STAMP"
 fi
 
 if [ ! -f .env ]; then
