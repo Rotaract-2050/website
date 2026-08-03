@@ -227,7 +227,8 @@ const committeeGridTemplate = {
 };
 
 // Events themselves are not Tina content: EventsCalendar.astro fetches them live from the
-// district's public Google Calendar (src/lib/calendar.ts). Only the section title is editorial.
+// district's public Google Calendar (src/lib/calendar.ts), whose ID is set below (calendarId).
+// Only the events themselves are non-editorial — title and calendar source are.
 const eventsCalendarTemplate = {
 	name: 'EventsCalendar',
 	label: 'Calendario eventi',
