@@ -23,8 +23,10 @@ const clubs = (clubsData.clubsConnection.edges ?? []).map((edge) => edge?.node).
 
 const zoneGroups = zones.map((zone) => ({
 	name: zone.name,
+	nameFieldAttr: tinaField(zone, 'name'),
 	color: zone.color,
 	description: lang === 'en' ? zone.descriptionEn || zone.description : zone.description,
+	descriptionFieldAttr: tinaField(zone, lang === 'en' && zone.descriptionEn ? 'descriptionEn' : 'description'),
 	clubs: clubs.filter((club) => club.zone?.name === zone.name),
 }));
 ---
@@ -33,15 +35,15 @@ const zoneGroups = zones.map((zone) => ({
 
 <section class="club-list">
 	<div class="section-inner">
-		<p class="intro">{intro}</p>
-		<p class="disclaimer">{disclaimer}</p>
+		{intro && <p class="intro">{intro}</p>}
+		{disclaimer && <p class="disclaimer">{disclaimer}</p>}
 
 		{zoneGroups.map((zone) => (
 			<div class="zone-block">
-				<h2 class="zone-heading" style={zone.color ? `color: ${zone.color}; border-color: ${zone.color};` : undefined}>
+				<h2 class="zone-heading" style={zone.color ? `color: ${zone.color}; border-color: ${zone.color};` : undefined} data-tina-field={zone.nameFieldAttr}>
 					{zone.name}
 				</h2>
-				{zone.description && <p class="zone-description">{zone.description}</p>}
+				{zone.description && <p class="zone-description" data-tina-field={zone.descriptionFieldAttr}>{zone.description}</p>}
 				<div class="club-grid">
 					{zone.clubs.map((club) => (
 						<div class="club-card" data-tina-field={tinaField(club)}>

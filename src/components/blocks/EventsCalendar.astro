@@ -1,17 +1,19 @@
 ---
 import { uiStrings, type Lang } from '../../data/ui-strings';
-import { getDistrictEvents, eventDateKey, CALENDAR_VIEW_URL, CALENDAR_SUBSCRIBE_URL, type DistrictEvent } from '../../lib/calendar';
+import { getDistrictEvents, eventDateKey, calendarUrls, type DistrictEvent } from '../../lib/calendar';
 
 interface Props {
 	lang: Lang;
 	title: string;
+	calendarId?: string;
 }
 
-const { lang, title } = Astro.props;
+const { lang, title, calendarId } = Astro.props;
 const t = uiStrings[lang].calendar;
+const { viewUrl: CALENDAR_VIEW_URL, subscribeUrl: CALENDAR_SUBSCRIBE_URL } = calendarUrls(calendarId);
 
 const forceRefresh = Astro.url.searchParams.has('refresh');
-const result = await getDistrictEvents({ forceRefresh });
+const result = await getDistrictEvents({ calendarId, forceRefresh });
 const events = result.ok ? result.events : [];
 
 const todayKey = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Rome' }).format(new Date());

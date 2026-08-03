@@ -26,6 +26,7 @@ const heroTemplate = {
 	label: 'Hero (Carosello)',
 	fields: [
 		{ type: 'string' as const, name: 'ctaHref', label: 'Link pulsante (slug pagina)' },
+		{ type: 'boolean' as const, name: 'autoplay', label: 'Scorrimento automatico slide' },
 		{
 			type: 'object' as const,
 			name: 'slides',
@@ -33,6 +34,7 @@ const heroTemplate = {
 			list: true,
 			ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 			fields: [
+				{ type: 'image' as const, name: 'image', label: 'Foto di sfondo' },
 				{ type: 'string' as const, name: 'eyebrow', label: 'Etichetta' },
 				{ type: 'string' as const, name: 'title', label: 'Titolo' },
 				{ type: 'string' as const, name: 'subtitle', label: 'Sottotitolo', ui: { component: 'textarea' } },
@@ -146,6 +148,11 @@ const roleGridTemplate = {
 		{ type: 'boolean' as const, name: 'showDisclaimer', label: 'Mostra disclaimer' },
 		{ type: 'string' as const, name: 'disclaimerText', label: 'Testo disclaimer' },
 		{
+			type: 'boolean' as const,
+			name: 'highlightFirst',
+			label: 'Metti in evidenza il primo ruolo (card grande sopra gli altri)',
+		},
+		{
 			type: 'object' as const,
 			name: 'items',
 			label: 'Ruoli',
@@ -157,6 +164,16 @@ const roleGridTemplate = {
 				{ type: 'string' as const, name: 'name', label: 'Nome e cognome' },
 				{ type: 'string' as const, name: 'role', label: 'Ruolo' },
 				{ type: 'string' as const, name: 'email', label: 'Email (se disponibile)' },
+				{
+					type: 'string' as const,
+					name: 'themeMotto',
+					label: 'Motto dell’anno (solo per il ruolo in evidenza)',
+				},
+				{
+					type: 'image' as const,
+					name: 'themeLogo',
+					label: 'Logo distrettuale dell’anno (solo per il ruolo in evidenza)',
+				},
 			],
 		},
 	],
@@ -215,7 +232,16 @@ const eventsCalendarTemplate = {
 	name: 'EventsCalendar',
 	label: 'Calendario eventi',
 	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
-	fields: [{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true }],
+	fields: [
+		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
+		{
+			type: 'string' as const,
+			name: 'calendarId',
+			label: 'ID Calendario Google (opzionale)',
+			description:
+				'Da Google Calendar → Impostazioni del calendario → "Integra calendario" → "ID calendario" (es. admin@rotaract2050.org). Lascia vuoto per usare il calendario di default del distretto.',
+		},
+	],
 };
 
 // Ticker items are not Tina content: NewsTicker.astro fetches them live from an RSS feed

@@ -75,11 +75,11 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 	}
 
 	.section-title {
-		font-family: var(--font-heading);
+		font-family: var(--font-script);
 		font-weight: 700;
-		font-size: 28px;
-		color: var(--color-navy);
-		text-transform: uppercase;
+		font-size: 48px;
+		color: var(--color-pink);
+		text-transform: none;
 		margin: 0 0 34px;
 	}
 
@@ -122,15 +122,14 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 	}
 
 	.members-row {
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
 		gap: 20px;
 	}
 
-	@media (max-width: 900px) {
-		.members-row {
-			grid-template-columns: repeat(2, 1fr);
-		}
+	.members-row :global(.person-card) {
+		flex: 0 1 200px;
 	}
 
 	@media (max-width: 720px) {
