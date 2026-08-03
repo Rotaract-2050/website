@@ -6,7 +6,7 @@ seo:
   description: "The Rotaract District 2050 organizational chart for the 2026/2027 Rotary year: District Executive, Zone Delegates and Committees."
 blocks:
   - _template: "RoleGrid"
-    title: "District Executive 2026/2027"
+    title: "District Executive"
     items:
       - initials: "RD"
         name: "Sebastiano Fortugno"
@@ -44,7 +44,7 @@ blocks:
         name: "Lorenzo Pancini"
         role: "District Representative 2025/2026 (Past RD)"
   - _template: "RoleGrid"
-    title: "Zone Delegates 2026/2027"
+    title: "Zone Delegates"
     items:
       - initials: "DZ"
         name: "Davide Bosio"
@@ -63,7 +63,7 @@ blocks:
         role: "Zone Delegate — Padana"
         email: "dz.padana@rotaract2050.org"
   - _template: "CommitteeGrid"
-    title: "District Committees 2026/2027"
+    title: "District Committees"
     items:
       - name: "Internal Action"
         leadLabel: "Chair"

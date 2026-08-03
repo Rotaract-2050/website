@@ -6,7 +6,7 @@ seo:
   description: "L'organigramma del Distretto Rotaract 2050 per l'anno rotariano 2026/2027: Esecutivo Distrettuale, Delegati di Zona e Commissioni."
 blocks:
   - _template: "RoleGrid"
-    title: "Esecutivo Distrettuale A.R. 2026/2027"
+    title: "Esecutivo Distrettuale"
     items:
       - initials: "RD"
         name: "Sebastiano Fortugno"
@@ -44,7 +44,7 @@ blocks:
         name: "Lorenzo Pancini"
         role: "Rappresentante Distrettuale A.R. 2025/2026 (Past RD)"
   - _template: "RoleGrid"
-    title: "Delegati di Zona A.R. 2026/2027"
+    title: "Delegati di Zona"
     items:
       - initials: "DZ"
         name: "Davide Bosio"
@@ -63,7 +63,7 @@ blocks:
         role: "Delegato di Zona — Padana"
         email: "dz.padana@rotaract2050.org"
   - _template: "CommitteeGrid"
-    title: "Commissioni Distrettuali A.R. 2026/2027"
+    title: "Commissioni Distrettuali"
     items:
       - name: "Azione Interna"
         leadLabel: "Presidente"
