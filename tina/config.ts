@@ -7,18 +7,18 @@ const pageRouter = ({ document }: { document: { _sys: { breadcrumbs: string[] } 
 	return locale === 'it' ? `/${path}` : `/en/${path}`;
 };
 
+// news/events are single files (IT + EN fields together, like clubs/zones) — the router just
+// jumps to the IT (default-locale) route, same as clubs/zones get no router override at all.
 const newsRouter = ({ document }: { document: { _sys: { breadcrumbs: string[] } } }) => {
-	const [locale, ...rest] = document._sys.breadcrumbs;
-	const slug = rest.join('/');
-	return locale === 'it' ? `/news/${slug}` : `/en/news/${slug}`;
+	const slug = document._sys.breadcrumbs.join('/');
+	return `/news/${slug}`;
 };
 
 // Past events have no dedicated detail page (single archive page, per district decision):
 // the router jumps straight to the event's anchor on the archive list instead of a route.
 const eventsRouter = ({ document }: { document: { _sys: { breadcrumbs: string[] } } }) => {
-	const [locale, ...rest] = document._sys.breadcrumbs;
-	const slug = rest.join('/');
-	return locale === 'it' ? `/eventi#${slug}` : `/en/eventi#${slug}`;
+	const slug = document._sys.breadcrumbs.join('/');
+	return `/eventi#${slug}`;
 };
 
 const heroTemplate = {
@@ -479,7 +479,8 @@ export default defineConfig({
 				format: 'md',
 				ui: { router: newsRouter },
 				fields: [
-					{ type: 'string', name: 'title', label: 'Titolo', isTitle: true, required: true },
+					{ type: 'string', name: 'title', label: 'Titolo (IT)', isTitle: true, required: true },
+					{ type: 'string', name: 'titleEn', label: 'Titolo (EN)' },
 					{
 						type: 'string',
 						name: 'scope',
@@ -496,21 +497,25 @@ export default defineConfig({
 						list: true,
 						fields: [{ type: 'reference', name: 'club', label: 'Club', collections: ['clubs'], required: true }],
 					},
-					{ type: 'string', name: 'excerpt', label: 'Estratto', ui: { component: 'textarea' }, required: true },
+					{ type: 'string', name: 'excerpt', label: 'Estratto (IT)', ui: { component: 'textarea' }, required: true },
+					{ type: 'string', name: 'excerptEn', label: 'Estratto (EN)', ui: { component: 'textarea' } },
 					{ type: 'datetime', name: 'date', label: 'Data pubblicazione', required: true, ui: { dateFormat: 'DD MMMM YYYY' } },
 					{ type: 'image', name: 'image', label: 'Immagine' },
-					{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine', required: true },
-					{ type: 'rich-text', name: 'body', label: 'Corpo articolo', isBody: true },
+					{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine (IT)', required: true },
+					{ type: 'string', name: 'imageLabelEn', label: 'Didascalia segnaposto immagine (EN)' },
+					{ type: 'rich-text', name: 'body', label: 'Corpo articolo (IT)', isBody: true },
+					{ type: 'rich-text', name: 'bodyEn', label: 'Corpo articolo (EN)' },
 				],
 			},
 			{
 				name: 'events',
-				label: 'Archivio eventi',
+				label: 'Eventi',
 				path: 'src/content/events',
 				format: 'md',
 				ui: { router: eventsRouter },
 				fields: [
-					{ type: 'string', name: 'title', label: 'Titolo', isTitle: true, required: true },
+					{ type: 'string', name: 'title', label: 'Titolo (IT)', isTitle: true, required: true },
+					{ type: 'string', name: 'titleEn', label: 'Titolo (EN)' },
 					{
 						type: 'boolean',
 						name: 'visible',
@@ -543,9 +548,11 @@ export default defineConfig({
 						list: true,
 						fields: [{ type: 'reference', name: 'club', label: 'Club', collections: ['clubs'], required: true }],
 					},
-					{ type: 'string', name: 'excerpt', label: 'Descrizione', ui: { component: 'textarea' } },
+					{ type: 'string', name: 'excerpt', label: 'Descrizione (IT)', ui: { component: 'textarea' } },
+					{ type: 'string', name: 'excerptEn', label: 'Descrizione (EN)', ui: { component: 'textarea' } },
 					{ type: 'image', name: 'image', label: 'Immagine' },
-					{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine', required: true },
+					{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine (IT)', required: true },
+					{ type: 'string', name: 'imageLabelEn', label: 'Didascalia segnaposto immagine (EN)' },
 					{
 						type: 'string',
 						name: 'ticketsUrl',
