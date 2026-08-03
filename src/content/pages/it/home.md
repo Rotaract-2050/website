@@ -16,7 +16,7 @@ blocks:
       - eyebrow: UNISCITI A NOI
         title: LA TUA RETE PARTE DA QUI
         subtitle: 'Rotaract è la community di giovani 18-30 anni che unisce crescita personale, amicizia e service.'
-        ctaLabel: ENTRA IN ROTARACT
+        ctaLabel: ENTRA NEL ROTARACT
     _template: Hero
   - label: NOTIZIE ROTARY INTERNATIONAL
     feedUrl: https://www.rotary.org/rss.xml
@@ -66,7 +66,7 @@ blocks:
   - title: NEWS DAL DISTRETTO
     limit: 3
     _template: NewsGrid
-  - title: DIVENTA SOCIO ROTARACT
+  - title: DIVENTA SOCIO DEL ROTARACT
     body: Hai tra 18 e 30 anni? Scopri il club più vicino a te e inizia il tuo percorso di leadership e servizio.
     buttonLabel: TROVA IL TUO CLUB
     buttonHref: club

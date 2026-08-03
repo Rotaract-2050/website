@@ -57,7 +57,7 @@ const resolvedCtaHref = getRelativeLocaleUrl(lang, ctaHref);
 <style>
 	.hero {
 		position: relative;
-		height: 620px;
+		min-height: 480px;
 		overflow: hidden;
 	}
 
@@ -206,10 +206,6 @@ const resolvedCtaHref = getRelativeLocaleUrl(lang, ctaHref);
 	}
 
 	@media (max-width: 720px) {
-		.hero {
-			height: 520px;
-		}
-
 		.hero-copy {
 			padding: 32px;
 		}
