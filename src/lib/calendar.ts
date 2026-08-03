@@ -1,9 +1,17 @@
 import ical from 'node-ical';
 import type { ParameterValue } from 'node-ical';
 
-const ICS_URL = 'https://calendar.google.com/calendar/ical/admin%40rotaract2050.org/public/basic.ics';
-export const CALENDAR_VIEW_URL = 'https://calendar.google.com/calendar/embed?src=admin%40rotaract2050.org&ctz=Europe%2FRome';
-export const CALENDAR_SUBSCRIBE_URL = 'https://calendar.google.com/calendar/render?cid=admin%40rotaract2050.org';
+export const DEFAULT_CALENDAR_ID = 'admin@rotaract2050.org';
+
+/** Google Calendar's public URLs for a given calendar ID (an email-shaped ID, e.g. `admin@rotaract2050.org` — found in Google Calendar settings under "Integrate calendar"). */
+export function calendarUrls(calendarId: string = DEFAULT_CALENDAR_ID) {
+	const encoded = encodeURIComponent(calendarId);
+	return {
+		icsUrl: `https://calendar.google.com/calendar/ical/${encoded}/public/basic.ics`,
+		viewUrl: `https://calendar.google.com/calendar/embed?src=${encoded}&ctz=Europe%2FRome`,
+		subscribeUrl: `https://calendar.google.com/calendar/render?cid=${encoded}`,
+	};
+}
 
 export interface DistrictEvent {
 	uid: string;
@@ -16,15 +24,15 @@ export interface DistrictEvent {
 export type CalendarResult = { ok: true; events: DistrictEvent[] } | { ok: false };
 
 const CACHE_TTL_MS = 15 * 60 * 1000;
-let cache: { fetchedAt: number; events: DistrictEvent[] } | null = null;
+let cache: { calendarId: string; fetchedAt: number; events: DistrictEvent[] } | null = null;
 
 function textValue(value: ParameterValue | undefined): string {
 	if (!value) return '';
 	return typeof value === 'string' ? value : value.val;
 }
 
-async function fetchEvents(): Promise<DistrictEvent[]> {
-	const data = await ical.async.fromURL(ICS_URL);
+async function fetchEvents(calendarId: string): Promise<DistrictEvent[]> {
+	const data = await ical.async.fromURL(calendarUrls(calendarId).icsUrl);
 	const events: DistrictEvent[] = [];
 
 	for (const component of Object.values(data)) {
@@ -42,25 +50,27 @@ async function fetchEvents(): Promise<DistrictEvent[]> {
 }
 
 /**
- * All district events (past and future) from the public Google Calendar (admin@rotaract2050.org),
- * fetched per-request and cached briefly to avoid hammering Google on every homepage view. Callers
- * filter for "upcoming" themselves — a month view still needs past days of the current month.
+ * All district events (past and future) from the district's public Google Calendar (editable
+ * per-block in Tina, defaults to admin@rotaract2050.org), fetched per-request and cached briefly
+ * to avoid hammering Google on every homepage view. Callers filter for "upcoming" themselves — a
+ * month view still needs past days of the current month.
  *
  * Pass `forceRefresh: true` to bypass the cache (EventsCalendar.astro does this for `?refresh` in
  * the URL) — handy right after editing the calendar, instead of waiting out the TTL.
  */
-export async function getDistrictEvents(options?: { forceRefresh?: boolean }): Promise<CalendarResult> {
+export async function getDistrictEvents(options?: { calendarId?: string; forceRefresh?: boolean }): Promise<CalendarResult> {
+	const calendarId = options?.calendarId || DEFAULT_CALENDAR_ID;
 	const now = Date.now();
-	if (!options?.forceRefresh && cache && now - cache.fetchedAt < CACHE_TTL_MS) {
+	if (!options?.forceRefresh && cache && cache.calendarId === calendarId && now - cache.fetchedAt < CACHE_TTL_MS) {
 		return { ok: true, events: cache.events };
 	}
 
 	try {
-		const events = await fetchEvents();
-		cache = { fetchedAt: now, events };
+		const events = await fetchEvents(calendarId);
+		cache = { calendarId, fetchedAt: now, events };
 		return { ok: true, events };
 	} catch {
-		if (cache) return { ok: true, events: cache.events };
+		if (cache && cache.calendarId === calendarId) return { ok: true, events: cache.events };
 		return { ok: false };
 	}
 }

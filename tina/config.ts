@@ -217,7 +217,16 @@ const eventsCalendarTemplate = {
 	name: 'EventsCalendar',
 	label: 'Calendario eventi',
 	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
-	fields: [{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true }],
+	fields: [
+		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
+		{
+			type: 'string' as const,
+			name: 'calendarId',
+			label: 'ID Calendario Google (opzionale)',
+			description:
+				'Da Google Calendar → Impostazioni del calendario → "Integra calendario" → "ID calendario" (es. admin@rotaract2050.org). Lascia vuoto per usare il calendario di default del distretto.',
+		},
+	],
 };
 
 // Ticker items are not Tina content: NewsTicker.astro fetches them live from an RSS feed

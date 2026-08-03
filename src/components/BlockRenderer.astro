@@ -137,7 +137,9 @@ const { lang, blocks } = Astro.props;
 				}))}
 			/>
 		)}
-		{block.__typename === 'PagesBlocksEventsCalendar' && <EventsCalendar lang={lang} title={block.title} />}
+		{block.__typename === 'PagesBlocksEventsCalendar' && (
+			<EventsCalendar lang={lang} title={block.title} calendarId={block.calendarId ?? undefined} />
+		)}
 		{block.__typename === 'PagesBlocksNewsTicker' && (
 			<NewsTicker
 				lang={lang}
