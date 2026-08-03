@@ -29,14 +29,6 @@ blocks:
         name: Nome
         surname: Cognome esempio
         motto: Motto di esempio dell'anno
-      - yearRange: 2015/2016
-        name: User
-        surname: User
-        motto: User User User
-      - yearRange: 2014/2015
-        name: Not User
-        surname: Not User
-        motto: Not User Not User
     _template: RrdTimeline
 ---
 
