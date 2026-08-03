@@ -31,6 +31,7 @@ const heroTemplate = {
 			name: 'slides',
 			label: 'Slide',
 			list: true,
+			ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 			fields: [
 				{ type: 'string' as const, name: 'eyebrow', label: 'Etichetta' },
 				{ type: 'string' as const, name: 'title', label: 'Titolo' },
@@ -50,6 +51,7 @@ const statsBarTemplate = {
 			name: 'items',
 			label: 'Statistiche',
 			list: true,
+			ui: { itemProps: (item: { label?: string }) => ({ label: item.label }) },
 			fields: [
 				{ type: 'string' as const, name: 'value', label: 'Valore' },
 				{ type: 'string' as const, name: 'label', label: 'Etichetta' },
@@ -93,6 +95,7 @@ const cardGridTemplate = {
 			name: 'items',
 			label: 'Elementi',
 			list: true,
+			ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 			fields: [
 				{ type: 'string' as const, name: 'title', label: 'Titolo' },
 				{ type: 'string' as const, name: 'meta', label: 'Sottotitolo' },
@@ -124,6 +127,7 @@ const valuesGridTemplate = {
 			name: 'items',
 			label: 'Valori',
 			list: true,
+			ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 			fields: [
 				{ type: 'string' as const, name: 'letter', label: 'Lettera' },
 				{ type: 'string' as const, name: 'title', label: 'Titolo' },
@@ -146,6 +150,7 @@ const roleGridTemplate = {
 			name: 'items',
 			label: 'Ruoli',
 			list: true,
+			ui: { itemProps: (item: { name?: string; role?: string }) => ({ label: item.name ? `${item.name} — ${item.role ?? ''}` : undefined }) },
 			fields: [
 				{ type: 'string' as const, name: 'initials', label: 'Iniziali (fallback se manca la foto)' },
 				{ type: 'image' as const, name: 'photo', label: 'Foto' },
@@ -173,6 +178,7 @@ const committeeGridTemplate = {
 			name: 'items',
 			label: 'Commissioni / Deleghe',
 			list: true,
+			ui: { itemProps: (item: { name?: string }) => ({ label: item.name }) },
 			fields: [
 				{ type: 'string' as const, name: 'name', label: 'Nome commissione/delega' },
 				{ type: 'string' as const, name: 'leadLabel', label: 'Etichetta responsabile (es. "Presidente" o "Delegato")' },
@@ -192,6 +198,7 @@ const committeeGridTemplate = {
 					name: 'members',
 					label: 'Membri',
 					list: true,
+					ui: { itemProps: (item: { name?: string }) => ({ label: item.name }) },
 					fields: [
 						{ type: 'image' as const, name: 'photo', label: 'Foto' },
 						{ type: 'string' as const, name: 'name', label: 'Nome e cognome' },
@@ -272,6 +279,7 @@ const rrdTimelineTemplate = {
 			name: 'items',
 			label: 'Annate (dalla più recente alla più antica)',
 			list: true,
+			ui: { itemProps: (item: { yearRange?: string; name?: string; surname?: string }) => ({ label: item.yearRange ? `${item.yearRange} — ${item.name ?? ''} ${item.surname ?? ''}` : undefined }) },
 			fields: [
 				{ type: 'string' as const, name: 'yearRange', label: 'Anno rotariano (es. 2026/2027)' },
 				{ type: 'string' as const, name: 'name', label: 'Nome' },
