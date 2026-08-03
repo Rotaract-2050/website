@@ -109,7 +109,7 @@ const IT: UiStrings = {
 		club: 'I CLUB',
 		news: 'NEWS',
 		eventi: 'EVENTI',
-		join: 'ENTRA IN ROTARACT',
+		join: 'ENTRA NEL ROTARACT',
 		materials: 'MATERIALI DISTRETTUALI',
 		menuOpen: 'Apri il menu di navigazione',
 		menuClose: 'Chiudi il menu di navigazione',
