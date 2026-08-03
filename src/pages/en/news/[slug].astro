@@ -8,12 +8,12 @@ import { Image } from 'astro:assets';
 import ImageSlot from '../../../components/ImageSlot.astro';
 import { uiStrings } from '../../../data/ui-strings';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { newsTagLabels, rotaryYearLabel, tagPillStyle } from '../../../lib/news';
+import { localizeNews, newsTagLabels, rotaryYearLabel, tagPillStyle } from '../../../lib/news';
 
 const lang = 'en' as const;
 const t = uiStrings[lang];
 const slug = Astro.params.slug ?? '';
-const relativePath = `en/${slug}.md`;
+const relativePath = `${slug}.md`;
 
 const result = await requestWithMetadata(client.queries.news({ relativePath }), { priority: 'primary' });
 const article = result.data.news;
@@ -24,15 +24,18 @@ if (!article) {
 
 const dateFormatter = new Intl.DateTimeFormat('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 const tags = newsTagLabels(article);
+const localized = localizeNews(article, lang);
+const titleField = article.titleEn ? 'titleEn' : 'title';
+const bodyField = article.bodyEn ? 'bodyEn' : 'body';
 ---
 
-<BaseLayout lang={lang} current="news" title={article.title} description={article.excerpt}>
+<BaseLayout lang={lang} current="news" title={localized.title} description={localized.excerpt}>
 	<PageBanner
 		lang={lang}
 		eyebrow={t.news.articleEyebrow}
-		title={article.title}
+		title={localized.title}
 		breadcrumbCurrent={t.nav.news}
-		titleField={tinaField(article, 'title')}
+		titleField={tinaField(article, titleField)}
 	/>
 	<article class="news-article">
 		<div class="article-inner">
@@ -51,13 +54,13 @@ const tags = newsTagLabels(article);
 			</div>
 			<div data-tina-field={tinaField(article, 'image')}>
 				{article.image ? (
-					<Image src={article.image} alt={article.imageLabel} width={960} height={420} class="article-image" />
+					<Image src={article.image} alt={localized.imageLabel} width={960} height={420} class="article-image" />
 				) : (
-					<ImageSlot label={article.imageLabel} class="article-image" />
+					<ImageSlot label={localized.imageLabel} class="article-image" />
 				)}
 			</div>
-			<div class="article-body" data-tina-field={tinaField(article, 'body')}>
-				<StaticTinaMarkdown content={article.body} />
+			<div class="article-body" data-tina-field={tinaField(article, bodyField)}>
+				<StaticTinaMarkdown content={localized.body} />
 			</div>
 		</div>
 	</article>

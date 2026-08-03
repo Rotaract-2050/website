@@ -8,6 +8,7 @@ import {
 	eventTags,
 	isUpcomingEvent,
 	currentRotaryYearLabel,
+	localizeEvent,
 	yearLabelSlug,
 } from '../../lib/events';
 import { uiStrings, type Lang } from '../../data/ui-strings';
@@ -20,7 +21,7 @@ interface Props {
 const { lang, emptyMessage } = Astro.props;
 const t = uiStrings[lang];
 
-const events = await getArchiveEvents(lang);
+const events = await getArchiveEvents();
 const yearGroups = groupEventsByYear(events);
 const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-GB', {
 	day: 'numeric',
@@ -63,29 +64,32 @@ const activeYear =
 				</div>
 				{yearGroups.map((group) => (
 					<div class="year-panel" data-year-panel={yearLabelSlug(group.yearLabel)} hidden={group.yearLabel !== activeYear}>
-						{group.events.map((event) => (
-							<EventCard
-								id={eventSlug(event)}
-								image={event.image}
-								imageLabel={event.imageLabel}
-								tags={eventTags(event)}
-								title={event.title}
-								dateLabel={dateFormatter.format(new Date(event.date))}
-								upcoming={isUpcomingEvent(event.date)}
-								upcomingLabel={t.events.upcomingBadge}
-								locationLavori={event.locationLavori}
-								locationCena={event.locationCena}
-								locationLabel={t.events.locationLabel}
-								worksLocationLabel={t.events.worksLocationLabel}
-								dinnerLocationLabel={t.events.dinnerLocationLabel}
-								excerpt={event.excerpt}
-								ticketsUrl={event.ticketsUrl}
-								ticketsButtonLabel={t.events.ticketsButtonLabel}
-								photoAlbumUrl={event.photoAlbumUrl}
-								photoButtonLabel={t.events.photoButtonLabel}
-								tinaFieldAttr={tinaField(event)}
-							/>
-						))}
+						{group.events.map((event) => {
+							const localized = localizeEvent(event, lang);
+							return (
+								<EventCard
+									id={eventSlug(event)}
+									image={event.image}
+									imageLabel={localized.imageLabel}
+									tags={eventTags(event)}
+									title={localized.title}
+									dateLabel={dateFormatter.format(new Date(event.date))}
+									upcoming={isUpcomingEvent(event.date)}
+									upcomingLabel={t.events.upcomingBadge}
+									locationLavori={event.locationLavori}
+									locationCena={event.locationCena}
+									locationLabel={t.events.locationLabel}
+									worksLocationLabel={t.events.worksLocationLabel}
+									dinnerLocationLabel={t.events.dinnerLocationLabel}
+									excerpt={localized.excerpt}
+									ticketsUrl={event.ticketsUrl}
+									ticketsButtonLabel={t.events.ticketsButtonLabel}
+									photoAlbumUrl={event.photoAlbumUrl}
+									photoButtonLabel={t.events.photoButtonLabel}
+									tinaFieldAttr={tinaField(event)}
+								/>
+							);
+						})}
 					</div>
 				))}
 			</div>

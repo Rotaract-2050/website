@@ -6,9 +6,24 @@ import type { Lang } from '../data/ui-strings';
 type NewsEdge = NonNullable<NewsConnectionQuery['newsConnection']['edges']>[number];
 export type NewsArticle = NonNullable<NonNullable<NewsEdge>['node']>;
 
-/** Slug relative to the locale folder, e.g. `it/academy-2050.md` -> `academy-2050`. */
+/** Slug for a news article, e.g. `academy-2050.md` -> `academy-2050`. */
 export function newsSlug(article: Pick<NewsArticle, '_sys'>): string {
-	return article._sys.breadcrumbs.slice(1).join('/');
+	return article._sys.breadcrumbs.join('/');
+}
+
+/**
+ * A news article's title/excerpt/body/imageLabel in the given language — one file holds both
+ * (`title`/`titleEn`, like `clubs.story`/`storyEn`), falling back to the IT value when the EN
+ * twin is empty, same as `ClubDetail.astro`'s `story`/`storyEn` fallback.
+ */
+export function localizeNews(article: Pick<NewsArticle, 'title' | 'titleEn' | 'excerpt' | 'excerptEn' | 'body' | 'bodyEn' | 'imageLabel' | 'imageLabelEn'>, lang: Lang) {
+	const isEn = lang === 'en';
+	return {
+		title: (isEn && article.titleEn) || article.title,
+		excerpt: (isEn && article.excerptEn) || article.excerpt,
+		body: (isEn && article.bodyEn) || article.body,
+		imageLabel: (isEn && article.imageLabelEn) || article.imageLabel,
+	};
 }
 
 /**
@@ -64,18 +79,17 @@ export function tagPillStyle(color?: string | null): string | undefined {
 }
 
 /**
- * All published district news for a locale, newest first. Backed by the `news` Tina
- * collection (like clubs/zones), so any article a socio adds shows up here without
- * touching a page block. Pass `limit` to cap how many are returned (e.g. for the
- * homepage teaser); omit it for the full archive.
+ * All published district news, newest first, in both languages (one doc per article, like
+ * clubs/zones — see `localizeNews`). Backed by the `news` Tina collection, so any article a
+ * socio adds shows up here without touching a page block. Pass `limit` to cap how many are
+ * returned (e.g. for the homepage teaser); omit it for the full archive.
  */
-export async function getDistrictNews(lang: Lang, limit?: number): Promise<NewsArticle[]> {
+export async function getDistrictNews(limit?: number): Promise<NewsArticle[]> {
 	const result = await requestWithMetadata(client.queries.newsConnection({ sort: 'date' }));
 	const edges = result.data.newsConnection.edges ?? [];
 	const articles = edges
 		.map((edge) => edge?.node)
 		.filter((node): node is NewsArticle => node != null)
-		.filter((node) => node._sys.breadcrumbs[0] === lang)
 		.reverse();
 
 	return typeof limit === 'number' ? articles.slice(0, limit) : articles;

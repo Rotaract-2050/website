@@ -17,9 +17,23 @@ export function eventTags(event: Pick<DistrictEvent, 'clubs' | 'eventType'>): Ne
 	return [...typeTag, ...clubTagLabels(event.clubs)];
 }
 
-/** Slug relative to the locale folder, e.g. `it/passaggio-consegne-2026.md` -> `passaggio-consegne-2026`. */
+/** Slug for an event, e.g. `passaggio-consegne-2026.md` -> `passaggio-consegne-2026`. */
 export function eventSlug(event: Pick<DistrictEvent, '_sys'>): string {
-	return event._sys.breadcrumbs.slice(1).join('/');
+	return event._sys.breadcrumbs.join('/');
+}
+
+/**
+ * An event's title/excerpt/imageLabel in the given language — one file holds both (`title`/
+ * `titleEn`, like `clubs.story`/`storyEn`), falling back to the IT value when the EN twin is
+ * empty, same as `ClubDetail.astro`'s `story`/`storyEn` fallback.
+ */
+export function localizeEvent(event: Pick<DistrictEvent, 'title' | 'titleEn' | 'excerpt' | 'excerptEn' | 'imageLabel' | 'imageLabelEn'>, lang: Lang) {
+	const isEn = lang === 'en';
+	return {
+		title: (isEn && event.titleEn) || event.title,
+		excerpt: (isEn && event.excerptEn) || event.excerpt,
+		imageLabel: (isEn && event.imageLabelEn) || event.imageLabel,
+	};
 }
 
 /** True once a district event's date is now or in the future. */
@@ -39,22 +53,21 @@ export function yearLabelSlug(yearLabel: string): string {
 }
 
 /**
- * All district events for a locale (past and upcoming — e.g. a Distrettuale event with a ticket
- * link needs to be visible before it happens). Backed by the `events` Tina collection (like
- * news/clubs/zones), so any event a socio adds shows up here without touching code.
+ * All district events, in both languages (past and upcoming — e.g. a Distrettuale event with a
+ * ticket link needs to be visible before it happens). Backed by the `events` Tina collection
+ * (like news/clubs/zones), so any event a socio adds shows up here without touching code.
  *
  * Order: upcoming events first (soonest first, so the next flagship event surfaces at the top),
  * then past events (most recent first). Separate from the live Google Calendar
  * (EventsCalendar.astro / src/lib/calendar.ts), which stays the lightweight upcoming-agenda widget.
  */
-export async function getArchiveEvents(lang: Lang): Promise<DistrictEvent[]> {
+export async function getArchiveEvents(): Promise<DistrictEvent[]> {
 	const result = await requestWithMetadata(client.queries.eventsConnection({ sort: 'date' }));
 	const edges = result.data.eventsConnection.edges ?? [];
 
 	const events = edges
 		.map((edge) => edge?.node)
 		.filter((node): node is DistrictEvent => node != null)
-		.filter((node) => node._sys.breadcrumbs[0] === lang)
 		// `visible` defaults to shown — only an explicit "Mostra evento" = off hides a draft event.
 		.filter((node) => node.visible ?? true);
 

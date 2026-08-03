@@ -2,7 +2,7 @@
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { tinaField } from '@tinacms/astro';
 import NewsCard from '../NewsCard.astro';
-import { getDistrictNews, newsSlug, newsTagLabels, rotaryYearLabel } from '../../lib/news';
+import { getDistrictNews, localizeNews, newsSlug, newsTagLabels, rotaryYearLabel } from '../../lib/news';
 import { uiStrings, type Lang } from '../../data/ui-strings';
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 const { lang, emptyMessage } = Astro.props;
 const t = uiStrings[lang];
 
-const articles = await getDistrictNews(lang);
+const articles = await getDistrictNews();
 const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-US', {
 	day: 'numeric',
 	month: 'short',
@@ -25,19 +25,22 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-US',
 	<div class="archive-inner">
 		{articles.length > 0 ? (
 			<div class="news-grid">
-				{articles.map((article) => (
-					<NewsCard
-						href={getRelativeLocaleUrl(lang, `news/${newsSlug(article)}`)}
-						image={article.image}
-						imageLabel={article.imageLabel}
-						tags={newsTagLabels(article)}
-						title={article.title}
-						excerpt={article.excerpt}
-						dateLabel={dateFormatter.format(new Date(article.date)).toUpperCase()}
-						yearLabel={rotaryYearLabel(article.date)}
-						tinaFieldAttr={tinaField(article)}
-					/>
-				))}
+				{articles.map((article) => {
+					const localized = localizeNews(article, lang);
+					return (
+						<NewsCard
+							href={getRelativeLocaleUrl(lang, `news/${newsSlug(article)}`)}
+							image={article.image}
+							imageLabel={localized.imageLabel}
+							tags={newsTagLabels(article)}
+							title={localized.title}
+							excerpt={localized.excerpt}
+							dateLabel={dateFormatter.format(new Date(article.date)).toUpperCase()}
+							yearLabel={rotaryYearLabel(article.date)}
+							tinaFieldAttr={tinaField(article)}
+						/>
+					);
+				})}
 			</div>
 		) : (
 			<p class="news-empty">{emptyMessage || t.news.empty}</p>
