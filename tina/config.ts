@@ -164,6 +164,16 @@ const roleGridTemplate = {
 				{ type: 'string' as const, name: 'name', label: 'Nome e cognome' },
 				{ type: 'string' as const, name: 'role', label: 'Ruolo' },
 				{ type: 'string' as const, name: 'email', label: 'Email (se disponibile)' },
+				{
+					type: 'string' as const,
+					name: 'themeMotto',
+					label: 'Motto dell’anno (solo per il ruolo in evidenza)',
+				},
+				{
+					type: 'image' as const,
+					name: 'themeLogo',
+					label: 'Logo distrettuale dell’anno (solo per il ruolo in evidenza)',
+				},
 			],
 		},
 	],

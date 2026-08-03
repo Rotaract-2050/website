@@ -13,6 +13,8 @@ blocks:
         name: "Sebastiano Fortugno"
         role: "District Representative"
         email: "rd@rotaract2050.org"
+        themeMotto: "Set sail with enthusiasm"
+        themeLogo: "/uploads/Squadra/2026-2027/Logo-Distrettuale.svg"
       - initials: "RDE"
         name: "Marco Zacchetti"
         role: "District Representative-Elect"

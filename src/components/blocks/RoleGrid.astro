@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import PersonCard from '../PersonCard.astro';
 
 interface Props {
@@ -6,11 +7,21 @@ interface Props {
 	showDisclaimer?: boolean;
 	disclaimerText?: string;
 	highlightFirst?: boolean;
-	items: { initials?: string; photo?: string; name: string; role: string; email?: string; tinaFieldAttr?: string }[];
+	items: {
+		initials?: string;
+		photo?: string;
+		name: string;
+		role: string;
+		email?: string;
+		themeMotto?: string;
+		themeLogo?: string;
+		tinaFieldAttr?: string;
+	}[];
 }
 
 const { title, showDisclaimer = false, disclaimerText, highlightFirst = false, items } = Astro.props;
 const [featured, ...rest] = items;
+const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 ---
 
 <section class="governance">
@@ -18,7 +29,8 @@ const [featured, ...rest] = items;
 		<h2 class="section-title center tight">{title}</h2>
 		{showDisclaimer && disclaimerText && <p class="disclaimer">{disclaimerText}</p>}
 		{highlightFirst && featured && (
-			<div class="featured-row">
+			<div class="featured-row" data-themed={hasTheme}>
+				{hasTheme && featured.themeMotto && <p class="theme-motto">“{featured.themeMotto}”</p>}
 				<PersonCard
 					name={featured.name}
 					role={featured.role}
@@ -28,6 +40,9 @@ const [featured, ...rest] = items;
 					tinaFieldAttr={featured.tinaFieldAttr}
 					size="lg"
 				/>
+				{hasTheme && featured.themeLogo && (
+					<Image src={featured.themeLogo} alt={`Logo del tema distrettuale — ${featured.themeMotto ?? title}`} width={160} height={226} class="theme-logo" />
+				)}
 			</div>
 		)}
 		<div class="roles-grid">
@@ -57,11 +72,11 @@ const [featured, ...rest] = items;
 	}
 
 	.section-title {
-		font-family: var(--font-heading);
+		font-family: var(--font-script);
 		font-weight: 700;
-		font-size: 28px;
-		color: var(--color-navy);
-		text-transform: uppercase;
+		font-size: 48px;
+		color: var(--color-pink);
+		text-transform: none;
 		margin: 0 0 34px;
 	}
 
@@ -83,12 +98,59 @@ const [featured, ...rest] = items;
 
 	.featured-row {
 		display: flex;
+		align-items: center;
 		justify-content: center;
+		gap: 32px;
 		margin-bottom: 34px;
 	}
 
 	.featured-row :global(.person-card) {
 		max-width: 280px;
+		flex-shrink: 0;
+	}
+
+	.featured-row[data-themed='true'] {
+		padding: 36px;
+		border-radius: 22px;
+		background:
+			repeating-linear-gradient(
+				135deg,
+				rgba(247, 168, 27, 0.16) 0px,
+				rgba(247, 168, 27, 0.16) 14px,
+				rgba(23, 69, 143, 0.1) 14px,
+				rgba(23, 69, 143, 0.1) 28px
+			),
+			var(--color-bg);
+	}
+
+	.theme-motto {
+		flex: 1 1 200px;
+		max-width: 260px;
+		font-family: var(--font-script);
+		font-weight: 700;
+		font-size: 30px;
+		line-height: 1.25;
+		color: var(--color-navy);
+		text-align: right;
+		margin: 0;
+	}
+
+	.theme-logo {
+		flex: 0 0 auto;
+		width: 130px;
+		height: auto;
+	}
+
+	@media (max-width: 720px) {
+		.featured-row[data-themed='true'] {
+			flex-direction: column;
+			padding: 28px 20px;
+		}
+
+		.theme-motto {
+			text-align: center;
+			max-width: 320px;
+		}
 	}
 
 	.roles-grid {
