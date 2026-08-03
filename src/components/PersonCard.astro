@@ -8,12 +8,13 @@ interface Props {
 	photo?: string;
 	initials?: string;
 	email?: string;
+	tinaFieldAttr?: string;
 }
 
-const { name, role, photo, initials, email } = Astro.props;
+const { name, role, photo, initials, email, tinaFieldAttr } = Astro.props;
 ---
 
-<div class="person-card">
+<div class="person-card" data-tina-field={tinaFieldAttr}>
 	<div class="person-avatar">
 		{photo ? (
 			<Image src={photo} alt={name} width={160} height={160} class="person-photo" />

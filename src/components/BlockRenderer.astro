@@ -99,6 +99,7 @@ const { lang, blocks } = Astro.props;
 					name: i.name ?? '',
 					role: i.role ?? '',
 					email: i.email ?? undefined,
+					tinaFieldAttr: tinaField(i),
 				}))}
 			/>
 		)}
@@ -109,17 +110,20 @@ const { lang, blocks } = Astro.props;
 				disclaimerText={block.disclaimerText ?? undefined}
 				items={(block.items ?? []).filter(nonNull).map((i) => ({
 					name: i.name ?? '',
+					nameFieldAttr: tinaField(i, 'name'),
 					leadLabel: i.leadLabel || 'Presidente',
 					membersLabel: i.membersLabel || 'Membro',
 					lead: {
 						name: i.lead?.name ?? '',
 						photo: i.lead?.photo ?? undefined,
 						email: i.lead?.email ?? undefined,
+						tinaFieldAttr: i.lead ? tinaField(i.lead) : undefined,
 					},
 					members: (i.members ?? []).filter(nonNull).map((m) => ({
 						name: m.name ?? '',
 						photo: m.photo ?? undefined,
 						email: m.email ?? undefined,
+						tinaFieldAttr: tinaField(m),
 					})),
 				}))}
 			/>

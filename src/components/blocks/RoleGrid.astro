@@ -5,7 +5,7 @@ interface Props {
 	title: string;
 	showDisclaimer?: boolean;
 	disclaimerText?: string;
-	items: { initials?: string; photo?: string; name: string; role: string; email?: string }[];
+	items: { initials?: string; photo?: string; name: string; role: string; email?: string; tinaFieldAttr?: string }[];
 }
 
 const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
@@ -17,7 +17,14 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		{showDisclaimer && disclaimerText && <p class="disclaimer">{disclaimerText}</p>}
 		<div class="roles-grid">
 			{items.map((role) => (
-				<PersonCard name={role.name} role={role.role} photo={role.photo} initials={role.initials} email={role.email} />
+				<PersonCard
+					name={role.name}
+					role={role.role}
+					photo={role.photo}
+					initials={role.initials}
+					email={role.email}
+					tinaFieldAttr={role.tinaFieldAttr}
+				/>
 			))}
 		</div>
 	</div>

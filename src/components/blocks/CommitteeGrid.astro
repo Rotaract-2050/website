@@ -5,10 +5,12 @@ interface Person {
 	name: string;
 	photo?: string;
 	email?: string;
+	tinaFieldAttr?: string;
 }
 
 interface CommitteeItem {
 	name: string;
+	nameFieldAttr?: string;
 	leadLabel: string;
 	membersLabel: string;
 	lead: Person;
@@ -32,14 +34,26 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		<div class="committee-list">
 			{items.map((item) => (
 				<div class="committee">
-					<h3 class="committee-name">{item.name}</h3>
+					<h3 class="committee-name" data-tina-field={item.nameFieldAttr}>{item.name}</h3>
 					<div class="lead-row">
-						<PersonCard name={item.lead.name} role={item.leadLabel} photo={item.lead.photo} email={item.lead.email} />
+						<PersonCard
+							name={item.lead.name}
+							role={item.leadLabel}
+							photo={item.lead.photo}
+							email={item.lead.email}
+							tinaFieldAttr={item.lead.tinaFieldAttr}
+						/>
 					</div>
 					{item.members.length > 0 && (
 						<div class="members-row">
 							{item.members.map((member) => (
-								<PersonCard name={member.name} role={item.membersLabel} photo={member.photo} email={member.email} />
+								<PersonCard
+									name={member.name}
+									role={item.membersLabel}
+									photo={member.photo}
+									email={member.email}
+									tinaFieldAttr={member.tinaFieldAttr}
+								/>
 							))}
 						</div>
 					)}
