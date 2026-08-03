@@ -61,6 +61,7 @@ const statsBarTemplate = {
 const splitSectionTemplate = {
 	name: 'SplitSection',
 	label: 'Sezione divisa (testo + immagine)',
+	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 	fields: [
 		{ type: 'string' as const, name: 'kicker', label: 'Eyebrow' },
 		{ type: 'string' as const, name: 'title', label: 'Titolo', required: true },
@@ -84,6 +85,7 @@ const splitSectionTemplate = {
 const cardGridTemplate = {
 	name: 'CardGrid',
 	label: 'Griglia link',
+	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 	fields: [
 		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
 		{
@@ -114,6 +116,7 @@ const cardGridTemplate = {
 const valuesGridTemplate = {
 	name: 'ValuesGrid',
 	label: 'Griglia valori',
+	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 	fields: [
 		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
 		{
@@ -133,6 +136,7 @@ const valuesGridTemplate = {
 const roleGridTemplate = {
 	name: 'RoleGrid',
 	label: 'Griglia ruoli',
+	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 	fields: [
 		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
 		{ type: 'boolean' as const, name: 'showDisclaimer', label: 'Mostra disclaimer' },
@@ -159,6 +163,7 @@ const roleGridTemplate = {
 const committeeGridTemplate = {
 	name: 'CommitteeGrid',
 	label: 'Griglia commissioni',
+	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 	fields: [
 		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
 		{ type: 'boolean' as const, name: 'showDisclaimer', label: 'Mostra disclaimer' },
@@ -203,6 +208,7 @@ const committeeGridTemplate = {
 const eventsCalendarTemplate = {
 	name: 'EventsCalendar',
 	label: 'Calendario eventi',
+	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 	fields: [{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true }],
 };
 
@@ -213,6 +219,7 @@ const eventsCalendarTemplate = {
 const newsTickerTemplate = {
 	name: 'NewsTicker',
 	label: 'Barra notizie (RSS)',
+	ui: { itemProps: (item: { label?: string }) => ({ label: item.label }) },
 	fields: [
 		{ type: 'string' as const, name: 'label', label: 'Etichetta', required: true },
 		{ type: 'string' as const, name: 'feedUrl', label: 'URL feed RSS' },
@@ -226,6 +233,7 @@ const newsTickerTemplate = {
 const newsGridTemplate = {
 	name: 'NewsGrid',
 	label: 'Griglia news',
+	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 	fields: [
 		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
 		{ type: 'number' as const, name: 'limit', label: 'Numero massimo di notizie mostrate' },
@@ -235,6 +243,7 @@ const newsGridTemplate = {
 const ctaBannerTemplate = {
 	name: 'CtaBanner',
 	label: 'Banner CTA',
+	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 	fields: [
 		{ type: 'string' as const, name: 'title', label: 'Titolo', required: true },
 		{ type: 'string' as const, name: 'body', label: 'Testo', ui: { component: 'textarea' } },
@@ -246,12 +255,14 @@ const ctaBannerTemplate = {
 const pagePlaceholderTemplate = {
 	name: 'PagePlaceholder',
 	label: 'Pagina in preparazione',
+	ui: { itemProps: (item: { message?: string }) => ({ label: item.message }) },
 	fields: [{ type: 'string' as const, name: 'message', label: 'Messaggio', ui: { component: 'textarea' } }],
 };
 
 const rrdTimelineTemplate = {
 	name: 'RrdTimeline',
 	label: 'Timeline RRD (Rappresentanti Rotaract Distrettuali)',
+	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 	fields: [
 		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
 		{ type: 'boolean' as const, name: 'showDisclaimer', label: 'Mostra disclaimer' },
