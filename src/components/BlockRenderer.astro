@@ -1,27 +1,13 @@
 ---
-import { tinaField } from '@tinacms/astro';
 import type { PagesQuery } from '../../tina/__generated__/types';
 import type { Lang } from '../data/ui-strings';
-import Hero from './blocks/Hero.astro';
-import StatsBar from './blocks/StatsBar.astro';
-import SplitSection from './blocks/SplitSection.astro';
-import CardGrid from './blocks/CardGrid.astro';
-import ValuesGrid from './blocks/ValuesGrid.astro';
-import RoleGrid from './blocks/RoleGrid.astro';
-import CommitteeGrid from './blocks/CommitteeGrid.astro';
-import EventsCalendar from './blocks/EventsCalendar.astro';
-import NewsTicker from './blocks/NewsTicker.astro';
-import NewsGrid from './blocks/NewsGrid.astro';
-import CtaBanner from './blocks/CtaBanner.astro';
-import PagePlaceholder from './blocks/PagePlaceholder.astro';
-import ClubDirectory from './blocks/ClubDirectory.astro';
-import RrdTimeline from './blocks/RrdTimeline.astro';
-import EventsArchive from './blocks/EventsArchive.astro';
-import NewsArchive from './blocks/NewsArchive.astro';
+import BlockItem from './BlockItem.astro';
 
 function nonNull<T>(value: T | null | undefined): value is T {
 	return value != null;
 }
+
+type Block = NonNullable<NonNullable<PagesQuery['pages']['blocks']>[number]>;
 
 interface Props {
 	lang: Lang;
@@ -29,163 +15,91 @@ interface Props {
 }
 
 const { lang, blocks } = Astro.props;
+
+// A Hero immediately followed by NewsTicker/StatsBar bars forms the page's
+// opening "fold": these are grouped so the Hero can grow and absorb the
+// leftover space, keeping the whole group flush with the viewport bottom
+// instead of leaving a gap before the next section.
+const FOLD_FOLLOWERS = new Set(['PagesBlocksNewsTicker', 'PagesBlocksStatsBar']);
+
+type Group = { fold: boolean; items: Block[] };
+
+function groupBlocks(list: Block[]): Group[] {
+	const groups: Group[] = [];
+	let i = 0;
+	while (i < list.length) {
+		const block = list[i];
+		if (block.__typename === 'PagesBlocksHero') {
+			const items: Block[] = [block];
+			let j = i + 1;
+			while (j < list.length && FOLD_FOLLOWERS.has(list[j].__typename ?? '')) {
+				items.push(list[j]);
+				j++;
+			}
+			groups.push({ fold: items.length > 1, items });
+			i = j;
+		} else {
+			groups.push({ fold: false, items: [block] });
+			i++;
+		}
+	}
+	return groups;
+}
+
+const groups = groupBlocks(blocks.filter(nonNull));
 ---
 
-{blocks.filter(nonNull).map((block) => (
-	<div data-tina-field={tinaField(block)} data-reveal={block.__typename === 'PagesBlocksHero' ? undefined : true}>
-		{block.__typename === 'PagesBlocksHero' && (
-			<Hero
-				lang={lang}
-				ctaHref={block.ctaHref ?? ''}
-				autoplay={block.autoplay ?? true}
-				slides={(block.slides ?? []).filter(nonNull).map((s) => ({
-					eyebrow: s.eyebrow ?? '',
-					title: s.title ?? '',
-					subtitle: s.subtitle ?? '',
-					ctaLabel: s.ctaLabel ?? '',
-					image: s.image ?? undefined,
-					tinaFieldAttr: tinaField(s),
-				}))}
-			/>
-		)}
-		{block.__typename === 'PagesBlocksStatsBar' && (
-			<StatsBar
-				items={(block.items ?? []).filter(nonNull).map((i) => ({
-					value: i.value ?? '',
-					label: i.label ?? '',
-					tinaFieldAttr: tinaField(i),
-				}))}
-			/>
-		)}
-		{block.__typename === 'PagesBlocksSplitSection' && (
-			<SplitSection
-				lang={lang}
-				kicker={block.kicker ?? undefined}
-				title={block.title}
-				quote={block.quote ?? undefined}
-				body={block.body ?? ''}
-				subhead={block.subhead ?? undefined}
-				body2={block.body2 ?? undefined}
-				ctaLabel={block.ctaLabel ?? undefined}
-				ctaHref={block.ctaHref ?? undefined}
-				image={block.image ?? undefined}
-				imageLabel={block.imageLabel}
-				imageSide={block.imageSide === 'left' ? 'left' : 'right'}
-			/>
-		)}
-		{block.__typename === 'PagesBlocksCardGrid' && (
-			<CardGrid
-				lang={lang}
-				title={block.title}
-				items={(block.items ?? []).filter(nonNull).map((i) => ({
-					title: i.title ?? '',
-					meta: i.meta ?? '',
-					href: i.href ?? '',
-					color: i.color ?? undefined,
-					tinaFieldAttr: tinaField(i),
-				}))}
-			/>
-		)}
-		{block.__typename === 'PagesBlocksValuesGrid' && (
-			<ValuesGrid
-				title={block.title}
-				items={(block.items ?? []).filter(nonNull).map((i) => ({
-					letter: i.letter ?? '',
-					title: i.title ?? '',
-					description: i.description ?? '',
-					tinaFieldAttr: tinaField(i),
-				}))}
-			/>
-		)}
-		{block.__typename === 'PagesBlocksRoleGrid' && (
-			<RoleGrid
-				title={block.title}
-				showDisclaimer={block.showDisclaimer ?? false}
-				disclaimerText={block.disclaimerText ?? undefined}
-				highlightFirst={block.highlightFirst ?? false}
-				items={(block.items ?? []).filter(nonNull).map((i) => ({
-					initials: i.initials ?? undefined,
-					photo: i.photo ?? undefined,
-					name: i.name ?? '',
-					role: i.role ?? '',
-					email: i.email ?? undefined,
-					themeMotto: i.themeMotto ?? undefined,
-					themeLogo: i.themeLogo ?? undefined,
-					tinaFieldAttr: tinaField(i),
-				}))}
-			/>
-		)}
-		{block.__typename === 'PagesBlocksCommitteeGrid' && (
-			<CommitteeGrid
-				title={block.title}
-				showDisclaimer={block.showDisclaimer ?? false}
-				disclaimerText={block.disclaimerText ?? undefined}
-				items={(block.items ?? []).filter(nonNull).map((i) => ({
-					name: i.name ?? '',
-					nameFieldAttr: tinaField(i, 'name'),
-					leadLabel: i.leadLabel || (lang === 'en' ? 'President' : 'Presidente'),
-					membersLabel: i.membersLabel || (lang === 'en' ? 'Member' : 'Membro'),
-					lead: {
-						name: i.lead?.name ?? '',
-						photo: i.lead?.photo ?? undefined,
-						email: i.lead?.email ?? undefined,
-						tinaFieldAttr: i.lead ? tinaField(i.lead) : undefined,
-					},
-					members: (i.members ?? []).filter(nonNull).map((m) => ({
-						name: m.name ?? '',
-						photo: m.photo ?? undefined,
-						email: m.email ?? undefined,
-						tinaFieldAttr: tinaField(m),
-					})),
-				}))}
-			/>
-		)}
-		{block.__typename === 'PagesBlocksEventsCalendar' && (
-			<EventsCalendar lang={lang} title={block.title} calendarId={block.calendarId ?? undefined} />
-		)}
-		{block.__typename === 'PagesBlocksNewsTicker' && (
-			<NewsTicker
-				lang={lang}
-				label={block.label}
-				feedUrl={block.feedUrl || 'https://www.rotary.org/rss.xml'}
-				limit={block.limit ?? 12}
-			/>
-		)}
-		{block.__typename === 'PagesBlocksNewsGrid' && (
-			<NewsGrid lang={lang} title={block.title} limit={block.limit ?? undefined} />
-		)}
-		{block.__typename === 'PagesBlocksCtaBanner' && (
-			<CtaBanner
-				lang={lang}
-				title={block.title}
-				body={block.body ?? ''}
-				buttonLabel={block.buttonLabel ?? ''}
-				buttonHref={block.buttonHref ?? ''}
-			/>
-		)}
-		{block.__typename === 'PagesBlocksPagePlaceholder' && <PagePlaceholder message={block.message ?? ''} />}
-		{block.__typename === 'PagesBlocksClubDirectory' && (
-			<ClubDirectory lang={lang} intro={block.intro ?? ''} disclaimer={block.disclaimer ?? ''} />
-		)}
-		{block.__typename === 'PagesBlocksRrdTimeline' && (
-			<RrdTimeline
-				title={block.title}
-				showDisclaimer={block.showDisclaimer ?? false}
-				disclaimerText={block.disclaimerText ?? undefined}
-				items={(block.items ?? []).filter(nonNull).map((i) => ({
-					yearRange: i.yearRange ?? '',
-					name: i.name ?? '',
-					surname: i.surname ?? '',
-					motto: i.motto ?? '',
-					tinaFieldAttr: tinaField(i),
-				}))}
-			/>
-		)}
-		{block.__typename === 'PagesBlocksEventsArchive' && (
-			<EventsArchive lang={lang} emptyMessage={block.emptyMessage ?? undefined} />
-		)}
-		{block.__typename === 'PagesBlocksNewsArchive' && (
-			<NewsArchive lang={lang} emptyMessage={block.emptyMessage ?? undefined} />
-		)}
-	</div>
-))}
+{groups.map((group) =>
+	group.fold ? (
+		<div class="hero-fold">
+			{group.items.map((block) => (
+				<BlockItem lang={lang} block={block} />
+			))}
+		</div>
+	) : (
+		<BlockItem lang={lang} block={group.items[0]} />
+	)
+)}
+
+<style>
+	.hero-fold {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		min-height: 100dvh;
+	}
+
+	/*
+	 * The wrapper div and .hero are rendered by the child BlockItem/Hero
+	 * components, so Astro's scoped-CSS attribute never lands on them —
+	 * :global() is required for these selectors to match at all.
+	 */
+	.hero-fold > :global(div:not([data-reveal])) {
+		display: flex;
+		flex: 1 1 480px;
+		min-height: 0;
+	}
+
+	.hero-fold > :global(div:not([data-reveal]) .hero) {
+		flex: 1;
+		width: 100%;
+		min-height: 0;
+	}
+</style>
+
+<script>
+	// min-height: 100dvh alone ignores the sticky header sitting above the
+	// fold, which pushes the ticker/stats bars mostly off-screen. Header
+	// height varies by breakpoint, so measure it instead of guessing it.
+	function sizeHeroFold(fold: HTMLElement) {
+		function apply() {
+			const documentTop = fold.getBoundingClientRect().top + window.scrollY;
+			fold.style.minHeight = `${Math.max(0, window.innerHeight - documentTop)}px`;
+		}
+		apply();
+		window.addEventListener('load', apply);
+		window.addEventListener('resize', apply);
+	}
+
+	document.querySelectorAll<HTMLElement>('.hero-fold').forEach(sizeHeroFold);
+</script>
