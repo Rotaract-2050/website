@@ -9,15 +9,17 @@ interface Props {
 	initials?: string;
 	email?: string;
 	tinaFieldAttr?: string;
+	/** 'lg' renders a bigger, standalone card (e.g. the RD featured above the rest). */
+	size?: 'md' | 'lg';
 }
 
-const { name, role, photo, initials, email, tinaFieldAttr } = Astro.props;
+const { name, role, photo, initials, email, tinaFieldAttr, size = 'md' } = Astro.props;
 ---
 
-<div class="person-card" data-tina-field={tinaFieldAttr}>
+<div class="person-card" data-size={size} data-tina-field={tinaFieldAttr}>
 	<div class="person-avatar">
 		{photo ? (
-			<Image src={photo} alt={name} width={160} height={160} class="person-photo" />
+			<Image src={photo} alt={name} width={size === 'lg' ? 240 : 160} height={size === 'lg' ? 240 : 160} class="person-photo" />
 		) : initials ? (
 			<div class="person-initials">{initials}</div>
 		) : (
@@ -40,6 +42,13 @@ const { name, role, photo, initials, email, tinaFieldAttr } = Astro.props;
 		transition: transform 0.25s ease, box-shadow 0.25s ease;
 	}
 
+	.person-card[data-size='lg'] {
+		background: var(--color-navy);
+		padding: 40px 30px;
+		border-radius: 18px;
+		box-shadow: 0 14px 34px rgba(11, 37, 69, 0.18);
+	}
+
 	.person-card:hover {
 		transform: translateY(-4px);
 		box-shadow: 0 10px 24px rgba(11, 37, 69, 0.12);
@@ -51,11 +60,23 @@ const { name, role, photo, initials, email, tinaFieldAttr } = Astro.props;
 		margin: 0 auto 14px;
 	}
 
+	.person-card[data-size='lg'] .person-avatar {
+		width: 140px;
+		height: 140px;
+		margin-bottom: 20px;
+	}
+
 	.person-avatar :global(.person-photo) {
 		width: 88px;
 		height: 88px;
 		border-radius: 50%;
 		object-fit: cover;
+	}
+
+	.person-card[data-size='lg'] .person-avatar :global(.person-photo) {
+		width: 140px;
+		height: 140px;
+		border: 4px solid var(--color-gold);
 	}
 
 	.person-initials {
@@ -73,6 +94,14 @@ const { name, role, photo, initials, email, tinaFieldAttr } = Astro.props;
 		margin: 0 auto;
 	}
 
+	.person-card[data-size='lg'] .person-initials {
+		width: 140px;
+		height: 140px;
+		font-size: 36px;
+		background: rgba(255, 255, 255, 0.12);
+		border: 4px solid var(--color-gold);
+	}
+
 	.person-name {
 		font-family: var(--font-heading);
 		font-weight: 600;
@@ -81,9 +110,22 @@ const { name, role, photo, initials, email, tinaFieldAttr } = Astro.props;
 		margin-bottom: 4px;
 	}
 
+	.person-card[data-size='lg'] .person-name {
+		font-size: 26px;
+		color: #fff;
+	}
+
 	.person-role {
 		font-size: 12px;
 		color: var(--color-text);
+	}
+
+	.person-card[data-size='lg'] .person-role {
+		font-size: 15px;
+		font-weight: 600;
+		letter-spacing: 0.5px;
+		text-transform: uppercase;
+		color: var(--color-gold);
 	}
 
 	.person-email {
@@ -92,5 +134,12 @@ const { name, role, photo, initials, email, tinaFieldAttr } = Astro.props;
 		font-size: 11px;
 		color: var(--color-pink);
 		word-break: break-word;
+	}
+
+	.person-card[data-size='lg'] .person-email {
+		margin-top: 10px;
+		font-size: 13px;
+		color: #fff;
+		opacity: 0.85;
 	}
 </style>

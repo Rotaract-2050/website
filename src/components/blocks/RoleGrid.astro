@@ -5,18 +5,33 @@ interface Props {
 	title: string;
 	showDisclaimer?: boolean;
 	disclaimerText?: string;
+	highlightFirst?: boolean;
 	items: { initials?: string; photo?: string; name: string; role: string; email?: string; tinaFieldAttr?: string }[];
 }
 
-const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
+const { title, showDisclaimer = false, disclaimerText, highlightFirst = false, items } = Astro.props;
+const [featured, ...rest] = items;
 ---
 
 <section class="governance">
 	<div class="section-inner">
 		<h2 class="section-title center tight">{title}</h2>
 		{showDisclaimer && disclaimerText && <p class="disclaimer">{disclaimerText}</p>}
+		{highlightFirst && featured && (
+			<div class="featured-row">
+				<PersonCard
+					name={featured.name}
+					role={featured.role}
+					photo={featured.photo}
+					initials={featured.initials}
+					email={featured.email}
+					tinaFieldAttr={featured.tinaFieldAttr}
+					size="lg"
+				/>
+			</div>
+		)}
 		<div class="roles-grid">
-			{items.map((role) => (
+			{(highlightFirst ? rest : items).map((role) => (
 				<PersonCard
 					name={role.name}
 					role={role.role}
@@ -64,6 +79,16 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		font-style: italic;
 		text-align: center;
 		margin: 0 0 34px;
+	}
+
+	.featured-row {
+		display: flex;
+		justify-content: center;
+		margin-bottom: 34px;
+	}
+
+	.featured-row :global(.person-card) {
+		max-width: 280px;
 	}
 
 	.roles-grid {

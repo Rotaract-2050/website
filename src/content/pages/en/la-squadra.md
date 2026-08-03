@@ -7,6 +7,7 @@ seo:
 blocks:
   - _template: "RoleGrid"
     title: "District Executive"
+    highlightFirst: true
     items:
       - initials: "RD"
         name: "Sebastiano Fortugno"

@@ -102,6 +102,7 @@ const { lang, blocks } = Astro.props;
 				title={block.title}
 				showDisclaimer={block.showDisclaimer ?? false}
 				disclaimerText={block.disclaimerText ?? undefined}
+				highlightFirst={block.highlightFirst ?? false}
 				items={(block.items ?? []).filter(nonNull).map((i) => ({
 					initials: i.initials ?? undefined,
 					photo: i.photo ?? undefined,
