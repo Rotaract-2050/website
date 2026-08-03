@@ -150,7 +150,7 @@ const roleGridTemplate = {
 			name: 'items',
 			label: 'Ruoli',
 			list: true,
-			ui: { itemProps: (item: { name?: string; role?: string }) => ({ label: item.name ? `${item.name} — ${item.role ?? ''}` : undefined }) },
+			ui: { itemProps: (item: { role?: string }) => ({ label: item.role }) },
 			fields: [
 				{ type: 'string' as const, name: 'initials', label: 'Iniziali (fallback se manca la foto)' },
 				{ type: 'image' as const, name: 'photo', label: 'Foto' },
