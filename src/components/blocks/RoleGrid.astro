@@ -41,7 +41,7 @@ const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 					size="lg"
 				/>
 				{hasTheme && featured.themeLogo && (
-					<Image src={featured.themeLogo} alt={`Logo del tema distrettuale — ${featured.themeMotto ?? title}`} width={340} height={480} class="theme-logo" />
+					<Image src={featured.themeLogo} alt={`Logo del tema distrettuale — ${featured.themeMotto ?? title}`} width={460} height={650} class="theme-logo" />
 				)}
 			</div>
 		)}
@@ -106,13 +106,14 @@ const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 	.featured-row :global(.person-card) {
 		max-width: 280px;
 		flex-shrink: 0;
+		justify-self: center;
 	}
 
-	/* Grid keeps the card in a true center column: the two 1fr side columns always
-	   match, so motto/logo content of different widths can't push the card off-center. */
+	/* Three equal columns, each element centered within its own — not just pushed
+	   toward the middle — so motto/logo have real room to grow independently of the card. */
 	.featured-row[data-themed='true'] {
 		display: grid;
-		grid-template-columns: 1fr auto 1fr;
+		grid-template-columns: 1fr 1fr 1fr;
 		align-items: center;
 		gap: 32px;
 		width: 100%;
@@ -125,20 +126,20 @@ const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 	}
 
 	.theme-motto {
-		justify-self: end;
-		max-width: 340px;
+		justify-self: center;
+		max-width: 380px;
 		font-family: var(--font-script);
 		font-weight: 700;
 		font-size: 66px;
 		line-height: 1.2;
 		color: var(--color-navy);
-		text-align: right;
+		text-align: center;
 		margin: 0;
 	}
 
 	.theme-logo {
-		justify-self: start;
-		width: 300px;
+		justify-self: center;
+		width: 400px;
 		height: auto;
 	}
 
