@@ -26,6 +26,7 @@ const heroTemplate = {
 	label: 'Hero (Carosello)',
 	fields: [
 		{ type: 'string' as const, name: 'ctaHref', label: 'Link pulsante (slug pagina)' },
+		{ type: 'boolean' as const, name: 'autoplay', label: 'Scorrimento automatico slide' },
 		{
 			type: 'object' as const,
 			name: 'slides',
@@ -33,6 +34,7 @@ const heroTemplate = {
 			list: true,
 			ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 			fields: [
+				{ type: 'image' as const, name: 'image', label: 'Foto di sfondo' },
 				{ type: 'string' as const, name: 'eyebrow', label: 'Etichetta' },
 				{ type: 'string' as const, name: 'title', label: 'Titolo' },
 				{ type: 'string' as const, name: 'subtitle', label: 'Sottotitolo', ui: { component: 'textarea' } },

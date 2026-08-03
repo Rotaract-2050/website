@@ -1,7 +1,7 @@
 ---
 interface Props {
 	title: string;
-	items: { letter: string; title: string; description: string }[];
+	items: { letter: string; title: string; description: string; tinaFieldAttr?: string }[];
 }
 
 const { title, items } = Astro.props;
@@ -12,7 +12,7 @@ const { title, items } = Astro.props;
 		<h2 class="section-title center">{title}</h2>
 		<div class="values-grid">
 			{items.map((val) => (
-				<div class="value-card">
+				<div class="value-card" data-tina-field={val.tinaFieldAttr}>
 					<div class="value-letter">{val.letter}</div>
 					<div class="value-title">{val.title}</div>
 					<div class="value-desc">{val.description}</div>

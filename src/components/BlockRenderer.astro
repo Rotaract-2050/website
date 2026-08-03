@@ -37,17 +37,24 @@ const { lang, blocks } = Astro.props;
 			<Hero
 				lang={lang}
 				ctaHref={block.ctaHref ?? ''}
+				autoplay={block.autoplay ?? true}
 				slides={(block.slides ?? []).filter(nonNull).map((s) => ({
 					eyebrow: s.eyebrow ?? '',
 					title: s.title ?? '',
 					subtitle: s.subtitle ?? '',
 					ctaLabel: s.ctaLabel ?? '',
+					image: s.image ?? undefined,
+					tinaFieldAttr: tinaField(s),
 				}))}
 			/>
 		)}
 		{block.__typename === 'PagesBlocksStatsBar' && (
 			<StatsBar
-				items={(block.items ?? []).filter(nonNull).map((i) => ({ value: i.value ?? '', label: i.label ?? '' }))}
+				items={(block.items ?? []).filter(nonNull).map((i) => ({
+					value: i.value ?? '',
+					label: i.label ?? '',
+					tinaFieldAttr: tinaField(i),
+				}))}
 			/>
 		)}
 		{block.__typename === 'PagesBlocksSplitSection' && (
@@ -75,6 +82,7 @@ const { lang, blocks } = Astro.props;
 					meta: i.meta ?? '',
 					href: i.href ?? '',
 					color: i.color ?? undefined,
+					tinaFieldAttr: tinaField(i),
 				}))}
 			/>
 		)}
@@ -85,6 +93,7 @@ const { lang, blocks } = Astro.props;
 					letter: i.letter ?? '',
 					title: i.title ?? '',
 					description: i.description ?? '',
+					tinaFieldAttr: tinaField(i),
 				}))}
 			/>
 		)}
@@ -111,8 +120,8 @@ const { lang, blocks } = Astro.props;
 				items={(block.items ?? []).filter(nonNull).map((i) => ({
 					name: i.name ?? '',
 					nameFieldAttr: tinaField(i, 'name'),
-					leadLabel: i.leadLabel || 'Presidente',
-					membersLabel: i.membersLabel || 'Membro',
+					leadLabel: i.leadLabel || (lang === 'en' ? 'President' : 'Presidente'),
+					membersLabel: i.membersLabel || (lang === 'en' ? 'Member' : 'Membro'),
 					lead: {
 						name: i.lead?.name ?? '',
 						photo: i.lead?.photo ?? undefined,
@@ -163,6 +172,7 @@ const { lang, blocks } = Astro.props;
 					name: i.name ?? '',
 					surname: i.surname ?? '',
 					motto: i.motto ?? '',
+					tinaFieldAttr: tinaField(i),
 				}))}
 			/>
 		)}

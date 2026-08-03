@@ -5,7 +5,7 @@ import type { Lang } from '../../data/ui-strings';
 interface Props {
 	lang: Lang;
 	title: string;
-	items: { title: string; meta: string; href: string; color?: string }[];
+	items: { title: string; meta: string; href: string; color?: string; tinaFieldAttr?: string }[];
 }
 
 const { lang, title, items } = Astro.props;
@@ -16,7 +16,7 @@ const { lang, title, items } = Astro.props;
 		<h2 class="section-title center">{title}</h2>
 		<div class="card-row">
 			{items.map((item) => (
-				<a href={getRelativeLocaleUrl(lang, item.href)} class="card">
+				<a href={getRelativeLocaleUrl(lang, item.href)} class="card" data-tina-field={item.tinaFieldAttr}>
 					<div class="card-title" style={item.color ? `background-color: ${item.color};` : undefined}>{item.title}</div>
 					<div class="card-meta">{item.meta}</div>
 				</a>

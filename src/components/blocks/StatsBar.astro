@@ -1,6 +1,6 @@
 ---
 interface Props {
-	items: { value: string; label: string }[];
+	items: { value: string; label: string; tinaFieldAttr?: string }[];
 }
 
 const { items } = Astro.props;
@@ -8,7 +8,7 @@ const { items } = Astro.props;
 
 <section class="stats">
 	{items.map((stat) => (
-		<div class="stat">
+		<div class="stat" data-tina-field={stat.tinaFieldAttr}>
 			<div class="stat-value">{stat.value}</div>
 			<div class="stat-label">{stat.label}</div>
 		</div>

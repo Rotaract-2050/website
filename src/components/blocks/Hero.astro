@@ -1,5 +1,6 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import { Image } from 'astro:assets';
 import ImageSlot from '../ImageSlot.astro';
 import type { Lang } from '../../data/ui-strings';
 
@@ -8,6 +9,8 @@ interface Slide {
 	title: string;
 	subtitle: string;
 	ctaLabel: string;
+	image?: string;
+	tinaFieldAttr?: string;
 }
 
 interface Props {
@@ -17,15 +20,19 @@ interface Props {
 	autoplay?: boolean;
 }
 
-const { lang, ctaHref, slides, autoplay = false } = Astro.props;
+const { lang, ctaHref, slides, autoplay = true } = Astro.props;
 const resolvedCtaHref = getRelativeLocaleUrl(lang, ctaHref);
 ---
 
 <section class="hero" data-hero data-autoplay={autoplay ? 'true' : 'false'}>
 	<div class="hero-slides">
 		{slides.map((slide, i) => (
-			<div class="hero-slide" data-slide data-index={i} data-active={i === 0 ? 'true' : 'false'}>
-				<ImageSlot label="Foto banner distrettuale" class="hero-image" />
+			<div class="hero-slide" data-slide data-index={i} data-active={i === 0 ? 'true' : 'false'} data-tina-field={slide.tinaFieldAttr}>
+				{slide.image ? (
+					<Image src={slide.image} alt={slide.title} width={1600} height={900} class="hero-image" />
+				) : (
+					<ImageSlot label="Foto banner distrettuale" class="hero-image" />
+				)}
 				<div class="hero-overlay" aria-hidden="true"></div>
 				<div class="hero-copy">
 					<span class="hero-eyebrow">{slide.eyebrow}</span>
