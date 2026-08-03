@@ -148,6 +148,11 @@ const roleGridTemplate = {
 		{ type: 'boolean' as const, name: 'showDisclaimer', label: 'Mostra disclaimer' },
 		{ type: 'string' as const, name: 'disclaimerText', label: 'Testo disclaimer' },
 		{
+			type: 'boolean' as const,
+			name: 'highlightFirst',
+			label: 'Metti in evidenza il primo ruolo (card grande sopra gli altri)',
+		},
+		{
 			type: 'object' as const,
 			name: 'items',
 			label: 'Ruoli',
