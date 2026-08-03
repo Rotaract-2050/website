@@ -1,13 +1,12 @@
 ---
 name: Rotaract Club Abbiategrasso
 zone: src/content/zones/navigli.md
+foundationYear: 1990
 lat: 45.3987330
 lng: 8.9162299
-email: segreteria@rotaractabbiategrasso.it
-website: 'https://www.rotaractabbiategrasso.it'
-instagram: 'https://www.instagram.com/rotaractabbiategrasso'
+email: 'segreteria@rtcabbiategrasso.org'
+instagram: 'https://www.instagram.com/rotaractclubabbiategrasso/'
 facebook: 'https://www.facebook.com/rotaractabbiategrasso'
-story: 'Il Rotaract Club Abbiategrasso nasce dalla volontà di un gruppo di giovani del territorio dei Navigli di mettere le proprie energie al servizio della comunità. Da allora il club promuove progetti di volontariato locale, iniziative di raccolta fondi per associazioni del territorio e momenti di formazione e confronto tra i soci, mantenendo sempre uno stretto legame con il Rotary Club di riferimento.'
-storyEn: 'Rotaract Club Abbiategrasso was founded by a group of young people from the Navigli area who wanted to put their energy at the service of the community. Since then, the club has promoted local volunteering projects, fundraising initiatives for local associations, and training and networking moments for its members, all while keeping a close bond with its sponsoring Rotary Club.'
+story: 'Il 16 gennaio 2020 il Rotaract Club Abbiategrasso ha festeggiato il trentesimo compleanno, un momento di condivisione in cui il club ha ripercorso la propria storia a partire dai primi fondatori, destinando parte del ricavato dell''evento all''ASD Polisportiva SuperHabily, associazione che promuove l''attività sportiva per persone con disabilità. Nella primavera del 2020 il club ha inoltre sostenuto la Fondazione Ospedali con una raccolta fondi per i centri di Abbiategrasso, Cuggiono, Legnano e Magenta, raccogliendo in due settimane 5.102,61 euro.'
+storyEn: 'On 16 January 2020 Rotaract Club Abbiategrasso celebrated its thirtieth anniversary, a moment of shared reflection on the club''s history since its founding members, donating part of the event''s proceeds to ASD Polisportiva SuperHabily, an association promoting sport for people with disabilities. In spring 2020 the club also supported Fondazione Ospedali with a fundraiser for the hospital centres of Abbiategrasso, Cuggiono, Legnano and Magenta, raising 5,102.61 euros in just two weeks.'
 ---
-
