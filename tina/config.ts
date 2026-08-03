@@ -198,7 +198,6 @@ const committeeGridTemplate = {
 					name: 'members',
 					label: 'Membri',
 					list: true,
-					ui: { itemProps: (item: { name?: string }) => ({ label: item.name }) },
 					fields: [
 						{ type: 'image' as const, name: 'photo', label: 'Foto' },
 						{ type: 'string' as const, name: 'name', label: 'Nome e cognome' },
