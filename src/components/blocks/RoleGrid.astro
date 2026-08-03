@@ -41,7 +41,7 @@ const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 					size="lg"
 				/>
 				{hasTheme && featured.themeLogo && (
-					<Image src={featured.themeLogo} alt={`Logo del tema distrettuale — ${featured.themeMotto ?? title}`} width={160} height={226} class="theme-logo" />
+					<Image src={featured.themeLogo} alt={`Logo del tema distrettuale — ${featured.themeMotto ?? title}`} width={220} height={311} class="theme-logo" />
 				)}
 			</div>
 		)}
@@ -100,7 +100,6 @@ const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		gap: 32px;
 		margin-bottom: 34px;
 	}
 
@@ -109,22 +108,24 @@ const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 		flex-shrink: 0;
 	}
 
+	/* Grid keeps the card in a true center column: the two 1fr side columns always
+	   match, so motto/logo content of different widths can't push the card off-center. */
 	.featured-row[data-themed='true'] {
+		display: grid;
+		grid-template-columns: 1fr auto 1fr;
+		align-items: center;
+		gap: 32px;
+		width: 100%;
 		padding: 36px;
 		border-radius: 22px;
-		background:
-			repeating-linear-gradient(
-				135deg,
-				rgba(247, 168, 27, 0.16) 0px,
-				rgba(247, 168, 27, 0.16) 14px,
-				rgba(23, 69, 143, 0.1) 14px,
-				rgba(23, 69, 143, 0.1) 28px
-			),
-			var(--color-bg);
+		background-color: var(--color-bg);
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='60' viewBox='0 0 240 60'%3E%3Cpath d='M0 42 Q30 22 60 42 T120 42 T180 42 T240 42' fill='none' stroke='%2317458F' stroke-width='4' opacity='0.16'/%3E%3Cpath d='M0 24 Q30 4 60 24 T120 24 T180 24 T240 24' fill='none' stroke='%23F7A81B' stroke-width='4' opacity='0.28'/%3E%3C/svg%3E");
+		background-repeat: repeat;
+		background-size: 240px 60px;
 	}
 
 	.theme-motto {
-		flex: 1 1 200px;
+		justify-self: end;
 		max-width: 260px;
 		font-family: var(--font-script);
 		font-weight: 700;
@@ -136,18 +137,21 @@ const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 	}
 
 	.theme-logo {
-		flex: 0 0 auto;
-		width: 130px;
+		justify-self: start;
+		width: 220px;
 		height: auto;
 	}
 
 	@media (max-width: 720px) {
 		.featured-row[data-themed='true'] {
-			flex-direction: column;
+			grid-template-columns: 1fr;
+			justify-items: center;
 			padding: 28px 20px;
 		}
 
-		.theme-motto {
+		.theme-motto,
+		.theme-logo {
+			justify-self: center;
 			text-align: center;
 			max-width: 320px;
 		}
