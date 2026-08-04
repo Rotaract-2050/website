@@ -285,6 +285,34 @@ const ctaBannerTemplate = {
 	],
 };
 
+// Files themselves are not Tina content: MaterialsGrid.astro fetches them live client-side
+// from the Drive API v3 (files.list), including subfolders (folder browsing happens entirely
+// in the client script). Only the section title, the root folder ID and the empty-state
+// override are editorial — the API key lives once in `settings` (not per-block), since it's
+// a site-wide credential, not page content.
+const materialsGridTemplate = {
+	name: 'MaterialsGrid',
+	label: 'Materiali distrettuali (Google Drive)',
+	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
+	fields: [
+		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
+		{
+			type: 'string' as const,
+			name: 'driveFolderId',
+			label: 'ID cartella Google Drive (radice)',
+			required: true,
+			description:
+				'ID della cartella condivisa dal distretto, dall\'URL Drive (https://drive.google.com/drive/folders/<ID>). La cartella e le sue sottocartelle devono essere condivise "chiunque abbia il link": la lettura avviene via API key, senza login Google.',
+		},
+		{
+			type: 'string' as const,
+			name: 'emptyMessage',
+			label: 'Messaggio se una cartella è vuota (opzionale)',
+			ui: { component: 'textarea' },
+		},
+	],
+};
+
 const pagePlaceholderTemplate = {
 	name: 'PagePlaceholder',
 	label: 'Pagina in preparazione',
@@ -413,6 +441,7 @@ export default defineConfig({
 							rrdTimelineTemplate,
 							eventsArchiveTemplate,
 							newsArchiveTemplate,
+							materialsGridTemplate,
 						],
 					},
 				],
@@ -576,6 +605,13 @@ export default defineConfig({
 					{ type: 'string', name: 'about', label: 'Testo "chi siamo" (footer)', ui: { component: 'textarea' } },
 					{ type: 'string', name: 'address', label: 'Indirizzo' },
 					{ type: 'string', name: 'email', label: 'Email' },
+					{
+						type: 'string',
+						name: 'driveApiKey',
+						label: 'API key Google Drive (materiali distrettuali)',
+						description:
+							'Da Google Cloud Console: API key con Drive API abilitata, ristretta per HTTP referrer al dominio del sito. Non è un segreto da nascondere — è pensata per finire nel codice client, per questo va ristretta per referrer, non protetta come una password. Usata dal blocco "Materiali distrettuali" per elencare i file della cartella Drive del distretto.',
+					},
 				],
 			},
 		],
