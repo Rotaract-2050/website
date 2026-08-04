@@ -90,7 +90,11 @@ const zoneAreas = zones
 		const viewClubLabel = container.dataset.viewLabel ?? '';
 		if (markers.length === 0) return;
 
-		const map = L.map(container, { scrollWheelZoom: false });
+		// zoomSnap: 1 (Leaflet's default) forces fitBounds to round DOWN to the nearest whole
+		// zoom level to guarantee the bounds fit without clipping — that rounding is why the
+		// map looked much more zoomed out than the bounds actually needed. A finer snap lets
+		// it land on the fractional zoom closest to the real fit.
+		const map = L.map(container, { scrollWheelZoom: false, zoomSnap: 0.25 });
 		// A muted basemap (rather than OSM's default colorful green/orange land-use tiles)
 		// so the zone fill colors read clearly instead of blending into the map itself.
 		L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
@@ -160,7 +164,7 @@ const zoneAreas = zones
 		if (markers.length === 1 && zones.length === 0) {
 			map.setView([markers[0].lat, markers[0].lng], 12);
 		} else {
-			map.fitBounds(mapBounds, { padding: [30, 30], maxZoom: 12 });
+			map.fitBounds(mapBounds, { padding: [8, 8], maxZoom: 13 });
 		}
 	}
 
