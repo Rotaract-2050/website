@@ -40,7 +40,13 @@ const configured = Boolean(driveFolderId && driveApiKey);
 				data-error-message={t.unavailable}
 				data-empty-message={emptyMessage || t.empty}
 			>
-				<nav class="materials-breadcrumb" aria-label={t.breadcrumbLabel} data-materials-breadcrumb></nav>
+				<div class="materials-toolbar">
+					<nav class="materials-breadcrumb" aria-label={t.breadcrumbLabel} data-materials-breadcrumb></nav>
+					<a class="materials-drive-link" data-materials-drive-link href={`https://drive.google.com/drive/folders/${driveFolderId}`} target="_blank" rel="noopener">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><path d="M15 3h6v6" /><path d="M10 14 21 3" /></svg>
+						{t.openInDriveLabel}
+					</a>
+				</div>
 				<p class="materials-status" data-materials-status hidden></p>
 				<h3 class="materials-subhead" data-materials-folders-label hidden>{t.foldersLabel}</h3>
 				<div class="materials-folders" data-materials-folders></div>
@@ -77,16 +83,40 @@ const configured = Boolean(driveFolderId && driveApiKey);
 		font-style: italic;
 	}
 
+	.materials-toolbar {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 10px 20px;
+		margin-bottom: 18px;
+	}
+
 	.materials-breadcrumb {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
 		gap: 6px;
-		margin-bottom: 18px;
 	}
 
-	.materials-breadcrumb:empty {
-		display: none;
+	.materials-drive-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		flex: none;
+		font-size: 13px;
+		font-weight: 600;
+		color: var(--color-pink);
+		white-space: nowrap;
+	}
+
+	.materials-drive-link:hover {
+		text-decoration: underline;
+	}
+
+	.materials-drive-link svg {
+		width: 15px;
+		height: 15px;
 	}
 
 	.materials-subhead {
@@ -309,12 +339,13 @@ const configured = Boolean(driveFolderId && driveApiKey);
 		const emptyMessage = app.dataset.emptyMessage ?? '';
 
 		const breadcrumb = app.querySelector<HTMLElement>('[data-materials-breadcrumb]');
+		const driveLink = app.querySelector<HTMLAnchorElement>('[data-materials-drive-link]');
 		const status = app.querySelector<HTMLElement>('[data-materials-status]');
 		const foldersLabel = app.querySelector<HTMLElement>('[data-materials-folders-label]');
 		const folders = app.querySelector<HTMLElement>('[data-materials-folders]');
 		const filesLabel = app.querySelector<HTMLElement>('[data-materials-files-label]');
 		const list = app.querySelector<HTMLUListElement>('[data-materials-list]');
-		if (!breadcrumb || !status || !folders || !list || !foldersLabel || !filesLabel) return;
+		if (!breadcrumb || !driveLink || !status || !folders || !list || !foldersLabel || !filesLabel) return;
 
 		// Stack of folders entered so far (root excluded, it's rendered separately).
 		let path: { id: string; name: string }[] = [];
@@ -429,13 +460,14 @@ const configured = Boolean(driveFolderId && driveApiKey);
 		}
 
 		async function load(folderId: string) {
-			if (!folders || !list || !foldersLabel || !filesLabel) return;
+			if (!folders || !list || !foldersLabel || !filesLabel || !driveLink) return;
 			folders.innerHTML = '';
 			list.innerHTML = '';
 			foldersLabel.hidden = true;
 			filesLabel.hidden = true;
 			setStatus(loadingMessage);
 			renderBreadcrumb();
+			driveLink.href = `https://drive.google.com/drive/folders/${folderId}`;
 
 			const url = new URL('https://www.googleapis.com/drive/v3/files');
 			url.searchParams.set('q', `'${folderId}' in parents and trashed = false`);

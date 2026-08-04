@@ -93,6 +93,7 @@ export interface UiStrings {
 		openFolderLabel: string;
 		foldersLabel: string;
 		filesLabel: string;
+		openInDriveLabel: string;
 	};
 }
 
@@ -216,6 +217,7 @@ const IT: UiStrings = {
 		openFolderLabel: 'Apri cartella',
 		foldersLabel: 'Cartelle',
 		filesLabel: 'File',
+		openInDriveLabel: 'Apri su Google Drive',
 	},
 };
 
@@ -325,6 +327,7 @@ const EN: UiStrings = {
 		openFolderLabel: 'Open folder',
 		foldersLabel: 'Folders',
 		filesLabel: 'Files',
+		openInDriveLabel: 'Open in Google Drive',
 	},
 };
 
