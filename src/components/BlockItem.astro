@@ -18,6 +18,7 @@ import ClubDirectory from './blocks/ClubDirectory.astro';
 import RrdTimeline from './blocks/RrdTimeline.astro';
 import EventsArchive from './blocks/EventsArchive.astro';
 import NewsArchive from './blocks/NewsArchive.astro';
+import MaterialsGrid from './blocks/MaterialsGrid.astro';
 
 function nonNull<T>(value: T | null | undefined): value is T {
 	return value != null;
@@ -187,5 +188,8 @@ const { lang, block } = Astro.props;
 	)}
 	{block.__typename === 'PagesBlocksNewsArchive' && (
 		<NewsArchive lang={lang} emptyMessage={block.emptyMessage ?? undefined} />
+	)}
+	{block.__typename === 'PagesBlocksMaterialsGrid' && (
+		<MaterialsGrid lang={lang} title={block.title} driveFolderId={block.driveFolderId ?? undefined} emptyMessage={block.emptyMessage ?? undefined} />
 	)}
 </div>
