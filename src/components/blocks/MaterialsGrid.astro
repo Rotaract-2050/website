@@ -86,7 +86,13 @@ const configured = Boolean(driveFolderId && driveApiKey);
 		display: none;
 	}
 
-	.breadcrumb-item {
+	/* The breadcrumb buttons, list items and entries below are all built client-side in the
+	   <script> (document.createElement), not present in this component's server-rendered
+	   markup — Astro's style scoping tags only elements it renders itself with a
+	   data-astro-cid-* attribute, so a plain scoped selector silently never matches anything
+	   created afterwards by JS. :global() is Astro's documented escape hatch for exactly this
+	   (dynamic content), scoped narrowly to just these selectors rather than the whole block. */
+	:global(.breadcrumb-item) {
 		font-family: var(--font-heading);
 		font-weight: 600;
 		font-size: 13px;
@@ -99,17 +105,17 @@ const configured = Boolean(driveFolderId && driveApiKey);
 		cursor: pointer;
 	}
 
-	.breadcrumb-item:hover {
+	:global(.breadcrumb-item:hover) {
 		text-decoration: underline;
 	}
 
-	.breadcrumb-item[aria-current='page'] {
+	:global(.breadcrumb-item[aria-current='page']) {
 		color: var(--color-navy);
 		cursor: default;
 		text-decoration: none;
 	}
 
-	.breadcrumb-sep {
+	:global(.breadcrumb-sep) {
 		color: var(--color-muted);
 	}
 
@@ -121,7 +127,7 @@ const configured = Boolean(driveFolderId && driveApiKey);
 		gap: 10px;
 	}
 
-	.materials-entry {
+	:global(.materials-entry) {
 		display: flex;
 		align-items: center;
 		gap: 14px;
@@ -137,33 +143,29 @@ const configured = Boolean(driveFolderId && driveApiKey);
 		cursor: pointer;
 	}
 
-	a.materials-entry {
-		cursor: pointer;
-	}
-
-	.materials-entry:hover {
+	:global(.materials-entry:hover) {
 		border-color: var(--color-pink);
 	}
 
-	.materials-icon {
+	:global(.materials-icon) {
 		flex: none;
 		width: 24px;
 		height: 24px;
 		color: var(--color-pink);
 	}
 
-	.materials-icon svg {
+	:global(.materials-icon svg) {
 		width: 100%;
 		height: 100%;
 	}
 
-	.materials-name {
+	:global(.materials-name) {
 		flex: 1;
 		font-weight: 600;
 		word-break: break-word;
 	}
 
-	.materials-size {
+	:global(.materials-size) {
 		flex: none;
 		font-size: 13px;
 		color: var(--color-muted);
