@@ -83,6 +83,15 @@ export interface UiStrings {
 		ticketsButtonLabel: string;
 		photoButtonLabel: string;
 	};
+	materials: {
+		loading: string;
+		unavailable: string;
+		notConfigured: string;
+		empty: string;
+		breadcrumbLabel: string;
+		rootLabel: string;
+		openFolderLabel: string;
+	};
 }
 
 export type SocialName = 'instagram' | 'linkedin';
@@ -195,6 +204,15 @@ const IT: UiStrings = {
 		ticketsButtonLabel: 'Info e biglietti',
 		photoButtonLabel: 'Guarda le foto',
 	},
+	materials: {
+		loading: 'Caricamento file…',
+		unavailable: 'Materiali momentaneamente non disponibili.',
+		notConfigured: 'Sezione non ancora configurata: cartella o chiave Drive mancanti.',
+		empty: 'Questa cartella è vuota.',
+		breadcrumbLabel: 'Percorso cartelle',
+		rootLabel: 'Materiali',
+		openFolderLabel: 'Apri cartella',
+	},
 };
 
 const EN: UiStrings = {
@@ -292,6 +310,15 @@ const EN: UiStrings = {
 		dinnerLocationLabel: 'Dinner',
 		ticketsButtonLabel: 'Info & tickets',
 		photoButtonLabel: 'View the photos',
+	},
+	materials: {
+		loading: 'Loading files…',
+		unavailable: 'Materials temporarily unavailable.',
+		notConfigured: 'This section isn\'t configured yet: missing Drive folder or key.',
+		empty: 'This folder is empty.',
+		breadcrumbLabel: 'Folder path',
+		rootLabel: 'Materials',
+		openFolderLabel: 'Open folder',
 	},
 };
 
