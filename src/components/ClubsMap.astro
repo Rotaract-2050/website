@@ -1,7 +1,9 @@
 ---
+import type { Feature, MultiPolygon, Polygon } from 'geojson';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import type { Lang } from '../data/ui-strings';
 import { uiStrings } from '../data/ui-strings';
+import zoneBoundaries from '../data/zone-boundaries.geo.json';
 import 'leaflet/dist/leaflet.css';
 
 interface MapClub {
@@ -11,12 +13,18 @@ interface MapClub {
 	_sys: { filename: string };
 }
 
+interface MapZone {
+	name: string;
+	color?: string | null;
+}
+
 interface Props {
 	lang: Lang;
 	clubs: MapClub[];
+	zones?: MapZone[];
 }
 
-const { lang, clubs } = Astro.props;
+const { lang, clubs, zones = [] } = Astro.props;
 const t = uiStrings[lang].clubMap;
 
 const markers = clubs
@@ -27,6 +35,16 @@ const markers = clubs
 		lng: club.lng,
 		href: getRelativeLocaleUrl(lang, `club/${club._sys.filename}`),
 	}));
+
+// Real municipal (comune) boundaries, unioned per zone by scripts/fetch-zone-boundaries.mjs
+// from OpenStreetMap data — see that script for how each zone's comuni are determined.
+const zoneAreas = zones
+	.map((zone) => ({
+		name: zone.name,
+		color: zone.color || '#0B2545',
+		geometry: (zoneBoundaries.zones as Record<string, Feature<Polygon | MultiPolygon>>)[zone.name]?.geometry,
+	}))
+	.filter((zone): zone is { name: string; color: string; geometry: Polygon | MultiPolygon } => zone.geometry != null);
 ---
 
 <section class="clubs-map-section">
@@ -38,6 +56,7 @@ const markers = clubs
 				id="clubs-map"
 				class="clubs-map"
 				data-clubs={JSON.stringify(markers)}
+				data-zones={JSON.stringify(zoneAreas)}
 				data-view-label={t.viewClub}
 				role="application"
 				aria-label={t.title}
@@ -59,16 +78,47 @@ const markers = clubs
 		href: string;
 	}
 
+	interface MapZone {
+		name: string;
+		color: string;
+		geometry: GeoJSON.Polygon | GeoJSON.MultiPolygon;
+	}
+
 	function initClubsMap(container: HTMLElement) {
 		const markers: MapMarker[] = JSON.parse(container.dataset.clubs ?? '[]');
+		const zones: MapZone[] = JSON.parse(container.dataset.zones ?? '[]');
 		const viewClubLabel = container.dataset.viewLabel ?? '';
 		if (markers.length === 0) return;
 
 		const map = L.map(container, { scrollWheelZoom: false });
-		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		// A muted basemap (rather than OSM's default colorful green/orange land-use tiles)
+		// so the zone fill colors read clearly instead of blending into the map itself.
+		L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
 			maxZoom: 19,
-			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
+			attribution:
+				'&copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener noreferrer">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
 		}).addTo(map);
+
+		const mapBounds = L.latLngBounds([]);
+
+		// Draw the zone areas first so the club pins always sit on top of them.
+		for (const zone of zones) {
+			const layer = L.geoJSON(zone.geometry, {
+				style: {
+					color: zone.color,
+					weight: 4,
+					fillColor: zone.color,
+					fillOpacity: 0.7,
+				},
+			}).addTo(map);
+
+			mapBounds.extend(layer.getBounds());
+
+			L.tooltip({ permanent: true, direction: 'center', className: 'zone-label', interactive: false })
+				.setLatLng(layer.getBounds().getCenter())
+				.setContent(zone.name)
+				.addTo(map);
+		}
 
 		const pinIcon = L.divIcon({
 			className: 'club-pin',
@@ -81,7 +131,6 @@ const markers = clubs
 		// Several clubs share the same town-level coordinates (no precise address on file):
 		// fan overlapping pins out slightly around the shared point so every club stays clickable.
 		const seen = new Map<string, number>();
-		const bounds: [number, number][] = [];
 
 		for (const club of markers) {
 			const key = `${club.lat.toFixed(4)},${club.lng.toFixed(4)}`;
@@ -105,13 +154,13 @@ const markers = clubs
 				return wrapper;
 			});
 
-			bounds.push([lat, lng]);
+			mapBounds.extend([lat, lng]);
 		}
 
-		if (bounds.length === 1) {
-			map.setView(bounds[0], 12);
+		if (markers.length === 1 && zones.length === 0) {
+			map.setView([markers[0].lat, markers[0].lng], 12);
 		} else {
-			map.fitBounds(bounds, { padding: [30, 30], maxZoom: 12 });
+			map.fitBounds(mapBounds, { padding: [30, 30], maxZoom: 12 });
 		}
 	}
 
@@ -165,5 +214,27 @@ const markers = clubs
 		.clubs-map {
 			height: 360px;
 		}
+	}
+
+	/* Leaflet renders zone tooltips outside this component's markup, so they need :global(). */
+	.clubs-map :global(.leaflet-tooltip.zone-label) {
+		background: none;
+		border: none;
+		box-shadow: none;
+		padding: 0;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 13px;
+		letter-spacing: 0.02em;
+		color: var(--color-navy);
+		text-shadow:
+			0 0 4px #fff,
+			0 0 4px #fff,
+			0 0 8px #fff;
+		pointer-events: none;
+	}
+
+	.clubs-map :global(.leaflet-tooltip.zone-label::before) {
+		display: none;
 	}
 </style>
