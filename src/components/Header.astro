@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import type { Lang } from '../data/ui-strings';
 import { uiStrings, SOCIAL_LINKS, UTILITY_LINKS } from '../data/ui-strings';
@@ -48,11 +49,7 @@ const distrettoActive = (['distretto', 'story', 'squadra'] as PageKey[]).include
 
 <header class="main-nav">
 	<a href={href('home')} class="brand">
-		<span class="brand-mark">R</span>
-		<span class="brand-text">
-			<span class="brand-name">ROTARACT</span>
-			<span class="brand-sub">DISTRETTO 2050</span>
-		</span>
+		<Image src="/uploads/Loghi/Logo-distretto-nav.png" alt="Rotaract Distretto 2050" width={429} height={158} class="brand-logo" />
 	</a>
 
 	<button
@@ -195,44 +192,11 @@ const distrettoActive = (['distretto', 'story', 'squadra'] as PageKey[]).include
 	.brand {
 		display: flex;
 		align-items: center;
-		gap: 12px;
 	}
 
-	.brand-mark {
-		width: 44px;
-		height: 44px;
-		border-radius: 50%;
-		background: var(--color-pink);
-		color: #fff;
-		font-family: var(--font-heading);
-		font-weight: 700;
-		font-size: 22px;
-		flex-shrink: 0;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.brand-text {
-		display: flex;
-		flex-direction: column;
-		line-height: 1;
-	}
-
-	.brand-name {
-		font-family: var(--font-heading);
-		font-weight: 700;
-		font-size: 20px;
-		color: var(--color-navy);
-		letter-spacing: 0.5px;
-	}
-
-	.brand-sub {
-		font-weight: 600;
-		font-size: 11px;
-		color: var(--color-pink);
-		letter-spacing: 2px;
-		margin-top: 4px;
+	.brand-logo {
+		height: 48px;
+		width: auto;
 	}
 
 	.menu-toggle {
@@ -373,6 +337,10 @@ const distrettoActive = (['distretto', 'story', 'squadra'] as PageKey[]).include
 
 		.utility-bar {
 			padding: 8px 20px;
+		}
+
+		.brand-logo {
+			height: 38px;
 		}
 
 		.menu-toggle {
