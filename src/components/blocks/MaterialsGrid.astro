@@ -42,6 +42,9 @@ const configured = Boolean(driveFolderId && driveApiKey);
 			>
 				<nav class="materials-breadcrumb" aria-label={t.breadcrumbLabel} data-materials-breadcrumb></nav>
 				<p class="materials-status" data-materials-status hidden></p>
+				<h3 class="materials-subhead" data-materials-folders-label hidden>{t.foldersLabel}</h3>
+				<div class="materials-folders" data-materials-folders></div>
+				<h3 class="materials-subhead" data-materials-files-label hidden>{t.filesLabel}</h3>
 				<ul class="materials-list" data-materials-list></ul>
 			</div>
 		)}
@@ -86,6 +89,23 @@ const configured = Boolean(driveFolderId && driveApiKey);
 		display: none;
 	}
 
+	.materials-subhead {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 13px;
+		letter-spacing: 0.4px;
+		text-transform: uppercase;
+		color: var(--color-muted);
+		margin: 0 0 12px;
+	}
+
+	.materials-folders {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+		gap: 16px;
+		margin-bottom: 30px;
+	}
+
 	/* The breadcrumb buttons, list items and entries below are all built client-side in the
 	   <script> (document.createElement), not present in this component's server-rendered
 	   markup — Astro's style scoping tags only elements it renders itself with a
@@ -117,6 +137,50 @@ const configured = Boolean(driveFolderId && driveApiKey);
 
 	:global(.breadcrumb-sep) {
 		color: var(--color-muted);
+	}
+
+	/* Folder tiles: big square-ish cards, native-Google-Drive style — bigger icon, name below,
+	   as opposed to the compact row style used for files further down. */
+	:global(.materials-folder-tile) {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 12px;
+		aspect-ratio: 1 / 0.85;
+		width: 100%;
+		background: var(--color-bg);
+		border: 1px solid var(--color-border);
+		border-radius: 16px;
+		padding: 18px 12px;
+		text-align: center;
+		font-family: inherit;
+		cursor: pointer;
+	}
+
+	:global(.materials-folder-tile:hover) {
+		border-color: var(--color-pink);
+		box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+	}
+
+	:global(.materials-folder-icon) {
+		flex: none;
+		width: 56px;
+		height: 56px;
+		color: var(--color-pink);
+	}
+
+	:global(.materials-folder-icon svg) {
+		width: 100%;
+		height: 100%;
+	}
+
+	:global(.materials-folder-name) {
+		font-weight: 600;
+		font-size: 14px;
+		color: var(--color-text);
+		word-break: break-word;
+		line-height: 1.3;
 	}
 
 	.materials-list {
@@ -174,6 +238,11 @@ const configured = Boolean(driveFolderId && driveApiKey);
 	@media (max-width: 720px) {
 		.materials-grid {
 			padding: 50px 20px 70px;
+		}
+
+		.materials-folders {
+			grid-template-columns: repeat(auto-fill, minmax(108px, 1fr));
+			gap: 12px;
 		}
 	}
 </style>
@@ -241,8 +310,11 @@ const configured = Boolean(driveFolderId && driveApiKey);
 
 		const breadcrumb = app.querySelector<HTMLElement>('[data-materials-breadcrumb]');
 		const status = app.querySelector<HTMLElement>('[data-materials-status]');
+		const foldersLabel = app.querySelector<HTMLElement>('[data-materials-folders-label]');
+		const folders = app.querySelector<HTMLElement>('[data-materials-folders]');
+		const filesLabel = app.querySelector<HTMLElement>('[data-materials-files-label]');
 		const list = app.querySelector<HTMLUListElement>('[data-materials-list]');
-		if (!breadcrumb || !status || !list) return;
+		if (!breadcrumb || !status || !folders || !list || !foldersLabel || !filesLabel) return;
 
 		// Stack of folders entered so far (root excluded, it's rendered separately).
 		let path: { id: string; name: string }[] = [];
@@ -289,29 +361,48 @@ const configured = Boolean(driveFolderId && driveApiKey);
 			});
 		}
 
-		function renderEntries(files: DriveFile[]) {
+		// Folders render as big square tiles (native Google Drive folder-grid look), files as
+		// compact rows below — same split Drive itself uses between its folder row and file list.
+		function renderFolders(items: DriveFile[]) {
+			if (!folders) return;
+			folders.innerHTML = '';
+			for (const item of items) {
+				const tile = document.createElement('button');
+				tile.type = 'button';
+				tile.className = 'materials-folder-tile';
+				tile.setAttribute('aria-label', `${openFolderLabel}: ${item.name}`);
+				tile.addEventListener('click', () => {
+					path = [...path, { id: item.id, name: item.name }];
+					load(item.id);
+				});
+
+				const icon = document.createElement('span');
+				icon.className = 'materials-folder-icon';
+				icon.setAttribute('aria-hidden', 'true');
+				icon.innerHTML = ICONS.folder;
+				tile.appendChild(icon);
+
+				const name = document.createElement('span');
+				name.className = 'materials-folder-name';
+				name.textContent = item.name;
+				tile.appendChild(name);
+
+				folders.appendChild(tile);
+			}
+		}
+
+		function renderFiles(items: DriveFile[]) {
 			if (!list) return;
 			list.innerHTML = '';
-			for (const file of files) {
+			for (const file of items) {
 				const li = document.createElement('li');
 				li.className = 'materials-item';
 
-				const isFolder = file.mimeType === FOLDER_MIME;
-				const entry = document.createElement(isFolder ? 'button' : 'a') as HTMLButtonElement | HTMLAnchorElement;
+				const entry = document.createElement('a');
 				entry.className = 'materials-entry';
-
-				if (isFolder) {
-					(entry as HTMLButtonElement).type = 'button';
-					entry.setAttribute('aria-label', `${openFolderLabel}: ${file.name}`);
-					entry.addEventListener('click', () => {
-						path = [...path, { id: file.id, name: file.name }];
-						load(file.id);
-					});
-				} else {
-					(entry as HTMLAnchorElement).href = file.webViewLink ?? '#';
-					(entry as HTMLAnchorElement).target = '_blank';
-					entry.rel = 'noopener';
-				}
+				entry.href = file.webViewLink ?? '#';
+				entry.target = '_blank';
+				entry.rel = 'noopener';
 
 				const icon = document.createElement('span');
 				icon.className = 'materials-icon';
@@ -325,7 +416,7 @@ const configured = Boolean(driveFolderId && driveApiKey);
 				entry.appendChild(name);
 
 				const sizeLabel = formatSize(file.size);
-				if (!isFolder && sizeLabel) {
+				if (sizeLabel) {
 					const size = document.createElement('span');
 					size.className = 'materials-size';
 					size.textContent = sizeLabel;
@@ -338,8 +429,11 @@ const configured = Boolean(driveFolderId && driveApiKey);
 		}
 
 		async function load(folderId: string) {
-			if (!list) return;
+			if (!folders || !list || !foldersLabel || !filesLabel) return;
+			folders.innerHTML = '';
 			list.innerHTML = '';
+			foldersLabel.hidden = true;
+			filesLabel.hidden = true;
 			setStatus(loadingMessage);
 			renderBreadcrumb();
 
@@ -353,12 +447,23 @@ const configured = Boolean(driveFolderId && driveApiKey);
 				const res = await fetch(url.toString());
 				if (!res.ok) throw new Error(`Drive API ${res.status}`);
 				const json = await res.json();
-				const files: DriveFile[] = json.files ?? [];
-				if (files.length === 0) {
+				const items: DriveFile[] = json.files ?? [];
+				const folderItems = items.filter((item) => item.mimeType === FOLDER_MIME);
+				const fileItems = items.filter((item) => item.mimeType !== FOLDER_MIME);
+
+				if (items.length === 0) {
 					setStatus(emptyMessage);
-				} else {
-					setStatus('');
-					renderEntries(files);
+					return;
+				}
+
+				setStatus('');
+				if (folderItems.length > 0) {
+					foldersLabel.hidden = false;
+					renderFolders(folderItems);
+				}
+				if (fileItems.length > 0) {
+					filesLabel.hidden = false;
+					renderFiles(fileItems);
 				}
 			} catch {
 				setStatus(errorMessage);

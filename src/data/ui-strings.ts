@@ -91,6 +91,8 @@ export interface UiStrings {
 		breadcrumbLabel: string;
 		rootLabel: string;
 		openFolderLabel: string;
+		foldersLabel: string;
+		filesLabel: string;
 	};
 }
 
@@ -212,6 +214,8 @@ const IT: UiStrings = {
 		breadcrumbLabel: 'Percorso cartelle',
 		rootLabel: 'Materiali',
 		openFolderLabel: 'Apri cartella',
+		foldersLabel: 'Cartelle',
+		filesLabel: 'File',
 	},
 };
 
@@ -319,6 +323,8 @@ const EN: UiStrings = {
 		breadcrumbLabel: 'Folder path',
 		rootLabel: 'Materials',
 		openFolderLabel: 'Open folder',
+		foldersLabel: 'Folders',
+		filesLabel: 'Files',
 	},
 };
 
