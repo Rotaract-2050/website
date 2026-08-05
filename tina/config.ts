@@ -125,6 +125,30 @@ const valuesGridTemplate = {
 	fields: [
 		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
 		{
+			type: 'string' as const,
+			name: 'accent',
+			label: 'Colore accento sezione (per differenziare più griglie sulla stessa pagina)',
+			options: [
+				{ value: '#D41367', label: 'Cranberry (default)' },
+				{ value: '#F7A81B', label: 'Rotary Gold' },
+				{ value: '#0067C8', label: 'Azure' },
+				{ value: '#00A2E0', label: 'Sky Blue' },
+				{ value: '#657F99', label: 'Slate' },
+			],
+		},
+		{
+			type: 'string' as const,
+			name: 'layout',
+			label: 'Stile card',
+			description:
+				'Badge: cerchio col contorno, per valori/principi astratti. Percorso: cerchi pieni numerati collegati da una linea, per sequenze ordinate. Icona: pittogramma per voce, per elenchi di temi/cause distinti.',
+			options: [
+				{ value: 'badge', label: 'Badge (contorno)' },
+				{ value: 'path', label: 'Percorso collegato' },
+				{ value: 'icon', label: 'Icona personalizzata' },
+			],
+		},
+		{
 			type: 'object' as const,
 			name: 'items',
 			label: 'Valori',
@@ -132,6 +156,21 @@ const valuesGridTemplate = {
 			ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 			fields: [
 				{ type: 'string' as const, name: 'letter', label: 'Lettera' },
+				{
+					type: 'string' as const,
+					name: 'icon',
+					label: 'Icona (solo per stile "Icona personalizzata")',
+					options: [
+						{ value: '', label: '— Nessuna —' },
+						{ value: 'peace', label: 'Pace (cerchi uniti)' },
+						{ value: 'health', label: 'Salute (croce)' },
+						{ value: 'water', label: 'Acqua (goccia)' },
+						{ value: 'family', label: 'Famiglia (cuore)' },
+						{ value: 'education', label: 'Istruzione (libro)' },
+						{ value: 'growth', label: 'Sviluppo (crescita)' },
+						{ value: 'leaf', label: 'Ambiente (foglia)' },
+					],
+				},
 				{ type: 'string' as const, name: 'title', label: 'Titolo' },
 				{ type: 'string' as const, name: 'description', label: 'Descrizione', ui: { component: 'textarea' } },
 			],
@@ -338,7 +377,14 @@ const rrdTimelineTemplate = {
 				{ type: 'string' as const, name: 'yearRange', label: 'Anno rotariano (es. 2026/2027)' },
 				{ type: 'string' as const, name: 'name', label: 'Nome' },
 				{ type: 'string' as const, name: 'surname', label: 'Cognome' },
-				{ type: 'string' as const, name: 'motto', label: 'Motto dell’anno' },
+				{ type: 'string' as const, name: 'motto', label: 'Motto Rotary International (tema dell’anno rotariano)' },
+				{ type: 'string' as const, name: 'mottoDistretto', label: 'Motto del distretto (opzionale)' },
+				{
+					type: 'string' as const,
+					name: 'eraLabel',
+					label: 'Separatore era (opzionale)',
+					description: 'Se compilato, mostra un separatore con questa etichetta sopra questa annata — usalo sull’annata in cui inizia un nuovo nome di distretto (es. "Rotaract Distretto 204").',
+				},
 			],
 		},
 	],
