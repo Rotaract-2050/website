@@ -40,6 +40,17 @@ export default defineConfig({
 			prefixDefaultLocale: false,
 		},
 	},
+	// node-ical's rrule-temporal dependency ships parallel .js/.cjs builds behind a
+	// conditional `exports` map; Netlify's function bundler only picks up one of the
+	// two at build time, so the *other* condition's import fails at runtime in
+	// production ("Cannot find module .../totext.js"). Forcing it to bundle at
+	// Vite's build step (rather than staying an external node_modules require)
+	// sidesteps that bundler/exports-map mismatch entirely.
+	vite: {
+		ssr: {
+			noExternal: ['node-ical', 'rrule-temporal'],
+		},
+	},
 	integrations: [
 		tina(),
 		sitemap({
