@@ -6,8 +6,9 @@ scope:
 excerpt: Il Distretto 2090 lancia MADE-IN, tra aperitivi formativi, visite aziendali e networking per valorizzare il Made in Italy.
 excerptEn: District 2090 launches MADE-IN, mixing training aperitifs, company visits and networking to celebrate Made in Italy.
 date: '2026-08-05T11:00:00.000Z'
-imageLabel: Foto news
-imageLabelEn: News photo
+image: /uploads/news/2026-2027/Madein.jpeg
+imageLabel: Foto di MADE-IN
+imageLabelEn: Photo of MADE-IN
 bodyEn: |-
   Promoted by District 2090, MADE-IN is an outreach service designed to showcase local excellence and Made in Italy in a dynamic, youth-oriented way. Through training aperitifs, company visits, meetings with leaders and networking events, the project aims to:
 
