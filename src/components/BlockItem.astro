@@ -18,6 +18,7 @@ import ClubDirectory from './blocks/ClubDirectory.astro';
 import RrdTimeline from './blocks/RrdTimeline.astro';
 import EventsArchive from './blocks/EventsArchive.astro';
 import NewsArchive from './blocks/NewsArchive.astro';
+import MaterialsGrid from './blocks/MaterialsGrid.astro';
 
 function nonNull<T>(value: T | null | undefined): value is T {
 	return value != null;
@@ -33,7 +34,10 @@ interface Props {
 const { lang, block } = Astro.props;
 ---
 
-<div data-tina-field={tinaField(block)} data-reveal={block.__typename === 'PagesBlocksHero' ? undefined : true}>
+<div
+	data-tina-field={tinaField(block)}
+	data-reveal={block.__typename === 'PagesBlocksHero' || block.__typename === 'PagesBlocksRrdTimeline' ? undefined : true}
+>
 	{block.__typename === 'PagesBlocksHero' && (
 		<Hero
 			lang={lang}
@@ -90,8 +94,11 @@ const { lang, block } = Astro.props;
 	{block.__typename === 'PagesBlocksValuesGrid' && (
 		<ValuesGrid
 			title={block.title}
+			accent={block.accent ?? undefined}
+			layout={(block.layout as 'badge' | 'path' | 'icon' | null) ?? undefined}
 			items={(block.items ?? []).filter(nonNull).map((i) => ({
 				letter: i.letter ?? '',
+				icon: i.icon ?? undefined,
 				title: i.title ?? '',
 				description: i.description ?? '',
 				tinaFieldAttr: tinaField(i),
@@ -178,6 +185,8 @@ const { lang, block } = Astro.props;
 				name: i.name ?? '',
 				surname: i.surname ?? '',
 				motto: i.motto ?? '',
+				mottoDistretto: i.mottoDistretto ?? undefined,
+				eraLabel: i.eraLabel ?? undefined,
 				tinaFieldAttr: tinaField(i),
 			}))}
 		/>
@@ -187,5 +196,8 @@ const { lang, block } = Astro.props;
 	)}
 	{block.__typename === 'PagesBlocksNewsArchive' && (
 		<NewsArchive lang={lang} emptyMessage={block.emptyMessage ?? undefined} />
+	)}
+	{block.__typename === 'PagesBlocksMaterialsGrid' && (
+		<MaterialsGrid lang={lang} title={block.title} driveFolderId={block.driveFolderId ?? undefined} emptyMessage={block.emptyMessage ?? undefined} />
 	)}
 </div>

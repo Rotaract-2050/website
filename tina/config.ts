@@ -125,6 +125,30 @@ const valuesGridTemplate = {
 	fields: [
 		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
 		{
+			type: 'string' as const,
+			name: 'accent',
+			label: 'Colore accento sezione (per differenziare più griglie sulla stessa pagina)',
+			options: [
+				{ value: '#D41367', label: 'Cranberry (default)' },
+				{ value: '#F7A81B', label: 'Rotary Gold' },
+				{ value: '#0067C8', label: 'Azure' },
+				{ value: '#00A2E0', label: 'Sky Blue' },
+				{ value: '#657F99', label: 'Slate' },
+			],
+		},
+		{
+			type: 'string' as const,
+			name: 'layout',
+			label: 'Stile card',
+			description:
+				'Badge: cerchio col contorno, per valori/principi astratti. Percorso: cerchi pieni numerati collegati da una linea, per sequenze ordinate. Icona: pittogramma per voce, per elenchi di temi/cause distinti.',
+			options: [
+				{ value: 'badge', label: 'Badge (contorno)' },
+				{ value: 'path', label: 'Percorso collegato' },
+				{ value: 'icon', label: 'Icona personalizzata' },
+			],
+		},
+		{
 			type: 'object' as const,
 			name: 'items',
 			label: 'Valori',
@@ -132,6 +156,21 @@ const valuesGridTemplate = {
 			ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 			fields: [
 				{ type: 'string' as const, name: 'letter', label: 'Lettera' },
+				{
+					type: 'string' as const,
+					name: 'icon',
+					label: 'Icona (solo per stile "Icona personalizzata")',
+					options: [
+						{ value: '', label: '— Nessuna —' },
+						{ value: 'peace', label: 'Pace (cerchi uniti)' },
+						{ value: 'health', label: 'Salute (croce)' },
+						{ value: 'water', label: 'Acqua (goccia)' },
+						{ value: 'family', label: 'Famiglia (cuore)' },
+						{ value: 'education', label: 'Istruzione (libro)' },
+						{ value: 'growth', label: 'Sviluppo (crescita)' },
+						{ value: 'leaf', label: 'Ambiente (foglia)' },
+					],
+				},
 				{ type: 'string' as const, name: 'title', label: 'Titolo' },
 				{ type: 'string' as const, name: 'description', label: 'Descrizione', ui: { component: 'textarea' } },
 			],
@@ -285,6 +324,34 @@ const ctaBannerTemplate = {
 	],
 };
 
+// Files themselves are not Tina content: MaterialsGrid.astro fetches them live client-side
+// from the Drive API v3 (files.list), including subfolders (folder browsing happens entirely
+// in the client script). Only the section title, the root folder ID and the empty-state
+// override are editorial — the API key lives once in `settings` (not per-block), since it's
+// a site-wide credential, not page content.
+const materialsGridTemplate = {
+	name: 'MaterialsGrid',
+	label: 'Materiali distrettuali (Google Drive)',
+	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
+	fields: [
+		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
+		{
+			type: 'string' as const,
+			name: 'driveFolderId',
+			label: 'ID cartella Google Drive (radice)',
+			required: true,
+			description:
+				'ID della cartella condivisa dal distretto, dall\'URL Drive (https://drive.google.com/drive/folders/<ID>). La cartella e le sue sottocartelle devono essere condivise "chiunque abbia il link": la lettura avviene via API key, senza login Google.',
+		},
+		{
+			type: 'string' as const,
+			name: 'emptyMessage',
+			label: 'Messaggio se una cartella è vuota (opzionale)',
+			ui: { component: 'textarea' },
+		},
+	],
+};
+
 const pagePlaceholderTemplate = {
 	name: 'PagePlaceholder',
 	label: 'Pagina in preparazione',
@@ -310,7 +377,14 @@ const rrdTimelineTemplate = {
 				{ type: 'string' as const, name: 'yearRange', label: 'Anno rotariano (es. 2026/2027)' },
 				{ type: 'string' as const, name: 'name', label: 'Nome' },
 				{ type: 'string' as const, name: 'surname', label: 'Cognome' },
-				{ type: 'string' as const, name: 'motto', label: 'Motto dell’anno' },
+				{ type: 'string' as const, name: 'motto', label: 'Motto Rotary International (tema dell’anno rotariano)' },
+				{ type: 'string' as const, name: 'mottoDistretto', label: 'Motto del distretto (opzionale)' },
+				{
+					type: 'string' as const,
+					name: 'eraLabel',
+					label: 'Separatore era (opzionale)',
+					description: 'Se compilato, mostra un separatore con questa etichetta sopra questa annata — usalo sull’annata in cui inizia un nuovo nome di distretto (es. "Rotaract Distretto 204").',
+				},
 			],
 		},
 	],
@@ -413,6 +487,7 @@ export default defineConfig({
 							rrdTimelineTemplate,
 							eventsArchiveTemplate,
 							newsArchiveTemplate,
+							materialsGridTemplate,
 						],
 					},
 				],
@@ -576,6 +651,13 @@ export default defineConfig({
 					{ type: 'string', name: 'about', label: 'Testo "chi siamo" (footer)', ui: { component: 'textarea' } },
 					{ type: 'string', name: 'address', label: 'Indirizzo' },
 					{ type: 'string', name: 'email', label: 'Email' },
+					{
+						type: 'string',
+						name: 'driveApiKey',
+						label: 'API key Google Drive (materiali distrettuali)',
+						description:
+							'Da Google Cloud Console: API key con Drive API abilitata, ristretta per HTTP referrer al dominio del sito. Non è un segreto da nascondere — è pensata per finire nel codice client, per questo va ristretta per referrer, non protetta come una password. Usata dal blocco "Materiali distrettuali" per elencare i file della cartella Drive del distretto.',
+					},
 				],
 			},
 		],

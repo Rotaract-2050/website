@@ -1,19 +1,65 @@
 ---
 interface Props {
 	title: string;
-	items: { letter: string; title: string; description: string; tinaFieldAttr?: string }[];
+	accent?: string;
+	layout?: 'badge' | 'path' | 'icon';
+	items: { letter: string; icon?: string; title: string; description: string; tinaFieldAttr?: string }[];
 }
 
-const { title, items } = Astro.props;
+const { title, accent = '#d41367', layout, items } = Astro.props;
 ---
 
-<section class="values">
+<section class="values" data-layout={layout} style={`--accent: ${accent}`}>
 	<div class="section-inner">
-		<h2 class="section-title center">{title}</h2>
+		<h2 class="section-title center"><span class="section-title-bar" aria-hidden="true"></span>{title}</h2>
 		<div class="values-grid">
 			{items.map((val) => (
 				<div class="value-card" data-tina-field={val.tinaFieldAttr}>
-					<div class="value-letter">{val.letter}</div>
+					<div class="value-marker">
+						{layout === 'icon' && val.icon ? (
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+								{val.icon === 'peace' && (
+									<>
+										<circle cx="9" cy="12" r="6"></circle>
+										<circle cx="15" cy="12" r="6"></circle>
+									</>
+								)}
+								{val.icon === 'health' && (
+									<>
+										<circle cx="12" cy="12" r="9"></circle>
+										<path d="M12 8v8M8 12h8"></path>
+									</>
+								)}
+								{val.icon === 'water' && <path d="M12 3c3.5 4 7 8.4 7 12a7 7 0 0 1-14 0c0-3.6 3.5-8 7-12z"></path>}
+								{val.icon === 'family' && (
+									<>
+										<path d="M12 20s-7-4.3-9.3-8.4C1 8.4 2.7 5 6 5c2 0 3.6 1.1 4 2.6.4-1.5 2-2.6 4-2.6 3.3 0 5 3.4 3.3 6.6C19 15.7 12 20 12 20z"></path>
+										<line x1="12" y1="10.5" x2="12" y2="10.5"></line>
+									</>
+								)}
+								{val.icon === 'education' && (
+									<>
+										<path d="M12 6c-2-1.3-5-1.7-8-1v13c3-.7 6-.3 8 1 2-1.3 5-1.7 8-1V5c-3-.7-6-.3-8 1z"></path>
+										<path d="M12 6v13"></path>
+									</>
+								)}
+								{val.icon === 'growth' && (
+									<>
+										<path d="M3 17l6-6 4 4 7-7"></path>
+										<path d="M14 8h6v6"></path>
+									</>
+								)}
+								{val.icon === 'leaf' && (
+									<>
+										<path d="M12 3c4 2 6 6 6 9 0 3-2 7-6 9-4-2-6-6-6-9 0-3 2-7 6-9z"></path>
+										<path d="M12 6v13"></path>
+									</>
+								)}
+							</svg>
+						) : (
+							<span class="value-letter">{val.letter}</span>
+						)}
+					</div>
 					<div class="value-title">{val.title}</div>
 					<div class="value-desc">{val.description}</div>
 				</div>
@@ -40,6 +86,18 @@ const { title, items } = Astro.props;
 		color: var(--color-navy);
 		text-transform: uppercase;
 		margin: 0 0 34px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 14px;
+	}
+
+	.section-title-bar {
+		display: inline-block;
+		width: 36px;
+		height: 4px;
+		border-radius: 2px;
+		background: var(--accent);
 	}
 
 	.section-title.center {
@@ -53,9 +111,10 @@ const { title, items } = Astro.props;
 	}
 
 	.value-card {
+		position: relative;
 		background: #fff;
 		border-radius: 14px;
-		padding: 28px 22px;
+		padding: 28px 22px 24px;
 		text-align: center;
 		box-shadow: 0 4px 16px rgba(11, 37, 69, 0.06);
 		transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -66,19 +125,27 @@ const { title, items } = Astro.props;
 		box-shadow: 0 10px 26px rgba(11, 37, 69, 0.13);
 	}
 
-	.value-letter {
-		width: 48px;
-		height: 48px;
-		border-radius: 50%;
-		background: var(--color-pink);
-		color: #fff;
-		font-family: var(--font-heading);
-		font-weight: 700;
-		font-size: 20px;
+	.value-marker {
+		width: 56px;
+		height: 56px;
+		margin: 0 auto 16px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		margin: 0 auto 14px;
+		border-radius: 50%;
+		background: var(--accent);
+		color: #fff;
+	}
+
+	.value-letter {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 20px;
+	}
+
+	.value-marker svg {
+		width: 26px;
+		height: 26px;
 	}
 
 	.value-title {
@@ -95,6 +162,106 @@ const { title, items } = Astro.props;
 		line-height: 1.5;
 	}
 
+	/* --- Badge: a held mark, not a filled icon — a seal band, not a product card.
+	   No box, no shadow: values are principles you hold, not features you ship. --- */
+	.values[data-layout='badge'] .value-card {
+		background: none;
+		box-shadow: none;
+		border-radius: 0;
+		padding: 8px 20px;
+	}
+
+	.values[data-layout='badge'] .value-card:hover {
+		transform: none;
+		box-shadow: none;
+	}
+
+	.values[data-layout='badge'] .value-marker {
+		width: 64px;
+		height: 64px;
+		background: none;
+		border: 2px solid var(--accent);
+		color: var(--accent);
+		transition: transform 0.25s ease;
+	}
+
+	.values[data-layout='badge'] .value-card:hover .value-marker {
+		transform: scale(1.08);
+	}
+
+	.values[data-layout='badge'] .value-title {
+		font-size: 17px;
+	}
+
+	/* --- Path: a small waypoint marker in the gap, not just a line --- */
+	.values[data-layout='icon'] .value-marker {
+		width: 60px;
+		height: 60px;
+	}
+
+	.values[data-layout='icon'] .value-marker svg {
+		width: 28px;
+		height: 28px;
+	}
+
+	/* --- Badge & Path: five items read best as one row (a seal band / a route) --- */
+	.values[data-layout='badge'] .values-grid,
+	.values[data-layout='path'] .values-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	/* --- Icon: seven distinct causes read better centered than left-anchored,
+	   so a ragged last row (4+3) doesn't dangle on the left. --- */
+	.values[data-layout='icon'] .values-grid {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.values[data-layout='icon'] .value-card {
+		flex: 1 1 240px;
+		max-width: 280px;
+	}
+
+	@media (min-width: 901px) {
+		.values[data-layout='badge'] .values-grid,
+		.values[data-layout='path'] .values-grid {
+			grid-template-columns: repeat(5, 1fr);
+		}
+
+		.values[data-layout='badge'] .value-card:not(:last-child)::after {
+			content: '';
+			position: absolute;
+			top: 15%;
+			bottom: 15%;
+			right: 0;
+			width: 1px;
+			background: var(--color-border);
+		}
+
+		/* --- Path only: a waypoint chevron bridging each gap in the route --- */
+		.values[data-layout='path'] .value-card:not(:last-child)::after {
+			content: '›';
+			position: absolute;
+			top: 45px;
+			right: -23px;
+			z-index: 2;
+			width: 22px;
+			height: 22px;
+			border-radius: 50%;
+			background: #fff;
+			border: 1.5px solid var(--color-border);
+			color: var(--accent);
+			font-family: var(--font-heading);
+			font-weight: 700;
+			font-size: 13px;
+			line-height: 1;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+	}
+
 	@media (max-width: 900px) {
 		.values-grid {
 			grid-template-columns: repeat(2, 1fr);
@@ -105,6 +272,11 @@ const { title, items } = Astro.props;
 		.values {
 			padding-left: 20px;
 			padding-right: 20px;
+		}
+
+		.section-title {
+			flex-direction: column;
+			gap: 10px;
 		}
 	}
 </style>

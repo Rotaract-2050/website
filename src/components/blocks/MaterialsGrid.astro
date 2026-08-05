@@ -1,0 +1,509 @@
+---
+import { requestWithMetadata } from '@tinacms/astro';
+import client from '../../../tina/__generated__/client';
+import { uiStrings, type Lang } from '../../data/ui-strings';
+
+interface Props {
+	lang: Lang;
+	title: string;
+	driveFolderId?: string;
+	emptyMessage?: string;
+}
+
+const { lang, title, driveFolderId, emptyMessage } = Astro.props;
+const t = uiStrings[lang].materials;
+
+// driveApiKey is not language-specific (one Google Cloud key for the whole site), so it's
+// always read from the IT settings file regardless of `lang` — avoids two independently
+// editable copies of the same credential drifting apart across languages.
+const { data } = await requestWithMetadata(client.queries.settings({ relativePath: 'it.md' }));
+const driveApiKey = data.settings.driveApiKey;
+
+const configured = Boolean(driveFolderId && driveApiKey);
+---
+
+<section class="materials-grid">
+	<div class="section-inner">
+		<h2 class="section-title">{title}</h2>
+
+		{!configured && <p class="materials-status">{t.notConfigured}</p>}
+
+		{configured && (
+			<div
+				class="materials-app"
+				data-materials-app
+				data-root-folder-id={driveFolderId}
+				data-api-key={driveApiKey}
+				data-root-label={t.rootLabel}
+				data-open-folder-label={t.openFolderLabel}
+				data-loading-message={t.loading}
+				data-error-message={t.unavailable}
+				data-empty-message={emptyMessage || t.empty}
+			>
+				<div class="materials-toolbar">
+					<nav class="materials-breadcrumb" aria-label={t.breadcrumbLabel} data-materials-breadcrumb></nav>
+					<a class="materials-drive-link" data-materials-drive-link href={`https://drive.google.com/drive/folders/${driveFolderId}`} target="_blank" rel="noopener">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><path d="M15 3h6v6" /><path d="M10 14 21 3" /></svg>
+						{t.openInDriveLabel}
+					</a>
+				</div>
+				<p class="materials-status" data-materials-status hidden></p>
+				<h3 class="materials-subhead" data-materials-folders-label hidden>{t.foldersLabel}</h3>
+				<div class="materials-folders" data-materials-folders></div>
+				<h3 class="materials-subhead" data-materials-files-label hidden>{t.filesLabel}</h3>
+				<ul class="materials-list" data-materials-list></ul>
+			</div>
+		)}
+	</div>
+</section>
+
+<style>
+	.materials-grid {
+		background: #fff;
+		padding: 80px 40px;
+	}
+
+	.section-inner {
+		max-width: var(--content-max);
+		margin: 0 auto;
+	}
+
+	.section-title {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 34px;
+		color: var(--color-navy);
+		text-transform: uppercase;
+		margin: 0 0 34px;
+	}
+
+	.materials-status {
+		font-size: 15px;
+		color: var(--color-text);
+		font-style: italic;
+	}
+
+	.materials-toolbar {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 10px 20px;
+		margin-bottom: 18px;
+	}
+
+	.materials-breadcrumb {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 6px;
+	}
+
+	.materials-drive-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		flex: none;
+		font-size: 13px;
+		font-weight: 600;
+		color: var(--color-pink);
+		white-space: nowrap;
+	}
+
+	.materials-drive-link:hover {
+		text-decoration: underline;
+	}
+
+	.materials-drive-link svg {
+		width: 15px;
+		height: 15px;
+	}
+
+	.materials-subhead {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 13px;
+		letter-spacing: 0.4px;
+		text-transform: uppercase;
+		color: var(--color-muted);
+		margin: 0 0 12px;
+	}
+
+	.materials-folders {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+		gap: 16px;
+		margin-bottom: 30px;
+	}
+
+	/* The breadcrumb buttons, list items and entries below are all built client-side in the
+	   <script> (document.createElement), not present in this component's server-rendered
+	   markup — Astro's style scoping tags only elements it renders itself with a
+	   data-astro-cid-* attribute, so a plain scoped selector silently never matches anything
+	   created afterwards by JS. :global() is Astro's documented escape hatch for exactly this
+	   (dynamic content), scoped narrowly to just these selectors rather than the whole block. */
+	:global(.breadcrumb-item) {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 13px;
+		text-transform: uppercase;
+		letter-spacing: 0.4px;
+		color: var(--color-pink);
+		background: none;
+		border: 0;
+		padding: 4px 2px;
+		cursor: pointer;
+	}
+
+	:global(.breadcrumb-item:hover) {
+		text-decoration: underline;
+	}
+
+	:global(.breadcrumb-item[aria-current='page']) {
+		color: var(--color-navy);
+		cursor: default;
+		text-decoration: none;
+	}
+
+	:global(.breadcrumb-sep) {
+		color: var(--color-muted);
+	}
+
+	/* Folder tiles: big square-ish cards, native-Google-Drive style — bigger icon, name below,
+	   as opposed to the compact row style used for files further down. */
+	:global(.materials-folder-tile) {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 12px;
+		aspect-ratio: 1 / 0.85;
+		width: 100%;
+		background: var(--color-bg);
+		border: 1px solid var(--color-border);
+		border-radius: 16px;
+		padding: 18px 12px;
+		text-align: center;
+		font-family: inherit;
+		cursor: pointer;
+	}
+
+	:global(.materials-folder-tile:hover) {
+		border-color: var(--color-pink);
+		box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+	}
+
+	:global(.materials-folder-icon) {
+		flex: none;
+		width: 56px;
+		height: 56px;
+		color: var(--color-pink);
+	}
+
+	:global(.materials-folder-icon svg) {
+		width: 100%;
+		height: 100%;
+	}
+
+	:global(.materials-folder-name) {
+		font-weight: 600;
+		font-size: 14px;
+		color: var(--color-text);
+		word-break: break-word;
+		line-height: 1.3;
+	}
+
+	.materials-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: 10px;
+	}
+
+	:global(.materials-entry) {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		width: 100%;
+		background: var(--color-bg);
+		border: 1px solid var(--color-border);
+		border-radius: 10px;
+		padding: 14px 18px;
+		text-align: left;
+		font-family: inherit;
+		font-size: 15px;
+		color: var(--color-text);
+		cursor: pointer;
+	}
+
+	:global(.materials-entry:hover) {
+		border-color: var(--color-pink);
+	}
+
+	:global(.materials-icon) {
+		flex: none;
+		width: 24px;
+		height: 24px;
+		color: var(--color-pink);
+	}
+
+	:global(.materials-icon svg) {
+		width: 100%;
+		height: 100%;
+	}
+
+	:global(.materials-name) {
+		flex: 1;
+		font-weight: 600;
+		word-break: break-word;
+	}
+
+	:global(.materials-size) {
+		flex: none;
+		font-size: 13px;
+		color: var(--color-muted);
+	}
+
+	@media (max-width: 720px) {
+		.materials-grid {
+			padding: 50px 20px 70px;
+		}
+
+		.materials-folders {
+			grid-template-columns: repeat(auto-fill, minmax(108px, 1fr));
+			gap: 12px;
+		}
+	}
+</style>
+
+<script>
+	interface DriveFile {
+		id: string;
+		name: string;
+		mimeType: string;
+		size?: string;
+		webViewLink?: string;
+	}
+
+	const FOLDER_MIME = 'application/vnd.google-apps.folder';
+
+	// Hardcoded, known-safe SVG strings (never derived from the Drive API response) — assigning
+	// via innerHTML here is the documented exception in references/astro-standards.md.
+	const ICONS: Record<string, string> = {
+		folder:
+			'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>',
+		pdf:
+			'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15h1.5a1.5 1.5 0 0 0 0-3H9v5"/><path d="M13.5 12v5"/></svg>',
+		image:
+			'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>',
+		sheet:
+			'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>',
+		doc:
+			'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8"/></svg>',
+		generic:
+			'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>',
+	};
+
+	function iconKeyFor(mimeType: string): keyof typeof ICONS {
+		if (mimeType === FOLDER_MIME) return 'folder';
+		if (mimeType === 'application/pdf') return 'pdf';
+		if (mimeType.startsWith('image/')) return 'image';
+		if (mimeType.includes('spreadsheet') || mimeType.includes('ms-excel')) return 'sheet';
+		if (mimeType.includes('document') || mimeType.includes('msword') || mimeType.includes('presentation') || mimeType.includes('powerpoint'))
+			return 'doc';
+		return 'generic';
+	}
+
+	function formatSize(size?: string): string {
+		if (!size) return '';
+		const bytes = Number(size);
+		if (!Number.isFinite(bytes) || bytes <= 0) return '';
+		const units = ['B', 'KB', 'MB', 'GB'];
+		let value = bytes;
+		let unit = 0;
+		while (value >= 1024 && unit < units.length - 1) {
+			value /= 1024;
+			unit += 1;
+		}
+		return `${value.toFixed(unit === 0 ? 0 : 1)} ${units[unit]}`;
+	}
+
+	function initMaterials(app: HTMLElement) {
+		const apiKey = app.dataset.apiKey ?? '';
+		const rootFolderId = app.dataset.rootFolderId ?? '';
+		const rootLabel = app.dataset.rootLabel ?? '';
+		const openFolderLabel = app.dataset.openFolderLabel ?? '';
+		const loadingMessage = app.dataset.loadingMessage ?? '';
+		const errorMessage = app.dataset.errorMessage ?? '';
+		const emptyMessage = app.dataset.emptyMessage ?? '';
+
+		const breadcrumb = app.querySelector<HTMLElement>('[data-materials-breadcrumb]');
+		const driveLink = app.querySelector<HTMLAnchorElement>('[data-materials-drive-link]');
+		const status = app.querySelector<HTMLElement>('[data-materials-status]');
+		const foldersLabel = app.querySelector<HTMLElement>('[data-materials-folders-label]');
+		const folders = app.querySelector<HTMLElement>('[data-materials-folders]');
+		const filesLabel = app.querySelector<HTMLElement>('[data-materials-files-label]');
+		const list = app.querySelector<HTMLUListElement>('[data-materials-list]');
+		if (!breadcrumb || !driveLink || !status || !folders || !list || !foldersLabel || !filesLabel) return;
+
+		// Stack of folders entered so far (root excluded, it's rendered separately).
+		let path: { id: string; name: string }[] = [];
+
+		function setStatus(message: string) {
+			if (!status) return;
+			status.textContent = message;
+			status.hidden = message.length === 0;
+		}
+
+		function renderBreadcrumb() {
+			if (!breadcrumb) return;
+			breadcrumb.innerHTML = '';
+			const rootBtn = document.createElement('button');
+			rootBtn.type = 'button';
+			rootBtn.className = 'breadcrumb-item';
+			rootBtn.textContent = rootLabel;
+			if (path.length === 0) rootBtn.setAttribute('aria-current', 'page');
+			rootBtn.addEventListener('click', () => {
+				if (path.length === 0) return;
+				path = [];
+				load(rootFolderId);
+			});
+			breadcrumb.appendChild(rootBtn);
+
+			path.forEach((entry, index) => {
+				const sep = document.createElement('span');
+				sep.className = 'breadcrumb-sep';
+				sep.setAttribute('aria-hidden', 'true');
+				sep.textContent = '/';
+				breadcrumb.appendChild(sep);
+
+				const btn = document.createElement('button');
+				btn.type = 'button';
+				btn.className = 'breadcrumb-item';
+				btn.textContent = entry.name;
+				if (index === path.length - 1) btn.setAttribute('aria-current', 'page');
+				btn.addEventListener('click', () => {
+					if (index === path.length - 1) return;
+					path = path.slice(0, index + 1);
+					load(entry.id);
+				});
+				breadcrumb.appendChild(btn);
+			});
+		}
+
+		// Folders render as big square tiles (native Google Drive folder-grid look), files as
+		// compact rows below — same split Drive itself uses between its folder row and file list.
+		function renderFolders(items: DriveFile[]) {
+			if (!folders) return;
+			folders.innerHTML = '';
+			for (const item of items) {
+				const tile = document.createElement('button');
+				tile.type = 'button';
+				tile.className = 'materials-folder-tile';
+				tile.setAttribute('aria-label', `${openFolderLabel}: ${item.name}`);
+				tile.addEventListener('click', () => {
+					path = [...path, { id: item.id, name: item.name }];
+					load(item.id);
+				});
+
+				const icon = document.createElement('span');
+				icon.className = 'materials-folder-icon';
+				icon.setAttribute('aria-hidden', 'true');
+				icon.innerHTML = ICONS.folder;
+				tile.appendChild(icon);
+
+				const name = document.createElement('span');
+				name.className = 'materials-folder-name';
+				name.textContent = item.name;
+				tile.appendChild(name);
+
+				folders.appendChild(tile);
+			}
+		}
+
+		function renderFiles(items: DriveFile[]) {
+			if (!list) return;
+			list.innerHTML = '';
+			for (const file of items) {
+				const li = document.createElement('li');
+				li.className = 'materials-item';
+
+				const entry = document.createElement('a');
+				entry.className = 'materials-entry';
+				entry.href = file.webViewLink ?? '#';
+				entry.target = '_blank';
+				entry.rel = 'noopener';
+
+				const icon = document.createElement('span');
+				icon.className = 'materials-icon';
+				icon.setAttribute('aria-hidden', 'true');
+				icon.innerHTML = ICONS[iconKeyFor(file.mimeType)];
+				entry.appendChild(icon);
+
+				const name = document.createElement('span');
+				name.className = 'materials-name';
+				name.textContent = file.name;
+				entry.appendChild(name);
+
+				const sizeLabel = formatSize(file.size);
+				if (sizeLabel) {
+					const size = document.createElement('span');
+					size.className = 'materials-size';
+					size.textContent = sizeLabel;
+					entry.appendChild(size);
+				}
+
+				li.appendChild(entry);
+				list.appendChild(li);
+			}
+		}
+
+		async function load(folderId: string) {
+			if (!folders || !list || !foldersLabel || !filesLabel || !driveLink) return;
+			folders.innerHTML = '';
+			list.innerHTML = '';
+			foldersLabel.hidden = true;
+			filesLabel.hidden = true;
+			setStatus(loadingMessage);
+			renderBreadcrumb();
+			driveLink.href = `https://drive.google.com/drive/folders/${folderId}`;
+
+			const url = new URL('https://www.googleapis.com/drive/v3/files');
+			url.searchParams.set('q', `'${folderId}' in parents and trashed = false`);
+			url.searchParams.set('fields', 'files(id,name,mimeType,size,webViewLink)');
+			url.searchParams.set('orderBy', 'folder,name');
+			url.searchParams.set('key', apiKey);
+
+			try {
+				const res = await fetch(url.toString());
+				if (!res.ok) throw new Error(`Drive API ${res.status}`);
+				const json = await res.json();
+				const items: DriveFile[] = json.files ?? [];
+				const folderItems = items.filter((item) => item.mimeType === FOLDER_MIME);
+				const fileItems = items.filter((item) => item.mimeType !== FOLDER_MIME);
+
+				if (items.length === 0) {
+					setStatus(emptyMessage);
+					return;
+				}
+
+				setStatus('');
+				if (folderItems.length > 0) {
+					foldersLabel.hidden = false;
+					renderFolders(folderItems);
+				}
+				if (fileItems.length > 0) {
+					filesLabel.hidden = false;
+					renderFiles(fileItems);
+				}
+			} catch {
+				setStatus(errorMessage);
+			}
+		}
+
+		load(rootFolderId);
+	}
+
+	document.querySelectorAll<HTMLElement>('[data-materials-app]').forEach(initMaterials);
+</script>
