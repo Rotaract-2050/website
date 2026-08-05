@@ -3,7 +3,7 @@ interface Props {
 	title: string;
 	showDisclaimer?: boolean;
 	disclaimerText?: string;
-	items: { yearRange: string; name: string; surname: string; motto: string; tinaFieldAttr?: string }[];
+	items: { yearRange: string; name: string; surname: string; motto: string; mottoDistretto?: string; eraLabel?: string; tinaFieldAttr?: string }[];
 }
 
 const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
@@ -15,14 +15,26 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		{showDisclaimer && disclaimerText && <p class="disclaimer">{disclaimerText}</p>}
 		<ol class="timeline">
 			{items.map((item, index) => (
-				<li class="timeline-item" style={`animation-delay: ${index * 0.25}s`} data-tina-field={item.tinaFieldAttr}>
-					<span class="timeline-dot" aria-hidden="true"></span>
-					<div class="timeline-card">
-						<span class="timeline-year">A.R. {item.yearRange}</span>
-						<span class="timeline-name">{item.name} {item.surname}</span>
-						{item.motto && <span class="timeline-motto">“{item.motto}”</span>}
-					</div>
-				</li>
+				<>
+					{item.eraLabel && (
+						<li class="timeline-era" aria-hidden="true">
+							<span class="era-label">{item.eraLabel}</span>
+						</li>
+					)}
+					<li
+						class:list={['timeline-item', { 'is-current': index === 0 }]}
+						style={`animation-delay: ${Math.min(index * 0.08, 1.2)}s`}
+						data-tina-field={item.tinaFieldAttr}
+					>
+						<span class="timeline-dot" aria-hidden="true"></span>
+						<div class="timeline-card">
+							<span class="timeline-year">A.R. {item.yearRange}</span>
+							<span class="timeline-name">{item.name} {item.surname}</span>
+							{item.motto && <span class="timeline-motto">“{item.motto}”</span>}
+							{item.mottoDistretto && <span class="timeline-motto-distretto">“{item.mottoDistretto}”</span>}
+						</div>
+					</li>
+				</>
 			))}
 		</ol>
 	</div>
@@ -122,7 +134,7 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		z-index: 1;
 	}
 
-	.timeline-item:first-child .timeline-dot {
+	.timeline-item.is-current .timeline-dot {
 		background: var(--color-gold);
 		box-shadow: 0 0 0 3px var(--color-gold);
 	}
@@ -159,7 +171,7 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		text-transform: uppercase;
 	}
 
-	.timeline-item:first-child .timeline-year {
+	.timeline-item.is-current .timeline-year {
 		color: var(--color-gold);
 	}
 
@@ -174,6 +186,34 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		font-size: 16px;
 		color: var(--color-text);
 		font-style: italic;
+	}
+
+	.timeline-motto-distretto {
+		font-size: 14px;
+		color: var(--color-muted);
+		font-style: italic;
+	}
+
+	.timeline-era {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		padding: 10px 0 44px;
+	}
+
+	.era-label {
+		position: relative;
+		z-index: 1;
+		background: var(--color-navy);
+		color: #fff;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 13px;
+		letter-spacing: 0.8px;
+		text-transform: uppercase;
+		padding: 8px 22px;
+		border-radius: 999px;
+		box-shadow: 0 0 0 6px #fff;
 	}
 
 	@media (max-width: 720px) {
@@ -201,7 +241,7 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 			box-shadow: 0 0 0 2px var(--color-pink);
 		}
 
-		.timeline-item:first-child .timeline-dot {
+		.timeline-item.is-current .timeline-dot {
 			box-shadow: 0 0 0 2px var(--color-gold);
 		}
 
