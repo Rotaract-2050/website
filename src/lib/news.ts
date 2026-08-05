@@ -56,7 +56,7 @@ export function clubTagLabels(clubs: ClubTagRef[] | null | undefined): NewsTag[]
 		.map((club) => ({ label: club.name, color: club.zone?.color ?? null }));
 }
 
-/** Badge labels for a news card/detail page: tagged club names (colored by their zone), then fixed scope tags (Distretto/MDIO). */
+/** Badge labels for a news card/detail page: tagged club names (colored by their zone), then scope tags (Distretto/MDIO/Service Distrettuale/Service Interdistrettuale/Service Nazionale). */
 export function newsTagLabels(article: Pick<NewsArticle, 'clubs' | 'scope'>): NewsTag[] {
 	const scopeTags: NewsTag[] = (article.scope ?? [])
 		.filter((s): s is string => Boolean(s))

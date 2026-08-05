@@ -561,7 +561,7 @@ export default defineConfig({
 						name: 'scope',
 						label: 'Ambito',
 						list: true,
-						options: ['Distretto', 'MDIO'],
+						options: ['Distretto', 'MDIO', 'Service Distrettuale', 'Service Interdistrettuale', 'Service Nazionale'],
 					},
 					// Tina's `reference` field doesn't support `list: true` directly (tina.io/docs/r/content-fields/#list-fields):
 					// wrap each reference in a repeatable object, one club per row, as the documented workaround.
