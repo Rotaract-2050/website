@@ -1,8 +1,10 @@
 ---
+import { Image } from 'astro:assets';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import type { Lang } from '../data/ui-strings';
 import { uiStrings, SOCIAL_LINKS, UTILITY_LINKS } from '../data/ui-strings';
 import { pageSlugs, type PageKey } from '../data/routes';
+import SocialIcon from './SocialIcon.astro';
 
 interface Props {
 	lang: Lang;
@@ -16,13 +18,13 @@ const href = (page: PageKey) => getRelativeLocaleUrl(lang, pageSlugs[page]);
 const otherLang: Lang = lang === 'it' ? 'en' : 'it';
 const langSwitchHref = getRelativeLocaleUrl(otherLang, pageSlugs[current]);
 
-const distrettoActive = (['distretto', 'esecutivo', 'delegati', 'commissioni'] as PageKey[]).includes(current);
+const distrettoActive = (['distretto', 'story', 'squadra'] as PageKey[]).includes(current);
 ---
 
 <div class="utility-bar">
 	<div class="utility-links">
 		{UTILITY_LINKS.map((link) => (
-			<a href={link.href}>{link.label}</a>
+			<a href={link.href} target="_blank" rel="noopener">{link.label}</a>
 		))}
 	</div>
 	<div class="utility-right">
@@ -37,7 +39,9 @@ const distrettoActive = (['distretto', 'esecutivo', 'delegati', 'commissioni'] a
 		<div class="divider" aria-hidden="true"></div>
 		<div class="social-icons">
 			{SOCIAL_LINKS.map((soc) => (
-				<a href={soc.href} class="social-icon" aria-label={soc.label}>{soc.label}</a>
+				<a href={soc.href} target="_blank" rel="noopener" class="social-icon" aria-label={soc.label}>
+					<SocialIcon name={soc.name} />
+				</a>
 			))}
 		</div>
 	</div>
@@ -45,14 +49,25 @@ const distrettoActive = (['distretto', 'esecutivo', 'delegati', 'commissioni'] a
 
 <header class="main-nav">
 	<a href={href('home')} class="brand">
-		<span class="brand-mark">R</span>
-		<span class="brand-text">
-			<span class="brand-name">ROTARACT</span>
-			<span class="brand-sub">DISTRETTO 2050</span>
-		</span>
+		<Image src="/uploads/Loghi/Logo-distretto-nav.png" alt="Rotaract Distretto 2050" width={429} height={158} class="brand-logo" />
 	</a>
 
-	<nav class="nav-links" aria-label="Main">
+	<button
+		type="button"
+		class="menu-toggle"
+		aria-expanded="false"
+		aria-controls="primary-nav"
+		aria-label={t.nav.menuOpen}
+		data-menu-toggle
+		data-label-open={t.nav.menuOpen}
+		data-label-close={t.nav.menuClose}
+	>
+		<span class="menu-toggle-bar" aria-hidden="true"></span>
+		<span class="menu-toggle-bar" aria-hidden="true"></span>
+		<span class="menu-toggle-bar" aria-hidden="true"></span>
+	</button>
+
+	<nav class="nav-links" id="primary-nav" aria-label="Main">
 		<a href={href('home')} class:list={['nav-link', { active: current === 'home' }]}>{t.nav.home}</a>
 
 		<div class="nav-dropdown">
@@ -61,14 +76,15 @@ const distrettoActive = (['distretto', 'esecutivo', 'delegati', 'commissioni'] a
 			</a>
 			<div class="dropdown-panel">
 				<a href={href('distretto')}>{t.nav.distrettoSub}</a>
-				<a href={href('esecutivo')}>{t.nav.esecutivo}</a>
-				<a href={href('delegati')}>{t.nav.delegati}</a>
-				<a href={href('commissioni')}>{t.nav.commissioni}</a>
+				<a href={href('story')}>{t.nav.story}</a>
+				<a href={href('squadra')}>{t.nav.squadra}</a>
 			</div>
 		</div>
 
 		<a href={href('club')} class:list={['nav-link', { active: current === 'club' }]}>{t.nav.club}</a>
-		<a href="#" target="_blank" rel="noopener" class="materials-link">⬇ {t.nav.materials}</a>
+		<a href={href('news')} class:list={['nav-link', { active: current === 'news' }]}>{t.nav.news}</a>
+		<a href={href('eventi')} class:list={['nav-link', { active: current === 'eventi' }]}>{t.nav.eventi}</a>
+		<a href={href('materiali')} class:list={['materials-link', { active: current === 'materiali' }]}>⬇ {t.nav.materials}</a>
 		<a href={href('club')} class="join-btn">{t.nav.join}</a>
 	</nav>
 </header>
@@ -146,8 +162,8 @@ const distrettoActive = (['distretto', 'esecutivo', 'delegati', 'commissioni'] a
 		border-radius: 50%;
 		background: rgba(255, 255, 255, 0.12);
 		color: #fff;
-		font-size: 10px;
-		font-weight: 700;
+		padding: 5px;
+		box-sizing: border-box;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -175,44 +191,45 @@ const distrettoActive = (['distretto', 'esecutivo', 'delegati', 'commissioni'] a
 	.brand {
 		display: flex;
 		align-items: center;
-		gap: 12px;
 	}
 
-	.brand-mark {
-		width: 44px;
-		height: 44px;
-		border-radius: 50%;
-		background: var(--color-pink);
-		color: #fff;
-		font-family: var(--font-heading);
-		font-weight: 700;
-		font-size: 22px;
-		flex-shrink: 0;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+	.brand-logo {
+		height: 48px;
+		width: auto;
 	}
 
-	.brand-text {
-		display: flex;
+	.menu-toggle {
+		display: none;
 		flex-direction: column;
-		line-height: 1;
+		justify-content: center;
+		align-items: center;
+		gap: 5px;
+		width: 40px;
+		height: 40px;
+		padding: 0;
+		border: none;
+		background: transparent;
+		flex-shrink: 0;
 	}
 
-	.brand-name {
-		font-family: var(--font-heading);
-		font-weight: 700;
-		font-size: 20px;
-		color: var(--color-navy);
-		letter-spacing: 0.5px;
+	.menu-toggle-bar {
+		width: 24px;
+		height: 2px;
+		border-radius: 2px;
+		background: var(--color-navy);
+		transition: transform 0.2s ease, opacity 0.2s ease;
 	}
 
-	.brand-sub {
-		font-weight: 600;
-		font-size: 11px;
-		color: var(--color-pink);
-		letter-spacing: 2px;
-		margin-top: 4px;
+	.menu-toggle[aria-expanded='true'] .menu-toggle-bar:nth-child(1) {
+		transform: translateY(7px) rotate(45deg);
+	}
+
+	.menu-toggle[aria-expanded='true'] .menu-toggle-bar:nth-child(2) {
+		opacity: 0;
+	}
+
+	.menu-toggle[aria-expanded='true'] .menu-toggle-bar:nth-child(3) {
+		transform: translateY(-7px) rotate(-45deg);
 	}
 
 	.nav-links {
@@ -320,8 +337,102 @@ const distrettoActive = (['distretto', 'esecutivo', 'delegati', 'commissioni'] a
 			padding: 8px 20px;
 		}
 
+		.brand-logo {
+			height: 38px;
+		}
+
+		.menu-toggle {
+			display: flex;
+		}
+
 		.nav-links {
-			gap: 14px;
+			display: none;
+			position: absolute;
+			top: 100%;
+			left: 0;
+			right: 0;
+			flex-direction: column;
+			align-items: stretch;
+			gap: 4px;
+			background: #fff;
+			padding: 8px 20px 24px;
+			box-shadow: 0 10px 30px rgba(11, 37, 69, 0.15);
+			max-height: calc(100vh - 100%);
+			overflow-y: auto;
+		}
+
+		.nav-links[data-open] {
+			display: flex;
+		}
+
+		.nav-link {
+			padding: 12px 4px;
+			border-bottom: 1px solid var(--color-bg);
+		}
+
+		.nav-dropdown {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.dropdown-panel {
+			position: static;
+			display: flex;
+			flex-direction: column;
+			min-width: 0;
+			padding: 0 0 8px 16px;
+			box-shadow: none;
+			border-radius: 0;
+		}
+
+		.dropdown-panel a {
+			padding: 8px 12px;
+			font-size: 13px;
+		}
+
+		.materials-link,
+		.join-btn {
+			text-align: center;
+			margin-top: 8px;
 		}
 	}
 </style>
+
+<script>
+	function initMenu(header: Element) {
+		const toggle = header.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+		const panel = header.querySelector<HTMLElement>('#primary-nav');
+		if (!toggle || !panel) return;
+
+		const openLabel = toggle.dataset.labelOpen ?? '';
+		const closeLabel = toggle.dataset.labelClose ?? '';
+
+		function setOpen(open: boolean) {
+			toggle!.setAttribute('aria-expanded', String(open));
+			toggle!.setAttribute('aria-label', open ? closeLabel : openLabel);
+			panel!.toggleAttribute('data-open', open);
+		}
+
+		toggle.addEventListener('click', () => {
+			setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+		});
+
+		panel.addEventListener('click', (event) => {
+			if ((event.target as HTMLElement).closest('a')) setOpen(false);
+		});
+
+		document.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+				setOpen(false);
+				toggle.focus();
+			}
+		});
+
+		const desktopQuery = window.matchMedia('(min-width: 861px)');
+		desktopQuery.addEventListener('change', (event) => {
+			if (event.matches) setOpen(false);
+		});
+	}
+
+	document.querySelectorAll('.main-nav').forEach(initMenu);
+</script>

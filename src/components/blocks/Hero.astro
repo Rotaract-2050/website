@@ -1,5 +1,6 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import { Image } from 'astro:assets';
 import ImageSlot from '../ImageSlot.astro';
 import type { Lang } from '../../data/ui-strings';
 
@@ -8,6 +9,8 @@ interface Slide {
 	title: string;
 	subtitle: string;
 	ctaLabel: string;
+	image?: string;
+	tinaFieldAttr?: string;
 }
 
 interface Props {
@@ -17,15 +20,19 @@ interface Props {
 	autoplay?: boolean;
 }
 
-const { lang, ctaHref, slides, autoplay = false } = Astro.props;
+const { lang, ctaHref, slides, autoplay = true } = Astro.props;
 const resolvedCtaHref = getRelativeLocaleUrl(lang, ctaHref);
 ---
 
 <section class="hero" data-hero data-autoplay={autoplay ? 'true' : 'false'}>
 	<div class="hero-slides">
 		{slides.map((slide, i) => (
-			<div class="hero-slide" data-slide data-index={i} data-active={i === 0 ? 'true' : 'false'}>
-				<ImageSlot label="Foto banner distrettuale" class="hero-image" />
+			<div class="hero-slide" data-slide data-index={i} data-active={i === 0 ? 'true' : 'false'} data-tina-field={slide.tinaFieldAttr}>
+				{slide.image ? (
+					<Image src={slide.image} alt={slide.title} width={1600} height={900} class="hero-image" />
+				) : (
+					<ImageSlot label="Foto banner distrettuale" class="hero-image" />
+				)}
 				<div class="hero-overlay" aria-hidden="true"></div>
 				<div class="hero-copy">
 					<span class="hero-eyebrow">{slide.eyebrow}</span>
@@ -50,7 +57,7 @@ const resolvedCtaHref = getRelativeLocaleUrl(lang, ctaHref);
 <style>
 	.hero {
 		position: relative;
-		height: 620px;
+		min-height: 480px;
 		overflow: hidden;
 	}
 
@@ -82,7 +89,7 @@ const resolvedCtaHref = getRelativeLocaleUrl(lang, ctaHref);
 	.hero-overlay {
 		position: absolute;
 		inset: 0;
-		background: linear-gradient(100deg, rgba(11, 37, 69, 0.92) 10%, rgba(11, 37, 69, 0.55) 55%, rgba(11, 37, 69, 0.25) 100%);
+		background: linear-gradient(100deg, rgba(168, 15, 83, 0.92) 10%, rgba(168, 15, 83, 0.55) 55%, rgba(168, 15, 83, 0.25) 100%);
 		pointer-events: none;
 	}
 
@@ -199,10 +206,6 @@ const resolvedCtaHref = getRelativeLocaleUrl(lang, ctaHref);
 	}
 
 	@media (max-width: 720px) {
-		.hero {
-			height: 520px;
-		}
-
 		.hero-copy {
 			padding: 32px;
 		}

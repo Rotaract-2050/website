@@ -1,0 +1,244 @@
+---
+import type { Feature, MultiPolygon, Polygon } from 'geojson';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { Lang } from '../data/ui-strings';
+import { uiStrings } from '../data/ui-strings';
+import zoneBoundaries from '../data/zone-boundaries.geo.json';
+import 'leaflet/dist/leaflet.css';
+
+interface MapClub {
+	name: string;
+	lat?: number | null;
+	lng?: number | null;
+	_sys: { filename: string };
+}
+
+interface MapZone {
+	name: string;
+	color?: string | null;
+}
+
+interface Props {
+	lang: Lang;
+	clubs: MapClub[];
+	zones?: MapZone[];
+}
+
+const { lang, clubs, zones = [] } = Astro.props;
+const t = uiStrings[lang].clubMap;
+
+const markers = clubs
+	.filter((club): club is MapClub & { lat: number; lng: number } => typeof club.lat === 'number' && typeof club.lng === 'number')
+	.map((club) => ({
+		name: club.name,
+		lat: club.lat,
+		lng: club.lng,
+		href: getRelativeLocaleUrl(lang, `club/${club._sys.filename}`),
+	}));
+
+// Real municipal (comune) boundaries, unioned per zone by scripts/fetch-zone-boundaries.mjs
+// from OpenStreetMap data — see that script for how each zone's comuni are determined.
+const zoneAreas = zones
+	.map((zone) => ({
+		name: zone.name,
+		color: zone.color || '#0B2545',
+		geometry: (zoneBoundaries.zones as Record<string, Feature<Polygon | MultiPolygon>>)[zone.name]?.geometry,
+	}))
+	.filter((zone): zone is { name: string; color: string; geometry: Polygon | MultiPolygon } => zone.geometry != null);
+---
+
+<section class="clubs-map-section">
+	<div class="section-inner">
+		<h2 class="map-title">{t.title}</h2>
+		<p class="map-disclaimer">{t.disclaimer}</p>
+		{markers.length > 0 ? (
+			<div
+				id="clubs-map"
+				class="clubs-map"
+				data-clubs={JSON.stringify(markers)}
+				data-zones={JSON.stringify(zoneAreas)}
+				data-view-label={t.viewClub}
+				role="application"
+				aria-label={t.title}
+			>
+			</div>
+		) : (
+			<p class="map-unavailable">{t.unavailable}</p>
+		)}
+	</div>
+</section>
+
+<script>
+	import L from 'leaflet';
+
+	interface MapMarker {
+		name: string;
+		lat: number;
+		lng: number;
+		href: string;
+	}
+
+	interface MapZone {
+		name: string;
+		color: string;
+		geometry: GeoJSON.Polygon | GeoJSON.MultiPolygon;
+	}
+
+	function initClubsMap(container: HTMLElement) {
+		const markers: MapMarker[] = JSON.parse(container.dataset.clubs ?? '[]');
+		const zones: MapZone[] = JSON.parse(container.dataset.zones ?? '[]');
+		const viewClubLabel = container.dataset.viewLabel ?? '';
+		if (markers.length === 0) return;
+
+		// zoomSnap: 1 (Leaflet's default) forces fitBounds to round DOWN to the nearest whole
+		// zoom level to guarantee the bounds fit without clipping — that rounding is why the
+		// map looked much more zoomed out than the bounds actually needed. A finer snap lets
+		// it land on the fractional zoom closest to the real fit.
+		const map = L.map(container, { scrollWheelZoom: false, zoomSnap: 0.25 });
+		// A muted basemap (rather than OSM's default colorful green/orange land-use tiles)
+		// so the zone fill colors read clearly instead of blending into the map itself.
+		L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+			maxZoom: 19,
+			attribution:
+				'&copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener noreferrer">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
+		}).addTo(map);
+
+		const mapBounds = L.latLngBounds([]);
+
+		// Draw the zone areas first so the club pins always sit on top of them.
+		for (const zone of zones) {
+			const layer = L.geoJSON(zone.geometry, {
+				style: {
+					color: zone.color,
+					weight: 4,
+					fillColor: zone.color,
+					fillOpacity: 0.7,
+				},
+			}).addTo(map);
+
+			mapBounds.extend(layer.getBounds());
+
+			L.tooltip({ permanent: true, direction: 'center', className: 'zone-label', interactive: false })
+				.setLatLng(layer.getBounds().getCenter())
+				.setContent(zone.name)
+				.addTo(map);
+		}
+
+		const pinIcon = L.divIcon({
+			className: 'club-pin',
+			html: '<svg viewBox="0 0 24 32" width="28" height="36" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20c0-6.6-5.4-12-12-12z" fill="#d41367" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="4.5" fill="#fff"/></svg>',
+			iconSize: [28, 36],
+			iconAnchor: [14, 36],
+			popupAnchor: [0, -32],
+		});
+
+		// Several clubs share the same town-level coordinates (no precise address on file):
+		// fan overlapping pins out slightly around the shared point so every club stays clickable.
+		const seen = new Map<string, number>();
+
+		for (const club of markers) {
+			const key = `${club.lat.toFixed(4)},${club.lng.toFixed(4)}`;
+			const occurrence = seen.get(key) ?? 0;
+			seen.set(key, occurrence + 1);
+
+			const angle = (occurrence * 137.5 * Math.PI) / 180;
+			const radius = occurrence === 0 ? 0 : 0.006 + occurrence * 0.0015;
+			const lat = club.lat + radius * Math.cos(angle);
+			const lng = club.lng + radius * Math.sin(angle);
+
+			const marker = L.marker([lat, lng], { icon: pinIcon }).addTo(map);
+			marker.bindPopup(() => {
+				const wrapper = document.createElement('div');
+				const title = document.createElement('strong');
+				title.textContent = club.name;
+				const link = document.createElement('a');
+				link.href = club.href;
+				link.textContent = viewClubLabel;
+				wrapper.append(title, document.createElement('br'), link);
+				return wrapper;
+			});
+
+			mapBounds.extend([lat, lng]);
+		}
+
+		if (markers.length === 1 && zones.length === 0) {
+			map.setView([markers[0].lat, markers[0].lng], 12);
+		} else {
+			map.fitBounds(mapBounds, { padding: [8, 8], maxZoom: 13 });
+		}
+	}
+
+	document.querySelectorAll<HTMLElement>('#clubs-map').forEach(initClubsMap);
+</script>
+
+<style>
+	.clubs-map-section {
+		background: var(--color-bg);
+		padding: 60px 40px 20px;
+	}
+
+	.section-inner {
+		max-width: var(--content-max);
+		margin: 0 auto;
+	}
+
+	.map-title {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 30px;
+		color: var(--color-navy);
+		margin: 0 0 8px;
+	}
+
+	.map-disclaimer {
+		font-size: 12px;
+		color: var(--color-muted);
+		font-style: italic;
+		margin: 0 0 24px;
+	}
+
+	.clubs-map {
+		width: 100%;
+		height: 480px;
+		border-radius: 14px;
+		overflow: hidden;
+		box-shadow: 0 4px 16px rgba(11, 37, 69, 0.07);
+	}
+
+	.map-unavailable {
+		font-size: 14px;
+		color: var(--color-muted);
+	}
+
+	@media (max-width: 600px) {
+		.clubs-map-section {
+			padding: 40px 20px 10px;
+		}
+
+		.clubs-map {
+			height: 360px;
+		}
+	}
+
+	/* Leaflet renders zone tooltips outside this component's markup, so they need :global(). */
+	.clubs-map :global(.leaflet-tooltip.zone-label) {
+		background: none;
+		border: none;
+		box-shadow: none;
+		padding: 0;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 13px;
+		letter-spacing: 0.02em;
+		color: var(--color-navy);
+		text-shadow:
+			0 0 4px #fff,
+			0 0 4px #fff,
+			0 0 8px #fff;
+		pointer-events: none;
+	}
+
+	.clubs-map :global(.leaflet-tooltip.zone-label::before) {
+		display: none;
+	}
+</style>

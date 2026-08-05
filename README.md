@@ -15,7 +15,7 @@ It tells visitors who we are, what we do, and how to reach us: district pages, t
 - **TypeScript** — typing across config and components
 - **[Netlify](https://www.netlify.com)** — hosting and automatic deploy on every push to `main`
 
-Block-based architecture: each page in `src/content/pages/{it,en}/` is a list of blocks (Hero, StatsBar, CardGrid, EventsList, etc.), each defined once in `tina/config.ts` and rendered by a component in `src/components/blocks/`. Adding a page requires no new code; adding a new section type does (Tina template + component + a line in `BlockRenderer.astro`).
+Block-based architecture: each page in `src/content/pages/{it,en}/` is a list of blocks (Hero, StatsBar, CardGrid, EventsCalendar, etc.), each defined once in `tina/config.ts` and rendered by a component in `src/components/blocks/`. Adding a page requires no new code; adding a new section type does (Tina template + component + a line in `BlockRenderer.astro`).
 
 ```text
 tina/config.ts          Tina collections schema (pages, zones, clubs, settings)

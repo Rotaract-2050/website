@@ -5,7 +5,7 @@ import type { Lang } from '../../data/ui-strings';
 interface Props {
 	lang: Lang;
 	title: string;
-	items: { title: string; meta: string; href: string }[];
+	items: { title: string; meta: string; href: string; color?: string; tinaFieldAttr?: string }[];
 }
 
 const { lang, title, items } = Astro.props;
@@ -16,8 +16,8 @@ const { lang, title, items } = Astro.props;
 		<h2 class="section-title center">{title}</h2>
 		<div class="card-row">
 			{items.map((item) => (
-				<a href={getRelativeLocaleUrl(lang, item.href)} class="card">
-					<div class="card-title">{item.title}</div>
+				<a href={getRelativeLocaleUrl(lang, item.href)} class="card" data-tina-field={item.tinaFieldAttr}>
+					<div class="card-title" style={item.color ? `background-color: ${item.color};` : undefined}>{item.title}</div>
 					<div class="card-meta">{item.meta}</div>
 				</a>
 			))}
@@ -52,6 +52,8 @@ const { lang, title, items } = Astro.props;
 
 	.card-row {
 		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
 		gap: 20px;
 		overflow-x: auto;
 		padding-bottom: 10px;
@@ -66,18 +68,24 @@ const { lang, title, items } = Astro.props;
 		padding: 24px 20px;
 		text-align: center;
 		color: inherit;
+		transition: transform 0.25s ease, box-shadow 0.25s ease;
 	}
 
 	.card:hover {
+		transform: translateY(-4px);
 		box-shadow: 0 8px 24px rgba(11, 37, 69, 0.12);
 	}
 
 	.card-title {
 		font-family: var(--font-heading);
 		font-weight: 600;
-		font-size: 17px;
-		color: var(--color-navy);
-		margin-bottom: 4px;
+		font-size: 15px;
+		color: #fff;
+		background-color: var(--color-navy);
+		display: inline-block;
+		border-radius: 999px;
+		padding: 6px 20px;
+		margin: 0 0 10px;
 	}
 
 	.card-meta {

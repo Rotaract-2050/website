@@ -1,0 +1,715 @@
+---
+import { uiStrings, type Lang } from '../../data/ui-strings';
+import { getDistrictEvents, eventDateKey, calendarUrls, type DistrictEvent } from '../../lib/calendar';
+
+interface Props {
+	lang: Lang;
+	title: string;
+	calendarId?: string;
+}
+
+const { lang, title, calendarId } = Astro.props;
+const t = uiStrings[lang].calendar;
+const { viewUrl: CALENDAR_VIEW_URL, subscribeUrl: CALENDAR_SUBSCRIBE_URL } = calendarUrls(calendarId);
+
+const forceRefresh = Astro.url.searchParams.has('refresh');
+const result = await getDistrictEvents({ calendarId, forceRefresh });
+const events = result.ok ? result.events : [];
+
+const todayKey = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Rome' }).format(new Date());
+const upcomingEvents = events.filter((ev) => eventDateKey(ev) >= todayKey);
+
+const AGENDA_LIMIT = 6;
+const agendaEvents = upcomingEvents.slice(0, AGENDA_LIMIT);
+
+// Clicking a day cell in the month view jumps to Agenda filtered to just that day (searches
+// all events, not just upcoming — a past day clicked while browsing an earlier month should
+// still show what was there). The "reset" link clears `day` to get back to the normal list.
+// Validated against eventsByDay below (a day with no events never gets its own panel/link).
+const dayFilterParam = Astro.url.searchParams.get('day')?.match(/^\d{4}-\d{2}-\d{2}$/)?.[0] ?? null;
+
+function formatFullDate(key: string): string {
+	const [y, m, d] = key.split('-').map(Number);
+	return new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-GB', {
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric',
+	}).format(new Date(y, m - 1, d));
+}
+
+function formatWeekday(key: string): string {
+	const [y, m, d] = key.split('-').map(Number);
+	const label = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-GB', { weekday: 'long' }).format(
+		new Date(y, m - 1, d)
+	);
+	return label.charAt(0).toUpperCase() + label.slice(1);
+}
+
+const eventsByDay = new Map<string, DistrictEvent[]>();
+for (const event of events) {
+	const key = eventDateKey(event);
+	const bucket = eventsByDay.get(key);
+	if (bucket) bucket.push(event);
+	else eventsByDay.set(key, [event]);
+}
+
+const dayFilter = dayFilterParam && eventsByDay.has(dayFilterParam) ? dayFilterParam : null;
+
+function dateParts(key: string) {
+	const [, month, day] = key.split('-').map(Number);
+	return { month: month - 1, day };
+}
+
+function formatTime(event: DistrictEvent): string {
+	if (event.allDay) return t.allDay;
+	return new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-GB', {
+		timeZone: 'Europe/Rome',
+		hour: '2-digit',
+		minute: '2-digit',
+	}).format(event.start);
+}
+
+interface DayCell {
+	day: number;
+	key: string;
+	events: DistrictEvent[];
+}
+
+function buildMonth(year: number, month: number) {
+	const daysInMonth = new Date(year, month + 1, 0).getDate();
+	const firstWeekday = (new Date(year, month, 1).getDay() + 6) % 7; // Monday = 0
+
+	const cells: (DayCell | null)[] = Array.from({ length: firstWeekday }, () => null);
+	for (let day = 1; day <= daysInMonth; day++) {
+		const key = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+		cells.push({ day, key, events: eventsByDay.get(key) ?? [] });
+	}
+	while (cells.length % 7 !== 0) cells.push(null);
+
+	return { label: `${t.monthsFull[month]} ${year}`, cells };
+}
+
+const now = new Date();
+
+function monthParamFor(year: number, month: number): string {
+	// Normalize via Date so month under/overflow (e.g. month -1 or 12) rolls into the adjacent year.
+	const normalized = new Date(year, month, 1);
+	return `${normalized.getFullYear()}-${String(normalized.getMonth() + 1).padStart(2, '0')}`;
+}
+
+const monthParamMatch = Astro.url.searchParams.get('month')?.match(/^(\d{4})-(\d{2})$/);
+const monthTabActive = Boolean(monthParamMatch) && !dayFilter;
+const viewYear = monthParamMatch ? Number(monthParamMatch[1]) : now.getFullYear();
+const viewMonth = monthParamMatch ? Number(monthParamMatch[2]) - 1 : now.getMonth();
+const activeMonthKey = monthParamFor(viewYear, viewMonth);
+
+// Pre-render a year of months around the current one so the prev/next arrows can page
+// through instantly client-side (see the <script> below) instead of reloading the page.
+// Stepping past this window falls back to a real navigation to `?month=...`, which lands
+// back here re-centered on the new month — see the fallback in the click handler.
+const WINDOW_HALF = 6;
+const monthWindow = Array.from({ length: WINDOW_HALF * 2 + 1 }, (_, i) => {
+	const offset = i - WINDOW_HALF;
+	const date = new Date(viewYear, viewMonth + offset, 1);
+	const year = date.getFullYear();
+	const month = date.getMonth();
+	return {
+		key: monthParamFor(year, month),
+		prevKey: monthParamFor(year, month - 1),
+		nextKey: monthParamFor(year, month + 1),
+		...buildMonth(year, month),
+	};
+});
+
+const uid = crypto.randomUUID().slice(0, 8);
+const agendaTabId = `cal-agenda-${uid}`;
+const monthTabId = `cal-month-${uid}`;
+---
+
+<section class="events-calendar" id="eventi-calendario">
+	<div class="section-inner">
+		<div class="calendar-header">
+			<h2 class="section-title">{title}</h2>
+			<div class="calendar-actions">
+				<a class="view-full" href={CALENDAR_VIEW_URL} target="_blank" rel="noopener">{t.viewFullCalendar}</a>
+				<a class="subscribe-btn" href={CALENDAR_SUBSCRIBE_URL} target="_blank" rel="noopener">{t.subscribe}</a>
+			</div>
+		</div>
+
+		{!result.ok && <p class="calendar-status">{t.unavailable}</p>}
+
+		{result.ok && (
+			<fieldset class="view-switch" data-calendar data-default-month={activeMonthKey}>
+				<legend class="sr-only">{t.viewToggleLabel}</legend>
+
+				<input type="radio" name={`calendar-view-${uid}`} id={agendaTabId} checked={!monthTabActive} />
+				<label for={agendaTabId}>{t.agendaTab}</label>
+				<input type="radio" name={`calendar-view-${uid}`} id={monthTabId} checked={monthTabActive} />
+				<label for={monthTabId}>{t.monthTab}</label>
+
+				<div class="view-panel agenda-panel">
+					<div class="agenda-content" data-day-agenda="default" hidden={dayFilter !== null}>
+						{agendaEvents.length === 0 && <p class="calendar-status">{t.noEvents}</p>}
+						{agendaEvents.map((ev) => {
+							const { day, month } = dateParts(eventDateKey(ev));
+							return (
+								<div class="event-row">
+									<div class="event-date">
+										<div class="event-day">{String(day).padStart(2, '0')}</div>
+										<div class="event-month">{t.monthsShort[month]}</div>
+									</div>
+									<div class="event-body">
+										<div class="event-title">{ev.summary}</div>
+										<div class="event-meta">
+											{formatWeekday(eventDateKey(ev))} · {formatTime(ev)}
+											{ev.location ? ` · ${ev.location}` : ''}
+										</div>
+									</div>
+									<div class="event-arrow" aria-hidden="true">→</div>
+								</div>
+							);
+						})}
+					</div>
+
+					{Array.from(eventsByDay.entries()).map(([key, dayEvents]) => (
+						<div class="agenda-content" data-day-agenda={key} hidden={dayFilter !== key}>
+							<div class="day-filter-bar">
+								<span class="day-filter-label">{t.dayFilterPrefix} {formatFullDate(key)}</span>
+								<a class="day-filter-reset" href="?#eventi-calendario">{t.dayFilterReset}</a>
+							</div>
+							{dayEvents.map((ev) => (
+								<div class="event-row">
+									<div class="event-date">
+										<div class="event-day">{String(dateParts(key).day).padStart(2, '0')}</div>
+										<div class="event-month">{t.monthsShort[dateParts(key).month]}</div>
+									</div>
+									<div class="event-body">
+										<div class="event-title">{ev.summary}</div>
+										<div class="event-meta">
+											{formatWeekday(eventDateKey(ev))} · {formatTime(ev)}
+											{ev.location ? ` · ${ev.location}` : ''}
+										</div>
+									</div>
+									<div class="event-arrow" aria-hidden="true">→</div>
+								</div>
+							))}
+						</div>
+					))}
+				</div>
+
+				<div class="view-panel month-panel">
+					{monthWindow.map((month) => (
+						<div class="month-single" data-month={month.key} hidden={month.key !== activeMonthKey}>
+							<div class="month-nav">
+								<a class="month-nav-btn" href={`?month=${month.prevKey}#eventi-calendario`} aria-label={t.prevMonth}>‹</a>
+								<div class="month-grid-title">{month.label}</div>
+								<a class="month-nav-btn" href={`?month=${month.nextKey}#eventi-calendario`} aria-label={t.nextMonth}>›</a>
+							</div>
+							<div class="weekday-row">
+								{t.weekdaysShort.map((wd) => (
+									<div class="weekday-cell">{wd}</div>
+								))}
+							</div>
+							<div class="day-grid">
+								{month.cells.map((cell) => {
+									if (cell === null) return <div class="day-cell empty" />;
+									const cellClass = `day-cell${cell.key === todayKey ? ' today' : ''}`;
+									const cellContent = (
+										<>
+											<span class="day-number">{cell.day}</span>
+											{cell.events.slice(0, 3).map((ev) => (
+												<span class="day-event" title={`${ev.summary}${ev.location ? ' · ' + ev.location : ''}`}>
+													{ev.summary}
+												</span>
+											))}
+											{cell.events.length > 3 && <span class="day-event-more">+{cell.events.length - 3}</span>}
+										</>
+									);
+									return cell.events.length > 0 ? (
+										<a class={cellClass} href={`?day=${cell.key}#eventi-calendario`}>
+											{cellContent}
+										</a>
+									) : (
+										<div class={cellClass}>{cellContent}</div>
+									);
+								})}
+							</div>
+						</div>
+					))}
+				</div>
+			</fieldset>
+		)}
+	</div>
+</section>
+
+<style>
+	.events-calendar {
+		background: #fff;
+		padding: 80px 40px;
+		scroll-margin-top: 90px;
+	}
+
+	.section-inner {
+		max-width: var(--content-max);
+		margin: 0 auto;
+	}
+
+	.calendar-header {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 8px 20px;
+		margin: 0 0 34px;
+	}
+
+	.section-title {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 34px;
+		color: var(--color-navy);
+		text-transform: uppercase;
+		margin: 0;
+	}
+
+	.calendar-actions {
+		display: flex;
+		align-items: center;
+		gap: 20px;
+		flex-wrap: wrap;
+	}
+
+	.view-full {
+		font-size: 13px;
+		font-weight: 600;
+		color: var(--color-pink);
+		white-space: nowrap;
+	}
+
+	.subscribe-btn {
+		background: var(--color-pink);
+		color: #fff;
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 13px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		padding: 10px 20px;
+		border-radius: 999px;
+		white-space: nowrap;
+	}
+
+	.subscribe-btn:hover {
+		background: var(--color-pink-dark);
+		color: #fff;
+	}
+
+	.calendar-status {
+		font-size: 15px;
+		color: var(--color-text);
+		font-style: italic;
+	}
+
+	.day-filter-bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 8px 16px;
+		background: var(--color-bg);
+		border-radius: 10px;
+		padding: 12px 18px;
+		margin-bottom: 18px;
+	}
+
+	.day-filter-label {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 14px;
+		color: var(--color-navy);
+		text-transform: capitalize;
+	}
+
+	.day-filter-reset {
+		font-size: 13px;
+		font-weight: 600;
+		color: var(--color-pink);
+		white-space: nowrap;
+	}
+
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	.view-switch {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 10px 12px;
+		border: 0;
+		margin: 0;
+		padding: 0;
+	}
+
+	.view-switch input[type='radio'] {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	.view-switch label {
+		flex: 0 0 auto;
+		cursor: pointer;
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 13px;
+		letter-spacing: 0.4px;
+		text-transform: uppercase;
+		color: var(--color-navy);
+		background: var(--color-bg);
+		border: 1px solid var(--color-border);
+		border-radius: 999px;
+		padding: 8px 22px;
+	}
+
+	.view-switch input[type='radio']:checked + label {
+		background: var(--color-pink);
+		border-color: var(--color-pink);
+		color: #fff;
+	}
+
+	.view-switch input[type='radio']:focus-visible + label {
+		outline: 2px solid var(--color-gold);
+		outline-offset: 2px;
+	}
+
+	.view-panel {
+		display: none;
+		flex: 1 1 100%;
+		margin-top: 28px;
+	}
+
+	.view-switch input[id^='cal-agenda-']:checked ~ .agenda-panel {
+		display: block;
+	}
+
+	.view-switch input[id^='cal-month-']:checked ~ .month-panel {
+		display: block;
+	}
+
+	/* Agenda view — same row layout as the rest of the site's event lists. */
+	.event-row {
+		display: flex;
+		align-items: center;
+		gap: 24px;
+		border-bottom: 1px solid var(--color-border);
+		padding: 22px 0;
+	}
+
+	.event-row:first-child {
+		padding-top: 0;
+	}
+
+	.event-date {
+		flex: 0 0 auto;
+		width: 64px;
+		background: var(--color-pink-dark);
+		border-radius: 10px;
+		text-align: center;
+		padding: 10px 0;
+	}
+
+	.event-day {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 22px;
+		color: var(--color-gold);
+		line-height: 1;
+	}
+
+	.event-month {
+		font-size: 11px;
+		color: #fff;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		margin-top: 2px;
+	}
+
+	.event-body {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.event-title {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 18px;
+		color: var(--color-navy);
+		margin-bottom: 4px;
+	}
+
+	.event-meta {
+		font-size: 13px;
+		color: var(--color-text);
+	}
+
+	.event-arrow {
+		color: var(--color-pink);
+		font-size: 20px;
+	}
+
+	/* Month view — one big single month, navigable. */
+	.month-single {
+		max-width: 720px;
+		margin: 0 auto;
+	}
+
+	.month-nav {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 28px;
+		margin: 0 0 20px;
+	}
+
+	.month-nav-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: var(--color-bg);
+		border: 1px solid var(--color-border);
+		color: var(--color-navy);
+		font-size: 22px;
+		line-height: 1;
+	}
+
+	.month-nav-btn:hover {
+		background: var(--color-pink);
+		border-color: var(--color-pink);
+		color: #fff;
+	}
+
+	.month-grid-title {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 22px;
+		color: var(--color-navy);
+		text-transform: uppercase;
+		min-width: 220px;
+		text-align: center;
+	}
+
+	.weekday-row,
+	.day-grid {
+		display: grid;
+		grid-template-columns: repeat(7, 1fr);
+	}
+
+	.weekday-cell {
+		font-size: 12px;
+		font-weight: 600;
+		color: var(--color-muted);
+		text-align: center;
+		padding-bottom: 8px;
+	}
+
+	.day-cell {
+		min-height: 96px;
+		border: 1px solid var(--color-border);
+		border-radius: 8px;
+		padding: 8px;
+		display: flex;
+		flex-direction: column;
+		gap: 3px;
+		background: var(--color-bg);
+		margin: -0.5px;
+	}
+
+	a.day-cell {
+		cursor: pointer;
+	}
+
+	a.day-cell:hover {
+		border-color: var(--color-pink);
+	}
+
+	.day-cell.empty {
+		border-color: transparent;
+		background: transparent;
+	}
+
+	.day-cell.today {
+		background: #fff;
+		border: 2px solid var(--color-gold);
+	}
+
+	.day-number {
+		font-size: 14px;
+		font-weight: 600;
+		color: var(--color-navy);
+	}
+
+	.day-event {
+		font-size: 11px;
+		line-height: 1.3;
+		color: var(--color-pink-dark);
+		background: #fff;
+		border-radius: 4px;
+		padding: 2px 5px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.day-cell.today .day-event {
+		background: var(--color-bg);
+	}
+
+	.day-event-more {
+		font-size: 10px;
+		color: var(--color-muted);
+	}
+
+	@media (max-width: 720px) {
+		.events-calendar {
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+
+		.section-title {
+			font-size: 26px;
+		}
+
+		.day-cell {
+			min-height: 72px;
+		}
+
+		.month-grid-title {
+			font-size: 18px;
+			min-width: 0;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.month-nav {
+			gap: 16px;
+		}
+
+		.day-cell {
+			min-height: 52px;
+			padding: 4px;
+			gap: 2px;
+		}
+
+		/* Too narrow for readable text: show a colored bar per event instead — still
+		   visible whatever the count (unlike the old "hide text, rely on +N" approach,
+		   which left 1-3 event days blank). Full text stays one tap away in Agenda. */
+		.day-event {
+			width: 100%;
+			height: 4px;
+			padding: 0;
+			border-radius: 2px;
+			font-size: 0;
+			overflow: hidden;
+			background: var(--color-pink-dark);
+		}
+
+		.day-cell.today .day-event {
+			background: var(--color-pink-dark);
+		}
+
+		.day-event-more {
+			font-size: 8px;
+		}
+	}
+</style>
+
+<script>
+	// Progressive enhancement over the plain `?month=`/`?day=` links: swap between
+	// pre-rendered panels in place instead of reloading the page. If a target wasn't
+	// pre-rendered (month outside the server's preloaded window, or a day with no events —
+	// which never gets a panel or a link), the click falls through to a real navigation,
+	// which lands back on this component correctly re-rendered for that target.
+	function initCalendar(root: HTMLElement) {
+		const monthPanels = Array.from(root.querySelectorAll<HTMLElement>('[data-month]'));
+		const dayPanels = Array.from(root.querySelectorAll<HTMLElement>('[data-day-agenda]'));
+		const agendaRadio = root.querySelector<HTMLInputElement>('input[id^="cal-agenda-"]');
+
+		function showMonth(key: string): boolean {
+			const panel = monthPanels.find((p) => p.dataset.month === key);
+			if (!panel) return false;
+			monthPanels.forEach((p) => {
+				p.hidden = p !== panel;
+			});
+			return true;
+		}
+
+		function showDay(key: string | null): boolean {
+			const panel = dayPanels.find((p) => p.dataset.dayAgenda === (key ?? 'default'));
+			if (!panel) return false;
+			dayPanels.forEach((p) => {
+				p.hidden = p !== panel;
+			});
+			return true;
+		}
+
+		root.addEventListener('click', (event) => {
+			const target = event.target as HTMLElement;
+
+			const monthLink = target.closest<HTMLAnchorElement>('.month-nav-btn');
+			if (monthLink) {
+				const url = new URL(monthLink.href);
+				const month = url.searchParams.get('month');
+				if (!month || !showMonth(month)) return;
+				event.preventDefault();
+				history.pushState(null, '', url.pathname + url.search + url.hash);
+				return;
+			}
+
+			const dayLink = target.closest<HTMLAnchorElement>('a.day-cell');
+			if (dayLink) {
+				const url = new URL(dayLink.href);
+				const day = url.searchParams.get('day');
+				if (!day || !showDay(day)) return;
+				event.preventDefault();
+				if (agendaRadio) agendaRadio.checked = true;
+				history.pushState(null, '', url.pathname + url.search + url.hash);
+				return;
+			}
+
+			const resetLink = target.closest<HTMLAnchorElement>('.day-filter-reset');
+			if (resetLink) {
+				if (!showDay(null)) return;
+				event.preventDefault();
+				const url = new URL(resetLink.href);
+				history.pushState(null, '', url.pathname + url.hash);
+			}
+		});
+
+		window.addEventListener('popstate', () => {
+			const params = new URLSearchParams(location.search);
+			const month = params.get('month') ?? root.dataset.defaultMonth;
+			if (month) showMonth(month);
+			showDay(params.get('day'));
+		});
+	}
+
+	document.querySelectorAll<HTMLElement>('[data-calendar]').forEach(initCalendar);
+</script>

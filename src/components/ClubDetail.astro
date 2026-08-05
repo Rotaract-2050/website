@@ -1,0 +1,220 @@
+---
+import { Image } from 'astro:assets';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { tinaField } from '@tinacms/astro';
+import ImageSlot from './ImageSlot.astro';
+import type { ClubsQuery } from '../../tina/__generated__/types';
+import type { Lang } from '../data/ui-strings';
+import { uiStrings } from '../data/ui-strings';
+
+interface Props {
+	lang: Lang;
+	club: ClubsQuery['clubs'];
+}
+
+const { lang, club } = Astro.props;
+const t = uiStrings[lang].clubDetail;
+const backHref = getRelativeLocaleUrl(lang, 'club');
+const story = lang === 'en' ? club.storyEn || club.story : club.story;
+const storyFieldName = lang === 'en' && club.storyEn ? 'storyEn' : 'story';
+---
+
+<section class="club-detail">
+	<div class="section-inner" data-tina-field={tinaField(club)}>
+		<a href={backHref} class="back-link">{t.backToList}</a>
+
+		<div class="club-layout">
+			{club.photo ? (
+				<Image src={club.photo} alt={`${t.photoAltPrefix} ${club.name}`} width={640} height={400} class="club-photo" />
+			) : (
+				<ImageSlot label={t.photoMissing} class="club-photo" />
+			)}
+
+			<div class="club-info">
+				{club.zone?.name && (
+					<div class="info-row">
+						<span class="info-label">{t.zoneLabel}</span>
+						<span class="info-value">{club.zone.name}</span>
+					</div>
+				)}
+				{club.foundationYear && (
+					<div class="info-row" data-tina-field={tinaField(club, 'foundationYear')}>
+						<span class="info-label">{t.foundationYearLabel}</span>
+						<span class="info-value">{club.foundationYear}</span>
+					</div>
+				)}
+				{club.email && (
+					<div class="info-row">
+						<span class="info-label">{t.emailLabel}</span>
+						<a class="info-value link" href={`mailto:${club.email}`}>{club.email}</a>
+					</div>
+				)}
+
+				{story && (
+					<div class="club-story" data-tina-field={tinaField(club, storyFieldName)}>
+						<h2 class="story-title">{t.storyTitle}</h2>
+						<p>{story}</p>
+					</div>
+				)}
+
+				{(club.website || club.instagram || club.facebook) && (
+					<div class="club-social">
+						{club.website && (
+							<a class="social-btn" href={club.website} target="_blank" rel="noopener noreferrer" aria-label={t.websiteLabel} data-tina-field={tinaField(club, 'website')}>
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+									<circle cx="12" cy="12" r="9" />
+									<ellipse cx="12" cy="12" rx="4" ry="9" />
+									<path d="M3 12h18M4.5 7.5h15M4.5 16.5h15" />
+								</svg>
+							</a>
+						)}
+						{club.instagram && (
+							<a class="social-btn" href={club.instagram} target="_blank" rel="noopener noreferrer" aria-label={t.instagramLabel} data-tina-field={tinaField(club, 'instagram')}>
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+									<rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+									<circle cx="12" cy="12" r="4.2" />
+									<circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
+								</svg>
+							</a>
+						)}
+						{club.facebook && (
+							<a class="social-btn" href={club.facebook} target="_blank" rel="noopener noreferrer" aria-label={t.facebookLabel} data-tina-field={tinaField(club, 'facebook')}>
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+									<circle cx="12" cy="12" r="9" />
+									<path d="M13.8 21v-7.2h2.4l.4-2.8h-2.8v-1.8c0-.8.2-1.4 1.4-1.4h1.5V5.1c-.3 0-1.1-.1-2.1-.1-2.1 0-3.5 1.3-3.5 3.6v2.4H8.7v2.8h2.4V21" />
+								</svg>
+							</a>
+						)}
+					</div>
+				)}
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.club-detail {
+		background: #fff;
+		padding: 60px 40px 90px;
+	}
+
+	.section-inner {
+		max-width: var(--content-max);
+		margin: 0 auto;
+	}
+
+	.back-link {
+		display: inline-block;
+		color: var(--color-pink);
+		font-size: 13px;
+		font-weight: 600;
+		margin-bottom: 30px;
+	}
+
+	.club-layout {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 40px;
+		align-items: start;
+	}
+
+	.club-layout :global(.club-photo) {
+		width: 100%;
+		height: 360px;
+		object-fit: cover;
+		border-radius: 14px;
+		order: 2;
+	}
+
+	.club-info {
+		display: flex;
+		flex-direction: column;
+		gap: 18px;
+		order: 1;
+	}
+
+	.info-row {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		padding-bottom: 14px;
+		border-bottom: 1px solid rgba(11, 37, 69, 0.08);
+	}
+
+	.info-label {
+		font-size: 12px;
+		font-weight: 700;
+		letter-spacing: 0.5px;
+		text-transform: uppercase;
+		color: var(--color-muted);
+	}
+
+	.info-value {
+		font-size: 15px;
+		color: var(--color-text);
+	}
+
+	.info-value.link {
+		color: var(--color-navy);
+		font-weight: 600;
+		word-break: break-word;
+	}
+
+	.info-value.link:hover {
+		color: var(--color-pink);
+	}
+
+	.story-title {
+		font-family: var(--font-heading);
+		font-size: 18px;
+		color: var(--color-navy);
+		margin: 0 0 8px;
+	}
+
+	.club-story p {
+		font-size: 15px;
+		line-height: 1.7;
+		color: var(--color-text);
+		margin: 0;
+	}
+
+	.club-social {
+		display: flex;
+		gap: 12px;
+		padding-top: 4px;
+	}
+
+	.social-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: var(--color-navy);
+		color: #fff;
+	}
+
+	.social-btn svg {
+		width: 20px;
+		height: 20px;
+	}
+
+	.social-btn:hover {
+		background: var(--color-pink);
+	}
+
+	@media (max-width: 720px) {
+		.club-detail {
+			padding: 40px 20px 60px;
+		}
+
+		.club-layout {
+			grid-template-columns: 1fr;
+		}
+
+		.club-layout :global(.club-photo) {
+			height: 240px;
+		}
+	}
+</style>

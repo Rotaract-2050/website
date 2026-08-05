@@ -1,0 +1,258 @@
+---
+import { uiStrings, type Lang } from '../../data/ui-strings';
+import { getRotaryNews } from '../../lib/rotaryNews';
+
+interface Props {
+	lang: Lang;
+	label: string;
+	feedUrl: string;
+	limit: number;
+}
+
+const { lang, label, feedUrl, limit } = Astro.props;
+const t = uiStrings[lang].newsTicker;
+
+const result = await getRotaryNews(feedUrl, limit);
+const items = result.ok ? result.items : [];
+
+const uid = crypto.randomUUID().slice(0, 8);
+const pauseId = `news-ticker-pause-${uid}`;
+
+// Longer lists get more time to scroll through so the reading speed stays roughly constant.
+const duration = Math.max(24, items.length * 5);
+---
+
+<section class="news-ticker" aria-label={label}>
+	<div class="ticker-row">
+		<div class="ticker-label">{label}</div>
+
+		{items.length > 0 ? (
+			<div class="ticker-viewport">
+				<input type="checkbox" id={pauseId} class="ticker-pause-toggle" aria-label={t.pauseToggle} />
+				<label for={pauseId} class="ticker-pause-btn">
+					<span class="icon-pause" aria-hidden="true">❚❚</span>
+					<span class="icon-play" aria-hidden="true">▶</span>
+				</label>
+				<div class="ticker-clip">
+					<div class="ticker-track">
+						{[0, 1].map((copyIndex) => (
+							<ul class="ticker-copy" aria-hidden={copyIndex === 1 ? 'true' : undefined}>
+								{items.map((item) => (
+									<li>
+										<a href={item.link} target="_blank" rel="noopener noreferrer" tabindex={copyIndex === 1 ? -1 : undefined}>
+											{item.title}
+											<span class="sr-only"> ({t.opensInNewTab})</span>
+										</a>
+									</li>
+								))}
+							</ul>
+						))}
+					</div>
+				</div>
+			</div>
+		) : (
+			<p class="ticker-status">{t.unavailable}</p>
+		)}
+	</div>
+</section>
+
+<style define:vars={{ tickerDuration: `${duration}s` }}>
+	.news-ticker {
+		background: var(--color-pink-dark);
+	}
+
+	.ticker-row {
+		max-width: var(--content-max);
+		margin: 0 auto;
+		display: flex;
+		align-items: center;
+		gap: 20px;
+		padding: 14px 40px;
+	}
+
+	.ticker-label {
+		flex: 0 0 auto;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 13px;
+		letter-spacing: 0.5px;
+		color: #fff;
+		text-transform: uppercase;
+		white-space: nowrap;
+	}
+
+	.ticker-status {
+		flex: 1;
+		margin: 0;
+		font-size: 13px;
+		font-style: italic;
+		color: rgba(255, 255, 255, 0.75);
+	}
+
+	.ticker-viewport {
+		flex: 1;
+		min-width: 0;
+		display: flex;
+		align-items: center;
+		gap: 14px;
+	}
+
+	.ticker-pause-toggle {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	.ticker-pause-btn {
+		flex: 0 0 auto;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 26px;
+		height: 26px;
+		border-radius: 50%;
+		border: 1px solid rgba(255, 255, 255, 0.3);
+		color: #fff;
+		font-size: 10px;
+		cursor: pointer;
+	}
+
+	.ticker-pause-toggle:focus-visible + .ticker-pause-btn {
+		outline: 2px solid var(--color-gold);
+		outline-offset: 2px;
+	}
+
+	.icon-play {
+		display: none;
+	}
+
+	.ticker-viewport:has(.ticker-pause-toggle:checked) .icon-pause {
+		display: none;
+	}
+
+	.ticker-viewport:has(.ticker-pause-toggle:checked) .icon-play {
+		display: inline;
+	}
+
+	.ticker-clip {
+		flex: 1;
+		min-width: 0;
+		overflow: hidden;
+	}
+
+	.ticker-track {
+		display: flex;
+		width: max-content;
+		animation-name: news-ticker-scroll;
+		animation-duration: var(--tickerDuration);
+		animation-timing-function: linear;
+		animation-iteration-count: infinite;
+	}
+
+	.ticker-viewport:has(.ticker-pause-toggle:checked) .ticker-track,
+	.ticker-viewport:hover .ticker-track,
+	.ticker-viewport:focus-within .ticker-track {
+		animation-play-state: paused;
+	}
+
+	.ticker-copy {
+		display: flex;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		gap: 48px;
+	}
+
+	.ticker-copy li {
+		flex: 0 0 auto;
+		padding-left: 48px;
+		border-left: 1px solid rgba(255, 255, 255, 0.25);
+	}
+
+	.ticker-copy li:first-child {
+		padding-left: 0;
+		border-left: 0;
+	}
+
+	.ticker-copy a {
+		font-size: 13px;
+		font-weight: 600;
+		color: #fff;
+		white-space: nowrap;
+	}
+
+	.ticker-copy a:hover,
+	.ticker-copy a:focus-visible {
+		color: var(--color-gold);
+	}
+
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	@keyframes news-ticker-scroll {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-50%);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.ticker-track {
+			animation: none;
+		}
+
+		.ticker-clip {
+			overflow-x: auto;
+		}
+
+		.ticker-copy:last-child {
+			display: none;
+		}
+
+		.ticker-pause-btn {
+			display: none;
+		}
+	}
+
+	@media (max-width: 720px) {
+		.ticker-row {
+			padding: 12px 20px;
+			gap: 14px;
+		}
+
+		.ticker-label {
+			font-size: 11px;
+		}
+	}
+
+	@media (max-width: 560px) {
+		.ticker-row {
+			flex-wrap: wrap;
+		}
+
+		.ticker-label {
+			flex-basis: 100%;
+		}
+
+		.ticker-viewport {
+			flex-basis: 100%;
+		}
+	}
+</style>

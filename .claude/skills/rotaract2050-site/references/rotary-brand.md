@@ -4,20 +4,56 @@ Regole di brand ufficiali Rotary International, recuperate da brandcenter.rotary
 
 ## Palette ufficiale (brand-elements/colors)
 
-Usare **solo** questi colori (o tinte neutre/grigie della palette). Non inventare colori.
+Usare **solo** questi colori (elenco completo brandcenter, formule colore complete). Non inventare colori né usare tinte fuori da questa lista.
 
-| Ruolo nel sito | Nome Rotary | Hex | Uso nel mockup |
+### Primari — identità di marca, uso guidato
+
+| Nome Rotary | PMS | Hex | RGB | Dove compare secondo il brandcenter |
+|---|---|---|---|---|
+| Rotary Royal Blue | 286C | `#17458F` | 23, 69, 143 | Parola "Rotary" nella Masterbrand Signature |
+| Rotary Gold | 130C | `#F7A81B` | 247, 168, 27 | Ruota nella Masterbrand Signature, Mark of Excellence |
+| Azure | 2175C | `#0067C8` | 0, 105, 200 | Versione monocolore della Masterbrand Signature, Mark of Excellence |
+| Cranberry | 214C | `#D41367` | 212, 19, 103 | Logo Rotaract |
+| Cardinal | 485C | `#E02927` | 224, 41, 39 | Logo End Polio Now |
+
+Uso nel sito: Royal Blue = primario scuro (header/footer/blocchi dark, oggi `#0B2545` nel mockup — **verificare con il distretto**, non è l'hex ufficiale). Cranberry = accent/CTA/link/pill di default (`--color-pink`). Gold = accent secondario su sfondo scuro (`--color-gold`). Azure = blu azione/link alternativo, non ancora usato altrove. Cardinal = riservato a un eventuale blocco End Polio Now, non usare per altro.
+
+### Secondari/estesi — accenti, categorizzazione, dati (es. tag/badge)
+
+| Nome Rotary | PMS | Hex | RGB |
 |---|---|---|---|
-| Primario scuro (header, footer, blocchi dark) | Rotary Royal Blue | `#17458F` | mockup usa `#0B2545`, navy più scuro — **verificare con il distretto quale usare**: `#0B2545` non è un colore ufficiale brandcenter |
-| Accent/CTA/link | Cranberry | `#D41367` | usato correttamente, è colore ufficiale |
-| Accent secondario (numeri, badge su sfondo scuro) | Rotary Gold | `#F7A81B` | usato correttamente |
-| Blu azione/link alternativo | Azure | `#0067C8` | non ancora usato, disponibile |
-| Sfondo pagina chiaro | White / neutro | `#FFFFFF`, `#FAFAFB` | ok, `#FAFAFB` è tinta neutra non ufficiale ma coerente (quasi-bianco) |
-| Testo body | Charcoal-ish grigio | `#54565A` (Charcoal ufficiale) | mockup usa `#5B6472` (blu-grigio, non ufficiale ma leggibile) |
+| Sky Blue | 2202C | `#00A2E0` | 0, 162, 224 |
+| Turquoise | 7466C | `#00ADBB` | 0, 173, 187 |
+| Orange | 2018C | `#FF7600` | 255, 118, 0 |
+| Violet | 2070C | `#901F93` | 144, 31, 147 |
+| Grass | 355C | `#009739` | 1, 151, 57 |
+| Powder Blue | 290C | `#B9D9EB` | 185, 217, 235 |
+| Moss | 7537C | `#A7ACA2` | 167, 172, 162 |
+| Lavender | 665C | `#C6BCD0` | 198, 188, 208 |
+| Taupe | 7501C | `#D9C89E` | 217, 200, 158 |
+| Stone | 2162C | `#9BA4B4` | 155, 164, 180 |
+| Slate | 2165C | `#657F99` | 101, 127, 153 |
+
+Uso nel sito: **Turquoise, Violet, Orange, Grass** sono i 4 colori scelti per i tag zona (badge club colorati per zona sulle news — vedi `references/news-tags.md`), assegnazione 1:1 con le 4 zone del distretto. Gli altri (Sky Blue, Powder Blue, Moss, Lavender, Taupe, Stone, Slate) restano disponibili per usi futuri simili (categorizzazione, data-viz), non ancora assegnati — non introdurli senza motivo.
+
+### Neutri/grigi
+
+| Nome Rotary | PMS | Hex | RGB |
+|---|---|---|---|
+| Charcoal | Cool Gray 11C | `#54565A` | 84, 86, 90 |
+| Pewter | Cool Gray 8C | `#898A8D` | 137, 138, 141 |
+| Smoke | Cool Gray 5C | `#B1B1B1` | 177, 177, 177 |
+| Silver | Cool Gray 2C | `#D0CFCD` | 208, 207, 205 |
+| Storm | Warm Gray 10C | `#7A6E66` | 122, 110, 102 |
+| Ash | Warm Gray 7C | `#968B83` | 150, 139, 131 |
+| Platinum | Warm Gray 3C | `#BFB7B0` | 191, 183, 176 |
+| Cloud | Warm Gray 1C | `#D6D1CA` | 214, 209, 202 |
+| White | — | `#FFFFFF` | 255, 255, 255 |
+| Black | — | `#000000` | 0, 0, 0 |
+
+Uso nel sito: Charcoal = testo body (`--color-text`, oggi mockup usa `#5B6472` blu-grigio non ufficiale). White/`#FAFAFB` (tinta neutra non ufficiale ma coerente, quasi-bianco) = sfondo pagina chiaro. Gli altri neutri non ancora usati, disponibili per varianti di sfondo/bordo se serve più contrasto graduale.
 
 **Regola pratica**: prima di introdurre un componente nuovo, chiedere conferma su `#0B2545` vs `#17458F` (Royal Blue ufficiale) se non già deciso nel progetto — è la discrepanza principale rispetto al brandcenter. Se non c'è risposta, mantenere `#0B2545` per coerenza con la homepage esistente (regola "mantenere lo stile della homepage" prevale finché non arriva una decisione esplicita), ma segnalarlo sempre all'utente.
-
-Non usare mai colori secondari (Cardinal, Violet, Turquoise, Grass, Orange) senza motivo di brand esplicito: il sito distrettuale deve restare essenziale, non "arcobaleno".
 
 ## Tipografia (brand-elements/typography)
 

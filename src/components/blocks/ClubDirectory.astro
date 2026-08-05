@@ -1,14 +1,19 @@
 ---
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import { requestWithMetadata, tinaField } from '@tinacms/astro';
 import client from '../../../tina/__generated__/client';
+import ClubsMap from '../ClubsMap.astro';
+import type { Lang } from '../../data/ui-strings';
+import { uiStrings } from '../../data/ui-strings';
 
 interface Props {
+	lang: Lang;
 	intro: string;
 	disclaimer: string;
-	contactLabel: string;
 }
 
-const { intro, disclaimer, contactLabel } = Astro.props;
+const { lang, intro, disclaimer } = Astro.props;
+const t = uiStrings[lang].clubDetail;
 
 const { data: zonesData } = await requestWithMetadata(client.queries.zonesConnection());
 const { data: clubsData } = await requestWithMetadata(client.queries.clubsConnection());
@@ -18,24 +23,66 @@ const clubs = (clubsData.clubsConnection.edges ?? []).map((edge) => edge?.node).
 
 const zoneGroups = zones.map((zone) => ({
 	name: zone.name,
+	nameFieldAttr: tinaField(zone, 'name'),
+	color: zone.color,
+	description: lang === 'en' ? zone.descriptionEn || zone.description : zone.description,
+	descriptionFieldAttr: tinaField(zone, lang === 'en' && zone.descriptionEn ? 'descriptionEn' : 'description'),
 	clubs: clubs.filter((club) => club.zone?.name === zone.name),
 }));
 ---
 
+<ClubsMap lang={lang} clubs={clubs} zones={zoneGroups} />
+
 <section class="club-list">
 	<div class="section-inner">
-		<p class="intro">{intro}</p>
-		<p class="disclaimer">{disclaimer}</p>
+		{intro && <p class="intro">{intro}</p>}
+		{disclaimer && <p class="disclaimer">{disclaimer}</p>}
 
 		{zoneGroups.map((zone) => (
 			<div class="zone-block">
-				<h2 class="zone-heading">{zone.name}</h2>
+				<h2 class="zone-heading" style={zone.color ? `color: ${zone.color}; border-color: ${zone.color};` : undefined} data-tina-field={zone.nameFieldAttr}>
+					{zone.name}
+				</h2>
+				{zone.description && <p class="zone-description" data-tina-field={zone.descriptionFieldAttr}>{zone.description}</p>}
 				<div class="club-grid">
 					{zone.clubs.map((club) => (
 						<div class="club-card" data-tina-field={tinaField(club)}>
-							<div class="club-name">{club.name}</div>
-							<div class="club-zone">{zone.name}</div>
-							<div class="club-contact">{contactLabel} →</div>
+							<div class="club-body">
+								<a href={getRelativeLocaleUrl(lang, `club/${club._sys.filename}`)} class="club-link">
+									<div class="club-name">{club.name}</div>
+									<div class="club-zone">{zone.name}</div>
+								</a>
+								{(club.website || club.instagram || club.facebook) && (
+									<div class="club-social">
+										{club.website && (
+											<a class="social-btn" href={club.website} target="_blank" rel="noopener noreferrer" aria-label={t.websiteLabel} data-tina-field={tinaField(club, 'website')}>
+												<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+													<circle cx="12" cy="12" r="9" />
+													<ellipse cx="12" cy="12" rx="4" ry="9" />
+													<path d="M3 12h18M4.5 7.5h15M4.5 16.5h15" />
+												</svg>
+											</a>
+										)}
+										{club.instagram && (
+											<a class="social-btn" href={club.instagram} target="_blank" rel="noopener noreferrer" aria-label={t.instagramLabel} data-tina-field={tinaField(club, 'instagram')}>
+												<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+													<rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+													<circle cx="12" cy="12" r="4.2" />
+													<circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
+												</svg>
+											</a>
+										)}
+										{club.facebook && (
+											<a class="social-btn" href={club.facebook} target="_blank" rel="noopener noreferrer" aria-label={t.facebookLabel} data-tina-field={tinaField(club, 'facebook')}>
+												<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+													<circle cx="12" cy="12" r="9" />
+													<path d="M13.8 21v-7.2h2.4l.4-2.8h-2.8v-1.8c0-.8.2-1.4 1.4-1.4h1.5V5.1c-.3 0-1.1-.1-2.1-.1-2.1 0-3.5 1.3-3.5 3.6v2.4H8.7v2.8h2.4V21" />
+												</svg>
+											</a>
+										)}
+									</div>
+								)}
+							</div>
 						</div>
 					))}
 				</div>
@@ -71,18 +118,26 @@ const zoneGroups = zones.map((zone) => ({
 	}
 
 	.zone-block {
-		margin-bottom: 36px;
+		margin-bottom: 44px;
 	}
 
 	.zone-heading {
 		font-family: var(--font-heading);
-		font-weight: 600;
-		font-size: 20px;
+		font-weight: 700;
+		font-size: 30px;
 		color: var(--color-navy);
 		border-bottom: 3px solid var(--color-pink);
 		display: inline-block;
-		padding-bottom: 6px;
-		margin: 0 0 18px;
+		padding-bottom: 8px;
+		margin: 0 0 12px;
+	}
+
+	.zone-description {
+		font-size: 15px;
+		line-height: 1.7;
+		color: var(--color-text);
+		max-width: 720px;
+		margin: 0 0 22px;
 	}
 
 	.club-grid {
@@ -92,9 +147,32 @@ const zoneGroups = zones.map((zone) => ({
 	}
 
 	.club-card {
+		position: relative;
+		display: block;
 		background: var(--color-bg);
 		border-radius: 12px;
+		overflow: hidden;
+		box-shadow: 0 4px 16px rgba(11, 37, 69, 0.07);
+		transition: box-shadow 0.2s ease;
+	}
+
+	.club-card:hover {
+		box-shadow: 0 8px 24px rgba(11, 37, 69, 0.12);
+	}
+
+	.club-body {
 		padding: 20px;
+	}
+
+	.club-link {
+		display: block;
+		color: inherit;
+	}
+
+	.club-link::after {
+		content: '';
+		position: absolute;
+		inset: 0;
 	}
 
 	.club-name {
@@ -108,13 +186,34 @@ const zoneGroups = zones.map((zone) => ({
 	.club-zone {
 		font-size: 13px;
 		color: var(--color-text);
-		margin-bottom: 10px;
 	}
 
-	.club-contact {
-		color: var(--color-pink);
-		font-size: 13px;
-		font-weight: 600;
+	.club-social {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		gap: 8px;
+		margin-top: 14px;
+	}
+
+	.social-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+		background: var(--color-navy);
+		color: #fff;
+	}
+
+	.social-btn svg {
+		width: 16px;
+		height: 16px;
+	}
+
+	.social-btn:hover {
+		background: var(--color-pink);
 	}
 
 	@media (max-width: 900px) {

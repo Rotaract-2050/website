@@ -5,6 +5,7 @@ import client from '../../tina/__generated__/client';
 import type { Lang } from '../data/ui-strings';
 import { uiStrings, SOCIAL_LINKS } from '../data/ui-strings';
 import { pageSlugs, type PageKey } from '../data/routes';
+import SocialIcon from './SocialIcon.astro';
 
 interface Props {
 	lang: Lang;
@@ -29,9 +30,7 @@ const href = (page: PageKey) => getRelativeLocaleUrl(lang, pageSlugs[page]);
 				<a href={href('home')}>{t.nav.home}</a>
 				<a href={href('distretto')}>{t.nav.distrettoMenu}</a>
 				<a href={href('club')}>{t.nav.club}</a>
-				<a href={href('esecutivo')}>{t.nav.esecutivo}</a>
-				<a href={href('delegati')}>{t.nav.delegati}</a>
-				<a href={href('commissioni')}>{t.nav.commissioni}</a>
+				<a href={href('squadra')}>{t.nav.squadra}</a>
 			</div>
 		</div>
 		<div>
@@ -42,7 +41,9 @@ const href = (page: PageKey) => getRelativeLocaleUrl(lang, pageSlugs[page]);
 			<div class="footer-heading">{t.footer.socialTitle}</div>
 			<div class="footer-social">
 				{SOCIAL_LINKS.map((soc) => (
-					<a href={soc.href} class="social-icon" aria-label={soc.label}>{soc.label}</a>
+					<a href={soc.href} target="_blank" rel="noopener" class="social-icon" aria-label={soc.label}>
+						<SocialIcon name={soc.name} />
+					</a>
 				))}
 			</div>
 		</div>
@@ -125,8 +126,8 @@ const href = (page: PageKey) => getRelativeLocaleUrl(lang, pageSlugs[page]);
 		border-radius: 50%;
 		background: rgba(255, 255, 255, 0.1);
 		color: #fff;
-		font-size: 12px;
-		font-weight: 700;
+		padding: 7px;
+		box-sizing: border-box;
 		display: flex;
 		align-items: center;
 		justify-content: center;

@@ -1,0 +1,248 @@
+---
+import { Image } from 'astro:assets';
+import ImageSlot from './ImageSlot.astro';
+import { tagPillStyle, type NewsTag } from '../lib/news';
+
+interface Props {
+	id: string;
+	image?: string | null;
+	imageLabel: string;
+	tags?: NewsTag[];
+	title: string;
+	dateLabel: string;
+	upcoming?: boolean;
+	upcomingLabel: string;
+	locationLavori?: string | null;
+	locationCena?: string | null;
+	locationLabel: string;
+	worksLocationLabel: string;
+	dinnerLocationLabel: string;
+	excerpt?: string | null;
+	ticketsUrl?: string | null;
+	ticketsButtonLabel: string;
+	photoAlbumUrl?: string | null;
+	photoButtonLabel: string;
+	tinaFieldAttr?: string;
+}
+
+const {
+	id,
+	image,
+	imageLabel,
+	tags = [],
+	title,
+	dateLabel,
+	upcoming = false,
+	upcomingLabel,
+	locationLavori,
+	locationCena,
+	locationLabel,
+	worksLocationLabel,
+	dinnerLocationLabel,
+	excerpt,
+	ticketsUrl,
+	ticketsButtonLabel,
+	photoAlbumUrl,
+	photoButtonLabel,
+	tinaFieldAttr,
+} = Astro.props;
+---
+
+<article class="event-entry" id={id} data-tina-field={tinaFieldAttr}>
+	<div class="event-media">
+		{image ? (
+			<Image src={image} alt={imageLabel} width={480} height={270} class="event-image" />
+		) : (
+			<ImageSlot label={imageLabel} class="event-image" />
+		)}
+	</div>
+	<div class="event-content">
+		{tags.length > 0 && (
+			<div class="event-tags">
+				{tags.map((tag) => (
+					<span class="event-tag" style={tagPillStyle(tag.color)}>{tag.label}</span>
+				))}
+			</div>
+		)}
+		<h2 class="event-title">{title}</h2>
+		<div class="event-meta">
+			{upcoming && <span class="event-upcoming-badge">{upcomingLabel}</span>}
+			{dateLabel}
+		</div>
+		{locationLavori && locationCena ? (
+			<>
+				<div class="event-meta event-location"><span class="event-location-label">{worksLocationLabel}:</span> {locationLavori}</div>
+				<div class="event-meta event-location"><span class="event-location-label">{dinnerLocationLabel}:</span> {locationCena}</div>
+			</>
+		) : (
+			(locationLavori || locationCena) && (
+				<div class="event-meta event-location"><span class="event-location-label">{locationLabel}:</span> {locationLavori || locationCena}</div>
+			)
+		)}
+		{excerpt && <p class="event-excerpt">{excerpt}</p>}
+		{(ticketsUrl || photoAlbumUrl) && (
+			<div class="event-actions">
+				{ticketsUrl && (
+					<a class="event-tickets-btn" href={ticketsUrl} target="_blank" rel="noopener">
+						{ticketsButtonLabel}
+					</a>
+				)}
+				{photoAlbumUrl && (
+					<a class="event-photo-btn" href={photoAlbumUrl} target="_blank" rel="noopener">
+						{photoButtonLabel}
+					</a>
+				)}
+			</div>
+		)}
+	</div>
+</article>
+
+<style>
+	.event-entry {
+		display: grid;
+		grid-template-columns: 320px 1fr;
+		gap: 32px;
+		padding: 36px 0;
+		border-bottom: 1px solid var(--color-border);
+		scroll-margin-top: 90px;
+	}
+
+	.event-entry:first-child {
+		padding-top: 0;
+	}
+
+	.event-entry:last-child {
+		border-bottom: 0;
+	}
+
+	.event-entry :global(.event-image) {
+		width: 100%;
+		height: 200px;
+		object-fit: cover;
+		border-radius: 12px;
+	}
+
+	.event-content {
+		min-width: 0;
+	}
+
+	.event-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin-bottom: 12px;
+	}
+
+	.event-tag {
+		display: inline-block;
+		background: var(--tag-bg, rgba(212, 19, 103, 0.1));
+		color: var(--tag-color, var(--color-pink));
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.5px;
+		text-transform: uppercase;
+		padding: 4px 10px;
+		border-radius: 999px;
+	}
+
+	.event-title {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 22px;
+		color: var(--color-navy);
+		text-transform: uppercase;
+		margin: 0 0 8px;
+	}
+
+	.event-meta {
+		font-size: 14px;
+		color: var(--color-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.4px;
+		margin-bottom: 6px;
+	}
+
+	.event-meta:last-of-type {
+		margin-bottom: 14px;
+	}
+
+	.event-location {
+		text-transform: none;
+		letter-spacing: normal;
+	}
+
+	.event-location-label {
+		color: var(--color-pink);
+		font-weight: 700;
+	}
+
+	.event-upcoming-badge {
+		display: inline-block;
+		background: var(--color-gold);
+		color: var(--color-navy);
+		font-weight: 700;
+		font-size: 11px;
+		letter-spacing: 0.5px;
+		padding: 3px 9px;
+		border-radius: 999px;
+		margin-right: 8px;
+	}
+
+	.event-excerpt {
+		font-size: 15px;
+		color: var(--color-text);
+		line-height: 1.6;
+		margin: 0 0 16px;
+	}
+
+	.event-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+	}
+
+	.event-tickets-btn {
+		display: inline-block;
+		background: var(--color-pink);
+		color: #fff;
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 13px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		padding: 10px 20px;
+		border-radius: 999px;
+	}
+
+	.event-tickets-btn:hover {
+		background: var(--color-pink-dark);
+		color: #fff;
+	}
+
+	.event-photo-btn {
+		display: inline-block;
+		background: transparent;
+		color: var(--color-navy);
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 13px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		padding: 8px 18px;
+		border-radius: 999px;
+		border: 2px solid var(--color-navy);
+	}
+
+	.event-photo-btn:hover {
+		background: var(--color-navy);
+		color: #fff;
+	}
+
+	@media (max-width: 720px) {
+		.event-entry {
+			grid-template-columns: 1fr;
+			gap: 18px;
+			padding: 28px 0;
+		}
+	}
+</style>

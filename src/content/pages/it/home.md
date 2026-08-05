@@ -16,12 +16,16 @@ blocks:
       - eyebrow: UNISCITI A NOI
         title: LA TUA RETE PARTE DA QUI
         subtitle: 'Rotaract è la community di giovani 18-30 anni che unisce crescita personale, amicizia e service.'
-        ctaLabel: ENTRA IN ROTARACT
+        ctaLabel: ENTRA NEL ROTARACT
     _template: Hero
+  - label: NOTIZIE ROTARY INTERNATIONAL
+    feedUrl: https://www.rotary.org/rss.xml
+    limit: 12
+    _template: NewsTicker
   - items:
-      - value: '28'
+      - value: '30'
         label: CLUB ROTARACT
-      - value: 350+
+      - value: '403'
         label: SOCI
       - value: '4'
         label: ZONE
@@ -43,58 +47,26 @@ blocks:
       - title: Francigena
         meta: 5 club
         href: club
+        color: '#009739'
       - title: Leonessa
         meta: 8 club
         href: club
+        color: '#00ADBB'
       - title: Navigli
         meta: 8 club
         href: club
+        color: '#FF7600'
       - title: Padana
         meta: 7 club
         href: club
+        color: '#901F93'
     _template: CardGrid
   - title: EVENTI DISTRETTUALI
-    items:
-      - day: '12'
-        month: SET
-        title: Assemblea Distrettuale 2026-27
-        time: '09:30 - 13:00'
-        location: Piacenza
-      - day: '03'
-        month: OTT
-        title: Seminario Leadership & Service
-        time: '15:00 - 18:00'
-        location: Cremona
-      - day: '24'
-        month: OTT
-        title: Giornata Mondiale della Polio
-        time: Tutto il giorno
-        location: Distretto 2050
-      - day: '14'
-        month: NOV
-        title: Congresso Distrettuale Rotaract Distretto 2050
-        time: '09:00 - 19:00'
-        location: Brescia
-    _template: EventsList
+    _template: EventsCalendar
   - title: NEWS DAL DISTRETTO
-    items:
-      - tag: PROGETTI
-        title: Raccolta fondi per la Fondazione Rotary
-        excerpt: I club del distretto superano l'obiettivo annuale di raccolta.
-        date: 18 LUG 2026
-        imageLabel: Foto news
-      - tag: FORMAZIONE
-        title: Al via l'Academy 2050 per i nuovi socie
-        excerpt: Un percorso formativo per i giovani leader del distretto.
-        date: 05 LUG 2026
-        imageLabel: Foto news
-      - tag: SERVIZIO
-        title: 'NGSE: scambio internazionale di servizio'
-        excerpt: Sei club coinvolti nel nuovo programma di service exchange.
-        date: 22 GIU 2026
-        imageLabel: Foto news
+    limit: 3
     _template: NewsGrid
-  - title: DIVENTA SOCIO ROTARACT
+  - title: DIVENTA SOCIO DEL ROTARACT
     body: Hai tra 18 e 30 anni? Scopri il club più vicino a te e inizia il tuo percorso di leadership e servizio.
     buttonLabel: TROVA IL TUO CLUB
     buttonHref: club
