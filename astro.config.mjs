@@ -40,16 +40,19 @@ export default defineConfig({
 			prefixDefaultLocale: false,
 		},
 	},
-	// node-ical (and its rrule-temporal dependency) ship conditional `exports` maps
-	// and/or import each other's runtime deps (temporal-polyfill) as bare specifiers;
-	// Netlify's function bundler has repeatedly failed to trace and copy those into
-	// the deployed function's node_modules, causing prod-only ERR_MODULE_NOT_FOUND
-	// crashes that never reproduce locally (full node_modules is always present there).
-	// Bundling all three at Vite's build step instead removes the runtime filesystem
-	// import entirely, so there's nothing left for Netlify's tracer to miss.
+	// node-ical's date-recurrence chain (node-ical -> rrule-temporal + temporal-polyfill
+	// -> temporal-spec + temporal-utils) ships conditional `exports` maps and imports
+	// each other as bare specifiers at every layer. Netlify's function bundler has
+	// repeatedly failed to trace and copy those into the deployed function's
+	// node_modules, causing prod-only ERR_MODULE_NOT_FOUND crashes that never
+	// reproduce locally (full node_modules is always present there) — each fix so far
+	// surfaced the next package one layer deeper. This is the full, closed dependency
+	// set (confirmed: temporal-spec/temporal-utils have no further deps of their own),
+	// bundled at Vite's build step so there's no runtime filesystem import left for
+	// Netlify's tracer to miss.
 	vite: {
 		ssr: {
-			noExternal: ['node-ical', 'rrule-temporal', 'temporal-polyfill'],
+			noExternal: ['node-ical', 'rrule-temporal', 'temporal-polyfill', 'temporal-spec', 'temporal-utils'],
 		},
 	},
 	integrations: [
