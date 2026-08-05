@@ -52,7 +52,7 @@ const localized = localizeNews(article, lang);
 			</div>
 			<div data-tina-field={tinaField(article, 'image')}>
 				{article.image ? (
-					<Image src={article.image} alt={localized.imageLabel} width={960} height={420} class="article-image" />
+					<Image src={article.image} alt={localized.imageLabel} width={960} height={420} fit="contain" class="article-image" />
 				) : (
 					<ImageSlot label={localized.imageLabel} class="article-image" />
 				)}
