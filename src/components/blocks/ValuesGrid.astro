@@ -162,11 +162,46 @@ const { title, accent = '#d41367', layout, items } = Astro.props;
 		line-height: 1.5;
 	}
 
-	/* --- Badge: a held mark, not a filled icon — outline ring for abstract values --- */
+	/* --- Badge: a held mark, not a filled icon — a seal band, not a product card.
+	   No box, no shadow: values are principles you hold, not features you ship. --- */
+	.values[data-layout='badge'] .value-card {
+		background: none;
+		box-shadow: none;
+		border-radius: 0;
+		padding: 8px 20px;
+	}
+
+	.values[data-layout='badge'] .value-card:hover {
+		transform: none;
+		box-shadow: none;
+	}
+
 	.values[data-layout='badge'] .value-marker {
+		width: 64px;
+		height: 64px;
 		background: none;
 		border: 2px solid var(--accent);
 		color: var(--accent);
+		transition: transform 0.25s ease;
+	}
+
+	.values[data-layout='badge'] .value-card:hover .value-marker {
+		transform: scale(1.08);
+	}
+
+	.values[data-layout='badge'] .value-title {
+		font-size: 17px;
+	}
+
+	/* --- Path: a small waypoint marker in the gap, not just a line --- */
+	.values[data-layout='icon'] .value-marker {
+		width: 60px;
+		height: 60px;
+	}
+
+	.values[data-layout='icon'] .value-marker svg {
+		width: 28px;
+		height: 28px;
 	}
 
 	/* --- Badge & Path: five items read best as one row (a seal band / a route) --- */
@@ -175,21 +210,55 @@ const { title, accent = '#d41367', layout, items } = Astro.props;
 		grid-template-columns: repeat(2, 1fr);
 	}
 
+	/* --- Icon: seven distinct causes read better centered than left-anchored,
+	   so a ragged last row (4+3) doesn't dangle on the left. --- */
+	.values[data-layout='icon'] .values-grid {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.values[data-layout='icon'] .value-card {
+		flex: 1 1 240px;
+		max-width: 280px;
+	}
+
 	@media (min-width: 901px) {
 		.values[data-layout='badge'] .values-grid,
 		.values[data-layout='path'] .values-grid {
 			grid-template-columns: repeat(5, 1fr);
 		}
 
-		/* --- Path only: connect the sequence with a route running through the gaps --- */
-		.values[data-layout='path'] .value-card:not(:last-child)::after {
+		.values[data-layout='badge'] .value-card:not(:last-child)::after {
 			content: '';
 			position: absolute;
-			top: 56px;
-			right: -24px;
-			width: 24px;
-			height: 3px;
+			top: 15%;
+			bottom: 15%;
+			right: 0;
+			width: 1px;
 			background: var(--color-border);
+		}
+
+		/* --- Path only: a waypoint chevron bridging each gap in the route --- */
+		.values[data-layout='path'] .value-card:not(:last-child)::after {
+			content: '›';
+			position: absolute;
+			top: 45px;
+			right: -23px;
+			z-index: 2;
+			width: 22px;
+			height: 22px;
+			border-radius: 50%;
+			background: #fff;
+			border: 1.5px solid var(--color-border);
+			color: var(--accent);
+			font-family: var(--font-heading);
+			font-weight: 700;
+			font-size: 13px;
+			line-height: 1;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 		}
 	}
 
