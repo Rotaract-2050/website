@@ -51,7 +51,7 @@ const {
 <article class="event-entry" id={id} data-tina-field={tinaFieldAttr}>
 	<div class="event-media">
 		{image ? (
-			<Image src={image} alt={imageLabel} width={480} height={270} class="event-image" />
+			<Image src={image} alt={imageLabel} width={480} height={270} quality="high" class="event-image" />
 		) : (
 			<ImageSlot label={imageLabel} class="event-image" />
 		)}

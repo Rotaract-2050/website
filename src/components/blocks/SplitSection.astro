@@ -26,7 +26,7 @@ const resolvedCtaHref = ctaHref ? getRelativeLocaleUrl(lang, ctaHref) : undefine
 <section class="split" data-side={imageSide}>
 	<div class="split-inner">
 		<div class="split-media">
-			{image ? <Image src={image} alt={imageLabel} width={800} height={420} class="split-image" /> : <ImageSlot label={imageLabel} shape="rounded" class="split-image" />}
+			{image ? <Image src={image} alt={imageLabel} width={800} height={420} quality="high" class="split-image" /> : <ImageSlot label={imageLabel} shape="rounded" class="split-image" />}
 		</div>
 		<div class="split-copy">
 			{kicker && <div class="eyebrow">{kicker}</div>}

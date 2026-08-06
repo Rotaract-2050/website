@@ -21,7 +21,7 @@ const { href, image, imageLabel, tags = [], title, excerpt, dateLabel, yearLabel
 <article class="news-card" data-tina-field={tinaFieldAttr}>
 	<a href={href} class="news-link">
 		{image ? (
-			<Image src={image} alt={imageLabel} width={400} height={170} class="news-image" />
+			<Image src={image} alt={imageLabel} width={400} height={170} quality="high" class="news-image" />
 		) : (
 			<ImageSlot label={imageLabel} class="news-image" />
 		)}

@@ -19,7 +19,7 @@ const { name, role, photo, initials, email, tinaFieldAttr, size = 'md' } = Astro
 <div class="person-card" data-size={size} data-tina-field={tinaFieldAttr}>
 	<div class="person-avatar">
 		{photo ? (
-			<Image src={photo} alt={name} width={size === 'lg' ? 240 : 160} height={size === 'lg' ? 240 : 160} class="person-photo" />
+			<Image src={photo} alt={name} width={size === 'lg' ? 240 : 160} height={size === 'lg' ? 240 : 160} quality="high" class="person-photo" />
 		) : initials ? (
 			<div class="person-initials">{initials}</div>
 		) : (
