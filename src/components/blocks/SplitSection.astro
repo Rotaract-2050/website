@@ -15,18 +15,21 @@ interface Props {
 	ctaLabel?: string;
 	ctaHref?: string;
 	image?: string;
+	imageFocalX?: number | null;
+	imageFocalY?: number | null;
 	imageLabel: string;
 	imageSide?: 'left' | 'right';
 }
 
-const { lang, kicker, title, quote, body, subhead, body2, ctaLabel, ctaHref, image, imageLabel, imageSide = 'right' } = Astro.props;
+const { lang, kicker, title, quote, body, subhead, body2, ctaLabel, ctaHref, image, imageFocalX, imageFocalY, imageLabel, imageSide = 'right' } = Astro.props;
 const resolvedCtaHref = ctaHref ? getRelativeLocaleUrl(lang, ctaHref) : undefined;
+const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 50}%;`;
 ---
 
 <section class="split" data-side={imageSide}>
 	<div class="split-inner">
 		<div class="split-media">
-			{image ? <Image src={image} alt={imageLabel} width={800} height={420} quality="high" class="split-image" /> : <ImageSlot label={imageLabel} shape="rounded" class="split-image" />}
+			{image ? <Image src={image} alt={imageLabel} width={800} height={420} quality="high" class="split-image" style={focalStyle} /> : <ImageSlot label={imageLabel} shape="rounded" class="split-image" />}
 		</div>
 		<div class="split-copy">
 			{kicker && <div class="eyebrow">{kicker}</div>}
@@ -70,6 +73,7 @@ const resolvedCtaHref = ctaHref ? getRelativeLocaleUrl(lang, ctaHref) : undefine
 		height: 420px;
 		border-radius: 16px;
 		object-fit: cover;
+		object-position: var(--focal-x, 50%) var(--focal-y, 50%);
 	}
 
 	.eyebrow {

@@ -1,4 +1,5 @@
 import { defineConfig } from 'tinacms';
+import { focalImageFields } from './fields/focalPointImage';
 
 const pageRouter = ({ document }: { document: { _sys: { breadcrumbs: string[] } } }) => {
 	const [locale, ...rest] = document._sys.breadcrumbs;
@@ -34,7 +35,7 @@ const heroTemplate = {
 			list: true,
 			ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 			fields: [
-				{ type: 'image' as const, name: 'image', label: 'Foto di sfondo' },
+				...focalImageFields('image', 'Foto di sfondo'),
 				{ type: 'string' as const, name: 'eyebrow', label: 'Etichetta' },
 				{ type: 'string' as const, name: 'title', label: 'Titolo' },
 				{ type: 'string' as const, name: 'subtitle', label: 'Sottotitolo', ui: { component: 'textarea' } },
@@ -75,7 +76,7 @@ const splitSectionTemplate = {
 		{ type: 'string' as const, name: 'body2', label: 'Testo secondario', ui: { component: 'textarea' } },
 		{ type: 'string' as const, name: 'ctaLabel', label: 'Testo pulsante' },
 		{ type: 'string' as const, name: 'ctaHref', label: 'Link pulsante (slug pagina)' },
-		{ type: 'image' as const, name: 'image', label: 'Immagine' },
+		...focalImageFields('image', 'Immagine'),
 		{ type: 'string' as const, name: 'imageLabel', label: 'Didascalia segnaposto immagine', required: true },
 		{
 			type: 'string' as const,
@@ -200,7 +201,7 @@ const roleGridTemplate = {
 			ui: { itemProps: (item: { role?: string }) => ({ label: item.role }) },
 			fields: [
 				{ type: 'string' as const, name: 'initials', label: 'Iniziali (fallback se manca la foto)' },
-				{ type: 'image' as const, name: 'photo', label: 'Foto' },
+				...focalImageFields('photo', 'Foto'),
 				{ type: 'string' as const, name: 'name', label: 'Nome e cognome' },
 				{ type: 'string' as const, name: 'role', label: 'Ruolo' },
 				{ type: 'string' as const, name: 'email', label: 'Email (se disponibile)' },
@@ -245,7 +246,7 @@ const committeeGridTemplate = {
 					name: 'lead',
 					label: 'Responsabile',
 					fields: [
-						{ type: 'image' as const, name: 'photo', label: 'Foto' },
+						...focalImageFields('photo', 'Foto'),
 						{ type: 'string' as const, name: 'name', label: 'Nome e cognome' },
 						{ type: 'string' as const, name: 'email', label: 'Email (se disponibile)' },
 					],
@@ -256,7 +257,7 @@ const committeeGridTemplate = {
 					label: 'Membri',
 					list: true,
 					fields: [
-						{ type: 'image' as const, name: 'photo', label: 'Foto' },
+						...focalImageFields('photo', 'Foto'),
 						{ type: 'string' as const, name: 'name', label: 'Nome e cognome' },
 						{ type: 'string' as const, name: 'email', label: 'Email (se disponibile)' },
 					],
@@ -539,7 +540,7 @@ export default defineConfig({
 						label: 'Longitudine (mappa club)',
 						description: 'Coordinate approssimative del comune sede del club, da OpenStreetMap. Compilare insieme a Latitudine.',
 					},
-					{ type: 'image', name: 'photo', label: 'Foto club' },
+					...focalImageFields('photo', 'Foto club'),
 					{ type: 'string', name: 'email', label: 'Email' },
 					{ type: 'string', name: 'website', label: 'Sito web' },
 					{ type: 'string', name: 'instagram', label: 'Instagram' },
@@ -576,7 +577,7 @@ export default defineConfig({
 					{ type: 'string', name: 'excerpt', label: 'Estratto (IT)', ui: { component: 'textarea' }, required: true },
 					{ type: 'string', name: 'excerptEn', label: 'Estratto (EN)', ui: { component: 'textarea' } },
 					{ type: 'datetime', name: 'date', label: 'Data pubblicazione', required: true, ui: { dateFormat: 'DD MMMM YYYY' } },
-					{ type: 'image', name: 'image', label: 'Immagine' },
+					...focalImageFields('image', 'Immagine'),
 					{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine (IT)', required: true },
 					{ type: 'string', name: 'imageLabelEn', label: 'Didascalia segnaposto immagine (EN)' },
 					{ type: 'rich-text', name: 'body', label: 'Corpo articolo (IT)', isBody: true },
@@ -626,7 +627,7 @@ export default defineConfig({
 					},
 					{ type: 'string', name: 'excerpt', label: 'Descrizione (IT)', ui: { component: 'textarea' } },
 					{ type: 'string', name: 'excerptEn', label: 'Descrizione (EN)', ui: { component: 'textarea' } },
-					{ type: 'image', name: 'image', label: 'Immagine' },
+					...focalImageFields('image', 'Immagine'),
 					{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine (IT)', required: true },
 					{ type: 'string', name: 'imageLabelEn', label: 'Didascalia segnaposto immagine (EN)' },
 					{

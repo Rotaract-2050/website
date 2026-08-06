@@ -34,6 +34,8 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-US',
 							<NewsCard
 								href={getRelativeLocaleUrl(lang, `news/${newsSlug(article)}`)}
 								image={article.image}
+								imageFocalX={article.imageFocalX}
+								imageFocalY={article.imageFocalY}
 								imageLabel={localized.imageLabel}
 								tags={newsTagLabels(article)}
 								title={localized.title}

@@ -6,6 +6,8 @@ import { tagPillStyle, type NewsTag } from '../lib/news';
 interface Props {
 	id: string;
 	image?: string | null;
+	imageFocalX?: number | null;
+	imageFocalY?: number | null;
 	imageLabel: string;
 	tags?: NewsTag[];
 	title: string;
@@ -28,6 +30,8 @@ interface Props {
 const {
 	id,
 	image,
+	imageFocalX,
+	imageFocalY,
 	imageLabel,
 	tags = [],
 	title,
@@ -46,12 +50,13 @@ const {
 	photoButtonLabel,
 	tinaFieldAttr,
 } = Astro.props;
+const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 50}%;`;
 ---
 
 <article class="event-entry" id={id} data-tina-field={tinaFieldAttr}>
 	<div class="event-media">
 		{image ? (
-			<Image src={image} alt={imageLabel} width={480} height={270} quality="high" class="event-image" />
+			<Image src={image} alt={imageLabel} width={480} height={270} quality="high" class="event-image" style={focalStyle} />
 		) : (
 			<ImageSlot label={imageLabel} class="event-image" />
 		)}
@@ -119,6 +124,7 @@ const {
 		width: 100%;
 		height: 200px;
 		object-fit: cover;
+		object-position: var(--focal-x, 50%) var(--focal-y, 50%);
 		border-radius: 12px;
 	}
 

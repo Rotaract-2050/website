@@ -49,6 +49,8 @@ const { lang, block } = Astro.props;
 				subtitle: s.subtitle ?? '',
 				ctaLabel: s.ctaLabel ?? '',
 				image: s.image ?? undefined,
+				imageFocalX: s.imageFocalX ?? undefined,
+				imageFocalY: s.imageFocalY ?? undefined,
 				tinaFieldAttr: tinaField(s),
 			}))}
 		/>
@@ -74,6 +76,8 @@ const { lang, block } = Astro.props;
 			ctaLabel={block.ctaLabel ?? undefined}
 			ctaHref={block.ctaHref ?? undefined}
 			image={block.image ?? undefined}
+			imageFocalX={block.imageFocalX ?? undefined}
+			imageFocalY={block.imageFocalY ?? undefined}
 			imageLabel={block.imageLabel}
 			imageSide={block.imageSide === 'left' ? 'left' : 'right'}
 		/>
@@ -114,6 +118,8 @@ const { lang, block } = Astro.props;
 			items={(block.items ?? []).filter(nonNull).map((i) => ({
 				initials: i.initials ?? undefined,
 				photo: i.photo ?? undefined,
+				photoFocalX: i.photoFocalX ?? undefined,
+				photoFocalY: i.photoFocalY ?? undefined,
 				name: i.name ?? '',
 				role: i.role ?? '',
 				email: i.email ?? undefined,
@@ -136,12 +142,16 @@ const { lang, block } = Astro.props;
 				lead: {
 					name: i.lead?.name ?? '',
 					photo: i.lead?.photo ?? undefined,
+					photoFocalX: i.lead?.photoFocalX ?? undefined,
+					photoFocalY: i.lead?.photoFocalY ?? undefined,
 					email: i.lead?.email ?? undefined,
 					tinaFieldAttr: i.lead ? tinaField(i.lead) : undefined,
 				},
 				members: (i.members ?? []).filter(nonNull).map((m) => ({
 					name: m.name ?? '',
 					photo: m.photo ?? undefined,
+					photoFocalX: m.photoFocalX ?? undefined,
+					photoFocalY: m.photoFocalY ?? undefined,
 					email: m.email ?? undefined,
 					tinaFieldAttr: tinaField(m),
 				})),

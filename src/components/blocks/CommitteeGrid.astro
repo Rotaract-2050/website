@@ -4,6 +4,8 @@ import PersonCard from '../PersonCard.astro';
 interface Person {
 	name: string;
 	photo?: string;
+	photoFocalX?: number | null;
+	photoFocalY?: number | null;
 	email?: string;
 	tinaFieldAttr?: string;
 }
@@ -40,6 +42,8 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 							name={item.lead.name}
 							role={item.leadLabel}
 							photo={item.lead.photo}
+							photoFocalX={item.lead.photoFocalX}
+							photoFocalY={item.lead.photoFocalY}
 							email={item.lead.email}
 							tinaFieldAttr={item.lead.tinaFieldAttr}
 						/>
@@ -51,6 +55,8 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 									name={member.name}
 									role={item.membersLabel}
 									photo={member.photo}
+									photoFocalX={member.photoFocalX}
+									photoFocalY={member.photoFocalY}
 									email={member.email}
 									tinaFieldAttr={member.tinaFieldAttr}
 								/>

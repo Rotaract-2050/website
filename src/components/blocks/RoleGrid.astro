@@ -10,6 +10,8 @@ interface Props {
 	items: {
 		initials?: string;
 		photo?: string;
+		photoFocalX?: number | null;
+		photoFocalY?: number | null;
 		name: string;
 		role: string;
 		email?: string;
@@ -37,6 +39,8 @@ const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 					name={featured.name}
 					role={featured.role}
 					photo={featured.photo}
+					photoFocalX={featured.photoFocalX}
+					photoFocalY={featured.photoFocalY}
 					initials={featured.initials}
 					email={featured.email}
 					tinaFieldAttr={featured.tinaFieldAttr}
@@ -51,6 +55,8 @@ const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 					name={role.name}
 					role={role.role}
 					photo={role.photo}
+					photoFocalX={role.photoFocalX}
+					photoFocalY={role.photoFocalY}
 					initials={role.initials}
 					email={role.email}
 					tinaFieldAttr={role.tinaFieldAttr}

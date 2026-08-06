@@ -17,6 +17,7 @@ const t = uiStrings[lang].clubDetail;
 const backHref = getRelativeLocaleUrl(lang, 'club');
 const story = lang === 'en' ? club.storyEn || club.story : club.story;
 const storyFieldName = lang === 'en' && club.storyEn ? 'storyEn' : 'story';
+const focalStyle = `--focal-x:${club.photoFocalX ?? 50}%;--focal-y:${club.photoFocalY ?? 50}%;`;
 ---
 
 <section class="club-detail">
@@ -25,7 +26,7 @@ const storyFieldName = lang === 'en' && club.storyEn ? 'storyEn' : 'story';
 
 		<div class="club-layout">
 			{club.photo ? (
-				<Image src={club.photo} alt={`${t.photoAltPrefix} ${club.name}`} width={640} height={400} quality="high" class="club-photo" />
+				<Image src={club.photo} alt={`${t.photoAltPrefix} ${club.name}`} width={640} height={400} quality="high" class="club-photo" style={focalStyle} />
 			) : (
 				<ImageSlot label={t.photoMissing} class="club-photo" />
 			)}
@@ -122,6 +123,7 @@ const storyFieldName = lang === 'en' && club.storyEn ? 'storyEn' : 'story';
 		width: 100%;
 		height: 360px;
 		object-fit: cover;
+		object-position: var(--focal-x, 50%) var(--focal-y, 50%);
 		border-radius: 14px;
 		order: 2;
 	}

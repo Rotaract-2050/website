@@ -6,6 +6,8 @@ interface Props {
 	name: string;
 	role: string;
 	photo?: string;
+	photoFocalX?: number | null;
+	photoFocalY?: number | null;
 	initials?: string;
 	email?: string;
 	tinaFieldAttr?: string;
@@ -13,13 +15,14 @@ interface Props {
 	size?: 'md' | 'lg';
 }
 
-const { name, role, photo, initials, email, tinaFieldAttr, size = 'md' } = Astro.props;
+const { name, role, photo, photoFocalX, photoFocalY, initials, email, tinaFieldAttr, size = 'md' } = Astro.props;
+const focalStyle = `--focal-x:${photoFocalX ?? 50}%;--focal-y:${photoFocalY ?? 50}%;`;
 ---
 
 <div class="person-card" data-size={size} data-tina-field={tinaFieldAttr}>
 	<div class="person-avatar">
 		{photo ? (
-			<Image src={photo} alt={name} width={size === 'lg' ? 240 : 160} height={size === 'lg' ? 240 : 160} quality="high" class="person-photo" />
+			<Image src={photo} alt={name} width={size === 'lg' ? 240 : 160} height={size === 'lg' ? 240 : 160} quality="high" class="person-photo" style={focalStyle} />
 		) : initials ? (
 			<div class="person-initials">{initials}</div>
 		) : (
@@ -71,6 +74,7 @@ const { name, role, photo, initials, email, tinaFieldAttr, size = 'md' } = Astro
 		height: 88px;
 		border-radius: 50%;
 		object-fit: cover;
+		object-position: var(--focal-x, 50%) var(--focal-y, 50%);
 	}
 
 	.person-card[data-size='lg'] .person-avatar :global(.person-photo) {
