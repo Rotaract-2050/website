@@ -57,14 +57,14 @@ Uso nel sito: Charcoal = testo body (`--color-text`, oggi mockup usa `#5B6472` b
 
 ## Tipografia (brand-elements/typography)
 
-| Ruolo | Font ufficiale (a licenza) | Alternativa libera consigliata | Uso nel mockup |
+| Ruolo | Font ufficiale (a licenza) | Alternativa libera consigliata | Uso nel sito |
 |---|---|---|---|
-| Titoli, nav, label | Frutiger | **Open Sans** o Arial | mockup usa Barlow Condensed — non è l'alternativa ufficiale |
-| Corpo testo, sottotitoli, didascalie | Sentinel | **Georgia** | mockup usa Barlow — non è l'alternativa ufficiale |
+| Titoli, nav, label | Frutiger | **Open Sans** o Arial | `--font-heading: 'Open Sans'` — conforme |
+| Corpo testo, sottotitoli, didascalie | Sentinel | **Georgia** | `--font-body: Georgia` — conforme |
 
 Il brandcenter non distingue regole diverse per stampa vs digitale: la stessa gerarchia (primario/secondario) vale ovunque; per il web, senza licenza Frutiger/Sentinel, usare le alternative libere indicate (Open Sans + Georgia), non font a piacere.
 
-**Discrepanza da segnalare**: il mockup usa Barlow/Barlow Condensed (Google Fonts), che non è tra le alternative ufficiali. Stessa regola pratica dei colori: chiedere conferma all'utente se allineare a Open Sans/Georgia o mantenere Barlow per coerenza con la homepage esistente; finché non c'è una decisione esplicita, mantenere Barlow ma segnalarlo.
+**Risolto** (verificato 2026-08-06): il vecchio mockup HTML usava Barlow/Barlow Condensed, non tra le alternative ufficiali — discrepanza segnalata qui. La ricostruzione reale in Astro (`src/styles/global.css`) usa già Open Sans + Georgia, le alternative libere corrette. Nessuna azione da fare: **non introdurre Barlow o altri font** in nuovi componenti, restare su Open Sans/Georgia/Dancing Script (quest'ultimo solo per accenti script decorativi, es. motto squadra — non è nella tabella ufficiale, uso puramente stilistico su un ruolo non coperto dalle due righe sopra).
 
 ## Tono e voce (brand-elements/voice-and-messaging)
 
