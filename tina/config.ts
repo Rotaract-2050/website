@@ -15,11 +15,11 @@ const newsRouter = ({ document }: { document: { _sys: { breadcrumbs: string[] } 
 	return `/news/${slug}`;
 };
 
-// Past events have no dedicated detail page (single archive page, per district decision):
-// the router jumps straight to the event's anchor on the archive list instead of a route.
+// Events are single files (IT + EN fields together, like news) with a real detail page —
+// the router jumps to it directly.
 const eventsRouter = ({ document }: { document: { _sys: { breadcrumbs: string[] } } }) => {
 	const slug = document._sys.breadcrumbs.join('/');
-	return `/eventi#${slug}`;
+	return `/eventi/${slug}`;
 };
 
 const heroTemplate = {
@@ -465,7 +465,17 @@ export default defineConfig({
 						type: 'object',
 						name: 'seo',
 						label: 'SEO',
-						fields: [{ type: 'string', name: 'description', label: 'Descrizione (meta/OG)', ui: { component: 'textarea' } }],
+						fields: [
+							{ type: 'string', name: 'title', label: 'Titolo alternativo (SEO/social)', description: 'Se vuoto, usa il Titolo della pagina.' },
+							{ type: 'string', name: 'description', label: 'Descrizione (meta/OG)', ui: { component: 'textarea' } },
+							{ type: 'image', name: 'ogImage', label: 'Immagine social (Open Graph)' },
+							{
+								type: 'boolean',
+								name: 'noindex',
+								label: 'Escludi dai motori di ricerca (noindex)',
+								description: 'Solo per pagine di servizio da non indicizzare.',
+							},
+						],
 					},
 					{
 						type: 'object',
@@ -653,6 +663,19 @@ export default defineConfig({
 					{ type: 'string', name: 'about', label: 'Testo "chi siamo" (footer)', ui: { component: 'textarea' } },
 					{ type: 'string', name: 'address', label: 'Indirizzo' },
 					{ type: 'string', name: 'email', label: 'Email' },
+					{ type: 'image', name: 'logo', label: 'Logo distretto (dati strutturati / social)' },
+					{
+						type: 'image',
+						name: 'defaultOgImage',
+						label: 'Immagine social predefinita (Open Graph)',
+						description: "Usata quando una pagina non ha un'immagine propria. Formato orizzontale, circa 1200×630px.",
+					},
+					{
+						type: 'string',
+						name: 'twitterHandle',
+						label: 'Account Twitter/X (opzionale)',
+						description: 'Es. @rotaract2050. Lasciare vuoto se non esiste.',
+					},
 					{
 						type: 'string',
 						name: 'driveApiKey',

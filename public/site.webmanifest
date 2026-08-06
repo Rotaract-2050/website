@@ -1,0 +1,9 @@
+{
+	"name": "Rotaract Distretto 2050",
+	"short_name": "Rotaract 2050",
+	"icons": [{ "src": "/favicon.png", "sizes": "512x512", "type": "image/png" }],
+	"theme_color": "#17458f",
+	"background_color": "#fafafb",
+	"display": "standalone",
+	"start_url": "/"
+}

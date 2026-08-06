@@ -2,9 +2,14 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SeoHead from '../components/SeoHead.astro';
+import JsonLd from '../components/JsonLd.astro';
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import { requestWithMetadata } from '@tinacms/astro';
+import client from '../../tina/__generated__/client';
 import type { Lang } from '../data/ui-strings';
+import { SITE_NAME, DEFAULT_OG_IMAGE } from '../data/ui-strings';
 import { pageSlugs, type PageKey } from '../data/routes';
+import { buildOrganizationGraph } from '../lib/jsonld';
 import '../styles/global.css';
 
 interface Props {
@@ -14,11 +19,35 @@ interface Props {
 	description: string;
 	/** Override the auto-computed hreflang alternate, e.g. for a dynamic sub-page like a club detail. */
 	alternateHref?: string;
+	/** Social-share image (page/article/event-specific). Falls back to settings.defaultOgImage, then the district logo. */
+	image?: string | null;
+	type?: 'website' | 'article';
+	publishedTime?: string;
+	noindex?: boolean;
 }
 
-const { lang, current, title, description, alternateHref: alternateHrefProp } = Astro.props;
+const {
+	lang,
+	current,
+	title,
+	description,
+	alternateHref: alternateHrefProp,
+	image,
+	type = 'website',
+	publishedTime,
+	noindex = false,
+} = Astro.props;
 const otherLang: Lang = lang === 'it' ? 'en' : 'it';
 const alternateHref = alternateHrefProp ?? getRelativeLocaleUrl(otherLang, pageSlugs[current]);
+
+const { data } = await requestWithMetadata(client.queries.settings({ relativePath: `${lang}.md` }), { priority: 'primary' });
+const settings = data.settings;
+const resolvedImage = image || settings.defaultOgImage || DEFAULT_OG_IMAGE;
+const pageTitle = title === SITE_NAME ? title : `${title} | ${SITE_NAME}`;
+const organizationGraph = buildOrganizationGraph(
+	{ about: settings.about, logo: new URL(settings.logo || DEFAULT_OG_IMAGE, Astro.site).toString() },
+	Astro.site!.toString()
+);
 ---
 
 <!doctype html>
@@ -27,6 +56,8 @@ const alternateHref = alternateHrefProp ?? getRelativeLocaleUrl(otherLang, pageS
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/png" href="/favicon.png" />
 		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link rel="apple-touch-icon" href="/favicon.png" />
+		<link rel="manifest" href="/site.webmanifest" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
@@ -36,8 +67,19 @@ const alternateHref = alternateHrefProp ?? getRelativeLocaleUrl(otherLang, pageS
 			href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Dancing+Script:wght@600;700&display=swap"
 			rel="stylesheet"
 		/>
-		<title>{title}</title>
-		<SeoHead lang={lang} title={title} description={description} alternateHref={alternateHref} />
+		<title>{pageTitle}</title>
+		<SeoHead
+			lang={lang}
+			title={title}
+			description={description}
+			alternateHref={alternateHref}
+			image={resolvedImage}
+			type={type}
+			publishedTime={publishedTime}
+			noindex={noindex}
+			twitterHandle={settings.twitterHandle}
+		/>
+		<JsonLd data={organizationGraph} />
 	</head>
 	<body>
 		<div class="page">
@@ -45,7 +87,7 @@ const alternateHref = alternateHrefProp ?? getRelativeLocaleUrl(otherLang, pageS
 			<main>
 				<slot />
 			</main>
-			<Footer lang={lang} />
+			<Footer lang={lang} settings={settings} />
 		</div>
 	</body>
 </html>

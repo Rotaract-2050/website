@@ -12,6 +12,7 @@ import {
 	yearLabelSlug,
 } from '../../lib/events';
 import { uiStrings, type Lang } from '../../data/ui-strings';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 interface Props {
 	lang: Lang;
@@ -69,6 +70,7 @@ const activeYear =
 							return (
 								<EventCard
 									id={eventSlug(event)}
+									href={getRelativeLocaleUrl(lang, `eventi/${eventSlug(event)}`)}
 									image={event.image}
 									imageFocalX={event.imageFocalX}
 									imageFocalY={event.imageFocalY}

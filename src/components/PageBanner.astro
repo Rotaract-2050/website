@@ -3,6 +3,8 @@ import { getRelativeLocaleUrl } from 'astro:i18n';
 import type { Lang } from '../data/ui-strings';
 import { uiStrings } from '../data/ui-strings';
 import { pageSlugs } from '../data/routes';
+import JsonLd from './JsonLd.astro';
+import { buildBreadcrumbList } from '../lib/jsonld';
 
 interface Props {
 	lang: Lang;
@@ -15,8 +17,13 @@ interface Props {
 const { lang, eyebrow, title, breadcrumbCurrent, titleField } = Astro.props;
 const t = uiStrings[lang];
 const homeHref = getRelativeLocaleUrl(lang, pageSlugs.home);
+const breadcrumbJsonLd = buildBreadcrumbList([
+	{ name: t.breadcrumbHome, url: new URL(homeHref, Astro.site).toString() },
+	{ name: breadcrumbCurrent, url: new URL(Astro.url.pathname, Astro.site).toString() },
+]);
 ---
 
+<JsonLd data={breadcrumbJsonLd} />
 <div class="page-banner">
 	<div class="banner-inner">
 		<div class="breadcrumb">

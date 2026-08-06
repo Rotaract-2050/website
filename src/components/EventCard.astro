@@ -5,6 +5,7 @@ import { tagPillStyle, type NewsTag } from '../lib/news';
 
 interface Props {
 	id: string;
+	href: string;
 	image?: string | null;
 	imageFocalX?: number | null;
 	imageFocalY?: number | null;
@@ -29,6 +30,7 @@ interface Props {
 
 const {
 	id,
+	href,
 	image,
 	imageFocalX,
 	imageFocalY,
@@ -54,13 +56,13 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 ---
 
 <article class="event-entry" id={id} data-tina-field={tinaFieldAttr}>
-	<div class="event-media">
+	<a class="event-media" href={href}>
 		{image ? (
 			<Image src={image} alt={imageLabel} width={480} height={270} quality="high" class="event-image" style={focalStyle} />
 		) : (
 			<ImageSlot label={imageLabel} class="event-image" />
 		)}
-	</div>
+	</a>
 	<div class="event-content">
 		{tags.length > 0 && (
 			<div class="event-tags">
@@ -69,7 +71,7 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 				))}
 			</div>
 		)}
-		<h2 class="event-title">{title}</h2>
+		<h2 class="event-title"><a href={href}>{title}</a></h2>
 		<div class="event-meta">
 			{upcoming && <span class="event-upcoming-badge">{upcomingLabel}</span>}
 			{dateLabel}
@@ -120,6 +122,10 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 		border-bottom: 0;
 	}
 
+	.event-media {
+		display: block;
+	}
+
 	.event-entry :global(.event-image) {
 		width: 100%;
 		height: 200px;
@@ -158,6 +164,14 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 		color: var(--color-navy);
 		text-transform: uppercase;
 		margin: 0 0 8px;
+	}
+
+	.event-title a {
+		color: inherit;
+	}
+
+	.event-title a:hover {
+		color: var(--color-pink);
 	}
 
 	.event-meta {

@@ -9,6 +9,8 @@ import ImageSlot from '../../components/ImageSlot.astro';
 import { uiStrings } from '../../data/ui-strings';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { localizeNews, newsTagLabels, rotaryYearLabel, tagPillStyle } from '../../lib/news';
+import JsonLd from '../../components/JsonLd.astro';
+import { buildNewsArticleJsonLd } from '../../lib/jsonld';
 
 const lang = 'it' as const;
 const t = uiStrings[lang];
@@ -25,9 +27,27 @@ if (!article) {
 const dateFormatter = new Intl.DateTimeFormat('it-IT', { day: 'numeric', month: 'short', year: 'numeric' });
 const tags = newsTagLabels(article);
 const localized = localizeNews(article, lang);
+const jsonLd = buildNewsArticleJsonLd({
+	headline: localized.title,
+	description: localized.excerpt,
+	imageUrl: new URL(article.image || '/uploads/Loghi/Logo-distretto.png', Astro.site).toString(),
+	datePublished: article.date,
+	url: new URL(Astro.url.pathname, Astro.site).toString(),
+	lang,
+	publisherLogoUrl: new URL('/uploads/Loghi/Logo-distretto.png', Astro.site).toString(),
+});
 ---
 
-<BaseLayout lang={lang} current="news" title={localized.title} description={localized.excerpt}>
+<BaseLayout
+	lang={lang}
+	current="news"
+	title={localized.title}
+	description={localized.excerpt}
+	alternateHref={getRelativeLocaleUrl('en', `news/${slug}`)}
+	image={article.image}
+	type="article"
+	publishedTime={article.date}
+>
 	<PageBanner
 		lang={lang}
 		eyebrow={t.news.articleEyebrow}
@@ -62,6 +82,7 @@ const localized = localizeNews(article, lang);
 			</div>
 		</div>
 	</article>
+	<JsonLd data={jsonLd} />
 </BaseLayout>
 
 <style>
