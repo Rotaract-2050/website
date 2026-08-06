@@ -83,6 +83,8 @@ export interface UiStrings {
 		dinnerLocationLabel: string;
 		ticketsButtonLabel: string;
 		photoButtonLabel: string;
+		detailEyebrow: string;
+		backToArchive: string;
 	};
 	materials: {
 		loading: string;
@@ -104,6 +106,10 @@ export const SOCIAL_LINKS: { name: SocialName; label: string; href: string }[] =
 	{ name: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/rotaract2050/' },
 	{ name: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/company/distretto-rotaract-club-2050' },
 ];
+
+export const SITE_NAME = 'Rotaract Distretto 2050';
+/** Fallback finale se pagina/articolo/evento e settings.defaultOgImage sono tutti vuoti. */
+export const DEFAULT_OG_IMAGE = '/uploads/Loghi/Logo-distretto.png';
 
 export const UTILITY_LINKS = [
 	{ label: 'ROTARY DISTRETTO 2050', href: 'https://www.rotary2050.org/site/' },
@@ -208,6 +214,8 @@ const IT: UiStrings = {
 		dinnerLocationLabel: 'Cena',
 		ticketsButtonLabel: 'Info e biglietti',
 		photoButtonLabel: 'Guarda le foto',
+		detailEyebrow: 'EVENTI DEL DISTRETTO',
+		backToArchive: '← Tutti gli eventi',
 	},
 	materials: {
 		loading: 'Caricamento file…',
@@ -319,6 +327,8 @@ const EN: UiStrings = {
 		dinnerLocationLabel: 'Dinner',
 		ticketsButtonLabel: 'Info & tickets',
 		photoButtonLabel: 'View the photos',
+		detailEyebrow: 'DISTRICT EVENTS',
+		backToArchive: '← All events',
 	},
 	materials: {
 		loading: 'Loading files…',
