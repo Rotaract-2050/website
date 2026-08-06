@@ -30,8 +30,8 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 						<div class="timeline-card">
 							<span class="timeline-year">A.R. {item.yearRange}</span>
 							<span class="timeline-name">{item.name} {item.surname}</span>
-							{item.motto && <span class="timeline-motto">“{item.motto}”</span>}
-							{item.mottoDistretto && <span class="timeline-motto-distretto">“{item.mottoDistretto}”</span>}
+							{item.motto && <span class="timeline-motto">{item.motto}</span>}
+							{item.mottoDistretto && <span class="timeline-motto-distretto">{item.mottoDistretto}</span>}
 						</div>
 					</li>
 				</>
@@ -184,13 +184,13 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 
 	.timeline-motto {
 		font-size: 16px;
-		color: var(--color-text);
+		color: var(--color-royal-blue);
 		font-style: italic;
 	}
 
 	.timeline-motto-distretto {
 		font-size: 14px;
-		color: var(--color-muted);
+		color: var(--color-pink);
 		font-style: italic;
 	}
 

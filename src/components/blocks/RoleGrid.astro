@@ -30,7 +30,9 @@ const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 		{showDisclaimer && disclaimerText && <p class="disclaimer">{disclaimerText}</p>}
 		{highlightFirst && featured && (
 			<div class="featured-row" data-themed={hasTheme}>
-				{hasTheme && featured.themeMotto && <p class="theme-motto">“{featured.themeMotto}”</p>}
+				{hasTheme && featured.themeLogo && (
+					<Image src={featured.themeLogo} alt={`Logo del tema distrettuale — ${featured.themeMotto ?? title}`} width={520} height={520} quality="high" class="theme-logo" />
+				)}
 				<PersonCard
 					name={featured.name}
 					role={featured.role}
@@ -40,9 +42,7 @@ const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 					tinaFieldAttr={featured.tinaFieldAttr}
 					size="lg"
 				/>
-				{hasTheme && featured.themeLogo && (
-					<Image src={featured.themeLogo} alt={`Logo del tema distrettuale — ${featured.themeMotto ?? title}`} width={520} height={520} class="theme-logo" />
-				)}
+				{hasTheme && featured.themeMotto && <p class="theme-motto">{featured.themeMotto}</p>}
 			</div>
 		)}
 		<div class="roles-grid">

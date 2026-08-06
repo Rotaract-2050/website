@@ -54,7 +54,7 @@ const bodyField = article.bodyEn ? 'bodyEn' : 'body';
 			</div>
 			<div data-tina-field={tinaField(article, 'image')}>
 				{article.image ? (
-					<Image src={article.image} alt={localized.imageLabel} width={960} height={420} fit="contain" class="article-image" />
+					<Image src={article.image} alt={localized.imageLabel} width={960} height={420} fit="contain" quality="high" class="article-image" />
 				) : (
 					<ImageSlot label={localized.imageLabel} class="article-image" />
 				)}

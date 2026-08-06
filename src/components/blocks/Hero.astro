@@ -29,7 +29,7 @@ const resolvedCtaHref = getRelativeLocaleUrl(lang, ctaHref);
 		{slides.map((slide, i) => (
 			<div class="hero-slide" data-slide data-index={i} data-active={i === 0 ? 'true' : 'false'} data-tina-field={slide.tinaFieldAttr}>
 				{slide.image ? (
-					<Image src={slide.image} alt={slide.title} width={1600} height={900} class="hero-image" />
+					<Image src={slide.image} alt={slide.title} width={1600} height={900} quality="high" class="hero-image" />
 				) : (
 					<ImageSlot label="Foto banner distrettuale" class="hero-image" />
 				)}

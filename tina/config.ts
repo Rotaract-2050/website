@@ -124,6 +124,7 @@ const valuesGridTemplate = {
 	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 	fields: [
 		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
+		{ type: 'string' as const, name: 'intro', label: 'Testo introduttivo (opzionale)', ui: { component: 'textarea' } },
 		{
 			type: 'string' as const,
 			name: 'accent',

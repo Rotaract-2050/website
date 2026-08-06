@@ -25,7 +25,7 @@ const storyFieldName = lang === 'en' && club.storyEn ? 'storyEn' : 'story';
 
 		<div class="club-layout">
 			{club.photo ? (
-				<Image src={club.photo} alt={`${t.photoAltPrefix} ${club.name}`} width={640} height={400} class="club-photo" />
+				<Image src={club.photo} alt={`${t.photoAltPrefix} ${club.name}`} width={640} height={400} quality="high" class="club-photo" />
 			) : (
 				<ImageSlot label={t.photoMissing} class="club-photo" />
 			)}

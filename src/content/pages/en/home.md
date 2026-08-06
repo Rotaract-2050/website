@@ -1,14 +1,14 @@
 ---
 title: "Rotaract District 2050"
 seo:
-  description: "Rotaract District 2050 brings together Rotaract clubs across eastern Lombardy and western Emilia."
+  description: "Rotaract District 2050 brings together Rotaract clubs across southern Lombardy and the Province of Piacenza."
 blocks:
   - _template: "Hero"
     ctaHref: "club"
     slides:
       - eyebrow: "ROTARACT DISTRICT 2050"
         title: "YOUNG PEOPLE BUILDING CHANGE"
-        subtitle: "Eastern Lombardy and western Emilia: 7 provinces, one district of young leaders serving their communities."
+        subtitle: "Southern Lombardy and the Province of Piacenza: 7 provinces, one district of young leaders serving their communities."
         ctaLabel: "DISCOVER THE DISTRICT"
       - eyebrow: "SERVICE AND LEADERSHIP"
         title: "PROJECTS THAT LEAVE A MARK"
@@ -26,7 +26,7 @@ blocks:
     items:
       - value: "30"
         label: "ROTARACT CLUBS"
-      - value: "403"
+      - value: "357"
         label: "MEMBERS"
       - value: "4"
         label: "ZONES"
@@ -35,9 +35,8 @@ blocks:
   - _template: "SplitSection"
     kicker: "WHO WE ARE"
     title: "ROTARACT IN DISTRICT 2050"
-    body: "Rotaract is the district network of clubs for young people aged 18-30, sponsored by Rotary International. In District 2050 it brings together clubs across eastern Lombardy and western Emilia."
-    subhead: "Our mission"
-    body2: "We shape responsible leaders, champion service, and build a network of professionals and students committed to their communities."
+    body: "Rotaract is a service club organization partnered with Rotary International, welcoming young adults distinguished by integrity, strong moral character, leadership ability, and a genuine commitment to serving their communities, both locally and internationally."
+    body2: "Rotaract District 2050 brings together clubs active across southern Lombardy and the Province of Piacenza."
     ctaLabel: "DISCOVER THE DISTRICT"
     ctaHref: "distretto"
     imageLabel: "Photo of members on a service project"
@@ -68,7 +67,7 @@ blocks:
     limit: 3
   - _template: "CtaBanner"
     title: "BECOME A ROTARACT MEMBER"
-    body: "Are you 18 to 30 years old? Find the club nearest to you and start your leadership and service journey."
+    body: "Have you already turned 18?"
     buttonLabel: "FIND YOUR CLUB"
     buttonHref: "club"
 ---
