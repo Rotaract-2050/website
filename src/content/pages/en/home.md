@@ -18,10 +18,6 @@ blocks:
         title: "YOUR NETWORK STARTS HERE"
         subtitle: "Rotaract is the community for 18-30 year-olds combining personal growth, fellowship and service."
         ctaLabel: "JOIN ROTARACT"
-  - _template: "NewsTicker"
-    label: "ROTARY INTERNATIONAL NEWS"
-    feedUrl: "https://www.rotary.org/rss.xml"
-    limit: 12
   - _template: "StatsBar"
     items:
       - value: "30"
@@ -32,6 +28,10 @@ blocks:
         label: "ZONES"
       - value: "40+"
         label: "ACTIVE PROJECTS"
+  - _template: "NewsTicker"
+    label: "ROTARY INTERNATIONAL NEWS"
+    feedUrl: "https://www.rotary.org/rss.xml"
+    limit: 12
   - _template: "SplitSection"
     kicker: "WHO WE ARE"
     title: "ROTARACT IN DISTRICT 2050"

@@ -7,99 +7,14 @@ function nonNull<T>(value: T | null | undefined): value is T {
 	return value != null;
 }
 
-type Block = NonNullable<NonNullable<PagesQuery['pages']['blocks']>[number]>;
-
 interface Props {
 	lang: Lang;
 	blocks: NonNullable<PagesQuery['pages']['blocks']>;
 }
 
 const { lang, blocks } = Astro.props;
-
-// A Hero immediately followed by NewsTicker/StatsBar bars forms the page's
-// opening "fold": these are grouped so the Hero can grow and absorb the
-// leftover space, keeping the whole group flush with the viewport bottom
-// instead of leaving a gap before the next section.
-const FOLD_FOLLOWERS = new Set(['PagesBlocksNewsTicker', 'PagesBlocksStatsBar']);
-
-type Group = { fold: boolean; items: Block[] };
-
-function groupBlocks(list: Block[]): Group[] {
-	const groups: Group[] = [];
-	let i = 0;
-	while (i < list.length) {
-		const block = list[i];
-		if (block.__typename === 'PagesBlocksHero') {
-			const items: Block[] = [block];
-			let j = i + 1;
-			while (j < list.length && FOLD_FOLLOWERS.has(list[j].__typename ?? '')) {
-				items.push(list[j]);
-				j++;
-			}
-			groups.push({ fold: items.length > 1, items });
-			i = j;
-		} else {
-			groups.push({ fold: false, items: [block] });
-			i++;
-		}
-	}
-	return groups;
-}
-
-const groups = groupBlocks(blocks.filter(nonNull));
 ---
 
-{groups.map((group) =>
-	group.fold ? (
-		<div class="hero-fold">
-			{group.items.map((block) => (
-				<BlockItem lang={lang} block={block} />
-			))}
-		</div>
-	) : (
-		<BlockItem lang={lang} block={group.items[0]} />
-	)
-)}
-
-<style>
-	.hero-fold {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-		min-height: 100dvh;
-	}
-
-	/*
-	 * The wrapper div and .hero are rendered by the child BlockItem/Hero
-	 * components, so Astro's scoped-CSS attribute never lands on them —
-	 * :global() is required for these selectors to match at all.
-	 */
-	.hero-fold > :global(div:not([data-reveal])) {
-		display: flex;
-		flex: 1 1 480px;
-		min-height: 0;
-	}
-
-	.hero-fold > :global(div:not([data-reveal]) .hero) {
-		flex: 1;
-		width: 100%;
-		min-height: 0;
-	}
-</style>
-
-<script>
-	// min-height: 100dvh alone ignores the sticky header sitting above the
-	// fold, which pushes the ticker/stats bars mostly off-screen. Header
-	// height varies by breakpoint, so measure it instead of guessing it.
-	function sizeHeroFold(fold: HTMLElement) {
-		function apply() {
-			const documentTop = fold.getBoundingClientRect().top + window.scrollY;
-			fold.style.minHeight = `${Math.max(0, window.innerHeight - documentTop)}px`;
-		}
-		apply();
-		window.addEventListener('load', apply);
-		window.addEventListener('resize', apply);
-	}
-
-	document.querySelectorAll<HTMLElement>('.hero-fold').forEach(sizeHeroFold);
-</script>
+{blocks.filter(nonNull).map((block) => (
+	<BlockItem lang={lang} block={block} />
+))}

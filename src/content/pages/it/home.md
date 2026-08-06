@@ -18,10 +18,6 @@ blocks:
         subtitle: 'Rotaract è la community di giovani 18-30 anni che unisce crescita personale, amicizia e service.'
         ctaLabel: ENTRA NEL ROTARACT
     _template: Hero
-  - label: NOTIZIE ROTARY INTERNATIONAL
-    feedUrl: https://www.rotary.org/rss.xml
-    limit: 12
-    _template: NewsTicker
   - items:
       - value: '30'
         label: CLUB ROTARACT
@@ -32,6 +28,10 @@ blocks:
       - value: 40+
         label: PROGETTI ATTIVI
     _template: StatsBar
+  - label: NOTIZIE ROTARY INTERNATIONAL
+    feedUrl: https://www.rotary.org/rss.xml
+    limit: 12
+    _template: NewsTicker
   - kicker: CHI SIAMO
     title: IL ROTARACT NEL DISTRETTO 2050
     body: 'Il Rotaract è un''organizzazione di service club partner del Rotary International che accoglie giovani adulti che si distinguano per integrità, spessore morale, attitudine alla leadership e condividano una concreta vocazione al servizio a favore delle comunità, sia a livello locale sia internazionale.'
