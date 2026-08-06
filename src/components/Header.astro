@@ -18,7 +18,7 @@ const href = (page: PageKey) => getRelativeLocaleUrl(lang, pageSlugs[page]);
 const otherLang: Lang = lang === 'it' ? 'en' : 'it';
 const langSwitchHref = getRelativeLocaleUrl(otherLang, pageSlugs[current]);
 
-const distrettoActive = (['distretto', 'story', 'squadra'] as PageKey[]).includes(current);
+const distrettoActive = (['distretto', 'story', 'rrd', 'squadra'] as PageKey[]).includes(current);
 ---
 
 <div class="utility-bar">
@@ -77,6 +77,7 @@ const distrettoActive = (['distretto', 'story', 'squadra'] as PageKey[]).include
 			<div class="dropdown-panel">
 				<a href={href('distretto')}>{t.nav.distrettoSub}</a>
 				<a href={href('story')}>{t.nav.story}</a>
+				<a href={href('rrd')}>{t.nav.rrd}</a>
 				<a href={href('squadra')}>{t.nav.squadra}</a>
 			</div>
 		</div>

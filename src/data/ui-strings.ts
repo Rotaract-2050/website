@@ -6,6 +6,7 @@ export interface UiStrings {
 		distrettoMenu: string;
 		distrettoSub: string;
 		story: string;
+		rrd: string;
 		squadra: string;
 		club: string;
 		news: string;
@@ -115,8 +116,9 @@ const IT: UiStrings = {
 	nav: {
 		home: 'HOME',
 		distrettoMenu: 'IL DISTRETTO',
-		distrettoSub: 'Panoramica',
+		distrettoSub: 'PANORAMICA',
 		story: 'LA STORIA',
+		rrd: 'ALBO RRD',
 		squadra: 'LA SQUADRA',
 		club: 'I CLUB',
 		news: 'NEWS',
@@ -225,8 +227,9 @@ const EN: UiStrings = {
 	nav: {
 		home: 'HOME',
 		distrettoMenu: 'THE DISTRICT',
-		distrettoSub: 'Overview',
+		distrettoSub: 'OVERVIEW',
 		story: 'OUR STORY',
+		rrd: 'RRD ROLL',
 		squadra: 'THE TEAM',
 		club: 'CLUBS',
 		news: 'NEWS',
