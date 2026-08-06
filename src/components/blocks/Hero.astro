@@ -74,11 +74,12 @@ const resolvedCtaHref = getRelativeLocaleUrl(lang, ctaHref);
 		background: var(--color-bg);
 	}
 
+	/* No max-width here on purpose: the hero card fills the .hero band edge-to-edge
+	   (minus its padding), big on both axes — everything else on the page stays
+	   capped at --content-max, the hero is the one deliberate exception. */
 	.hero-card {
 		position: relative;
-		max-width: var(--content-max);
 		min-height: 82vh;
-		margin: 0 auto;
 		border-radius: var(--shape-extra-large);
 		overflow: hidden;
 		box-shadow: var(--elevation-4);
