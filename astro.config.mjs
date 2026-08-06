@@ -28,6 +28,44 @@ const customPages = [
 	...clubSlugs.flatMap((slug) => [`${SITE}/club/${slug}`, `${SITE}/en/club/${slug}`]),
 ];
 
+// @tinacms/astro ships its own dev-time auto-reload plugin, but it only watches
+// content files being *added or removed* (it exists to fix a getStaticPaths
+// route-cache bug for brand-new docs — see node_modules/@tinacms/astro/src/integration.ts,
+// devContentInvalidationPlugin). Saving an edit to an *existing* doc from the Tina
+// admin is a `change` event, which that plugin never listens for, so the open tab
+// doesn't reflect the edit until you reload by hand. This plugin covers that gap
+// with the same signals @tinacms/astro sends: `astro:content-changed` on the SSR
+// hot channel (Astro's own content-layer route-cache invalidation) plus a Vite
+// full-reload, debounced so saving several fields in one go only reloads once.
+function tinaReloadOnContentChangePlugin() {
+	const CONTENT_EXT = /\.(?:md|mdx|markdown|mdoc|json|ya?ml|toml)$/i;
+	const IGNORED = /[\\/](?:node_modules|\.git|\.astro|dist|\.vercel|\.netlify|\.cache)[\\/]/;
+	/** @param {string} file */
+	const isContentFile = (file) => CONTENT_EXT.test(file) && !IGNORED.test(file) && /[\\/]src[\\/]content[\\/]/.test(file);
+
+	return {
+		name: 'tina-reload-on-content-change',
+		apply: 'serve',
+		/** @param {import('vite').ViteDevServer} server */
+		configureServer(server) {
+			const ssr = server.environments?.ssr;
+			const client = server.environments?.client;
+			if (!client?.hot) return;
+			/** @type {ReturnType<typeof setTimeout> | undefined} */
+			let timer;
+			const flush = () => {
+				ssr?.hot?.send('astro:content-changed', {});
+				client.hot.send({ type: 'full-reload', path: '*' });
+			};
+			server.watcher.on('change', (/** @type {string} */ file) => {
+				if (!isContentFile(file)) return;
+				clearTimeout(timer);
+				timer = setTimeout(flush, 50);
+			});
+		},
+	};
+}
+
 // https://astro.build/config
 export default defineConfig({
 	site: SITE,
@@ -54,6 +92,7 @@ export default defineConfig({
 		ssr: {
 			noExternal: ['node-ical', 'rrule-temporal', 'temporal-polyfill', 'temporal-spec', 'temporal-utils'],
 		},
+		plugins: [tinaReloadOnContentChangePlugin()],
 	},
 	integrations: [
 		tina(),

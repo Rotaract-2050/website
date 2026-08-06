@@ -10,6 +10,8 @@ interface Slide {
 	subtitle: string;
 	ctaLabel: string;
 	image?: string;
+	imageFocalX?: number | null;
+	imageFocalY?: number | null;
 	tinaFieldAttr?: string;
 }
 
@@ -29,7 +31,15 @@ const resolvedCtaHref = getRelativeLocaleUrl(lang, ctaHref);
 		{slides.map((slide, i) => (
 			<div class="hero-slide" data-slide data-index={i} data-active={i === 0 ? 'true' : 'false'} data-tina-field={slide.tinaFieldAttr}>
 				{slide.image ? (
-					<Image src={slide.image} alt={slide.title} width={1600} height={900} quality="high" class="hero-image" />
+					<Image
+						src={slide.image}
+						alt={slide.title}
+						width={1600}
+						height={900}
+						quality="high"
+						class="hero-image"
+						style={`--focal-x:${slide.imageFocalX ?? 50}%;--focal-y:${slide.imageFocalY ?? 50}%;`}
+					/>
 				) : (
 					<ImageSlot label="Foto banner distrettuale" class="hero-image" />
 				)}
@@ -84,6 +94,8 @@ const resolvedCtaHref = getRelativeLocaleUrl(lang, ctaHref);
 		inset: 0;
 		width: 100%;
 		height: 100%;
+		object-fit: cover;
+		object-position: var(--focal-x, 50%) var(--focal-y, 50%);
 	}
 
 	.hero-overlay {

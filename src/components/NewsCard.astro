@@ -6,6 +6,8 @@ import { tagPillStyle, type NewsTag } from '../lib/news';
 interface Props {
 	href: string;
 	image?: string | null;
+	imageFocalX?: number | null;
+	imageFocalY?: number | null;
 	imageLabel: string;
 	tags?: NewsTag[];
 	title: string;
@@ -15,13 +17,14 @@ interface Props {
 	tinaFieldAttr?: string;
 }
 
-const { href, image, imageLabel, tags = [], title, excerpt, dateLabel, yearLabel, tinaFieldAttr } = Astro.props;
+const { href, image, imageFocalX, imageFocalY, imageLabel, tags = [], title, excerpt, dateLabel, yearLabel, tinaFieldAttr } = Astro.props;
+const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 50}%;`;
 ---
 
 <article class="news-card" data-tina-field={tinaFieldAttr}>
 	<a href={href} class="news-link">
 		{image ? (
-			<Image src={image} alt={imageLabel} width={400} height={170} quality="high" class="news-image" />
+			<Image src={image} alt={imageLabel} width={400} height={170} quality="high" class="news-image" style={focalStyle} />
 		) : (
 			<ImageSlot label={imageLabel} class="news-image" />
 		)}
@@ -63,6 +66,7 @@ const { href, image, imageLabel, tags = [], title, excerpt, dateLabel, yearLabel
 		width: 100%;
 		height: 170px;
 		object-fit: cover;
+		object-position: var(--focal-x, 50%) var(--focal-y, 50%);
 	}
 
 	.news-body {
