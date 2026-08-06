@@ -20,7 +20,14 @@ if (!page) {
 const current = slug as PageKey;
 ---
 
-<BaseLayout lang={lang} current={current} title={page.title} description={page.seo?.description ?? ''}>
+<BaseLayout
+	lang={lang}
+	current={current}
+	title={page.seo?.title || page.title}
+	description={page.seo?.description ?? ''}
+	image={page.seo?.ogImage}
+	noindex={page.seo?.noindex ?? false}
+>
 	{slug !== 'home' && page.eyebrow && page.breadcrumbCurrent && (
 		<PageBanner
 			lang={lang}
