@@ -17,23 +17,29 @@ const { items } = Astro.props;
 
 <style>
 	.stats {
-		background: var(--color-pink-dark);
-		padding: 40px;
+		background: var(--color-bg);
+		padding: 48px 40px;
 		display: flex;
 		justify-content: center;
-		gap: 70px;
+		gap: 20px;
 		flex-wrap: wrap;
 	}
 
+	/* M3 tonal container card, not a flat solid-color band: the stat "floats" as its
+	   own surface instead of the whole section being one loud fill. */
 	.stat {
 		text-align: center;
+		background: var(--color-pink-container);
+		border-radius: var(--shape-large);
+		padding: 24px 36px;
+		min-width: 160px;
 	}
 
 	.stat-value {
 		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: 42px;
-		color: var(--color-gold);
+		color: var(--color-on-pink-container);
 		line-height: 1;
 	}
 
@@ -41,7 +47,8 @@ const { items } = Astro.props;
 		font-size: 12px;
 		font-weight: 600;
 		letter-spacing: 1px;
-		color: rgba(255, 255, 255, 0.75);
+		color: var(--color-on-pink-container);
+		opacity: 0.75;
 		text-transform: uppercase;
 		margin-top: 6px;
 	}

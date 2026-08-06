@@ -50,6 +50,20 @@
 	--motion-easing-emphasized: cubic-bezier(0.3, 0, 0.1, 1);
 	--motion-easing-decelerate: cubic-bezier(0, 0, 0, 1);
 	--motion-easing-accelerate: cubic-bezier(0.3, 0, 1, 1);
+
+	/* Tonal container surfaces (m3.material.io/styles/color/roles): M3's actual visual
+	   signature isn't the shape scale, it's swapping flat solid-color blocks for soft
+	   tinted "container" panels with a saturated "on-container" color for content on top.
+	   Each pair is a ~12% tint of the matching Rotary brand color over white — still
+	   locked to the brandcenter palette, just expressed as a tone instead of a fill. */
+	--color-pink-container: #fae3ed;
+	--color-on-pink-container: var(--color-pink-dark);
+	--color-navy-container: #e2e5e9;
+	--color-on-navy-container: var(--color-navy);
+	--color-gold-container: #fef3df;
+	--color-on-gold-container: #7a5300;
+	--color-royal-container: #e3e8f2;
+	--color-on-royal-container: var(--color-royal-blue);
 }
 
 *,
