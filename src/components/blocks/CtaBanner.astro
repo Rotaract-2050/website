@@ -14,15 +14,28 @@ const { lang, title, body, buttonLabel, buttonHref } = Astro.props;
 ---
 
 <section class="cta-banner">
-	<h2 class="cta-title">{title}</h2>
-	<p class="cta-body">{body}</p>
-	<a href={getRelativeLocaleUrl(lang, buttonHref)} class="cta-button">{buttonLabel}</a>
+	<div class="cta-card">
+		<h2 class="cta-title">{title}</h2>
+		<p class="cta-body">{body}</p>
+		<a href={getRelativeLocaleUrl(lang, buttonHref)} class="cta-button">{buttonLabel}</a>
+	</div>
 </section>
 
 <style>
+	/* A big rounded filled card, inset from the edges like the rest of Home's
+	   surfaces — full-bleed solid-color bands were the pre-M3 pattern. */
 	.cta-banner {
+		background: var(--color-bg);
+		padding: 0 40px 96px;
+	}
+
+	.cta-card {
+		max-width: var(--content-max);
+		margin: 0 auto;
 		background: var(--color-pink);
-		padding: 70px 40px;
+		border-radius: var(--shape-extra-large);
+		box-shadow: var(--elevation-3);
+		padding: 80px 40px;
 		text-align: center;
 		color: #fff;
 	}
@@ -30,7 +43,7 @@ const { lang, title, body, buttonLabel, buttonHref } = Astro.props;
 	.cta-title {
 		font-family: var(--font-heading);
 		font-weight: 700;
-		font-size: 32px;
+		font-size: 38px;
 		text-transform: uppercase;
 		margin: 0 0 14px;
 	}
@@ -59,5 +72,16 @@ const { lang, title, body, buttonLabel, buttonHref } = Astro.props;
 	.cta-button:hover {
 		background: var(--color-bg);
 		color: var(--color-pink);
+	}
+
+	@media (max-width: 720px) {
+		.cta-banner {
+			padding: 0 20px 48px;
+		}
+
+		.cta-card {
+			border-radius: var(--shape-large);
+			padding: 48px 24px;
+		}
 	}
 </style>

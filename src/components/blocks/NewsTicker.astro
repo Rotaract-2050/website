@@ -57,17 +57,22 @@ const duration = Math.max(24, items.length * 5);
 </section>
 
 <style define:vars={{ tickerDuration: `${duration}s` }}>
+	/* A floating tonal-dark card, like everything else on Home, not an edge-to-edge band. */
 	.news-ticker {
-		background: var(--color-pink-dark);
+		background: var(--color-bg);
+		padding: 0 40px 40px;
 	}
 
 	.ticker-row {
 		max-width: var(--content-max);
 		margin: 0 auto;
+		background: var(--color-pink-dark);
+		border-radius: var(--shape-extra-large);
+		box-shadow: var(--elevation-2);
 		display: flex;
 		align-items: center;
 		gap: 20px;
-		padding: 14px 40px;
+		padding: 18px 36px;
 	}
 
 	.ticker-label {
@@ -232,9 +237,14 @@ const duration = Math.max(24, items.length * 5);
 	}
 
 	@media (max-width: 720px) {
+		.news-ticker {
+			padding: 0 20px 24px;
+		}
+
 		.ticker-row {
 			padding: 12px 20px;
 			gap: 14px;
+			border-radius: var(--shape-large);
 		}
 
 		.ticker-label {

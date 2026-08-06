@@ -18,28 +18,44 @@ const { items } = Astro.props;
 <style>
 	.stats {
 		background: var(--color-bg);
-		padding: 48px 40px;
+		padding: 24px 40px 96px;
 		display: flex;
 		justify-content: center;
-		gap: 20px;
+		gap: 24px;
 		flex-wrap: wrap;
 	}
 
-	/* M3 tonal container card, not a flat solid-color band: the stat "floats" as its
-	   own surface instead of the whole section being one loud fill. */
+	/* Big M3 tonal container cards, each stat its own soft-colored surface — and each
+	   one a different Rotary tone, cycling the palette instead of one flat color band. */
 	.stat {
 		text-align: center;
 		background: var(--color-pink-container);
-		border-radius: var(--shape-large);
-		padding: 24px 36px;
-		min-width: 160px;
+		color: var(--color-on-pink-container);
+		border-radius: var(--shape-extra-large);
+		padding: 36px 44px;
+		min-width: 180px;
+	}
+
+	.stat:nth-child(4n + 2) {
+		background: var(--color-gold-container);
+		color: var(--color-on-gold-container);
+	}
+
+	.stat:nth-child(4n + 3) {
+		background: var(--color-royal-container);
+		color: var(--color-on-royal-container);
+	}
+
+	.stat:nth-child(4n + 4) {
+		background: var(--color-navy-container);
+		color: var(--color-on-navy-container);
 	}
 
 	.stat-value {
 		font-family: var(--font-heading);
 		font-weight: 700;
-		font-size: 42px;
-		color: var(--color-on-pink-container);
+		font-size: 52px;
+		color: inherit;
 		line-height: 1;
 	}
 
@@ -47,10 +63,10 @@ const { items } = Astro.props;
 		font-size: 12px;
 		font-weight: 600;
 		letter-spacing: 1px;
-		color: var(--color-on-pink-container);
+		color: inherit;
 		opacity: 0.75;
 		text-transform: uppercase;
-		margin-top: 6px;
+		margin-top: 8px;
 	}
 </style>
 
