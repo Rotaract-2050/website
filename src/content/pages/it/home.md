@@ -1,13 +1,13 @@
 ---
 title: Rotaract Distretto 2050
 seo:
-  description: Il Distretto Rotaract 2050 riunisce i club Rotaract di Lombardia orientale ed Emilia occidentale.
+  description: Il Distretto Rotaract 2050 riunisce i club Rotaract della Lombardia meridionale e della Provincia di Piacenza.
 blocks:
   - ctaHref: club
     slides:
       - eyebrow: DISTRETTO ROTARACT 2050
         title: GIOVANI CHE COSTRUISCONO IL CAMBIAMENTO
-        subtitle: 'Lombardia orientale ed Emilia occidentale: 7 provincie, un solo distretto di giovani leader al servizio della comunità.'
+        subtitle: 'Lombardia meridionale e Provincia di Piacenza: 7 provincie, un solo distretto di giovani leader al servizio della comunità.'
         ctaLabel: SCOPRI I CLUB
       - eyebrow: SERVIZIO E LEADERSHIP
         title: PROGETTI CHE LASCIANO IL SEGNO
@@ -25,7 +25,7 @@ blocks:
   - items:
       - value: '30'
         label: CLUB ROTARACT
-      - value: '403'
+      - value: '357'
         label: SOCI
       - value: '4'
         label: ZONE
@@ -34,9 +34,8 @@ blocks:
     _template: StatsBar
   - kicker: CHI SIAMO
     title: IL ROTARACT NEL DISTRETTO 2050
-    body: 'Rotaract è la rete distrettuale dei club per giovani dai 18 ai 30 anni, sostenuta dal Rotary International. Nel Distretto 2050 riunisce club attivi in Lombardia orientale ed Emilia occidentale.'
-    subhead: La nostra missione
-    body2: 'Formiamo leader responsabili, promuoviamo il service e costruiamo una rete di professioniste e professionisti impegnati per le proprie comunità.'
+    body: 'Il Rotaract è un''organizzazione di service club partner del Rotary International che accoglie giovani adulti che si distinguano per integrità, spessore morale, attitudine alla leadership e condividano una concreta vocazione al servizio a favore delle comunità, sia a livello locale sia internazionale.'
+    body2: 'Il Rotaract Distretto 2050 riunisce i sodalizi attivi nella Lombardia meridionale e nella Provincia di Piacenza.'
     ctaLabel: SCOPRI IL DISTRETTO
     ctaHref: distretto
     imageLabel: Foto socie/i in un progetto di servizio
@@ -67,7 +66,7 @@ blocks:
     limit: 3
     _template: NewsGrid
   - title: DIVENTA SOCIO DEL ROTARACT
-    body: Hai tra 18 e 30 anni? Scopri il club più vicino a te e inizia il tuo percorso di leadership e servizio.
+    body: Hai già compiuto 18 anni?
     buttonLabel: TROVA IL TUO CLUB
     buttonHref: club
     _template: CtaBanner
