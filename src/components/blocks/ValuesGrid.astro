@@ -1,18 +1,20 @@
 ---
 interface Props {
 	title: string;
+	intro?: string;
 	accent?: string;
 	layout?: 'badge' | 'path' | 'icon';
 	items: { letter: string; icon?: string; title: string; description: string; tinaFieldAttr?: string }[];
 }
 
-const { title, accent = '#d41367', layout, items } = Astro.props;
+const { title, intro, accent = '#d41367', layout, items } = Astro.props;
 ---
 
 <section class="values" data-layout={layout} style={`--accent: ${accent}`}>
 	<div class="section-inner">
 		<h2 class="section-title center"><span class="section-title-bar" aria-hidden="true"></span>{title}</h2>
-		<div class="values-grid">
+		{intro && <p class="values-intro">{intro}</p>}
+		<div class="values-grid" style={`--grid-cols: ${items.length}`}>
 			{items.map((val) => (
 				<div class="value-card" data-tina-field={val.tinaFieldAttr}>
 					<div class="value-marker">
@@ -101,6 +103,15 @@ const { title, accent = '#d41367', layout, items } = Astro.props;
 	}
 
 	.section-title.center {
+		text-align: center;
+	}
+
+	.values-intro {
+		max-width: 640px;
+		margin: -14px auto 34px;
+		font-size: 15px;
+		color: var(--color-text);
+		font-style: italic;
 		text-align: center;
 	}
 
@@ -226,7 +237,7 @@ const { title, accent = '#d41367', layout, items } = Astro.props;
 	@media (min-width: 901px) {
 		.values[data-layout='badge'] .values-grid,
 		.values[data-layout='path'] .values-grid {
-			grid-template-columns: repeat(5, 1fr);
+			grid-template-columns: repeat(var(--grid-cols, 5), 1fr);
 		}
 
 		.values[data-layout='badge'] .value-card:not(:last-child)::after {
