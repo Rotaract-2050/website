@@ -1,0 +1,88 @@
+import type { Lang } from '../data/ui-strings';
+import { SITE_NAME, SOCIAL_LINKS } from '../data/ui-strings';
+
+interface SettingsForJsonLd {
+	about?: string | null;
+	logo?: string | null; // già risolto a URL assoluto dal chiamante
+}
+
+/** Grafo sitewide Organization + WebSite, renderizzato una volta da BaseLayout. */
+export function buildOrganizationGraph(settings: SettingsForJsonLd, siteUrl: string) {
+	return {
+		'@context': 'https://schema.org',
+		'@graph': [
+			{
+				'@type': 'Organization',
+				'@id': `${siteUrl}#organization`,
+				name: SITE_NAME,
+				url: siteUrl,
+				logo: settings.logo,
+				description: settings.about || undefined,
+				sameAs: SOCIAL_LINKS.map((s) => s.href),
+			},
+			{
+				'@type': 'WebSite',
+				'@id': `${siteUrl}#website`,
+				name: SITE_NAME,
+				url: siteUrl,
+				inLanguage: ['it', 'en'],
+				publisher: { '@id': `${siteUrl}#organization` },
+			},
+		],
+	};
+}
+
+/** BreadcrumbList — rispecchia esattamente il breadcrumb visibile in pagina, niente gerarchie inventate. */
+export function buildBreadcrumbList(items: { name: string; url: string }[]) {
+	return {
+		'@context': 'https://schema.org',
+		'@type': 'BreadcrumbList',
+		itemListElement: items.map((item, i) => ({ '@type': 'ListItem', position: i + 1, name: item.name, item: item.url })),
+	};
+}
+
+export function buildNewsArticleJsonLd(p: {
+	headline: string;
+	description: string;
+	imageUrl: string;
+	datePublished: string;
+	url: string;
+	lang: Lang;
+	publisherLogoUrl: string;
+}) {
+	return {
+		'@context': 'https://schema.org',
+		'@type': 'NewsArticle',
+		headline: p.headline,
+		description: p.description,
+		image: [p.imageUrl],
+		datePublished: p.datePublished,
+		inLanguage: p.lang,
+		mainEntityOfPage: { '@type': 'WebPage', '@id': p.url },
+		author: { '@type': 'Organization', name: SITE_NAME },
+		publisher: { '@type': 'Organization', name: SITE_NAME, logo: { '@type': 'ImageObject', url: p.publisherLogoUrl } },
+	};
+}
+
+export function buildEventJsonLd(p: {
+	name: string;
+	description?: string | null;
+	startDate: string;
+	imageUrl: string;
+	url: string;
+	locationName?: string | null;
+}) {
+	return {
+		'@context': 'https://schema.org',
+		'@type': 'Event',
+		name: p.name,
+		startDate: p.startDate,
+		eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+		eventStatus: 'https://schema.org/EventScheduled',
+		image: [p.imageUrl],
+		description: p.description || undefined,
+		url: p.url,
+		location: p.locationName ? { '@type': 'Place', name: p.locationName } : undefined,
+		organizer: { '@type': 'Organization', name: SITE_NAME },
+	};
+}
