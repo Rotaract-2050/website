@@ -46,15 +46,15 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 <style>
 	.news-card {
 		background: #fff;
-		border-radius: 14px;
+		border-radius: var(--shape-medium);
 		overflow: hidden;
-		box-shadow: 0 4px 16px rgba(11, 37, 69, 0.07);
-		transition: transform 0.25s ease, box-shadow 0.25s ease;
+		box-shadow: var(--elevation-1);
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
 	.news-card:hover {
 		transform: translateY(-4px);
-		box-shadow: 0 10px 28px rgba(11, 37, 69, 0.14);
+		box-shadow: var(--elevation-3);
 	}
 
 	.news-link {
@@ -89,7 +89,7 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 		letter-spacing: 0.5px;
 		text-transform: uppercase;
 		padding: 4px 10px;
-		border-radius: 999px;
+		border-radius: var(--shape-full);
 	}
 
 	.news-title {

@@ -85,7 +85,7 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		bottom: 0;
 		width: 6px;
 		background: var(--color-border);
-		border-radius: 999px;
+		border-radius: var(--shape-full);
 		transform: translateX(-50%);
 	}
 
@@ -144,7 +144,7 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		flex-direction: column;
 		gap: 6px;
 		background: var(--color-bg);
-		border-radius: 16px;
+		border-radius: var(--shape-large);
 		padding: 22px 26px;
 	}
 
@@ -212,7 +212,7 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		letter-spacing: 0.8px;
 		text-transform: uppercase;
 		padding: 8px 22px;
-		border-radius: 999px;
+		border-radius: var(--shape-full);
 		box-shadow: 0 0 0 6px #fff;
 	}
 

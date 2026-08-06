@@ -124,16 +124,16 @@ const { title, intro, accent = '#d41367', layout, items } = Astro.props;
 	.value-card {
 		position: relative;
 		background: #fff;
-		border-radius: 14px;
+		border-radius: var(--shape-medium);
 		padding: 28px 22px 24px;
 		text-align: center;
-		box-shadow: 0 4px 16px rgba(11, 37, 69, 0.06);
-		transition: transform 0.25s ease, box-shadow 0.25s ease;
+		box-shadow: var(--elevation-1);
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
 	.value-card:hover {
 		transform: translateY(-4px);
-		box-shadow: 0 10px 26px rgba(11, 37, 69, 0.13);
+		box-shadow: var(--elevation-3);
 	}
 
 	.value-marker {
@@ -177,8 +177,8 @@ const { title, intro, accent = '#d41367', layout, items } = Astro.props;
 	   No box, no shadow: values are principles you hold, not features you ship. --- */
 	.values[data-layout='badge'] .value-card {
 		background: none;
-		box-shadow: none;
-		border-radius: 0;
+		box-shadow: var(--elevation-0);
+		border-radius: var(--shape-none);
 		padding: 8px 20px;
 	}
 
@@ -193,7 +193,7 @@ const { title, intro, accent = '#d41367', layout, items } = Astro.props;
 		background: none;
 		border: 2px solid var(--accent);
 		color: var(--accent);
-		transition: transform 0.25s ease;
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
 	.values[data-layout='badge'] .value-card:hover .value-marker {

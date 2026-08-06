@@ -71,7 +71,7 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 	.split-media :global(.split-image) {
 		width: 100%;
 		height: 420px;
-		border-radius: 16px;
+		border-radius: var(--shape-large);
 		object-fit: cover;
 		object-position: var(--focal-x, 50%) var(--focal-y, 50%);
 	}

@@ -131,7 +131,7 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 		height: 200px;
 		object-fit: cover;
 		object-position: var(--focal-x, 50%) var(--focal-y, 50%);
-		border-radius: 12px;
+		border-radius: var(--shape-medium);
 	}
 
 	.event-content {
@@ -154,7 +154,7 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 		letter-spacing: 0.5px;
 		text-transform: uppercase;
 		padding: 4px 10px;
-		border-radius: 999px;
+		border-radius: var(--shape-full);
 	}
 
 	.event-title {
@@ -204,7 +204,7 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 		font-size: 11px;
 		letter-spacing: 0.5px;
 		padding: 3px 9px;
-		border-radius: 999px;
+		border-radius: var(--shape-full);
 		margin-right: 8px;
 	}
 
@@ -231,7 +231,7 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
 		padding: 10px 20px;
-		border-radius: 999px;
+		border-radius: var(--shape-full);
 	}
 
 	.event-tickets-btn:hover {
@@ -249,7 +249,7 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
 		padding: 8px 18px;
-		border-radius: 999px;
+		border-radius: var(--shape-full);
 		border: 2px solid var(--color-navy);
 	}
 

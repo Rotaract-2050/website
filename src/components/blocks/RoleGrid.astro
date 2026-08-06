@@ -124,7 +124,7 @@ const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 		gap: 32px;
 		width: 100%;
 		padding: 36px;
-		border-radius: 22px;
+		border-radius: var(--shape-large);
 		background-color: var(--color-bg);
 		background-image:
 			linear-gradient(rgba(250, 250, 251, 0.6), rgba(250, 250, 251, 0.6)),
@@ -175,15 +175,15 @@ const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 
 	.role-card {
 		background: var(--color-bg);
-		border-radius: 14px;
+		border-radius: var(--shape-medium);
 		padding: 26px 18px;
 		text-align: center;
-		transition: transform 0.25s ease, box-shadow 0.25s ease;
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
 	.role-card:hover {
 		transform: translateY(-4px);
-		box-shadow: 0 10px 24px rgba(11, 37, 69, 0.12);
+		box-shadow: var(--elevation-2);
 	}
 
 	.role-initials {

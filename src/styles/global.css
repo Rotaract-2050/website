@@ -14,6 +14,42 @@
 	--font-script: 'Dancing Script', cursive;
 
 	--content-max: 1200px;
+
+	/* --- Material Design 3 language (shape / elevation / motion) mapped onto the Rotary
+	   palette above — colors stay locked to the brandcenter, everything else follows M3.
+	   See references/rotary-brand.md and the M3 design-system project memory. --- */
+
+	/* Shape scale (m3.material.io/styles/shape): corner radius by component weight.
+	   Circles/avatars stay literal `border-radius: 50%` — M3 doesn't tokenize those. */
+	--shape-none: 0;
+	--shape-extra-small: 4px;
+	--shape-small: 8px;
+	--shape-medium: 12px;
+	--shape-large: 16px;
+	--shape-extra-large: 28px;
+	--shape-full: 999px;
+
+	/* Elevation (m3.material.io/styles/elevation): two-layer key + ambient shadow per
+	   level, tinted with the site's navy instead of pure black to stay on-brand. */
+	--elevation-0: none;
+	--elevation-1: 0 1px 2px rgba(11, 37, 69, 0.08), 0 1px 3px 1px rgba(11, 37, 69, 0.06);
+	--elevation-2: 0 1px 2px rgba(11, 37, 69, 0.08), 0 2px 6px 2px rgba(11, 37, 69, 0.08);
+	--elevation-3: 0 1px 3px rgba(11, 37, 69, 0.12), 0 4px 8px 3px rgba(11, 37, 69, 0.1);
+	--elevation-4: 0 2px 3px rgba(11, 37, 69, 0.14), 0 6px 10px 4px rgba(11, 37, 69, 0.1);
+	--elevation-5: 0 4px 4px rgba(11, 37, 69, 0.16), 0 8px 12px 6px rgba(11, 37, 69, 0.12);
+
+	/* Motion (m3.material.io/styles/motion): a pragmatic subset of M3's duration/easing
+	   tokens — enough to make hover/reveal transitions consistent, not the full 19-token
+	   catalog. `emphasized` is M3's spring-like curve approximated as a single cubic-bezier
+	   (no JS-driven multi-keyframe spring here), good for the transitions that should feel
+	   most "designed" (card lift, reveal-on-scroll); `standard` is the neutral default. */
+	--motion-duration-short: 150ms;
+	--motion-duration-medium: 250ms;
+	--motion-duration-long: 400ms;
+	--motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+	--motion-easing-emphasized: cubic-bezier(0.3, 0, 0.1, 1);
+	--motion-easing-decelerate: cubic-bezier(0, 0, 0, 1);
+	--motion-easing-accelerate: cubic-bezier(0.3, 0, 1, 1);
 }
 
 *,
@@ -43,7 +79,12 @@ body {
 a {
 	color: var(--color-pink);
 	text-decoration: none;
-	transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+	transition:
+		color var(--motion-duration-short) var(--motion-easing-standard),
+		background-color var(--motion-duration-short) var(--motion-easing-standard),
+		border-color var(--motion-duration-short) var(--motion-easing-standard),
+		box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized),
+		transform var(--motion-duration-medium) var(--motion-easing-emphasized);
 }
 
 a:hover {
@@ -51,7 +92,12 @@ a:hover {
 }
 
 button {
-	transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+	transition:
+		color var(--motion-duration-short) var(--motion-easing-standard),
+		background-color var(--motion-duration-short) var(--motion-easing-standard),
+		border-color var(--motion-duration-short) var(--motion-easing-standard),
+		box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized),
+		transform var(--motion-duration-medium) var(--motion-easing-emphasized);
 }
 
 img {
@@ -64,7 +110,7 @@ img {
 .reveal-init {
 	opacity: 0;
 	transform: translateY(24px);
-	transition: opacity 0.7s ease, transform 0.7s ease;
+	transition: opacity 0.7s var(--motion-easing-decelerate), transform 0.7s var(--motion-easing-decelerate);
 }
 
 .reveal-init.is-visible {

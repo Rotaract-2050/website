@@ -150,14 +150,14 @@ const zoneGroups = zones.map((zone) => ({
 		position: relative;
 		display: block;
 		background: var(--color-bg);
-		border-radius: 12px;
+		border-radius: var(--shape-medium);
 		overflow: hidden;
-		box-shadow: 0 4px 16px rgba(11, 37, 69, 0.07);
-		transition: box-shadow 0.2s ease;
+		box-shadow: var(--elevation-1);
+		transition: box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
 	.club-card:hover {
-		box-shadow: 0 8px 24px rgba(11, 37, 69, 0.12);
+		box-shadow: var(--elevation-2);
 	}
 
 	.club-body {
