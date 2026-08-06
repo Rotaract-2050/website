@@ -2,7 +2,6 @@
 title: "L'Impresa Eccezionale: il service nazionale sulla salute mentale"
 titleEn: "L'Impresa Eccezionale: national service on mental health"
 scope:
-  - Service Distrettuale
   - Service Nazionale
 excerpt: Promosso dal Distretto 2080 e adottato a livello nazionale, un cortometraggio animato e giornate nelle scuole per parlare di salute mentale.
 excerptEn: Promoted by District 2080 and adopted nationwide, an animated short film and school outreach days to talk about mental health.

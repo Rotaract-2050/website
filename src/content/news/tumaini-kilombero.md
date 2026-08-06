@@ -2,7 +2,7 @@
 title: "Tumaini Kilombero: solidarietà internazionale per Il Donnino's"
 titleEn: "Tumaini Kilombero: international solidarity for Il Donnino's"
 scope:
-  - Service Distrettuale
+  - Service Nazionale
 excerpt: Il Distretto 2102 raccoglie fondi per la struttura Il Donnino's a Kilombero, in Tanzania, che accoglie 85 bambini con disabilità.
 excerptEn: District 2102 fundraises for the Il Donnino's centre in Kilombero, Tanzania, home to 85 children with disabilities.
 date: '2026-08-05T12:00:00.000Z'
