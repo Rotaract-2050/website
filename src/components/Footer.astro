@@ -1,7 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { requestWithMetadata, tinaField } from '@tinacms/astro';
-import client from '../../tina/__generated__/client';
+import { tinaField } from '@tinacms/astro';
+import type { SettingsQuery } from '../../tina/__generated__/types';
 import type { Lang } from '../data/ui-strings';
 import { uiStrings, SOCIAL_LINKS } from '../data/ui-strings';
 import { pageSlugs, type PageKey } from '../data/routes';
@@ -9,12 +9,11 @@ import SocialIcon from './SocialIcon.astro';
 
 interface Props {
 	lang: Lang;
+	settings: SettingsQuery['settings'];
 }
 
-const { lang } = Astro.props;
+const { lang, settings } = Astro.props;
 const t = uiStrings[lang];
-const { data } = await requestWithMetadata(client.queries.settings({ relativePath: `${lang}.md` }));
-const settings = data.settings;
 const href = (page: PageKey) => getRelativeLocaleUrl(lang, pageSlugs[page]);
 ---
 
