@@ -26,49 +26,62 @@ const { lang, ctaHref, slides, autoplay = true } = Astro.props;
 const resolvedCtaHref = getRelativeLocaleUrl(lang, ctaHref);
 ---
 
-<section class="hero" data-hero data-autoplay={autoplay ? 'true' : 'false'}>
-	<div class="hero-slides">
-		{slides.map((slide, i) => (
-			<div class="hero-slide" data-slide data-index={i} data-active={i === 0 ? 'true' : 'false'} data-tina-field={slide.tinaFieldAttr}>
-				{slide.image ? (
-					<Image
-						src={slide.image}
-						alt={slide.title}
-						width={1600}
-						height={900}
-						quality="high"
-						class="hero-image"
-						style={`--focal-x:${slide.imageFocalX ?? 50}%;--focal-y:${slide.imageFocalY ?? 50}%;`}
-					/>
-				) : (
-					<ImageSlot label="Foto banner distrettuale" class="hero-image" />
-				)}
-				<div class="hero-overlay" aria-hidden="true"></div>
-				<div class="hero-copy">
-					<span class="hero-eyebrow">{slide.eyebrow}</span>
-					<h1 class="hero-title">{slide.title}</h1>
-					<p class="hero-subtitle">{slide.subtitle}</p>
-					<a class="hero-cta" href={resolvedCtaHref}>{slide.ctaLabel}</a>
+<section class="hero">
+	<div class="hero-card" data-hero data-autoplay={autoplay ? 'true' : 'false'}>
+		<div class="hero-slides">
+			{slides.map((slide, i) => (
+				<div class="hero-slide" data-slide data-index={i} data-active={i === 0 ? 'true' : 'false'} data-tina-field={slide.tinaFieldAttr}>
+					{slide.image ? (
+						<Image
+							src={slide.image}
+							alt={slide.title}
+							width={1600}
+							height={900}
+							quality="high"
+							class="hero-image"
+							style={`--focal-x:${slide.imageFocalX ?? 50}%;--focal-y:${slide.imageFocalY ?? 50}%;`}
+						/>
+					) : (
+						<ImageSlot label="Foto banner distrettuale" class="hero-image" />
+					)}
+					<div class="hero-overlay" aria-hidden="true"></div>
+					<div class="hero-copy">
+						<span class="hero-eyebrow">{slide.eyebrow}</span>
+						<h1 class="hero-title">{slide.title}</h1>
+						<p class="hero-subtitle">{slide.subtitle}</p>
+						<a class="hero-cta" href={resolvedCtaHref}>{slide.ctaLabel}</a>
+					</div>
 				</div>
-			</div>
-		))}
-	</div>
+			))}
+		</div>
 
-	<button type="button" class="hero-arrow hero-prev" data-prev aria-label="Previous slide">‹</button>
-	<button type="button" class="hero-arrow hero-next" data-next aria-label="Next slide">›</button>
+		<button type="button" class="hero-arrow hero-prev" data-prev aria-label="Previous slide">‹</button>
+		<button type="button" class="hero-arrow hero-next" data-next aria-label="Next slide">›</button>
 
-	<div class="hero-dots" data-dots>
-		{slides.map((_, i) => (
-			<button type="button" class="hero-dot" data-dot data-index={i} data-active={i === 0 ? 'true' : 'false'} aria-label={`Slide ${i + 1}`}></button>
-		))}
+		<div class="hero-dots" data-dots>
+			{slides.map((_, i) => (
+				<button type="button" class="hero-dot" data-dot data-index={i} data-active={i === 0 ? 'true' : 'false'} aria-label={`Slide ${i + 1}`}></button>
+			))}
+		</div>
 	</div>
 </section>
 
 <style>
+	/* The hero is a big rounded M3 "expressive" card, inset from the page edges like the
+	   rest of the site's content — not a full-bleed band — with the photo filling it. */
 	.hero {
+		padding: 32px 40px 40px;
+		background: var(--color-bg);
+	}
+
+	.hero-card {
 		position: relative;
-		min-height: 480px;
+		max-width: var(--content-max);
+		min-height: 560px;
+		margin: 0 auto;
+		border-radius: var(--shape-extra-large);
 		overflow: hidden;
+		box-shadow: var(--elevation-4);
 	}
 
 	.hero-slides {
@@ -218,6 +231,15 @@ const resolvedCtaHref = getRelativeLocaleUrl(lang, ctaHref);
 	}
 
 	@media (max-width: 720px) {
+		.hero {
+			padding: 16px 16px 24px;
+		}
+
+		.hero-card {
+			min-height: 480px;
+			border-radius: var(--shape-large);
+		}
+
 		.hero-copy {
 			padding: 32px;
 		}
