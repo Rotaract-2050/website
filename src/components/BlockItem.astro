@@ -137,6 +137,8 @@ const { lang, block } = Astro.props;
 			items={(block.items ?? []).filter(nonNull).map((i) => ({
 				name: i.name ?? '',
 				nameFieldAttr: tinaField(i, 'name'),
+				description: i.description ?? undefined,
+				descriptionFieldAttr: tinaField(i, 'description'),
 				leadLabel: i.leadLabel || (lang === 'en' ? 'President' : 'Presidente'),
 				membersLabel: i.membersLabel || (lang === 'en' ? 'Member' : 'Membro'),
 				lead: {

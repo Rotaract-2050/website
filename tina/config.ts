@@ -239,6 +239,7 @@ const committeeGridTemplate = {
 			ui: { itemProps: (item: { name?: string }) => ({ label: item.name }) },
 			fields: [
 				{ type: 'string' as const, name: 'name', label: 'Nome commissione/delega' },
+				{ type: 'string' as const, name: 'description', label: 'Descrizione (cosa fa questa commissione)', ui: { component: 'textarea' } },
 				{ type: 'string' as const, name: 'leadLabel', label: 'Etichetta responsabile (es. "Presidente" o "Delegato")' },
 				{ type: 'string' as const, name: 'membersLabel', label: 'Etichetta membri (es. "Membro")' },
 				{

@@ -13,6 +13,8 @@ interface Person {
 interface CommitteeItem {
 	name: string;
 	nameFieldAttr?: string;
+	description?: string;
+	descriptionFieldAttr?: string;
 	leadLabel: string;
 	membersLabel: string;
 	lead: Person;
@@ -37,6 +39,7 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 			{items.map((item) => (
 				<div class="committee">
 					<h3 class="committee-name" data-tina-field={item.nameFieldAttr}>{item.name}</h3>
+						{item.description && <p class="committee-description" data-tina-field={item.descriptionFieldAttr}>{item.description}</p>}
 					<div class="lead-row">
 						<PersonCard
 							name={item.lead.name}
@@ -84,7 +87,7 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		font-family: var(--font-script);
 		font-weight: 700;
 		font-size: 48px;
-		color: var(--color-pink);
+		color: var(--color-royal-blue);
 		text-transform: none;
 		margin: 0 0 34px;
 	}
@@ -126,7 +129,16 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		font-size: 18px;
 		color: var(--color-navy);
 		text-align: center;
-		margin: 0 0 20px;
+		margin: 0 0 8px;
+	}
+
+	.committee-description {
+		font-size: 14px;
+		color: var(--color-text);
+		line-height: 1.6;
+		text-align: center;
+		max-width: 560px;
+		margin: 0 auto 24px;
 	}
 
 	.lead-row {
