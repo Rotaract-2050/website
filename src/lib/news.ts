@@ -27,6 +27,16 @@ export function localizeNews(article: Pick<NewsArticle, 'title' | 'titleEn' | 'e
 }
 
 /**
+ * The date label shown on a news card: `displayDate` verbatim if the article has one
+ * (an editorial override, e.g. "Estate 2026" instead of a day-precise date), otherwise
+ * the publish date formatted normally. Ordering and the Rotary year (`rotaryYearLabel`)
+ * always use the real `date` field regardless — this only changes what's displayed.
+ */
+export function newsDateLabel(article: Pick<NewsArticle, 'date' | 'displayDate'>, formatter: Intl.DateTimeFormat): string {
+	return article.displayDate || formatter.format(new Date(article.date)).toUpperCase();
+}
+
+/**
  * Rotary year label for a date, e.g. `AR 2026/2027`. The Rotary year always runs
  * 1 July - 30 June, so this is derived from the article's publish date rather than
  * tagged by hand — see references/news-tags.md for why.

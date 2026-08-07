@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+
 interface Props {
 	title: string;
 	intro?: string;
@@ -8,6 +10,35 @@ interface Props {
 }
 
 const { title, intro, accent = '#d41367', layout, items } = Astro.props;
+
+// Official Rotary Areas of Focus icons (brandcenter.rotary.org), full color, one per
+// area — each already carries its own official AOF color baked into the PNG, so this
+// replaces the earlier hand-drawn single-color SVG set. Maps our existing Tina `icon`
+// option keys to the asset's filename segment.
+const AOF_ICON_FILE: Record<string, string> = {
+	peace: 'peace',
+	health: 'disease',
+	water: 'water',
+	family: 'maternal',
+	education: 'education',
+	growth: 'economic',
+	leaf: 'environment',
+};
+const aofIconSrc = (icon: string) => `/uploads/Aree-Azione/color/no_title/AOF_${AOF_ICON_FILE[icon]}_color_no_title.png`;
+
+// The official artwork's own baked-in color per area, read off the source PNGs —
+// each matches a color already in the Rotary secondary palette (references/rotary-brand.md):
+// Azure, Cardinal, Sky Blue, Violet, Orange, Turquoise, Grass respectively. Used to tint
+// each card's own tonal surface, same pattern as the zone cards on Home.
+const AOF_ICON_COLOR: Record<string, string> = {
+	peace: '#0067c8',
+	health: '#e02927',
+	water: '#00a2e0',
+	family: '#901f93',
+	education: '#ff7600',
+	growth: '#00adbb',
+	leaf: '#009739',
+};
 ---
 
 <section class="values" data-layout={layout} style={`--accent: ${accent}`}>
@@ -16,48 +47,14 @@ const { title, intro, accent = '#d41367', layout, items } = Astro.props;
 		{intro && <p class="values-intro">{intro}</p>}
 		<div class="values-grid" style={`--grid-cols: ${items.length}`}>
 			{items.map((val) => (
-				<div class="value-card" data-tina-field={val.tinaFieldAttr}>
+				<div
+					class="value-card"
+					data-tina-field={val.tinaFieldAttr}
+					style={layout === 'icon' && val.icon ? `--tint:${AOF_ICON_COLOR[val.icon]};` : undefined}
+				>
 					<div class="value-marker">
 						{layout === 'icon' && val.icon ? (
-							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-								{val.icon === 'peace' && (
-									<>
-										<circle cx="9" cy="12" r="6"></circle>
-										<circle cx="15" cy="12" r="6"></circle>
-									</>
-								)}
-								{val.icon === 'health' && (
-									<>
-										<circle cx="12" cy="12" r="9"></circle>
-										<path d="M12 8v8M8 12h8"></path>
-									</>
-								)}
-								{val.icon === 'water' && <path d="M12 3c3.5 4 7 8.4 7 12a7 7 0 0 1-14 0c0-3.6 3.5-8 7-12z"></path>}
-								{val.icon === 'family' && (
-									<>
-										<path d="M12 20s-7-4.3-9.3-8.4C1 8.4 2.7 5 6 5c2 0 3.6 1.1 4 2.6.4-1.5 2-2.6 4-2.6 3.3 0 5 3.4 3.3 6.6C19 15.7 12 20 12 20z"></path>
-										<line x1="12" y1="10.5" x2="12" y2="10.5"></line>
-									</>
-								)}
-								{val.icon === 'education' && (
-									<>
-										<path d="M12 6c-2-1.3-5-1.7-8-1v13c3-.7 6-.3 8 1 2-1.3 5-1.7 8-1V5c-3-.7-6-.3-8 1z"></path>
-										<path d="M12 6v13"></path>
-									</>
-								)}
-								{val.icon === 'growth' && (
-									<>
-										<path d="M3 17l6-6 4 4 7-7"></path>
-										<path d="M14 8h6v6"></path>
-									</>
-								)}
-								{val.icon === 'leaf' && (
-									<>
-										<path d="M12 3c4 2 6 6 6 9 0 3-2 7-6 9-4-2-6-6-6-9 0-3 2-7 6-9z"></path>
-										<path d="M12 6v13"></path>
-									</>
-								)}
-							</svg>
+							<Image src={aofIconSrc(val.icon)} alt="" width={200} height={200} quality="high" />
 						) : (
 							<span class="value-letter">{val.letter}</span>
 						)}
@@ -85,7 +82,7 @@ const { title, intro, accent = '#d41367', layout, items } = Astro.props;
 		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: 28px;
-		color: var(--color-navy);
+		color: var(--color-royal-blue);
 		text-transform: uppercase;
 		margin: 0 0 34px;
 		display: flex;
@@ -124,16 +121,16 @@ const { title, intro, accent = '#d41367', layout, items } = Astro.props;
 	.value-card {
 		position: relative;
 		background: #fff;
-		border-radius: 14px;
+		border-radius: var(--shape-medium);
 		padding: 28px 22px 24px;
 		text-align: center;
-		box-shadow: 0 4px 16px rgba(11, 37, 69, 0.06);
-		transition: transform 0.25s ease, box-shadow 0.25s ease;
+		box-shadow: var(--elevation-1);
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
 	.value-card:hover {
 		transform: translateY(-4px);
-		box-shadow: 0 10px 26px rgba(11, 37, 69, 0.13);
+		box-shadow: var(--elevation-3);
 	}
 
 	.value-marker {
@@ -154,7 +151,7 @@ const { title, intro, accent = '#d41367', layout, items } = Astro.props;
 		font-size: 20px;
 	}
 
-	.value-marker svg {
+	.value-marker :global(img) {
 		width: 26px;
 		height: 26px;
 	}
@@ -163,7 +160,7 @@ const { title, intro, accent = '#d41367', layout, items } = Astro.props;
 		font-family: var(--font-heading);
 		font-weight: 600;
 		font-size: 16px;
-		color: var(--color-navy);
+		color: var(--color-royal-blue);
 		margin-bottom: 8px;
 	}
 
@@ -177,8 +174,8 @@ const { title, intro, accent = '#d41367', layout, items } = Astro.props;
 	   No box, no shadow: values are principles you hold, not features you ship. --- */
 	.values[data-layout='badge'] .value-card {
 		background: none;
-		box-shadow: none;
-		border-radius: 0;
+		box-shadow: var(--elevation-0);
+		border-radius: var(--shape-none);
 		padding: 8px 20px;
 	}
 
@@ -193,7 +190,7 @@ const { title, intro, accent = '#d41367', layout, items } = Astro.props;
 		background: none;
 		border: 2px solid var(--accent);
 		color: var(--accent);
-		transition: transform 0.25s ease;
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
 	.values[data-layout='badge'] .value-card:hover .value-marker {
@@ -204,15 +201,26 @@ const { title, intro, accent = '#d41367', layout, items } = Astro.props;
 		font-size: 17px;
 	}
 
-	/* --- Path: a small waypoint marker in the gap, not just a line --- */
-	.values[data-layout='icon'] .value-marker {
-		width: 60px;
-		height: 60px;
+	/* --- Icon: the official AOF artwork already carries its own area color baked in
+	   (peace=Azure, environment=Grass, water=Sky Blue, disease=Cardinal, ...), read off
+	   the source PNGs into --tint. The card becomes a tonal surface in that same color
+	   (same color-mix pattern as the Home zone cards) instead of a plain white card, and
+	   the marker turns into a plain white disc so the artwork's own color stays the only
+	   color doing work — no --accent circle fighting it. --- */
+	.values[data-layout='icon'] .value-card {
+		background: color-mix(in srgb, var(--tint, var(--color-royal-blue)) 12%, white);
 	}
 
-	.values[data-layout='icon'] .value-marker svg {
-		width: 28px;
-		height: 28px;
+	.values[data-layout='icon'] .value-marker {
+		width: 88px;
+		height: 88px;
+		background: #fff;
+		box-shadow: var(--elevation-1);
+	}
+
+	.values[data-layout='icon'] .value-marker :global(img) {
+		width: 56px;
+		height: 56px;
 	}
 
 	/* --- Badge & Path: five items read best as one row (a seal band / a route) --- */

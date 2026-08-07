@@ -16,7 +16,7 @@ Usare **solo** questi colori (elenco completo brandcenter, formule colore comple
 | Cranberry | 214C | `#D41367` | 212, 19, 103 | Logo Rotaract |
 | Cardinal | 485C | `#E02927` | 224, 41, 39 | Logo End Polio Now |
 
-Uso nel sito: Royal Blue = primario scuro (header/footer/blocchi dark, oggi `#0B2545` nel mockup — **verificare con il distretto**, non è l'hex ufficiale). Cranberry = accent/CTA/link/pill di default (`--color-pink`). Gold = accent secondario su sfondo scuro (`--color-gold`). Azure = blu azione/link alternativo, non ancora usato altrove. Cardinal = riservato a un eventuale blocco End Polio Now, non usare per altro.
+Uso nel sito: Royal Blue = primario scuro (header/footer/blocchi dark, `--color-royal-blue: #17458F`, hex ufficiale — **risolto 2026-08-07**: il vecchio `--color-navy: #0B2545` non ufficiale è stato rimosso e tutti i suoi usi migrati a `--color-royal-blue`, decisione esplicita dell'utente). Cranberry = accent/CTA/link/pill di default (`--color-pink`). Gold = accent secondario su sfondo scuro (`--color-gold`). Azure e Cardinal restano riservati come primari (non usarli per scegliere un nuovo colore UI a piacere) — l'unica eccezione è l'artwork ufficiale delle Aree di Intervento (vedi sotto), dove compaiono già così nel PNG scaricato dal Brand Center: non è una scelta cromatica nostra, è il colore con cui Rotary pubblica quell'icona.
 
 ### Secondari/estesi — accenti, categorizzazione, dati (es. tag/badge)
 
@@ -34,7 +34,25 @@ Uso nel sito: Royal Blue = primario scuro (header/footer/blocchi dark, oggi `#0B
 | Stone | 2162C | `#9BA4B4` | 155, 164, 180 |
 | Slate | 2165C | `#657F99` | 101, 127, 153 |
 
-Uso nel sito: **Turquoise, Violet, Orange, Grass** sono i 4 colori scelti per i tag zona (badge club colorati per zona sulle news — vedi `references/news-tags.md`), assegnazione 1:1 con le 4 zone del distretto. Gli altri (Sky Blue, Powder Blue, Moss, Lavender, Taupe, Stone, Slate) restano disponibili per usi futuri simili (categorizzazione, data-viz), non ancora assegnati — non introdurli senza motivo.
+Uso nel sito: **Turquoise, Violet, Orange, Grass** sono i 4 colori scelti per i tag zona (badge club colorati per zona sulle news — vedi `references/news-tags.md`), assegnazione 1:1 con le 4 zone del distretto. **Sky Blue** è anche il colore ufficiale dell'icona AOF "Acqua, servizi igienici e igiene" (vedi sotto). Gli altri (Powder Blue, Moss, Lavender, Taupe, Stone, Slate) restano disponibili per usi futuri simili (categorizzazione, data-viz), non ancora assegnati — non introdurli senza motivo.
+
+### Icone ufficiali "Aree di Intervento" (Areas of Focus)
+
+`public/uploads/Aree-Azione/` contiene l'artwork ufficiale delle 7 Aree di Intervento Rotary, scaricato dal Brand Center: tre varianti colore (`black`/`color`/`white`) × quattro layout (`no_title`, `bottom_title`, `side_title`, `bottom_title_rev`/`side_title_rev` solo su `color`). Il sito usa solo `color/no_title/AOF_<area>_color_no_title.png` — titolo e descrizione sono già testo HTML separato (vedi `ValuesGrid.astro`, layout `icon`, usato in `distretto.md` per "Le 7 aree di intervento"), non serve la versione con titolo incorporato nel PNG.
+
+Ogni icona porta già il proprio colore ufficiale, che ValuesGrid legge in `AOF_ICON_COLOR` per tingere la card (stesso pattern tonale delle card zona in Home) — non un colore scelto da noi:
+
+| Area (nome file) | Titolo IT sul sito | Colore ufficiale |
+|---|---|---|
+| peace | Costruzione della pace e prevenzione dei conflitti | Azure `#0067C8` |
+| disease | Prevenzione e cura delle malattie | Cardinal `#E02927` |
+| water | Acqua, servizi igienici e igiene | Sky Blue `#00A2E0` |
+| maternal | Salute materna e infantile | Violet `#901F93` |
+| education | Alfabetizzazione ed educazione di base | Orange `#FF7600` |
+| economic | Sviluppo economico e comunitario | Turquoise `#00ADBB` |
+| environment | Tutela dell'ambiente | Grass `#009739` |
+
+Le altre varianti (black/white, con titolo) non sono usate dal sito oggi ma restano nella cartella come risorsa per materiali futuri (stampa, sfondi scuri) — non cancellarle assumendo che siano inutilizzate.
 
 ### Neutri/grigi
 
@@ -51,9 +69,9 @@ Uso nel sito: **Turquoise, Violet, Orange, Grass** sono i 4 colori scelti per i 
 | White | — | `#FFFFFF` | 255, 255, 255 |
 | Black | — | `#000000` | 0, 0, 0 |
 
-Uso nel sito: Charcoal = testo body (`--color-text`, oggi mockup usa `#5B6472` blu-grigio non ufficiale). White/`#FAFAFB` (tinta neutra non ufficiale ma coerente, quasi-bianco) = sfondo pagina chiaro. Gli altri neutri non ancora usati, disponibili per varianti di sfondo/bordo se serve più contrasto graduale.
+Uso nel sito: Charcoal = testo body (`--color-text: #54565A`, hex ufficiale — **risolto 2026-08-07**, sostituiva `#5B6472` blu-grigio non ufficiale). Stone = testo secondario/muted (`--color-muted: #9BA4B4`, hex ufficiale — match quasi esatto del valore precedente, nessun cambio visivo percepibile). White/`#FAFAFB` (tinta neutra non ufficiale ma coerente, quasi-bianco) = sfondo pagina chiaro. `--color-border: #E4E7EE` non è un hex ufficiale letterale ma è un tint ~13% di Royal Blue su bianco (stesso pattern dei "container" sotto), quindi coerente col brand. Gli altri neutri non ancora usati, disponibili per varianti di sfondo/bordo se serve più contrasto graduale.
 
-**Regola pratica**: prima di introdurre un componente nuovo, chiedere conferma su `#0B2545` vs `#17458F` (Royal Blue ufficiale) se non già deciso nel progetto — è la discrepanza principale rispetto al brandcenter. Se non c'è risposta, mantenere `#0B2545` per coerenza con la homepage esistente (regola "mantenere lo stile della homepage" prevale finché non arriva una decisione esplicita), ma segnalarlo sempre all'utente.
+**Regola pratica**: usare sempre `--color-royal-blue` (`#17458F`, ufficiale) per il primario scuro — non reintrodurre un token "navy" separato non ufficiale.
 
 ## Tipografia (brand-elements/typography)
 

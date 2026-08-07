@@ -239,6 +239,7 @@ const committeeGridTemplate = {
 			ui: { itemProps: (item: { name?: string }) => ({ label: item.name }) },
 			fields: [
 				{ type: 'string' as const, name: 'name', label: 'Nome commissione/delega' },
+				{ type: 'string' as const, name: 'description', label: 'Descrizione (cosa fa questa commissione)', ui: { component: 'textarea' } },
 				{ type: 'string' as const, name: 'leadLabel', label: 'Etichetta responsabile (es. "Presidente" o "Delegato")' },
 				{ type: 'string' as const, name: 'membersLabel', label: 'Etichetta membri (es. "Membro")' },
 				{
@@ -311,6 +312,8 @@ const newsGridTemplate = {
 	fields: [
 		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
 		{ type: 'number' as const, name: 'limit', label: 'Numero massimo di notizie mostrate' },
+		{ type: 'boolean' as const, name: 'showDate', label: 'Mostra la data sulle card' },
+		{ type: 'boolean' as const, name: 'showYear', label: 'Mostra l\'anno rotariano (AR) sulle card' },
 	],
 };
 
@@ -432,6 +435,8 @@ const newsArchiveTemplate = {
 			label: 'Messaggio se non ci sono news (opzionale)',
 			ui: { component: 'textarea' },
 		},
+		{ type: 'boolean' as const, name: 'showDate', label: 'Mostra la data sulle card' },
+		{ type: 'boolean' as const, name: 'showYear', label: 'Mostra l\'anno rotariano (AR) sulle card' },
 	],
 };
 
@@ -587,6 +592,13 @@ export default defineConfig({
 					{ type: 'string', name: 'excerpt', label: 'Estratto (IT)', ui: { component: 'textarea' }, required: true },
 					{ type: 'string', name: 'excerptEn', label: 'Estratto (EN)', ui: { component: 'textarea' } },
 					{ type: 'datetime', name: 'date', label: 'Data pubblicazione', required: true, ui: { dateFormat: 'DD MMMM YYYY' } },
+					{
+						type: 'string',
+						name: 'displayDate',
+						label: 'Data mostrata sulla card (opzionale)',
+						description:
+							'Se compilata, sostituisce la Data pubblicazione SOLO nel testo mostrato sulla card (es. "Estate 2026"). L\'ordinamento delle news e l\'anno rotariano (AR) restano calcolati dalla Data pubblicazione qui sopra, non da questo campo.',
+					},
 					...focalImageFields('image', 'Immagine'),
 					{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine (IT)', required: true },
 					{ type: 'string', name: 'imageLabelEn', label: 'Didascalia segnaposto immagine (EN)' },
@@ -610,6 +622,13 @@ export default defineConfig({
 						description: 'Disattiva per preparare un evento senza pubblicarlo ancora nell\'archivio eventi del sito.',
 					},
 					{ type: 'datetime', name: 'date', label: 'Data evento', required: true, ui: { dateFormat: 'DD MMMM YYYY' } },
+					{
+						type: 'datetime',
+						name: 'calendarDate',
+						label: 'Data su Google Calendar (se diversa)',
+						description:
+							'Usata per collegare questo evento alla voce corrispondente nel widget "Calendario eventi" in home, quando la data su Google Calendar non coincide con la Data evento sopra (o per forzare/disambiguare il collegamento). Lascia vuoto per usare direttamente la Data evento.',
+					},
 					{
 						type: 'string',
 						name: 'eventType',

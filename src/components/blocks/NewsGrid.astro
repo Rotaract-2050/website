@@ -2,16 +2,18 @@
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { tinaField } from '@tinacms/astro';
 import NewsCard from '../NewsCard.astro';
-import { getDistrictNews, localizeNews, newsSlug, newsTagLabels, rotaryYearLabel } from '../../lib/news';
+import { getDistrictNews, localizeNews, newsSlug, newsTagLabels, newsDateLabel, rotaryYearLabel } from '../../lib/news';
 import { uiStrings, type Lang } from '../../data/ui-strings';
 
 interface Props {
 	lang: Lang;
 	title: string;
 	limit?: number;
+	showDate?: boolean;
+	showYear?: boolean;
 }
 
-const { lang, title, limit = 3 } = Astro.props;
+const { lang, title, limit = 3, showDate = true, showYear = true } = Astro.props;
 const t = uiStrings[lang].news;
 
 const articles = await getDistrictNews(limit);
@@ -40,8 +42,10 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-US',
 								tags={newsTagLabels(article)}
 								title={localized.title}
 								excerpt={localized.excerpt}
-								dateLabel={dateFormatter.format(new Date(article.date)).toUpperCase()}
+								dateLabel={newsDateLabel(article, dateFormatter)}
 								yearLabel={rotaryYearLabel(article.date)}
+								showDate={showDate}
+								showYear={showYear}
 								tinaFieldAttr={tinaField(article)}
 							/>
 						);
@@ -70,7 +74,7 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-US',
 		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: 34px;
-		color: var(--color-navy);
+		color: var(--color-royal-blue);
 		text-transform: uppercase;
 		margin: 0 0 30px;
 	}

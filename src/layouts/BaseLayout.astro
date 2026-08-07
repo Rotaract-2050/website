@@ -103,8 +103,8 @@ const organizationGraph = buildOrganizationGraph(
 	console.log(
 		'%c ROTARACT %c DISTRETTO 2050 %c\n\nConfezionato con cura da Alessandro Gorla & Gabriele Groppo',
 		'background:#d41367;color:#fff;font-weight:700;padding:6px 12px;border-radius:6px 0 0 6px;font-family:"Open Sans",sans-serif;font-size:13px;',
-		'background:#0b2545;color:#f7a81b;font-weight:700;padding:6px 12px;border-radius:0 6px 6px 0;font-family:"Open Sans",sans-serif;font-size:13px;',
-		'color:#5b6472;font-style:italic;font-family:"Open Sans",sans-serif;font-size:12px;'
+		'background:#17458f;color:#f7a81b;font-weight:700;padding:6px 12px;border-radius:0 6px 6px 0;font-family:"Open Sans",sans-serif;font-size:13px;',
+		'color:#54565a;font-style:italic;font-family:"Open Sans",sans-serif;font-size:12px;'
 	);
 
 	function initScrollReveal() {
@@ -123,7 +123,12 @@ const organizationGraph = buildOrganizationGraph(
 					}
 				}
 			},
-			{ threshold: 0.12, rootMargin: '0px 0px -10% 0px' }
+			// threshold: 0.12 + a shrunk root worked for short sections, but a tall one (e.g.
+			// CommitteeGrid's stacked commission cards) needs 12% of its own height scrolled
+			// into view before it fires — long enough that you'd scroll past still-invisible
+			// content first. Fire on the first visible pixel instead, so reveal never lags
+			// behind scroll regardless of how tall the target is.
+			{ threshold: 0, rootMargin: '0px 0px 0px 0px' }
 		);
 
 		els.forEach((el) => observer.observe(el));

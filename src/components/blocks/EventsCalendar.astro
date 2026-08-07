@@ -1,6 +1,8 @@
 ---
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import { uiStrings, type Lang } from '../../data/ui-strings';
 import { getDistrictEvents, eventDateKey, calendarUrls, type DistrictEvent } from '../../lib/calendar';
+import { getArchiveEvents, eventSlug, eventCalendarDayKey } from '../../lib/events';
 
 interface Props {
 	lang: Lang;
@@ -15,6 +17,26 @@ const { viewUrl: CALENDAR_VIEW_URL, subscribeUrl: CALENDAR_SUBSCRIBE_URL } = cal
 const forceRefresh = Astro.url.searchParams.has('refresh');
 const result = await getDistrictEvents({ calendarId, forceRefresh });
 const events = result.ok ? result.events : [];
+
+// Links a calendar entry to its /eventi detail page when exactly one published event shares its
+// day (Europe/Rome) — see eventCalendarDayKey in src/lib/events.ts. Ambiguous days (0 or 2+
+// candidates) are left unlinked rather than guessing; a socio can disambiguate via the event's
+// "Data su Google Calendar" override field in Tina.
+const archiveEvents = await getArchiveEvents();
+const archiveSlugsByDay = new Map<string, string[]>();
+for (const event of archiveEvents) {
+	const key = eventCalendarDayKey(event);
+	const bucket = archiveSlugsByDay.get(key);
+	const slug = eventSlug(event);
+	if (bucket) bucket.push(slug);
+	else archiveSlugsByDay.set(key, [slug]);
+}
+
+function archiveLinkFor(ev: DistrictEvent): string | null {
+	const candidates = archiveSlugsByDay.get(eventDateKey(ev));
+	if (!candidates || candidates.length !== 1) return null;
+	return getRelativeLocaleUrl(lang, `eventi/${candidates[0]}`);
+}
 
 const todayKey = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Rome' }).format(new Date());
 const upcomingEvents = events.filter((ev) => eventDateKey(ev) >= todayKey);
@@ -128,6 +150,7 @@ const monthTabId = `cal-month-${uid}`;
 
 <section class="events-calendar" id="eventi-calendario">
 	<div class="section-inner">
+	<div class="calendar-card">
 		<div class="calendar-header">
 			<h2 class="section-title">{title}</h2>
 			<div class="calendar-actions">
@@ -152,8 +175,10 @@ const monthTabId = `cal-month-${uid}`;
 						{agendaEvents.length === 0 && <p class="calendar-status">{t.noEvents}</p>}
 						{agendaEvents.map((ev) => {
 							const { day, month } = dateParts(eventDateKey(ev));
+							const href = archiveLinkFor(ev);
+							const RowTag = href ? 'a' : 'div';
 							return (
-								<div class="event-row">
+								<RowTag class="event-row" {...(href ? { href } : {})}>
 									<div class="event-date">
 										<div class="event-day">{String(day).padStart(2, '0')}</div>
 										<div class="event-month">{t.monthsShort[month]}</div>
@@ -166,7 +191,7 @@ const monthTabId = `cal-month-${uid}`;
 										</div>
 									</div>
 									<div class="event-arrow" aria-hidden="true">→</div>
-								</div>
+								</RowTag>
 							);
 						})}
 					</div>
@@ -177,22 +202,26 @@ const monthTabId = `cal-month-${uid}`;
 								<span class="day-filter-label">{t.dayFilterPrefix} {formatFullDate(key)}</span>
 								<a class="day-filter-reset" href="?#eventi-calendario">{t.dayFilterReset}</a>
 							</div>
-							{dayEvents.map((ev) => (
-								<div class="event-row">
-									<div class="event-date">
-										<div class="event-day">{String(dateParts(key).day).padStart(2, '0')}</div>
-										<div class="event-month">{t.monthsShort[dateParts(key).month]}</div>
-									</div>
-									<div class="event-body">
-										<div class="event-title">{ev.summary}</div>
-										<div class="event-meta">
-											{formatWeekday(eventDateKey(ev))} · {formatTime(ev)}
-											{ev.location ? ` · ${ev.location}` : ''}
+							{dayEvents.map((ev) => {
+								const href = archiveLinkFor(ev);
+								const RowTag = href ? 'a' : 'div';
+								return (
+									<RowTag class="event-row" {...(href ? { href } : {})}>
+										<div class="event-date">
+											<div class="event-day">{String(dateParts(key).day).padStart(2, '0')}</div>
+											<div class="event-month">{t.monthsShort[dateParts(key).month]}</div>
 										</div>
-									</div>
-									<div class="event-arrow" aria-hidden="true">→</div>
-								</div>
-							))}
+										<div class="event-body">
+											<div class="event-title">{ev.summary}</div>
+											<div class="event-meta">
+												{formatWeekday(eventDateKey(ev))} · {formatTime(ev)}
+												{ev.location ? ` · ${ev.location}` : ''}
+											</div>
+										</div>
+										<div class="event-arrow" aria-hidden="true">→</div>
+									</RowTag>
+								);
+							})}
 						</div>
 					))}
 				</div>
@@ -240,11 +269,12 @@ const monthTabId = `cal-month-${uid}`;
 			</fieldset>
 		)}
 	</div>
+	</div>
 </section>
 
 <style>
 	.events-calendar {
-		background: #fff;
+		background: var(--color-bg);
 		padding: 80px 40px;
 		scroll-margin-top: 90px;
 	}
@@ -252,6 +282,15 @@ const monthTabId = `cal-month-${uid}`;
 	.section-inner {
 		max-width: var(--content-max);
 		margin: 0 auto;
+	}
+
+	/* Everything else on the site floats as a big rounded card by now — the calendar
+	   was the last section still a flat panel flush with the page background. */
+	.calendar-card {
+		background: #fff;
+		border-radius: var(--shape-extra-large);
+		box-shadow: var(--elevation-3);
+		padding: 48px 40px;
 	}
 
 	.calendar-header {
@@ -267,7 +306,7 @@ const monthTabId = `cal-month-${uid}`;
 		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: 34px;
-		color: var(--color-navy);
+		color: var(--color-royal-blue);
 		text-transform: uppercase;
 		margin: 0;
 	}
@@ -295,7 +334,7 @@ const monthTabId = `cal-month-${uid}`;
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
 		padding: 10px 20px;
-		border-radius: 999px;
+		border-radius: var(--shape-full);
 		white-space: nowrap;
 	}
 
@@ -316,8 +355,8 @@ const monthTabId = `cal-month-${uid}`;
 		justify-content: space-between;
 		flex-wrap: wrap;
 		gap: 8px 16px;
-		background: var(--color-bg);
-		border-radius: 10px;
+		background: var(--color-pink-container);
+		border-radius: var(--shape-small);
 		padding: 12px 18px;
 		margin-bottom: 18px;
 	}
@@ -326,7 +365,7 @@ const monthTabId = `cal-month-${uid}`;
 		font-family: var(--font-heading);
 		font-weight: 600;
 		font-size: 14px;
-		color: var(--color-navy);
+		color: var(--color-on-pink-container);
 		text-transform: capitalize;
 	}
 
@@ -379,10 +418,10 @@ const monthTabId = `cal-month-${uid}`;
 		font-size: 13px;
 		letter-spacing: 0.4px;
 		text-transform: uppercase;
-		color: var(--color-navy);
+		color: var(--color-royal-blue);
 		background: var(--color-bg);
 		border: 1px solid var(--color-border);
-		border-radius: 999px;
+		border-radius: var(--shape-small);
 		padding: 8px 22px;
 	}
 
@@ -411,24 +450,49 @@ const monthTabId = `cal-month-${uid}`;
 		display: block;
 	}
 
-	/* Agenda view — same row layout as the rest of the site's event lists. */
+	/* Agenda view — each event is its own tonal card (same elevation-card language as
+	   NewsCard/EventCard elsewhere) instead of a bare row separated by a border line. */
+	.agenda-content {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	/* The `hidden` attribute toggles which day's panel shows (see the script below) —
+	   author styles beat the UA's [hidden] rule on a specificity tie, so the flex
+	   display above would otherwise unhide every panel at once. */
+	.agenda-content[hidden] {
+		display: none;
+	}
+
 	.event-row {
 		display: flex;
 		align-items: center;
 		gap: 24px;
-		border-bottom: 1px solid var(--color-border);
-		padding: 22px 0;
+		background: var(--color-bg);
+		border-radius: var(--shape-medium);
+		padding: 18px 20px;
+		box-shadow: var(--elevation-1);
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
-	.event-row:first-child {
-		padding-top: 0;
+	/* Only linked cards (matched to an /eventi detail page — see archiveLinkFor above) lift on
+	   hover and show a pink arrow; unmatched cards stay flat so the arrow doesn't promise a click
+	   that goes nowhere. */
+	a.event-row:hover {
+		transform: translateY(-2px);
+		box-shadow: var(--elevation-2);
+	}
+
+	div.event-row {
+		cursor: default;
 	}
 
 	.event-date {
 		flex: 0 0 auto;
 		width: 64px;
-		background: var(--color-pink-dark);
-		border-radius: 10px;
+		background: var(--color-pink-container);
+		border-radius: var(--shape-small);
 		text-align: center;
 		padding: 10px 0;
 	}
@@ -437,13 +501,14 @@ const monthTabId = `cal-month-${uid}`;
 		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: 22px;
-		color: var(--color-gold);
+		color: var(--color-on-pink-container);
 		line-height: 1;
 	}
 
 	.event-month {
 		font-size: 11px;
-		color: #fff;
+		color: var(--color-on-pink-container);
+		opacity: 0.75;
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
 		margin-top: 2px;
@@ -458,7 +523,7 @@ const monthTabId = `cal-month-${uid}`;
 		font-family: var(--font-heading);
 		font-weight: 600;
 		font-size: 18px;
-		color: var(--color-navy);
+		color: var(--color-royal-blue);
 		margin-bottom: 4px;
 	}
 
@@ -468,8 +533,12 @@ const monthTabId = `cal-month-${uid}`;
 	}
 
 	.event-arrow {
-		color: var(--color-pink);
+		color: var(--color-muted);
 		font-size: 20px;
+	}
+
+	a.event-row .event-arrow {
+		color: var(--color-pink);
 	}
 
 	/* Month view — one big single month, navigable. */
@@ -495,7 +564,7 @@ const monthTabId = `cal-month-${uid}`;
 		border-radius: 50%;
 		background: var(--color-bg);
 		border: 1px solid var(--color-border);
-		color: var(--color-navy);
+		color: var(--color-royal-blue);
 		font-size: 22px;
 		line-height: 1;
 	}
@@ -510,7 +579,7 @@ const monthTabId = `cal-month-${uid}`;
 		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: 22px;
-		color: var(--color-navy);
+		color: var(--color-royal-blue);
 		text-transform: uppercase;
 		min-width: 220px;
 		text-align: center;
@@ -533,7 +602,7 @@ const monthTabId = `cal-month-${uid}`;
 	.day-cell {
 		min-height: 96px;
 		border: 1px solid var(--color-border);
-		border-radius: 8px;
+		border-radius: var(--shape-small);
 		padding: 8px;
 		display: flex;
 		flex-direction: column;
@@ -563,7 +632,7 @@ const monthTabId = `cal-month-${uid}`;
 	.day-number {
 		font-size: 14px;
 		font-weight: 600;
-		color: var(--color-navy);
+		color: var(--color-royal-blue);
 	}
 
 	.day-event {
@@ -571,7 +640,7 @@ const monthTabId = `cal-month-${uid}`;
 		line-height: 1.3;
 		color: var(--color-pink-dark);
 		background: #fff;
-		border-radius: 4px;
+		border-radius: var(--shape-extra-small);
 		padding: 2px 5px;
 		white-space: nowrap;
 		overflow: hidden;
@@ -591,6 +660,11 @@ const monthTabId = `cal-month-${uid}`;
 		.events-calendar {
 			padding-left: 20px;
 			padding-right: 20px;
+		}
+
+		.calendar-card {
+			border-radius: var(--shape-large);
+			padding: 28px 20px;
 		}
 
 		.section-title {

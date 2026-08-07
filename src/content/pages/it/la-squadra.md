@@ -69,6 +69,7 @@ blocks:
     title: "Commissioni Distrettuali"
     items:
       - name: "Azione Interna"
+        description: "[todo]"
         leadLabel: "Presidente"
         membersLabel: "Membro"
         lead:
@@ -80,6 +81,7 @@ blocks:
           - name: "Mario Alessio Benelli"
           - name: "Jessica Bontempi"
       - name: "Azione Professionale"
+        description: "[todo]"
         leadLabel: "Presidente"
         membersLabel: "Membro"
         lead:
@@ -91,6 +93,7 @@ blocks:
           - name: "Elisa Goi"
           - name: "Simone Costa"
       - name: "Azione di Pubblico Interesse"
+        description: "[todo]"
         leadLabel: "Presidente"
         membersLabel: "Membro"
         lead:
@@ -102,6 +105,7 @@ blocks:
           - name: "Mattia Festa"
           - name: "Clara Brugali"
       - name: "Azione Internazionale"
+        description: "[todo]"
         leadLabel: "Presidente"
         membersLabel: "Membro"
         lead:
@@ -112,11 +116,13 @@ blocks:
           - name: "Francesca Iembo"
           - name: "Benedetta Romani"
       - name: "Delegato E.R.I.C."
+        description: "[todo]"
         leadLabel: "Delegato"
         lead:
           name: "Leonardo Calori"
           email: "eric@rotaract2050.org"
       - name: "Azione Giovani"
+        description: "[todo]"
         leadLabel: "Presidente"
         membersLabel: "Membro"
         lead:
@@ -128,11 +134,13 @@ blocks:
           - name: "Mario Lamperti"
           - name: "Alma Lauricella"
       - name: "Delegato per lo Scambio Giovani"
+        description: "[todo]"
         leadLabel: "Delegato"
         lead:
           name: "Sofia Somenzi"
           email: "scambio.giovani@rotaract2050.org"
       - name: "Cultura"
+        description: "[todo]"
         leadLabel: "Presidente"
         membersLabel: "Membro"
         lead:
@@ -144,6 +152,7 @@ blocks:
           - name: "Daniele Brignani"
           - name: "Lucrezia Giuseppina Zandon"
       - name: "Immagine Pubblica"
+        description: "[todo]"
         leadLabel: "Presidente"
         membersLabel: "Membro"
         lead:
@@ -155,6 +164,7 @@ blocks:
           - name: "Marta Vincenzi"
           - name: "Filippo Cantini"
       - name: "Risoluzione Controversie, Regolamento e Bilancio"
+        description: "[todo]"
         leadLabel: "Presidente"
         membersLabel: "Membro"
         lead:
@@ -164,16 +174,19 @@ blocks:
           - name: "Alessandro Ginevra"
           - name: "Valeria Goi"
       - name: "Delegato IT"
+        description: "[todo]"
         leadLabel: "Delegato"
         lead:
           name: "Alessandro Gorla"
           email: "it@rotaract2050.org"
       - name: "Delegato per la Rotary Foundation"
+        description: "[todo]"
         leadLabel: "Delegato"
         lead:
           name: "Davide Cappello"
           email: "rotary.foundation@rotaract2050.org"
       - name: "Delegato per l'Interact"
+        description: "[todo]"
         leadLabel: "Delegato"
         lead:
           name: "Benedetta Gilardi"
