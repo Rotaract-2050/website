@@ -56,26 +56,27 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 ---
 
 <article class="event-entry" id={id} data-tina-field={tinaFieldAttr}>
-	<a class="event-media" href={href}>
-		{image ? (
-			<Image src={image} alt={imageLabel} width={480} height={270} quality="high" class="event-image" style={focalStyle} />
-		) : (
-			<ImageSlot label={imageLabel} class="event-image" />
-		)}
-	</a>
-	<div class="event-content">
-		{tags.length > 0 && (
-			<div class="event-tags">
+	<div class="event-media">
+		<a href={href} class="event-media-link">
+			{image ? (
+				<Image src={image} alt={imageLabel} width={480} height={270} quality="high" class="event-image" style={focalStyle} />
+			) : (
+				<ImageSlot label={imageLabel} class="event-image" />
+			)}
+		</a>
+		<div class="event-media-scrim" aria-hidden="true"></div>
+		{(upcoming || tags.length > 0) && (
+			<div class="event-badges">
+				{upcoming && <span class="event-upcoming-badge">{upcomingLabel}</span>}
 				{tags.map((tag) => (
 					<span class="event-tag" style={tagPillStyle(tag.color)}>{tag.label}</span>
 				))}
 			</div>
 		)}
+	</div>
+	<div class="event-content">
 		<h2 class="event-title"><a href={href}>{title}</a></h2>
-		<div class="event-meta">
-			{upcoming && <span class="event-upcoming-badge">{upcomingLabel}</span>}
-			{dateLabel}
-		</div>
+		<div class="event-meta">{dateLabel}</div>
 		{locationLavori && locationCena ? (
 			<>
 				<div class="event-meta event-location"><span class="event-location-label">{worksLocationLabel}:</span> {locationLavori}</div>
@@ -105,24 +106,34 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 </article>
 
 <style>
+	/* Same photo-forward material card as NewsCard: badges float on the image over a
+	   scrim, the whole entry is an elevated tonal card instead of a border-separated
+	   row, image zooms on hover. */
 	.event-entry {
 		display: grid;
 		grid-template-columns: 320px 1fr;
-		gap: 32px;
-		padding: 36px 0;
-		border-bottom: 1px solid var(--color-border);
+		gap: 28px;
+		align-items: center;
+		background: var(--color-bg);
+		border-radius: var(--shape-large);
+		padding: 20px;
+		box-shadow: var(--elevation-1);
 		scroll-margin-top: 90px;
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
-	.event-entry:first-child {
-		padding-top: 0;
-	}
-
-	.event-entry:last-child {
-		border-bottom: 0;
+	.event-entry:hover {
+		transform: translateY(-4px);
+		box-shadow: var(--elevation-3);
 	}
 
 	.event-media {
+		position: relative;
+		border-radius: var(--shape-medium);
+		overflow: hidden;
+	}
+
+	.event-media-link {
 		display: block;
 	}
 
@@ -131,30 +142,47 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 		height: 200px;
 		object-fit: cover;
 		object-position: var(--focal-x, 50%) var(--focal-y, 50%);
-		border-radius: var(--shape-medium);
+		transition: transform var(--motion-duration-long) var(--motion-easing-emphasized);
+	}
+
+	.event-entry:hover :global(.event-image) {
+		transform: scale(1.06);
+	}
+
+	.event-media-scrim {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(180deg, rgba(11, 37, 69, 0.5) 0%, rgba(11, 37, 69, 0) 45%);
+		pointer-events: none;
+	}
+
+	.event-badges {
+		position: absolute;
+		top: 12px;
+		left: 12px;
+		right: 12px;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
 	}
 
 	.event-content {
 		min-width: 0;
 	}
 
-	.event-tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 6px;
-		margin-bottom: 12px;
-	}
-
 	.event-tag {
 		display: inline-block;
-		background: var(--tag-bg, rgba(212, 19, 103, 0.1));
+		background: var(--tag-bg, rgba(255, 255, 255, 0.85));
 		color: var(--tag-color, var(--color-pink));
 		font-size: 11px;
 		font-weight: 700;
 		letter-spacing: 0.5px;
 		text-transform: uppercase;
-		padding: 4px 10px;
+		padding: 5px 11px;
 		border-radius: var(--shape-small);
+		backdrop-filter: blur(6px);
+		-webkit-backdrop-filter: blur(6px);
+		box-shadow: var(--elevation-1);
 	}
 
 	.event-title {
@@ -170,7 +198,7 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 		color: inherit;
 	}
 
-	.event-title a:hover {
+	.event-entry:hover .event-title a {
 		color: var(--color-pink);
 	}
 
@@ -203,9 +231,9 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 		font-weight: 700;
 		font-size: 11px;
 		letter-spacing: 0.5px;
-		padding: 3px 9px;
+		padding: 5px 11px;
 		border-radius: var(--shape-small);
-		margin-right: 8px;
+		box-shadow: var(--elevation-1);
 	}
 
 	.event-excerpt {
@@ -261,8 +289,9 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 	@media (max-width: 720px) {
 		.event-entry {
 			grid-template-columns: 1fr;
-			gap: 18px;
-			padding: 28px 0;
+			gap: 16px;
+			padding: 16px;
+			border-radius: var(--shape-medium);
 		}
 	}
 </style>
