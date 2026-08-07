@@ -123,7 +123,12 @@ const organizationGraph = buildOrganizationGraph(
 					}
 				}
 			},
-			{ threshold: 0.12, rootMargin: '0px 0px -10% 0px' }
+			// threshold: 0.12 + a shrunk root worked for short sections, but a tall one (e.g.
+			// CommitteeGrid's stacked commission cards) needs 12% of its own height scrolled
+			// into view before it fires — long enough that you'd scroll past still-invisible
+			// content first. Fire on the first visible pixel instead, so reveal never lags
+			// behind scroll regardless of how tall the target is.
+			{ threshold: 0, rootMargin: '0px 0px 0px 0px' }
 		);
 
 		els.forEach((el) => observer.observe(el));
