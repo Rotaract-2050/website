@@ -75,6 +75,16 @@ export async function getDistrictEvents(options?: { calendarId?: string; forceRe
 	}
 }
 
+/** Calendar date (Europe/Rome) of a JS `Date`, as a YYYY-MM-DD key — shared with `src/lib/events.ts` so an `events` collection date and a Google Calendar date compare as the same key on the same day. */
+export function dateKeyEuropeRome(date: Date): string {
+	return new Intl.DateTimeFormat('en-CA', {
+		timeZone: 'Europe/Rome',
+		year: 'numeric',
+		month: '2-digit',
+		day: '2-digit',
+	}).format(date);
+}
+
 /** Local calendar date (Europe/Rome) of an event, as a YYYY-MM-DD key for grouping into day cells. */
 export function eventDateKey(event: DistrictEvent): string {
 	if (event.allDay) {
@@ -83,10 +93,5 @@ export function eventDateKey(event: DistrictEvent): string {
 		const d = String(event.start.getDate()).padStart(2, '0');
 		return `${y}-${m}-${d}`;
 	}
-	return new Intl.DateTimeFormat('en-CA', {
-		timeZone: 'Europe/Rome',
-		year: 'numeric',
-		month: '2-digit',
-		day: '2-digit',
-	}).format(event.start);
+	return dateKeyEuropeRome(event.start);
 }

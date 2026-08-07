@@ -24,7 +24,7 @@ const { label, shape = 'rect', class: className } = Astro.props;
 		position: relative;
 		overflow: hidden;
 		background: rgba(11, 37, 69, 0.06);
-		color: #9aa3b2;
+		color: var(--color-muted);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -50,7 +50,7 @@ const { label, shape = 'rect', class: className } = Astro.props;
 	}
 
 	.shape-rounded {
-		border-radius: 16px;
+		border-radius: var(--shape-large);
 	}
 
 	.shape-circle {

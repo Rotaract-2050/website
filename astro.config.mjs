@@ -1,16 +1,21 @@
 // @ts-check
-import { readdirSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
+import matter from 'gray-matter';
 import { defineConfig } from 'astro/config';
 import netlify from '@astrojs/netlify';
 import sitemap from '@astrojs/sitemap';
 import tina from '@tinacms/astro/integration';
 import react from '@astrojs/react';
+import { pageSlugs } from './src/data/routes';
 
 const SITE = 'https://rotaract2050.org';
 // Every page is server-rendered (required for Tina's edit-mode middleware), so there
 // are no prerendered routes for @astrojs/sitemap to auto-discover — list them explicitly.
-const PAGE_SLUGS = ['', 'distretto', 'club', 'la-squadra', 'materiali'];
+// Derived from the canonical slug registry (src/data/routes.ts) instead of a second
+// hand-maintained array, so a new `pages` document can't silently go missing from the sitemap.
+const PAGE_SLUGS = Object.values(pageSlugs);
 
 const newsSlugs = readdirSync(fileURLToPath(new URL('./src/content/news', import.meta.url)))
 	.filter((file) => file.endsWith('.md'))
@@ -20,12 +25,19 @@ const clubSlugs = readdirSync(fileURLToPath(new URL('./src/content/clubs', impor
 	.filter((file) => file.endsWith('.md'))
 	.map((file) => file.replace(/\.md$/, ''));
 
+// `visible: false` events (drafts) are excluded from the archive list (see getArchiveEvents() in
+// src/lib/events.ts) and must stay out of the sitemap for the same reason.
+const eventsDir = fileURLToPath(new URL('./src/content/events', import.meta.url));
+const eventSlugs = readdirSync(eventsDir)
+	.filter((file) => file.endsWith('.md'))
+	.filter((file) => matter(readFileSync(join(eventsDir, file), 'utf-8')).data.visible !== false)
+	.map((file) => file.replace(/\.md$/, ''));
+
 const customPages = [
 	...PAGE_SLUGS.flatMap((slug) => [`${SITE}/${slug}`, `${SITE}/en/${slug}`]),
-	`${SITE}/news`,
-	`${SITE}/en/news`,
 	...newsSlugs.flatMap((slug) => [`${SITE}/news/${slug}`, `${SITE}/en/news/${slug}`]),
 	...clubSlugs.flatMap((slug) => [`${SITE}/club/${slug}`, `${SITE}/en/club/${slug}`]),
+	...eventSlugs.flatMap((slug) => [`${SITE}/eventi/${slug}`, `${SITE}/en/eventi/${slug}`]),
 ];
 
 // @tinacms/astro ships its own dev-time auto-reload plugin, but it only watches

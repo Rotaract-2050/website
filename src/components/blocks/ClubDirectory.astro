@@ -46,7 +46,7 @@ const zoneGroups = zones.map((zone) => ({
 				{zone.description && <p class="zone-description" data-tina-field={zone.descriptionFieldAttr}>{zone.description}</p>}
 				<div class="club-grid">
 					{zone.clubs.map((club) => (
-						<div class="club-card" data-tina-field={tinaField(club)}>
+						<div class="club-card" data-tina-field={tinaField(club)} style={zone.color ? `--tint:${zone.color};` : undefined}>
 							<div class="club-body">
 								<a href={getRelativeLocaleUrl(lang, `club/${club._sys.filename}`)} class="club-link">
 									<div class="club-name">{club.name}</div>
@@ -146,18 +146,21 @@ const zoneGroups = zones.map((zone) => ({
 		gap: 18px;
 	}
 
+	/* Tinted by the club's own zone color (--tint), same tonal pattern as the Home
+	   zone cards — the zone grouping reads through the card, not just the heading. */
 	.club-card {
 		position: relative;
 		display: block;
-		background: var(--color-bg);
-		border-radius: 12px;
+		background: color-mix(in srgb, var(--tint, var(--color-navy)) 10%, white);
+		border-radius: var(--shape-large);
 		overflow: hidden;
-		box-shadow: 0 4px 16px rgba(11, 37, 69, 0.07);
-		transition: box-shadow 0.2s ease;
+		box-shadow: var(--elevation-1);
+		transition: box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized), transform var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
 	.club-card:hover {
-		box-shadow: 0 8px 24px rgba(11, 37, 69, 0.12);
+		box-shadow: var(--elevation-2);
+		transform: translateY(-4px);
 	}
 
 	.club-body {

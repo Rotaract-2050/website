@@ -3,6 +3,8 @@ import { getRelativeLocaleUrl } from 'astro:i18n';
 import type { Lang } from '../data/ui-strings';
 import { uiStrings } from '../data/ui-strings';
 import { pageSlugs } from '../data/routes';
+import JsonLd from './JsonLd.astro';
+import { buildBreadcrumbList } from '../lib/jsonld';
 
 interface Props {
 	lang: Lang;
@@ -15,10 +17,16 @@ interface Props {
 const { lang, eyebrow, title, breadcrumbCurrent, titleField } = Astro.props;
 const t = uiStrings[lang];
 const homeHref = getRelativeLocaleUrl(lang, pageSlugs.home);
+const breadcrumbJsonLd = buildBreadcrumbList([
+	{ name: t.breadcrumbHome, url: new URL(homeHref, Astro.site).toString() },
+	{ name: breadcrumbCurrent, url: new URL(Astro.url.pathname, Astro.site).toString() },
+]);
 ---
 
+<JsonLd data={breadcrumbJsonLd} />
 <div class="page-banner">
-	<div class="banner-inner">
+	<div class="banner-card">
+		<span class="mark" aria-hidden="true">2050</span>
 		<div class="breadcrumb">
 			<a href={homeHref}>{t.breadcrumbHome}</a> / {breadcrumbCurrent}
 		</div>
@@ -28,17 +36,41 @@ const homeHref = getRelativeLocaleUrl(lang, pageSlugs.home);
 </div>
 
 <style>
+	/* Same big-rounded-card language as the Home hero, applied to every inner page's
+	   banner instead of a flat full-bleed band. */
 	.page-banner {
-		background: var(--color-pink-dark);
-		padding: 56px 40px;
+		background: var(--color-bg);
+		padding: 32px 40px;
 	}
 
-	.banner-inner {
+	.banner-card {
+		position: relative;
+		overflow: hidden;
 		max-width: var(--content-max);
 		margin: 0 auto;
+		background: var(--color-pink);
+		border-radius: var(--shape-extra-large);
+		box-shadow: var(--elevation-3);
+		padding: 72px 48px;
+	}
+
+	/* Signature mark: the district's own number, echoed faintly on every inner page —
+	   a quiet recurring identity cue rather than a one-off decoration. */
+	.mark {
+		position: absolute;
+		right: -0.1em;
+		bottom: -0.22em;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: clamp(6rem, 18vw, 12rem);
+		line-height: 1;
+		color: rgba(255, 255, 255, 0.1);
+		pointer-events: none;
+		user-select: none;
 	}
 
 	.breadcrumb {
+		position: relative;
 		font-size: 13px;
 		color: rgba(255, 255, 255, 0.6);
 		margin-bottom: 16px;
@@ -53,6 +85,7 @@ const homeHref = getRelativeLocaleUrl(lang, pageSlugs.home);
 	}
 
 	.eyebrow {
+		position: relative;
 		color: #fff;
 		font-weight: 700;
 		font-size: 13px;
@@ -62,11 +95,27 @@ const homeHref = getRelativeLocaleUrl(lang, pageSlugs.home);
 	}
 
 	.title {
+		position: relative;
 		font-family: var(--font-heading);
 		font-weight: 700;
-		font-size: 42px;
+		font-size: 52px;
 		color: #fff;
 		text-transform: uppercase;
 		margin: 0;
+	}
+
+	@media (max-width: 720px) {
+		.page-banner {
+			padding: 16px 16px 0;
+		}
+
+		.banner-card {
+			border-radius: var(--shape-large);
+			padding: 40px 24px;
+		}
+
+		.title {
+			font-size: 34px;
+		}
 	}
 </style>

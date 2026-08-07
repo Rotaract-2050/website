@@ -14,21 +14,24 @@ interface Props {
 	excerpt: string;
 	dateLabel: string;
 	yearLabel: string;
+	showDate?: boolean;
+	showYear?: boolean;
 	tinaFieldAttr?: string;
 }
 
-const { href, image, imageFocalX, imageFocalY, imageLabel, tags = [], title, excerpt, dateLabel, yearLabel, tinaFieldAttr } = Astro.props;
+const { href, image, imageFocalX, imageFocalY, imageLabel, tags = [], title, excerpt, dateLabel, yearLabel, showDate = true, showYear = true, tinaFieldAttr } = Astro.props;
 const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 50}%;`;
 ---
 
 <article class="news-card" data-tina-field={tinaFieldAttr}>
 	<a href={href} class="news-link">
-		{image ? (
-			<Image src={image} alt={imageLabel} width={400} height={170} quality="high" class="news-image" style={focalStyle} />
-		) : (
-			<ImageSlot label={imageLabel} class="news-image" />
-		)}
-		<div class="news-body">
+		<div class="news-media">
+			{image ? (
+				<Image src={image} alt={imageLabel} width={400} height={170} quality="high" class="news-image" style={focalStyle} />
+			) : (
+				<ImageSlot label={imageLabel} class="news-image" />
+			)}
+			<div class="news-media-scrim" aria-hidden="true"></div>
 			{tags.length > 0 && (
 				<div class="news-tags">
 					{tags.map((tag) => (
@@ -36,9 +39,17 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 					))}
 				</div>
 			)}
+		</div>
+		<div class="news-body">
 			<h3 class="news-title">{title}</h3>
 			<p class="news-excerpt">{excerpt}</p>
-			<div class="news-date">{dateLabel} · {yearLabel}</div>
+			{(showDate || showYear) && (
+				<div class="news-date">
+					{showDate && dateLabel}
+					{showDate && showYear && ' · '}
+					{showYear && yearLabel}
+				</div>
+			)}
 		</div>
 	</a>
 </article>
@@ -46,15 +57,15 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 <style>
 	.news-card {
 		background: #fff;
-		border-radius: 14px;
+		border-radius: var(--shape-extra-large);
 		overflow: hidden;
-		box-shadow: 0 4px 16px rgba(11, 37, 69, 0.07);
-		transition: transform 0.25s ease, box-shadow 0.25s ease;
+		box-shadow: var(--elevation-1);
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
 	.news-card:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 10px 28px rgba(11, 37, 69, 0.14);
+		transform: translateY(-8px) scale(1.015);
+		box-shadow: var(--elevation-4);
 	}
 
 	.news-link {
@@ -62,56 +73,98 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 		color: inherit;
 	}
 
-	.news-card :global(.news-image) {
-		width: 100%;
-		height: 170px;
-		object-fit: cover;
-		object-position: var(--focal-x, 50%) var(--focal-y, 50%);
+	/* Photo-forward "material" card: tags float as glass chips on the image instead of
+	   sitting in the text block, with a scrim so they stay legible over any photo. */
+	.news-media {
+		position: relative;
 	}
 
-	.news-body {
-		padding: 20px;
+	.news-card :global(.news-image) {
+		width: 100%;
+		height: 216px;
+		object-fit: cover;
+		object-position: var(--focal-x, 50%) var(--focal-y, 50%);
+		transition: transform var(--motion-duration-long) var(--motion-easing-emphasized);
+	}
+
+	.news-card:hover :global(.news-image) {
+		transform: scale(1.06);
+	}
+
+	.news-media-scrim {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(180deg, rgba(11, 37, 69, 0.5) 0%, rgba(11, 37, 69, 0) 45%);
+		pointer-events: none;
 	}
 
 	.news-tags {
+		position: absolute;
+		top: 16px;
+		left: 16px;
+		right: 16px;
 		display: flex;
 		flex-wrap: wrap;
 		gap: 6px;
-		margin-bottom: 12px;
 	}
 
 	.news-tag {
 		display: inline-block;
-		background: var(--tag-bg, rgba(212, 19, 103, 0.1));
+		background: var(--tag-bg, rgba(255, 255, 255, 0.85));
 		color: var(--tag-color, var(--color-pink));
 		font-size: 11px;
 		font-weight: 700;
 		letter-spacing: 0.5px;
 		text-transform: uppercase;
-		padding: 4px 10px;
-		border-radius: 999px;
+		padding: 6px 12px;
+		border-radius: var(--shape-small);
+		backdrop-filter: blur(6px);
+		-webkit-backdrop-filter: blur(6px);
+		box-shadow: var(--elevation-1);
+	}
+
+	.news-body {
+		padding: 24px;
 	}
 
 	.news-title {
 		font-family: var(--font-heading);
-		font-weight: 600;
-		font-size: 17px;
+		font-weight: 700;
+		font-size: 19px;
 		color: var(--color-navy);
 		line-height: 1.3;
-		margin: 0 0 8px;
+		margin: 0 0 10px;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		transition: color var(--motion-duration-short) var(--motion-easing-standard);
+	}
+
+	.news-card:hover .news-title {
+		color: var(--color-pink);
 	}
 
 	.news-excerpt {
 		font-size: 14px;
 		color: var(--color-text);
-		line-height: 1.5;
-		margin: 0 0 12px;
+		line-height: 1.55;
+		margin: 0 0 16px;
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
 	}
 
 	.news-date {
+		display: inline-block;
+		background: var(--color-bg);
 		font-size: 12px;
+		font-weight: 600;
 		color: var(--color-muted);
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
+		padding: 5px 12px;
+		border-radius: var(--shape-small);
 	}
 </style>

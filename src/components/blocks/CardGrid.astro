@@ -16,8 +16,13 @@ const { lang, title, items } = Astro.props;
 		<h2 class="section-title center">{title}</h2>
 		<div class="card-row">
 			{items.map((item) => (
-				<a href={getRelativeLocaleUrl(lang, item.href)} class="card" data-tina-field={item.tinaFieldAttr}>
-					<div class="card-title" style={item.color ? `background-color: ${item.color};` : undefined}>{item.title}</div>
+				<a
+					href={getRelativeLocaleUrl(lang, item.href)}
+					class="card"
+					data-tina-field={item.tinaFieldAttr}
+					style={item.color ? `--tint:${item.color};` : undefined}
+				>
+					<div class="card-title">{item.title}</div>
 					<div class="card-meta">{item.meta}</div>
 				</a>
 			))}
@@ -28,7 +33,7 @@ const { lang, title, items } = Astro.props;
 <style>
 	.card-grid {
 		background: var(--color-bg);
-		padding: 80px 40px;
+		padding: 96px 40px;
 	}
 
 	.section-inner {
@@ -47,56 +52,64 @@ const { lang, title, items } = Astro.props;
 
 	.section-title.center {
 		text-align: center;
-		font-size: 28px;
+		font-size: 32px;
 	}
 
 	.card-row {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
-		gap: 20px;
+		gap: 24px;
 		overflow-x: auto;
 		padding-bottom: 10px;
 	}
 
+	/* Big M3 tonal container per card, tinted by the item's own color (--tint) instead of
+	   a small colored label pill on a white card — the color IS the surface now. */
 	.card {
+		--tint: var(--color-navy);
 		flex: 0 0 auto;
-		min-width: 200px;
-		background: #fff;
-		border-radius: 14px;
-		box-shadow: 0 4px 16px rgba(11, 37, 69, 0.07);
-		padding: 24px 20px;
+		width: 240px;
+		background: color-mix(in srgb, var(--tint) 14%, white);
+		border-radius: var(--shape-extra-large);
+		box-shadow: var(--elevation-1);
+		padding: 40px 28px;
 		text-align: center;
 		color: inherit;
-		transition: transform 0.25s ease, box-shadow 0.25s ease;
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
 	.card:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 8px 24px rgba(11, 37, 69, 0.12);
+		transform: translateY(-6px) scale(1.02);
+		box-shadow: var(--elevation-3);
 	}
 
 	.card-title {
 		font-family: var(--font-heading);
-		font-weight: 600;
-		font-size: 15px;
-		color: #fff;
-		background-color: var(--color-navy);
-		display: inline-block;
-		border-radius: 999px;
-		padding: 6px 20px;
-		margin: 0 0 10px;
+		font-weight: 700;
+		font-size: 26px;
+		color: color-mix(in srgb, var(--tint) 80%, black 25%);
+		text-transform: uppercase;
+		margin: 0 0 8px;
 	}
 
 	.card-meta {
-		font-size: 13px;
-		color: var(--color-text);
+		font-size: 14px;
+		font-weight: 600;
+		letter-spacing: 0.3px;
+		color: color-mix(in srgb, var(--tint) 80%, black 25%);
+		opacity: 0.75;
 	}
 
 	@media (max-width: 720px) {
 		.card-grid {
 			padding-left: 20px;
 			padding-right: 20px;
+		}
+
+		.card {
+			width: 100%;
+			max-width: 280px;
 		}
 	}
 </style>

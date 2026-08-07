@@ -69,6 +69,7 @@ blocks:
     title: "District Committees"
     items:
       - name: "Internal Action"
+        description: "[todo]"
         leadLabel: "Chair"
         membersLabel: "Member"
         lead:
@@ -80,6 +81,7 @@ blocks:
           - name: "Mario Alessio Benelli"
           - name: "Jessica Bontempi"
       - name: "Professional Action"
+        description: "[todo]"
         leadLabel: "Chair"
         membersLabel: "Member"
         lead:
@@ -91,6 +93,7 @@ blocks:
           - name: "Elisa Goi"
           - name: "Simone Costa"
       - name: "Public Interest Action"
+        description: "[todo]"
         leadLabel: "Chair"
         membersLabel: "Member"
         lead:
@@ -102,6 +105,7 @@ blocks:
           - name: "Mattia Festa"
           - name: "Clara Brugali"
       - name: "International Action"
+        description: "[todo]"
         leadLabel: "Chair"
         membersLabel: "Member"
         lead:
@@ -112,11 +116,13 @@ blocks:
           - name: "Francesca Iembo"
           - name: "Benedetta Romani"
       - name: "E.R.I.C. Delegate"
+        description: "[todo]"
         leadLabel: "Delegate"
         lead:
           name: "Leonardo Calori"
           email: "eric@rotaract2050.org"
       - name: "Youth Action"
+        description: "[todo]"
         leadLabel: "Chair"
         membersLabel: "Member"
         lead:
@@ -128,11 +134,13 @@ blocks:
           - name: "Mario Lamperti"
           - name: "Alma Lauricella"
       - name: "Youth Exchange Delegate"
+        description: "[todo]"
         leadLabel: "Delegate"
         lead:
           name: "Sofia Somenzi"
           email: "scambio.giovani@rotaract2050.org"
       - name: "Culture"
+        description: "[todo]"
         leadLabel: "Chair"
         membersLabel: "Member"
         lead:
@@ -144,6 +152,7 @@ blocks:
           - name: "Daniele Brignani"
           - name: "Lucrezia Giuseppina Zandon"
       - name: "Public Image"
+        description: "[todo]"
         leadLabel: "Chair"
         membersLabel: "Member"
         lead:
@@ -155,6 +164,7 @@ blocks:
           - name: "Marta Vincenzi"
           - name: "Filippo Cantini"
       - name: "Dispute Resolution, Bylaws and Budget"
+        description: "[todo]"
         leadLabel: "Chair"
         membersLabel: "Member"
         lead:
@@ -164,16 +174,19 @@ blocks:
           - name: "Alessandro Ginevra"
           - name: "Valeria Goi"
       - name: "IT Delegate"
+        description: "[todo]"
         leadLabel: "Delegate"
         lead:
           name: "Alessandro Gorla"
           email: "it@rotaract2050.org"
       - name: "Rotary Foundation Delegate"
+        description: "[todo]"
         leadLabel: "Delegate"
         lead:
           name: "Davide Cappello"
           email: "rotary.foundation@rotaract2050.org"
       - name: "Interact Delegate"
+        description: "[todo]"
         leadLabel: "Delegate"
         lead:
           name: "Benedetta Gilardi"

@@ -2,15 +2,17 @@
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { tinaField } from '@tinacms/astro';
 import NewsCard from '../NewsCard.astro';
-import { getDistrictNews, localizeNews, newsSlug, newsTagLabels, rotaryYearLabel } from '../../lib/news';
+import { getDistrictNews, localizeNews, newsSlug, newsTagLabels, newsDateLabel, rotaryYearLabel } from '../../lib/news';
 import { uiStrings, type Lang } from '../../data/ui-strings';
 
 interface Props {
 	lang: Lang;
 	emptyMessage?: string;
+	showDate?: boolean;
+	showYear?: boolean;
 }
 
-const { lang, emptyMessage } = Astro.props;
+const { lang, emptyMessage, showDate = true, showYear = true } = Astro.props;
 const t = uiStrings[lang];
 
 const articles = await getDistrictNews();
@@ -37,8 +39,10 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-US',
 							tags={newsTagLabels(article)}
 							title={localized.title}
 							excerpt={localized.excerpt}
-							dateLabel={dateFormatter.format(new Date(article.date)).toUpperCase()}
+							dateLabel={newsDateLabel(article, dateFormatter)}
 							yearLabel={rotaryYearLabel(article.date)}
+							showDate={showDate}
+							showYear={showYear}
 							tinaFieldAttr={tinaField(article)}
 						/>
 					);

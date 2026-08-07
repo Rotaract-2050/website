@@ -38,23 +38,25 @@ const focalStyle = `--focal-x:${photoFocalX ?? 50}%;--focal-y:${photoFocalY ?? 5
 
 <style>
 	.person-card {
-		background: var(--color-bg);
-		border-radius: 14px;
-		padding: 26px 18px;
+		background: var(--color-navy-container);
+		border-radius: var(--shape-large);
+		padding: 28px 20px;
 		text-align: center;
-		transition: transform 0.25s ease, box-shadow 0.25s ease;
+		box-shadow: var(--elevation-1);
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
 	.person-card[data-size='lg'] {
 		background: var(--color-pink);
 		padding: 40px 30px;
-		border-radius: 18px;
+		border-radius: var(--shape-large);
+		/* Deliberate pink-tinted glow for the featured role, not a neutral elevation level. */
 		box-shadow: 0 14px 34px rgba(212, 19, 103, 0.28);
 	}
 
 	.person-card:hover {
 		transform: translateY(-4px);
-		box-shadow: 0 10px 24px rgba(11, 37, 69, 0.12);
+		box-shadow: var(--elevation-2);
 	}
 
 	.person-avatar {

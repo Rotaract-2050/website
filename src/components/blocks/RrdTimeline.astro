@@ -85,7 +85,7 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		bottom: 0;
 		width: 6px;
 		background: var(--color-border);
-		border-radius: 999px;
+		border-radius: var(--shape-full);
 		transform: translateX(-50%);
 	}
 
@@ -143,9 +143,14 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		display: flex;
 		flex-direction: column;
 		gap: 6px;
-		background: var(--color-bg);
-		border-radius: 16px;
-		padding: 22px 26px;
+		background: var(--color-pink-container);
+		border-radius: var(--shape-large);
+		padding: 26px 30px;
+		box-shadow: var(--elevation-1);
+	}
+
+	.timeline-item.is-current .timeline-card {
+		background: var(--color-gold-container);
 	}
 
 	.timeline-item:nth-child(odd) .timeline-card {
@@ -212,7 +217,7 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		letter-spacing: 0.8px;
 		text-transform: uppercase;
 		padding: 8px 22px;
-		border-radius: 999px;
+		border-radius: var(--shape-full);
 		box-shadow: 0 0 0 6px #fff;
 	}
 

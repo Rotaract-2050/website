@@ -12,6 +12,7 @@ import {
 	yearLabelSlug,
 } from '../../lib/events';
 import { uiStrings, type Lang } from '../../data/ui-strings';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 interface Props {
 	lang: Lang;
@@ -44,6 +45,7 @@ const activeYear =
 
 <section class="archive" id="archivio-eventi">
 	<div class="archive-inner">
+	<div class="archive-card">
 		{yearGroups.length === 0 ? (
 			<p class="events-empty">{emptyMessage || t.events.empty}</p>
 		) : (
@@ -69,6 +71,7 @@ const activeYear =
 							return (
 								<EventCard
 									id={eventSlug(event)}
+									href={getRelativeLocaleUrl(lang, `eventi/${eventSlug(event)}`)}
 									image={event.image}
 									imageFocalX={event.imageFocalX}
 									imageFocalY={event.imageFocalY}
@@ -97,10 +100,12 @@ const activeYear =
 			</div>
 		)}
 	</div>
+	</div>
 </section>
 
 <style>
 	.archive {
+		background: var(--color-bg);
 		padding: 70px 40px 90px;
 		scroll-margin-top: 90px;
 	}
@@ -108,6 +113,28 @@ const activeYear =
 	.archive-inner {
 		max-width: var(--content-max);
 		margin: 0 auto;
+	}
+
+	/* Everything else on the site floats as a big rounded card by now — this was still
+	   flush with the page background (same fix as EventsCalendar's .calendar-card). */
+	.archive-card {
+		background: #fff;
+		border-radius: var(--shape-extra-large);
+		box-shadow: var(--elevation-3);
+		padding: 48px 40px;
+	}
+
+	.year-panel {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
+
+	/* Author styles beat the UA's [hidden] rule on a specificity tie — without this, the
+	   flex display above would unhide every year's panel at once (same bug caught and
+	   fixed in EventsCalendar's .agenda-content). */
+	.year-panel[hidden] {
+		display: none;
 	}
 
 	.events-empty {
@@ -132,7 +159,7 @@ const activeYear =
 		color: var(--color-navy);
 		background: var(--color-bg);
 		border: 1px solid var(--color-border);
-		border-radius: 999px;
+		border-radius: var(--shape-small);
 		padding: 8px 22px;
 	}
 
@@ -149,6 +176,11 @@ const activeYear =
 	@media (max-width: 720px) {
 		.archive {
 			padding: 50px 20px 70px;
+		}
+
+		.archive-card {
+			border-radius: var(--shape-large);
+			padding: 28px 20px;
 		}
 	}
 </style>

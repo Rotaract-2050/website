@@ -2,6 +2,7 @@ import { requestWithMetadata } from '@tinacms/astro';
 import client from '../../tina/__generated__/client';
 import type { EventsConnectionQuery } from '../../tina/__generated__/types';
 import type { Lang } from '../data/ui-strings';
+import { dateKeyEuropeRome } from './calendar';
 import { clubTagLabels, rotaryYearLabel, type NewsTag } from './news';
 
 type EventEdge = NonNullable<EventsConnectionQuery['eventsConnection']['edges']>[number];
@@ -20,6 +21,15 @@ export function eventTags(event: Pick<DistrictEvent, 'clubs' | 'eventType'>): Ne
 /** Slug for an event, e.g. `passaggio-consegne-2026.md` -> `passaggio-consegne-2026`. */
 export function eventSlug(event: Pick<DistrictEvent, '_sys'>): string {
 	return event._sys.breadcrumbs.join('/');
+}
+
+/**
+ * Calendar day (Europe/Rome, `YYYY-MM-DD`) used to match this event against a Google Calendar
+ * entry in `EventsCalendar.astro` — `calendarDate` overrides `date` when the socio needs to fix a
+ * mismatch or disambiguate two events on the same day (see `tina/config.ts`'s `calendarDate` field).
+ */
+export function eventCalendarDayKey(event: Pick<DistrictEvent, 'date' | 'calendarDate'>): string {
+	return dateKeyEuropeRome(new Date(event.calendarDate || event.date));
 }
 
 /**
