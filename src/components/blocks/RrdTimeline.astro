@@ -143,9 +143,14 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		display: flex;
 		flex-direction: column;
 		gap: 6px;
-		background: var(--color-bg);
+		background: var(--color-pink-container);
 		border-radius: var(--shape-large);
-		padding: 22px 26px;
+		padding: 26px 30px;
+		box-shadow: var(--elevation-1);
+	}
+
+	.timeline-item.is-current .timeline-card {
+		background: var(--color-gold-container);
 	}
 
 	.timeline-item:nth-child(odd) .timeline-card {

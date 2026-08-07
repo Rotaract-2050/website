@@ -25,7 +25,7 @@ const breadcrumbJsonLd = buildBreadcrumbList([
 
 <JsonLd data={breadcrumbJsonLd} />
 <div class="page-banner">
-	<div class="banner-inner">
+	<div class="banner-card">
 		<div class="breadcrumb">
 			<a href={homeHref}>{t.breadcrumbHome}</a> / {breadcrumbCurrent}
 		</div>
@@ -35,14 +35,21 @@ const breadcrumbJsonLd = buildBreadcrumbList([
 </div>
 
 <style>
+	/* Same big-rounded-card language as the Home hero, applied to every inner page's
+	   banner instead of a flat full-bleed band — navy here (not pink) so it reads as
+	   its own thing rather than a smaller copy of the hero. */
 	.page-banner {
-		background: var(--color-pink-dark);
-		padding: 56px 40px;
+		background: var(--color-bg);
+		padding: 32px 40px;
 	}
 
-	.banner-inner {
+	.banner-card {
 		max-width: var(--content-max);
 		margin: 0 auto;
+		background: var(--color-navy);
+		border-radius: var(--shape-extra-large);
+		box-shadow: var(--elevation-3);
+		padding: 72px 48px;
 	}
 
 	.breadcrumb {
@@ -71,9 +78,24 @@ const breadcrumbJsonLd = buildBreadcrumbList([
 	.title {
 		font-family: var(--font-heading);
 		font-weight: 700;
-		font-size: 42px;
+		font-size: 52px;
 		color: #fff;
 		text-transform: uppercase;
 		margin: 0;
+	}
+
+	@media (max-width: 720px) {
+		.page-banner {
+			padding: 16px 16px 0;
+		}
+
+		.banner-card {
+			border-radius: var(--shape-large);
+			padding: 40px 24px;
+		}
+
+		.title {
+			font-size: 34px;
+		}
 	}
 </style>

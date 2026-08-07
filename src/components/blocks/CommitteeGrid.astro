@@ -108,7 +108,16 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 	.committee-list {
 		display: flex;
 		flex-direction: column;
-		gap: 48px;
+		gap: 32px;
+	}
+
+	/* Each committee becomes its own big rounded surface instead of a bare heading +
+	   rows floating on the page background — the "everything is a card" pattern used
+	   everywhere else on the site now. */
+	.committee {
+		background: var(--color-bg);
+		border-radius: var(--shape-extra-large);
+		padding: 40px 32px;
 	}
 
 	.committee-name {
@@ -142,6 +151,11 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		.committees {
 			padding-left: 20px;
 			padding-right: 20px;
+		}
+
+		.committee {
+			border-radius: var(--shape-large);
+			padding: 28px 20px;
 		}
 	}
 </style>
