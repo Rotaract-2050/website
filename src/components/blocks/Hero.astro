@@ -63,6 +63,8 @@ const resolvedCtaHref = getRelativeLocaleUrl(lang, ctaHref);
 				<button type="button" class="hero-dot" data-dot data-index={i} data-active={i === 0 ? 'true' : 'false'} aria-label={`Slide ${i + 1}`}></button>
 			))}
 		</div>
+
+		<span class="mark" aria-hidden="true">2050</span>
 	</div>
 </section>
 
@@ -117,6 +119,22 @@ const resolvedCtaHref = getRelativeLocaleUrl(lang, ctaHref);
 		inset: 0;
 		background: linear-gradient(100deg, rgba(168, 15, 83, 0.92) 10%, rgba(168, 15, 83, 0.55) 55%, rgba(168, 15, 83, 0.25) 100%);
 		pointer-events: none;
+	}
+
+	/* Signature mark: the district's own number, echoed faintly on the hero and every
+	   inner page's PageBanner/CtaBanner — a quiet recurring identity cue, not a one-off. */
+	.mark {
+		position: absolute;
+		right: -0.05em;
+		bottom: -0.28em;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: clamp(8rem, 24vw, 18rem);
+		line-height: 1;
+		color: rgba(255, 255, 255, 0.08);
+		pointer-events: none;
+		user-select: none;
+		z-index: 3;
 	}
 
 	.hero-copy {
