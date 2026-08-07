@@ -172,7 +172,7 @@ const { lang, block } = Astro.props;
 		/>
 	)}
 	{block.__typename === 'PagesBlocksNewsGrid' && (
-		<NewsGrid lang={lang} title={block.title} limit={block.limit ?? undefined} />
+		<NewsGrid lang={lang} title={block.title} limit={block.limit ?? undefined} showDate={block.showDate ?? undefined} showYear={block.showYear ?? undefined} />
 	)}
 	{block.__typename === 'PagesBlocksCtaBanner' && (
 		<CtaBanner
@@ -207,7 +207,7 @@ const { lang, block } = Astro.props;
 		<EventsArchive lang={lang} emptyMessage={block.emptyMessage ?? undefined} />
 	)}
 	{block.__typename === 'PagesBlocksNewsArchive' && (
-		<NewsArchive lang={lang} emptyMessage={block.emptyMessage ?? undefined} />
+		<NewsArchive lang={lang} emptyMessage={block.emptyMessage ?? undefined} showDate={block.showDate ?? undefined} showYear={block.showYear ?? undefined} />
 	)}
 	{block.__typename === 'PagesBlocksMaterialsGrid' && (
 		<MaterialsGrid lang={lang} title={block.title} driveFolderId={block.driveFolderId ?? undefined} emptyMessage={block.emptyMessage ?? undefined} />

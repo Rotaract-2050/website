@@ -312,6 +312,8 @@ const newsGridTemplate = {
 	fields: [
 		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
 		{ type: 'number' as const, name: 'limit', label: 'Numero massimo di notizie mostrate' },
+		{ type: 'boolean' as const, name: 'showDate', label: 'Mostra la data sulle card' },
+		{ type: 'boolean' as const, name: 'showYear', label: 'Mostra l\'anno rotariano (AR) sulle card' },
 	],
 };
 
@@ -433,6 +435,8 @@ const newsArchiveTemplate = {
 			label: 'Messaggio se non ci sono news (opzionale)',
 			ui: { component: 'textarea' },
 		},
+		{ type: 'boolean' as const, name: 'showDate', label: 'Mostra la data sulle card' },
+		{ type: 'boolean' as const, name: 'showYear', label: 'Mostra l\'anno rotariano (AR) sulle card' },
 	],
 };
 
@@ -588,6 +592,13 @@ export default defineConfig({
 					{ type: 'string', name: 'excerpt', label: 'Estratto (IT)', ui: { component: 'textarea' }, required: true },
 					{ type: 'string', name: 'excerptEn', label: 'Estratto (EN)', ui: { component: 'textarea' } },
 					{ type: 'datetime', name: 'date', label: 'Data pubblicazione', required: true, ui: { dateFormat: 'DD MMMM YYYY' } },
+					{
+						type: 'string',
+						name: 'displayDate',
+						label: 'Data mostrata sulla card (opzionale)',
+						description:
+							'Se compilata, sostituisce la Data pubblicazione SOLO nel testo mostrato sulla card (es. "Estate 2026"). L\'ordinamento delle news e l\'anno rotariano (AR) restano calcolati dalla Data pubblicazione qui sopra, non da questo campo.',
+					},
 					...focalImageFields('image', 'Immagine'),
 					{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine (IT)', required: true },
 					{ type: 'string', name: 'imageLabelEn', label: 'Didascalia segnaposto immagine (EN)' },

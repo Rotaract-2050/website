@@ -14,10 +14,12 @@ interface Props {
 	excerpt: string;
 	dateLabel: string;
 	yearLabel: string;
+	showDate?: boolean;
+	showYear?: boolean;
 	tinaFieldAttr?: string;
 }
 
-const { href, image, imageFocalX, imageFocalY, imageLabel, tags = [], title, excerpt, dateLabel, yearLabel, tinaFieldAttr } = Astro.props;
+const { href, image, imageFocalX, imageFocalY, imageLabel, tags = [], title, excerpt, dateLabel, yearLabel, showDate = true, showYear = true, tinaFieldAttr } = Astro.props;
 const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 50}%;`;
 ---
 
@@ -41,7 +43,13 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 		<div class="news-body">
 			<h3 class="news-title">{title}</h3>
 			<p class="news-excerpt">{excerpt}</p>
-			<div class="news-date">{dateLabel} · {yearLabel}</div>
+			{(showDate || showYear) && (
+				<div class="news-date">
+					{showDate && dateLabel}
+					{showDate && showYear && ' · '}
+					{showYear && yearLabel}
+				</div>
+			)}
 		</div>
 	</a>
 </article>
