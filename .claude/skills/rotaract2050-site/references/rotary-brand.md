@@ -16,7 +16,7 @@ Usare **solo** questi colori (elenco completo brandcenter, formule colore comple
 | Cranberry | 214C | `#D41367` | 212, 19, 103 | Logo Rotaract |
 | Cardinal | 485C | `#E02927` | 224, 41, 39 | Logo End Polio Now |
 
-Uso nel sito: Royal Blue = primario scuro (header/footer/blocchi dark, oggi `#0B2545` nel mockup — **verificare con il distretto**, non è l'hex ufficiale). Cranberry = accent/CTA/link/pill di default (`--color-pink`). Gold = accent secondario su sfondo scuro (`--color-gold`). Azure e Cardinal restano riservati come primari (non usarli per scegliere un nuovo colore UI a piacere) — l'unica eccezione è l'artwork ufficiale delle Aree di Intervento (vedi sotto), dove compaiono già così nel PNG scaricato dal Brand Center: non è una scelta cromatica nostra, è il colore con cui Rotary pubblica quell'icona.
+Uso nel sito: Royal Blue = primario scuro (header/footer/blocchi dark, `--color-royal-blue: #17458F`, hex ufficiale — **risolto 2026-08-07**: il vecchio `--color-navy: #0B2545` non ufficiale è stato rimosso e tutti i suoi usi migrati a `--color-royal-blue`, decisione esplicita dell'utente). Cranberry = accent/CTA/link/pill di default (`--color-pink`). Gold = accent secondario su sfondo scuro (`--color-gold`). Azure e Cardinal restano riservati come primari (non usarli per scegliere un nuovo colore UI a piacere) — l'unica eccezione è l'artwork ufficiale delle Aree di Intervento (vedi sotto), dove compaiono già così nel PNG scaricato dal Brand Center: non è una scelta cromatica nostra, è il colore con cui Rotary pubblica quell'icona.
 
 ### Secondari/estesi — accenti, categorizzazione, dati (es. tag/badge)
 
@@ -69,9 +69,9 @@ Le altre varianti (black/white, con titolo) non sono usate dal sito oggi ma rest
 | White | — | `#FFFFFF` | 255, 255, 255 |
 | Black | — | `#000000` | 0, 0, 0 |
 
-Uso nel sito: Charcoal = testo body (`--color-text`, oggi mockup usa `#5B6472` blu-grigio non ufficiale). White/`#FAFAFB` (tinta neutra non ufficiale ma coerente, quasi-bianco) = sfondo pagina chiaro. Gli altri neutri non ancora usati, disponibili per varianti di sfondo/bordo se serve più contrasto graduale.
+Uso nel sito: Charcoal = testo body (`--color-text: #54565A`, hex ufficiale — **risolto 2026-08-07**, sostituiva `#5B6472` blu-grigio non ufficiale). Stone = testo secondario/muted (`--color-muted: #9BA4B4`, hex ufficiale — match quasi esatto del valore precedente, nessun cambio visivo percepibile). White/`#FAFAFB` (tinta neutra non ufficiale ma coerente, quasi-bianco) = sfondo pagina chiaro. `--color-border: #E4E7EE` non è un hex ufficiale letterale ma è un tint ~13% di Royal Blue su bianco (stesso pattern dei "container" sotto), quindi coerente col brand. Gli altri neutri non ancora usati, disponibili per varianti di sfondo/bordo se serve più contrasto graduale.
 
-**Regola pratica**: prima di introdurre un componente nuovo, chiedere conferma su `#0B2545` vs `#17458F` (Royal Blue ufficiale) se non già deciso nel progetto — è la discrepanza principale rispetto al brandcenter. Se non c'è risposta, mantenere `#0B2545` per coerenza con la homepage esistente (regola "mantenere lo stile della homepage" prevale finché non arriva una decisione esplicita), ma segnalarlo sempre all'utente.
+**Regola pratica**: usare sempre `--color-royal-blue` (`#17458F`, ufficiale) per il primario scuro — non reintrodurre un token "navy" separato non ufficiale.
 
 ## Tipografia (brand-elements/typography)
 

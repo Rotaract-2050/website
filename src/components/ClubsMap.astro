@@ -41,7 +41,7 @@ const markers = clubs
 const zoneAreas = zones
 	.map((zone) => ({
 		name: zone.name,
-		color: zone.color || '#0B2545',
+		color: zone.color || '#17458F',
 		geometry: (zoneBoundaries.zones as Record<string, Feature<Polygon | MultiPolygon>>)[zone.name]?.geometry,
 	}))
 	.filter((zone): zone is { name: string; color: string; geometry: Polygon | MultiPolygon } => zone.geometry != null);
@@ -186,7 +186,7 @@ const zoneAreas = zones
 		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: 30px;
-		color: var(--color-navy);
+		color: var(--color-royal-blue);
 		margin: 0 0 8px;
 	}
 
@@ -230,7 +230,7 @@ const zoneAreas = zones
 		font-weight: 700;
 		font-size: 13px;
 		letter-spacing: 0.02em;
-		color: var(--color-navy);
+		color: var(--color-royal-blue);
 		text-shadow:
 			0 0 4px #fff,
 			0 0 4px #fff,
