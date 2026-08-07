@@ -46,14 +46,14 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 <style>
 	.news-card {
 		background: #fff;
-		border-radius: var(--shape-medium);
+		border-radius: var(--shape-large);
 		overflow: hidden;
 		box-shadow: var(--elevation-1);
 		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
 	.news-card:hover {
-		transform: translateY(-4px);
+		transform: translateY(-6px) scale(1.01);
 		box-shadow: var(--elevation-3);
 	}
 
@@ -64,20 +64,20 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 
 	.news-card :global(.news-image) {
 		width: 100%;
-		height: 170px;
+		height: 216px;
 		object-fit: cover;
 		object-position: var(--focal-x, 50%) var(--focal-y, 50%);
 	}
 
 	.news-body {
-		padding: 20px;
+		padding: 24px;
 	}
 
 	.news-tags {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 6px;
-		margin-bottom: 12px;
+		margin-bottom: 14px;
 	}
 
 	.news-tag {
@@ -88,28 +88,37 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 		font-weight: 700;
 		letter-spacing: 0.5px;
 		text-transform: uppercase;
-		padding: 4px 10px;
+		padding: 5px 12px;
 		border-radius: var(--shape-small);
 	}
 
 	.news-title {
 		font-family: var(--font-heading);
-		font-weight: 600;
-		font-size: 17px;
+		font-weight: 700;
+		font-size: 19px;
 		color: var(--color-navy);
 		line-height: 1.3;
-		margin: 0 0 8px;
+		margin: 0 0 10px;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
 	}
 
 	.news-excerpt {
 		font-size: 14px;
 		color: var(--color-text);
-		line-height: 1.5;
-		margin: 0 0 12px;
+		line-height: 1.55;
+		margin: 0 0 16px;
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
 	}
 
 	.news-date {
 		font-size: 12px;
+		font-weight: 600;
 		color: var(--color-muted);
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
