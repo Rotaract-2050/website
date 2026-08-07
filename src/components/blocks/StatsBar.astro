@@ -7,55 +7,71 @@ const { items } = Astro.props;
 ---
 
 <section class="stats">
-	{items.map((stat) => (
-		<div class="stat" data-tina-field={stat.tinaFieldAttr}>
-			<div class="stat-value">{stat.value}</div>
-			<div class="stat-label">{stat.label}</div>
-		</div>
-	))}
+	<div class="stats-card">
+		{items.map((stat) => (
+			<div class="stat" data-tina-field={stat.tinaFieldAttr}>
+				<div class="stat-value">{stat.value}</div>
+				<div class="stat-label">{stat.label}</div>
+			</div>
+		))}
+	</div>
 </section>
 
 <style>
+	/* One unified card instead of separate tonal tiles — a single "proof" surface with
+	   thin dividers between stats, each number colored (cycling the Rotary palette)
+	   rather than each stat getting its own colored background. */
 	.stats {
 		background: var(--color-bg);
 		padding: 24px 40px 96px;
-		display: flex;
-		justify-content: center;
-		gap: 24px;
-		flex-wrap: wrap;
 	}
 
-	/* Big M3 tonal container cards, each stat its own soft-colored surface — and each
-	   one a different Rotary tone, cycling the palette instead of one flat color band. */
-	.stat {
-		text-align: center;
-		background: var(--color-pink-container);
-		color: var(--color-on-pink-container);
+	.stats-card {
+		max-width: var(--content-max);
+		margin: 0 auto;
+		background: #fff;
 		border-radius: var(--shape-extra-large);
-		padding: 36px 44px;
-		min-width: 180px;
+		box-shadow: var(--elevation-4);
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.stat {
+		--tone: var(--color-pink);
+		position: relative;
+		flex: 1 1 180px;
+		text-align: center;
+		padding: 44px 32px;
+	}
+
+	.stat:not(:last-child)::after {
+		content: '';
+		position: absolute;
+		top: 22%;
+		bottom: 22%;
+		right: 0;
+		width: 1px;
+		background: var(--color-border);
 	}
 
 	.stat:nth-child(4n + 2) {
-		background: var(--color-gold-container);
-		color: var(--color-on-gold-container);
+		--tone: var(--color-gold);
 	}
 
 	.stat:nth-child(4n + 3) {
-		background: var(--color-royal-container);
-		color: var(--color-on-royal-container);
+		--tone: var(--color-royal-blue);
 	}
 
 	.stat:nth-child(4n + 4) {
-		background: var(--color-navy-container);
-		color: var(--color-on-navy-container);
+		--tone: var(--color-navy);
 	}
 
 	.stat-value {
 		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: 52px;
-		color: inherit;
+		color: var(--tone);
 		line-height: 1;
 	}
 
@@ -63,10 +79,20 @@ const { items } = Astro.props;
 		font-size: 12px;
 		font-weight: 600;
 		letter-spacing: 1px;
-		color: inherit;
-		opacity: 0.75;
+		color: var(--color-text);
 		text-transform: uppercase;
 		margin-top: 8px;
+	}
+
+	@media (max-width: 640px) {
+		.stat {
+			flex: 1 1 45%;
+			padding: 28px 16px;
+		}
+
+		.stat:nth-child(2n)::after {
+			display: none;
+		}
 	}
 </style>
 
