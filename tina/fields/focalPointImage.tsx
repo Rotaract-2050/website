@@ -49,7 +49,11 @@ export function createFocalPointImageField(shortName: string) {
 								position: 'relative',
 								width: '100%',
 								paddingBottom: '56.25%',
-								backgroundImage: `url(${url})`,
+								// Quoted + percent-encoded: an unquoted CSS url() breaks on a literal space
+								// or paren in the value, and uploaded filenames routinely have both (Tina
+								// keeps the original filename, e.g. "Disegna il tuo futuro.png") — the <img>
+								// tag above doesn't have this problem, only this raw CSS string does.
+								backgroundImage: `url("${encodeURI(url)}")`,
 								backgroundSize: 'cover',
 								backgroundPosition: `${x}% ${y}%`,
 								borderRadius: '6px',
