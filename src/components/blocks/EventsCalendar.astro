@@ -1,6 +1,8 @@
 ---
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import { uiStrings, type Lang } from '../../data/ui-strings';
 import { getDistrictEvents, eventDateKey, calendarUrls, type DistrictEvent } from '../../lib/calendar';
+import { getArchiveEvents, eventSlug, eventCalendarDayKey } from '../../lib/events';
 
 interface Props {
 	lang: Lang;
@@ -15,6 +17,26 @@ const { viewUrl: CALENDAR_VIEW_URL, subscribeUrl: CALENDAR_SUBSCRIBE_URL } = cal
 const forceRefresh = Astro.url.searchParams.has('refresh');
 const result = await getDistrictEvents({ calendarId, forceRefresh });
 const events = result.ok ? result.events : [];
+
+// Links a calendar entry to its /eventi detail page when exactly one published event shares its
+// day (Europe/Rome) — see eventCalendarDayKey in src/lib/events.ts. Ambiguous days (0 or 2+
+// candidates) are left unlinked rather than guessing; a socio can disambiguate via the event's
+// "Data su Google Calendar" override field in Tina.
+const archiveEvents = await getArchiveEvents();
+const archiveSlugsByDay = new Map<string, string[]>();
+for (const event of archiveEvents) {
+	const key = eventCalendarDayKey(event);
+	const bucket = archiveSlugsByDay.get(key);
+	const slug = eventSlug(event);
+	if (bucket) bucket.push(slug);
+	else archiveSlugsByDay.set(key, [slug]);
+}
+
+function archiveLinkFor(ev: DistrictEvent): string | null {
+	const candidates = archiveSlugsByDay.get(eventDateKey(ev));
+	if (!candidates || candidates.length !== 1) return null;
+	return getRelativeLocaleUrl(lang, `eventi/${candidates[0]}`);
+}
 
 const todayKey = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Rome' }).format(new Date());
 const upcomingEvents = events.filter((ev) => eventDateKey(ev) >= todayKey);
@@ -153,8 +175,10 @@ const monthTabId = `cal-month-${uid}`;
 						{agendaEvents.length === 0 && <p class="calendar-status">{t.noEvents}</p>}
 						{agendaEvents.map((ev) => {
 							const { day, month } = dateParts(eventDateKey(ev));
+							const href = archiveLinkFor(ev);
+							const RowTag = href ? 'a' : 'div';
 							return (
-								<div class="event-row">
+								<RowTag class="event-row" {...(href ? { href } : {})}>
 									<div class="event-date">
 										<div class="event-day">{String(day).padStart(2, '0')}</div>
 										<div class="event-month">{t.monthsShort[month]}</div>
@@ -167,7 +191,7 @@ const monthTabId = `cal-month-${uid}`;
 										</div>
 									</div>
 									<div class="event-arrow" aria-hidden="true">→</div>
-								</div>
+								</RowTag>
 							);
 						})}
 					</div>
@@ -178,22 +202,26 @@ const monthTabId = `cal-month-${uid}`;
 								<span class="day-filter-label">{t.dayFilterPrefix} {formatFullDate(key)}</span>
 								<a class="day-filter-reset" href="?#eventi-calendario">{t.dayFilterReset}</a>
 							</div>
-							{dayEvents.map((ev) => (
-								<div class="event-row">
-									<div class="event-date">
-										<div class="event-day">{String(dateParts(key).day).padStart(2, '0')}</div>
-										<div class="event-month">{t.monthsShort[dateParts(key).month]}</div>
-									</div>
-									<div class="event-body">
-										<div class="event-title">{ev.summary}</div>
-										<div class="event-meta">
-											{formatWeekday(eventDateKey(ev))} · {formatTime(ev)}
-											{ev.location ? ` · ${ev.location}` : ''}
+							{dayEvents.map((ev) => {
+								const href = archiveLinkFor(ev);
+								const RowTag = href ? 'a' : 'div';
+								return (
+									<RowTag class="event-row" {...(href ? { href } : {})}>
+										<div class="event-date">
+											<div class="event-day">{String(dateParts(key).day).padStart(2, '0')}</div>
+											<div class="event-month">{t.monthsShort[dateParts(key).month]}</div>
 										</div>
-									</div>
-									<div class="event-arrow" aria-hidden="true">→</div>
-								</div>
-							))}
+										<div class="event-body">
+											<div class="event-title">{ev.summary}</div>
+											<div class="event-meta">
+												{formatWeekday(eventDateKey(ev))} · {formatTime(ev)}
+												{ev.location ? ` · ${ev.location}` : ''}
+											</div>
+										</div>
+										<div class="event-arrow" aria-hidden="true">→</div>
+									</RowTag>
+								);
+							})}
 						</div>
 					))}
 				</div>
@@ -278,7 +306,7 @@ const monthTabId = `cal-month-${uid}`;
 		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: 34px;
-		color: var(--color-navy);
+		color: var(--color-royal-blue);
 		text-transform: uppercase;
 		margin: 0;
 	}
@@ -390,7 +418,7 @@ const monthTabId = `cal-month-${uid}`;
 		font-size: 13px;
 		letter-spacing: 0.4px;
 		text-transform: uppercase;
-		color: var(--color-navy);
+		color: var(--color-royal-blue);
 		background: var(--color-bg);
 		border: 1px solid var(--color-border);
 		border-radius: var(--shape-small);
@@ -448,9 +476,16 @@ const monthTabId = `cal-month-${uid}`;
 		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
-	.event-row:hover {
+	/* Only linked cards (matched to an /eventi detail page — see archiveLinkFor above) lift on
+	   hover and show a pink arrow; unmatched cards stay flat so the arrow doesn't promise a click
+	   that goes nowhere. */
+	a.event-row:hover {
 		transform: translateY(-2px);
 		box-shadow: var(--elevation-2);
+	}
+
+	div.event-row {
+		cursor: default;
 	}
 
 	.event-date {
@@ -488,7 +523,7 @@ const monthTabId = `cal-month-${uid}`;
 		font-family: var(--font-heading);
 		font-weight: 600;
 		font-size: 18px;
-		color: var(--color-navy);
+		color: var(--color-royal-blue);
 		margin-bottom: 4px;
 	}
 
@@ -498,8 +533,12 @@ const monthTabId = `cal-month-${uid}`;
 	}
 
 	.event-arrow {
-		color: var(--color-pink);
+		color: var(--color-muted);
 		font-size: 20px;
+	}
+
+	a.event-row .event-arrow {
+		color: var(--color-pink);
 	}
 
 	/* Month view — one big single month, navigable. */
@@ -525,7 +564,7 @@ const monthTabId = `cal-month-${uid}`;
 		border-radius: 50%;
 		background: var(--color-bg);
 		border: 1px solid var(--color-border);
-		color: var(--color-navy);
+		color: var(--color-royal-blue);
 		font-size: 22px;
 		line-height: 1;
 	}
@@ -540,7 +579,7 @@ const monthTabId = `cal-month-${uid}`;
 		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: 22px;
-		color: var(--color-navy);
+		color: var(--color-royal-blue);
 		text-transform: uppercase;
 		min-width: 220px;
 		text-align: center;
@@ -593,7 +632,7 @@ const monthTabId = `cal-month-${uid}`;
 	.day-number {
 		font-size: 14px;
 		font-weight: 600;
-		color: var(--color-navy);
+		color: var(--color-royal-blue);
 	}
 
 	.day-event {

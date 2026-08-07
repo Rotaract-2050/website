@@ -623,6 +623,13 @@ export default defineConfig({
 					},
 					{ type: 'datetime', name: 'date', label: 'Data evento', required: true, ui: { dateFormat: 'DD MMMM YYYY' } },
 					{
+						type: 'datetime',
+						name: 'calendarDate',
+						label: 'Data su Google Calendar (se diversa)',
+						description:
+							'Usata per collegare questo evento alla voce corrispondente nel widget "Calendario eventi" in home, quando la data su Google Calendar non coincide con la Data evento sopra (o per forzare/disambiguare il collegamento). Lascia vuoto per usare direttamente la Data evento.',
+					},
+					{
 						type: 'string',
 						name: 'eventType',
 						label: 'Tipo evento',
