@@ -116,3 +116,12 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-US',
 		}
 	}
 </style>
+
+<script>
+	import { revealOnScroll, cappedStagger } from '../../lib/motion';
+
+	document.querySelectorAll<HTMLElement>('.news').forEach((section) => {
+		const cards = Array.from(section.querySelectorAll<HTMLElement>('.news-card'));
+		revealOnScroll(section, cards, { opacity: [0, 1], scale: [0.92, 1] }, { delay: cappedStagger(0.08) });
+	});
+</script>

@@ -97,6 +97,13 @@ const { items } = Astro.props;
 </style>
 
 <script>
+	import { revealOnScroll, cappedStagger } from '../../lib/motion';
+
+	function initStatsReveal(section: Element) {
+		const stats = Array.from(section.querySelectorAll<HTMLElement>('.stat'));
+		revealOnScroll(section, stats, { opacity: [0, 1], scale: [0.92, 1] }, { delay: cappedStagger(0.07) });
+	}
+
 	function initStatsCountUp(section: Element) {
 		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
 
@@ -135,5 +142,8 @@ const { items } = Astro.props;
 		observer.observe(section);
 	}
 
-	document.querySelectorAll('.stats').forEach(initStatsCountUp);
+	document.querySelectorAll<HTMLElement>('.stats').forEach((section) => {
+		initStatsCountUp(section);
+		initStatsReveal(section);
+	});
 </script>

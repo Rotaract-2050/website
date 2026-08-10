@@ -161,3 +161,14 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 		}
 	}
 </style>
+
+<script>
+	import { revealOnScroll } from '../../lib/motion';
+
+	document.querySelectorAll<HTMLElement>('.split').forEach((section) => {
+		const media = section.querySelector<HTMLElement>('.split-media');
+		const copy = section.querySelector<HTMLElement>('.split-copy');
+		if (media) revealOnScroll(section, media, { opacity: [0, 1], scale: [0.95, 1] });
+		if (copy) revealOnScroll(section, copy, { opacity: [0, 1], y: [16, 0] }, { delay: 0.1 });
+	});
+</script>

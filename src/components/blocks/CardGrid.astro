@@ -113,3 +113,12 @@ const { lang, title, items } = Astro.props;
 		}
 	}
 </style>
+
+<script>
+	import { revealOnScroll, cappedStagger } from '../../lib/motion';
+
+	document.querySelectorAll<HTMLElement>('.card-grid').forEach((section) => {
+		const cards = Array.from(section.querySelectorAll<HTMLElement>('.card'));
+		revealOnScroll(section, cards, { opacity: [0, 1], scale: [0.92, 1] }, { delay: cappedStagger(0.08) });
+	});
+</script>
