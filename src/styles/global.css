@@ -132,3 +132,18 @@ img {
 	opacity: 1;
 	transform: translateY(0);
 }
+
+/* Motion.dev entrance animations (src/lib/motion.ts) mark their targets with this
+   attribute right before animating them in - same "hide only once JS is really about
+   to reveal it" contract as .reveal-init above, so content never gets stuck invisible
+   if JS fails to load, and reduced-motion users never see it hidden at all (the JS
+   bails out of setting the attribute in that case - see prefersReducedMotion()). */
+[data-anim-hide] {
+	opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	[data-anim-hide] {
+		opacity: 1;
+	}
+}
