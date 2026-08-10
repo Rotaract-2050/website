@@ -89,14 +89,14 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: 40px;
-		color: var(--color-royal-blue);
+		color: var(--color-navy);
 		text-transform: uppercase;
 		margin: 0 0 20px;
 	}
 
 	.split-quote {
 		font-size: 17px;
-		color: var(--color-royal-blue);
+		color: var(--color-navy);
 		font-style: italic;
 		border-left: 3px solid var(--color-pink);
 		padding-left: 16px;
@@ -119,7 +119,7 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 		font-family: var(--font-heading);
 		font-weight: 600;
 		font-size: 18px;
-		color: var(--color-royal-blue);
+		color: var(--color-navy);
 		margin: 0 0 8px;
 	}
 
@@ -161,3 +161,14 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 		}
 	}
 </style>
+
+<script>
+	import { revealOnScroll } from '../../lib/motion';
+
+	document.querySelectorAll<HTMLElement>('.split').forEach((section) => {
+		const media = section.querySelector<HTMLElement>('.split-media');
+		const copy = section.querySelector<HTMLElement>('.split-copy');
+		if (media) revealOnScroll(section, media, { opacity: [0, 1], scale: [0.95, 1] });
+		if (copy) revealOnScroll(section, copy, { opacity: [0, 1], y: [16, 0] }, { delay: 0.1 });
+	});
+</script>

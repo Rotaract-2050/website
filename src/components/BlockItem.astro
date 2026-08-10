@@ -36,7 +36,15 @@ const { lang, block } = Astro.props;
 
 <div
 	data-tina-field={tinaField(block)}
-	data-reveal={block.__typename === 'PagesBlocksHero' || block.__typename === 'PagesBlocksRrdTimeline' ? undefined : true}
+	data-reveal={[
+		'PagesBlocksHero',
+		'PagesBlocksRrdTimeline',
+		'PagesBlocksStatsBar',
+		'PagesBlocksSplitSection',
+		'PagesBlocksCardGrid',
+		'PagesBlocksNewsGrid',
+		'PagesBlocksEventsCalendar',
+	].includes(block.__typename) ? undefined : true}
 >
 	{block.__typename === 'PagesBlocksHero' && (
 		<Hero

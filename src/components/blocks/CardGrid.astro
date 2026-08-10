@@ -45,7 +45,7 @@ const { lang, title, items } = Astro.props;
 		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: 34px;
-		color: var(--color-royal-blue);
+		color: var(--color-navy);
 		text-transform: uppercase;
 		margin: 0 0 34px;
 	}
@@ -67,7 +67,7 @@ const { lang, title, items } = Astro.props;
 	/* Big M3 tonal container per card, tinted by the item's own color (--tint) instead of
 	   a small colored label pill on a white card — the color IS the surface now. */
 	.card {
-		--tint: var(--color-royal-blue);
+		--tint: var(--color-navy);
 		flex: 0 0 auto;
 		width: 240px;
 		background: color-mix(in srgb, var(--tint) 14%, white);
@@ -113,3 +113,12 @@ const { lang, title, items } = Astro.props;
 		}
 	}
 </style>
+
+<script>
+	import { revealOnScroll, cappedStagger } from '../../lib/motion';
+
+	document.querySelectorAll<HTMLElement>('.card-grid').forEach((section) => {
+		const cards = Array.from(section.querySelectorAll<HTMLElement>('.card'));
+		revealOnScroll(section, cards, { opacity: [0, 1], scale: [0.92, 1] }, { delay: cappedStagger(0.08) });
+	});
+</script>
