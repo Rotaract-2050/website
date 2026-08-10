@@ -45,12 +45,13 @@ const resolvedCtaHref = getRelativeLocaleUrl(lang, ctaHref);
 						<ImageSlot label="Foto banner distrettuale" class="hero-image" />
 					)}
 					<div class="hero-overlay" aria-hidden="true"></div>
-					<div class="hero-copy">
+					<div class="hero-copy" data-hero-copy data-anim-hide>
 						<span class="hero-eyebrow">{slide.eyebrow}</span>
 						<h1 class="hero-title">{slide.title}</h1>
 						<p class="hero-subtitle">{slide.subtitle}</p>
 						<a class="hero-cta" href={resolvedCtaHref}>{slide.ctaLabel}</a>
 					</div>
+					<noscript><style>.hero-copy[data-anim-hide] { opacity: 1; }</style></noscript>
 				</div>
 			))}
 		</div>
@@ -270,6 +271,8 @@ const resolvedCtaHref = getRelativeLocaleUrl(lang, ctaHref);
 </style>
 
 <script>
+	import { revealOnLoad } from '../../lib/motion';
+
 	function initHero(hero: Element) {
 		const slides = Array.from(hero.querySelectorAll<HTMLElement>('[data-slide]'));
 		const dots = Array.from(hero.querySelectorAll<HTMLElement>('[data-dot]'));
@@ -298,4 +301,8 @@ const resolvedCtaHref = getRelativeLocaleUrl(lang, ctaHref);
 	}
 
 	document.querySelectorAll('[data-hero]').forEach(initHero);
+
+	document.querySelectorAll<HTMLElement>('[data-hero-copy]').forEach((copy) => {
+		revealOnLoad(copy, { opacity: [0, 1], y: [24, 0] });
+	});
 </script>

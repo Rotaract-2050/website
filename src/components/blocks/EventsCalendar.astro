@@ -716,6 +716,8 @@ const monthTabId = `cal-month-${uid}`;
 </style>
 
 <script>
+	import { revealOnScroll, cappedStagger } from '../../lib/motion';
+
 	// Progressive enhancement over the plain `?month=`/`?day=` links: swap between
 	// pre-rendered panels in place instead of reloading the page. If a target wasn't
 	// pre-rendered (month outside the server's preloaded window, or a day with no events —
@@ -786,4 +788,15 @@ const monthTabId = `cal-month-${uid}`;
 	}
 
 	document.querySelectorAll<HTMLElement>('[data-calendar]').forEach(initCalendar);
+
+	// Only the default agenda panel (bounded to AGENDA_LIMIT items server-side) gets a
+	// stagger entrance - the per-day filter panels can be numerous and are reached via
+	// click-through, not scroll discovery, so animating them would just add unobserved
+	// IntersectionObservers for content most visitors never scroll to.
+	document.querySelectorAll<HTMLElement>('.events-calendar').forEach((section) => {
+		const defaultPanel = section.querySelector<HTMLElement>('[data-day-agenda="default"]');
+		if (!defaultPanel) return;
+		const rows = Array.from(defaultPanel.querySelectorAll<HTMLElement>('.event-row'));
+		revealOnScroll(section, rows, { opacity: [0, 1], y: [12, 0] }, { delay: cappedStagger(0.06) });
+	});
 </script>
