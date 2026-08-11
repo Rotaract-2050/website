@@ -51,6 +51,15 @@ export function isUpcomingEvent(dateIso: string): boolean {
 	return new Date(dateIso).getTime() >= Date.now();
 }
 
+/**
+ * Guards `ticketsUrl` against non-URL text saved into the field by mistake (e.g. a button
+ * label like "Partecipa" instead of a link): rendered as-is in an href, that resolves to a
+ * broken relative URL on the current page instead of doing nothing visibly wrong at save time.
+ */
+export function isAbsoluteHttpUrl(value: string): boolean {
+	return /^https?:\/\//i.test(value);
+}
+
 /** Today's Rotary year label (server clock) — the archive's default active tab. */
 export function currentRotaryYearLabel(): string {
 	return rotaryYearLabel(new Date().toISOString());

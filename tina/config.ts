@@ -663,6 +663,7 @@ export default defineConfig({
 						type: 'boolean',
 						name: 'ticketsOpen',
 						label: 'Biglietti in vendita',
+						ui: { defaultValue: true },
 						description:
 							'Disattiva per preparare in anticipo il link e/o il widget biglietti senza pubblicarli finché la vendita non è aperta: pulsante "Info e biglietti" e widget vendita biglietti restano nascosti, senza dover cancellare quanto già compilato.',
 					},
@@ -670,7 +671,15 @@ export default defineConfig({
 						type: 'string',
 						name: 'ticketsUrl',
 						label: 'Link info e biglietti',
-						description: 'Se compilato (e "Biglietti in vendita" è attivo), mostra un bottone "Info e biglietti" che apre questo link in una nuova scheda.',
+						description:
+							'Se compilato (e "Biglietti in vendita" è attivo), mostra un bottone "Info e biglietti" che apre questo link in una nuova scheda. Deve essere un indirizzo web completo, es. https://www.tickettailor.com/... — non il testo del pulsante (quello è fisso: "Info e biglietti").',
+						ui: {
+							validate: (value?: string) => {
+								if (value && !/^https?:\/\//i.test(value)) {
+									return 'Deve essere un link completo che inizia con https:// (non il testo del pulsante).';
+								}
+							},
+						},
 					},
 					{
 						type: 'string',

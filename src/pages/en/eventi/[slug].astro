@@ -8,7 +8,7 @@ import { Image } from 'astro:assets';
 import ImageSlot from '../../../components/ImageSlot.astro';
 import { uiStrings } from '../../../data/ui-strings';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { localizeEvent, eventTags, isUpcomingEvent } from '../../../lib/events';
+import { localizeEvent, eventTags, isUpcomingEvent, isAbsoluteHttpUrl } from '../../../lib/events';
 import { tagPillStyle } from '../../../lib/news';
 import { buildEventJsonLd } from '../../../lib/jsonld';
 
@@ -33,7 +33,7 @@ const titleField = event.titleEn ? 'titleEn' : 'title';
 // the whole event page): a socio can prep the link/snippet in advance and open it only once
 // ticket sales are ready, without having to re-fill them. Absent = true, same as `visible`.
 const ticketsOpen = event.ticketsOpen ?? true;
-const showTicketsButton = ticketsOpen && Boolean(event.ticketsUrl);
+const showTicketsButton = Boolean(ticketsOpen && event.ticketsUrl && isAbsoluteHttpUrl(event.ticketsUrl));
 const showTicketWidget = ticketsOpen && Boolean(event.ticketWidgetEmbed);
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 const jsonLd = buildEventJsonLd({
