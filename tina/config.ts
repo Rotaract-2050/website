@@ -619,7 +619,8 @@ export default defineConfig({
 						type: 'boolean',
 						name: 'visible',
 						label: 'Mostra evento',
-						description: 'Disattiva per preparare un evento senza pubblicarlo ancora nell\'archivio eventi del sito.',
+						description:
+							'Disattiva per preparare un evento senza pubblicarlo ancora: sparisce da archivio e calendario, la sua pagina diventa irraggiungibile. Diverso da "Biglietti in vendita" più sotto, che nasconde solo il bottone/widget biglietti lasciando l\'evento visibile.',
 					},
 					{ type: 'datetime', name: 'date', label: 'Data evento', required: true, ui: { dateFormat: 'DD MMMM YYYY' } },
 					{
@@ -665,7 +666,7 @@ export default defineConfig({
 						label: 'Biglietti in vendita',
 						ui: { defaultValue: true },
 						description:
-							'Disattiva per preparare in anticipo il link e/o il widget biglietti senza pubblicarli finché la vendita non è aperta: pulsante "Info e biglietti" e widget vendita biglietti restano nascosti, senza dover cancellare quanto già compilato.',
+							'Disattiva per preparare in anticipo il link e/o il widget biglietti senza pubblicarli finché la vendita non è aperta: pulsante "Info e biglietti" e widget vendita biglietti restano nascosti, senza dover cancellare quanto già compilato. La pagina dell\'evento resta comunque visibile (usa "Mostra evento" sopra per nascondere l\'intero evento).',
 					},
 					{
 						type: 'string',
