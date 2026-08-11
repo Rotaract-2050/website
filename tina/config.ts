@@ -660,10 +660,17 @@ export default defineConfig({
 					{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine (IT)', required: true },
 					{ type: 'string', name: 'imageLabelEn', label: 'Didascalia segnaposto immagine (EN)' },
 					{
+						type: 'boolean',
+						name: 'ticketsOpen',
+						label: 'Biglietti in vendita',
+						description:
+							'Disattiva per preparare in anticipo il link e/o il widget biglietti senza pubblicarli finché la vendita non è aperta: pulsante "Info e biglietti" e widget vendita biglietti restano nascosti, senza dover cancellare quanto già compilato.',
+					},
+					{
 						type: 'string',
 						name: 'ticketsUrl',
 						label: 'Link info e biglietti',
-						description: 'Se compilato, mostra un bottone "Info e biglietti" che apre questo link in una nuova scheda.',
+						description: 'Se compilato (e "Biglietti in vendita" è attivo), mostra un bottone "Info e biglietti" che apre questo link in una nuova scheda.',
 					},
 					{
 						type: 'string',
@@ -677,7 +684,7 @@ export default defineConfig({
 						label: 'Widget vendita biglietti (embed HTML)',
 						ui: { component: 'textarea' },
 						description:
-							'Incolla qui l\'intero snippet HTML fornito dal servizio di biglietteria (es. Ticket Tailor, "Paste this into your website"), tag <script> compreso: verrà inserito così com\'è nella pagina evento. Lascia vuoto per non mostrare nessun widget. Usare solo snippet copiati direttamente dal fornitore di biglietteria, mai testo incollato da altre fonti.',
+							'Incolla qui l\'intero snippet HTML fornito dal servizio di biglietteria (es. Ticket Tailor, "Paste this into your website"), tag <script> compreso: verrà inserito così com\'è nella pagina evento (se "Biglietti in vendita" è attivo). Lascia vuoto per non mostrare nessun widget. Usare solo snippet copiati direttamente dal fornitore di biglietteria, mai testo incollato da altre fonti.',
 					},
 				],
 			},
