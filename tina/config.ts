@@ -671,6 +671,14 @@ export default defineConfig({
 						label: 'Link album foto (Google Drive/Photos)',
 						description: 'Se compilato, mostra un bottone "Foto" che apre questo link in una nuova scheda.',
 					},
+					{
+						type: 'string',
+						name: 'ticketWidgetEmbed',
+						label: 'Widget vendita biglietti (embed HTML)',
+						ui: { component: 'textarea' },
+						description:
+							'Incolla qui l\'intero snippet HTML fornito dal servizio di biglietteria (es. Ticket Tailor, "Paste this into your website"), tag <script> compreso: verrà inserito così com\'è nella pagina evento. Lascia vuoto per non mostrare nessun widget. Usare solo snippet copiati direttamente dal fornitore di biglietteria, mai testo incollato da altre fonti.',
+					},
 				],
 			},
 			{

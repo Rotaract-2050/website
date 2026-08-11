@@ -116,6 +116,9 @@ const jsonLd = buildEventJsonLd({
 					)}
 				</div>
 			)}
+			{event.ticketWidgetEmbed && (
+				<div class="event-detail-ticket-widget" set:html={event.ticketWidgetEmbed} />
+			)}
 		</div>
 	</article>
 	<JsonLd data={jsonLd} />
@@ -258,6 +261,10 @@ const jsonLd = buildEventJsonLd({
 		background: var(--color-navy);
 		color: #fff;
 	}
+	.event-detail-ticket-widget {
+		margin-top: 32px;
+	}
+
 
 	@media (max-width: 720px) {
 		.event-detail {
