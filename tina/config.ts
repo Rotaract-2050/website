@@ -441,7 +441,7 @@ const newsArchiveTemplate = {
 };
 
 export default defineConfig({
-	branch: process.env.HEAD || process.env.VERCEL_GIT_COMMIT_REF || 'main',
+	branch: process.env.WORKERS_CI_BRANCH || process.env.HEAD || process.env.VERCEL_GIT_COMMIT_REF || 'main',
 	clientId: process.env.TINA_CLIENT_ID || null,
 	token: process.env.TINA_TOKEN || null,
 	build: {

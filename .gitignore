@@ -1,6 +1,7 @@
 # build output
 dist/
 .netlify/
+.wrangler/
 # generated types
 .astro/
 tina/__generated__/
@@ -19,6 +20,7 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
+.dev.vars
 
 # macOS-specific files
 .DS_Store

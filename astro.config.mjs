@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
 import matter from 'gray-matter';
 import { defineConfig } from 'astro/config';
-import netlify from '@astrojs/netlify';
+import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
 import tina from '@tinacms/astro/integration';
 import react from '@astrojs/react';
@@ -82,7 +82,13 @@ function tinaReloadOnContentChangePlugin() {
 export default defineConfig({
 	site: SITE,
 	output: 'server',
-	adapter: netlify(),
+	// Every page is server-rendered (see PAGE_SLUGS comment above), so astro:assets runs
+	// on every request, not just at build time. Sharp (Astro's default image service)
+	// cannot run in the Workers `workerd` isolate at all — no native binaries — so
+	// 'passthrough' is the only zero-cost option here; it serves images unresized/
+	// unconverted rather than failing. Revisit with 'cloudflare-binding' (Cloudflare
+	// Images, paid) if unoptimized image payloads become a real performance problem.
+	adapter: cloudflare({ imageService: 'passthrough' }),
 	i18n: {
 		locales: ['it', 'en'],
 		defaultLocale: 'it',
@@ -92,14 +98,12 @@ export default defineConfig({
 	},
 	// node-ical's date-recurrence chain (node-ical -> rrule-temporal + temporal-polyfill
 	// -> temporal-spec + temporal-utils) ships conditional `exports` maps and imports
-	// each other as bare specifiers at every layer. Netlify's function bundler has
-	// repeatedly failed to trace and copy those into the deployed function's
-	// node_modules, causing prod-only ERR_MODULE_NOT_FOUND crashes that never
-	// reproduce locally (full node_modules is always present there) — each fix so far
-	// surfaced the next package one layer deeper. This is the full, closed dependency
-	// set (confirmed: temporal-spec/temporal-utils have no further deps of their own),
-	// bundled at Vite's build step so there's no runtime filesystem import left for
-	// Netlify's tracer to miss.
+	// each other as bare specifiers at every layer. There's no node_modules at runtime
+	// on Cloudflare Workers (the whole SSR handler is one bundled worker script), so
+	// anything left as an external import would 404 in prod even though it resolves
+	// fine locally against the full node_modules tree. This is the full, closed
+	// dependency set (confirmed: temporal-spec/temporal-utils have no further deps of
+	// their own), forced inline at Vite's build step so nothing is left external.
 	vite: {
 		ssr: {
 			noExternal: ['node-ical', 'rrule-temporal', 'temporal-polyfill', 'temporal-spec', 'temporal-utils'],
