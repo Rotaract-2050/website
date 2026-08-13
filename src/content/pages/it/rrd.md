@@ -242,7 +242,7 @@ blocks:
         name: Gianpietro
         surname: Rausse
         motto: Renew the Spirit of Rotary
-      - yearRange: 1973/1974
+      - yearRange: 1973 - 1974
         name: Cesare
         surname: Suriani
         motto: A Time for Action
