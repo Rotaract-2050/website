@@ -55,7 +55,7 @@ blocks:
         surname: Soldo
         motto: Be the Inspiration
         mottoDistretto: Seminiamo la speranza
-      - yearRange: 2017/2018
+      - yearRange: 2017 - 2018
         name: Francesco
         surname: Sassi
         motto: 'Rotary: Making a Difference'
