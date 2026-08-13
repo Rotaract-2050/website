@@ -262,7 +262,7 @@ blocks:
         name: Paolo
         surname: Moretti
         motto: Review and Renew
-      - yearRange: 1968 - 1969
+      - yearRange: 1968-1969
         name: Gabriele
         surname: Pizzorno
         motto: Participate!
