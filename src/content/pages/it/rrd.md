@@ -80,7 +80,7 @@ blocks:
         surname: Volonghi
         motto: 'Engage Rotary, Change Lives'
         mottoDistretto: 'Scopri te stesso, gli altri, il mondo'
-      - yearRange: 2012 - 2013
+      - yearRange: 2012-2013
         name: Andrea
         surname: Morandi
         motto: Peace through Service
