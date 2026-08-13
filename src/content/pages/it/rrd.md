@@ -217,7 +217,7 @@ blocks:
         name: Daniele
         surname: Roncoroni
         motto: Take Time to Serve
-      - yearRange: 1979 - 1980
+      - yearRange: 1979-1980
         name: Pierluigi
         surname: De Biasi
         motto: Let Service Light the Way
