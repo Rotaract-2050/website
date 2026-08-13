@@ -422,6 +422,7 @@ const rrdTimelineTemplate = {
 				{ type: 'string' as const, name: 'yearRange', label: 'Anno rotariano (es. 2026/2027)' },
 				{ type: 'string' as const, name: 'name', label: 'Nome' },
 				{ type: 'string' as const, name: 'surname', label: 'Cognome' },
+				{ type: 'string' as const, name: 'clubName', label: 'Club di provenienza' },
 				{ type: 'string' as const, name: 'motto', label: 'Motto Rotary International (tema dell’anno rotariano)' },
 				{ type: 'string' as const, name: 'mottoDistretto', label: 'Motto del distretto (opzionale)' },
 				{
