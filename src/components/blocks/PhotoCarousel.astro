@@ -1,0 +1,161 @@
+---
+import { Image } from 'astro:assets';
+import ImageSlot from '../ImageSlot.astro';
+
+interface Slide {
+	image?: string;
+	imageFocalX?: number | null;
+	imageFocalY?: number | null;
+	label: string;
+	tinaFieldAttr?: string;
+}
+
+interface Props {
+	slides: Slide[];
+	autoplay?: boolean;
+}
+
+const { slides, autoplay = true } = Astro.props;
+---
+
+<section class="photo-carousel">
+	<div class="photo-carousel-card" data-carousel data-autoplay={autoplay ? 'true' : 'false'}>
+		<div class="photo-carousel-slides">
+			{slides.map((slide, i) => (
+				<div class="photo-carousel-slide" data-slide data-index={i} data-active={i === 0 ? 'true' : 'false'} data-tina-field={slide.tinaFieldAttr}>
+					{slide.image ? (
+						<Image
+							src={slide.image}
+							alt={slide.label}
+							width={1600}
+							height={900}
+							quality="high"
+							class="photo-carousel-image"
+							style={`--focal-x:${slide.imageFocalX ?? 50}%;--focal-y:${slide.imageFocalY ?? 50}%;`}
+						/>
+					) : (
+						<ImageSlot label={slide.label} class="photo-carousel-image" />
+					)}
+				</div>
+			))}
+		</div>
+
+		{slides.length > 1 && (
+			<div class="photo-carousel-dots" data-dots>
+				{slides.map((_, i) => (
+					<button type="button" class="photo-carousel-dot" data-dot data-index={i} data-active={i === 0 ? 'true' : 'false'} aria-label={`Foto ${i + 1}`}></button>
+				))}
+			</div>
+		)}
+	</div>
+</section>
+
+<style>
+	/* Same rounded, inset "expressive" card as the Hero, minus text/CTA/mark: this is a
+	   pure photo showcase, not a section with a message to read. */
+	.photo-carousel {
+		padding: 32px 40px 40px;
+		background: var(--color-bg);
+	}
+
+	.photo-carousel-card {
+		position: relative;
+		height: 52vh;
+		min-height: 340px;
+		max-height: 560px;
+		border-radius: var(--shape-extra-large);
+		overflow: hidden;
+		box-shadow: var(--elevation-3);
+	}
+
+	.photo-carousel-slides {
+		position: absolute;
+		inset: 0;
+	}
+
+	.photo-carousel-slide {
+		position: absolute;
+		inset: 0;
+		opacity: 0;
+		z-index: 1;
+		transition: opacity 0.8s ease;
+	}
+
+	.photo-carousel-slide[data-active='true'] {
+		opacity: 1;
+		z-index: 2;
+	}
+
+	.photo-carousel-slide :global(.photo-carousel-image) {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: var(--focal-x, 50%) var(--focal-y, 50%);
+	}
+
+	.photo-carousel-dots {
+		position: absolute;
+		bottom: 18px;
+		left: 0;
+		right: 0;
+		display: flex;
+		justify-content: center;
+		gap: 8px;
+		z-index: 10;
+	}
+
+	.photo-carousel-dot {
+		width: 9px;
+		height: 9px;
+		padding: 0;
+		border: 0;
+		border-radius: 50%;
+		background: rgba(255, 255, 255, 0.5);
+		cursor: pointer;
+	}
+
+	.photo-carousel-dot[data-active='true'] {
+		background: #fff;
+	}
+
+	@media (max-width: 720px) {
+		.photo-carousel {
+			padding: 16px 16px 24px;
+		}
+
+		.photo-carousel-card {
+			height: 42vh;
+			min-height: 220px;
+			border-radius: var(--shape-large);
+		}
+	}
+</style>
+
+<script>
+	function initCarousel(carousel: Element) {
+		const slides = Array.from(carousel.querySelectorAll<HTMLElement>('[data-slide]'));
+		const dots = Array.from(carousel.querySelectorAll<HTMLElement>('[data-dot]'));
+		let index = 0;
+		let timer: ReturnType<typeof setInterval> | undefined;
+
+		function show(next: number) {
+			index = (next + slides.length) % slides.length;
+			slides.forEach((slide, i) => slide.setAttribute('data-active', String(i === index)));
+			dots.forEach((dot, i) => dot.setAttribute('data-active', String(i === index)));
+		}
+
+		dots.forEach((dot, i) => dot.addEventListener('click', () => show(i)));
+
+		if (carousel.getAttribute('data-autoplay') === 'true' && slides.length > 1) {
+			timer = setInterval(() => show(index + 1), 4500);
+			carousel.addEventListener('mouseenter', () => timer && clearInterval(timer));
+			carousel.addEventListener('mouseleave', () => {
+				timer = setInterval(() => show(index + 1), 4500);
+			});
+		}
+	}
+
+	document.querySelectorAll('[data-carousel]').forEach(initCarousel);
+</script>

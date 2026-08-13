@@ -3,6 +3,7 @@ import { tinaField } from '@tinacms/astro';
 import type { PagesQuery } from '../../tina/__generated__/types';
 import type { Lang } from '../data/ui-strings';
 import Hero from './blocks/Hero.astro';
+import PhotoCarousel from './blocks/PhotoCarousel.astro';
 import StatsBar from './blocks/StatsBar.astro';
 import SplitSection from './blocks/SplitSection.astro';
 import CardGrid from './blocks/CardGrid.astro';
@@ -24,11 +25,11 @@ function nonNull<T>(value: T | null | undefined): value is T {
 	return value != null;
 }
 
-type PersonClubRef = { name: string; zone?: { color?: string | null } | null } | null | undefined;
+type PersonClubRef = { name: string; zone?: { color?: string | null } | null; _sys?: { filename?: string | null } | null } | null | undefined;
 
-/** A person's club tag: the referenced Rotaract Club (colored by its zone), or the free-text fallback for Rotary/Interact clubs not in the `clubs` collection. */
+/** A person's club tag: the referenced Rotaract Club (colored by its zone, linking to its page), or the free-text fallback for Rotary/Interact clubs not in the `clubs` collection. */
 function personClub(club: PersonClubRef) {
-	return club ? { name: club.name, zoneColor: club.zone?.color ?? null } : null;
+	return club ? { name: club.name, zoneColor: club.zone?.color ?? null, slug: club._sys?.filename ?? null } : null;
 }
 
 type Block = NonNullable<NonNullable<PagesQuery['pages']['blocks']>[number]>;
@@ -66,6 +67,18 @@ const { lang, block } = Astro.props;
 				image: s.image ?? undefined,
 				imageFocalX: s.imageFocalX ?? undefined,
 				imageFocalY: s.imageFocalY ?? undefined,
+				tinaFieldAttr: tinaField(s),
+			}))}
+		/>
+	)}
+	{block.__typename === 'PagesBlocksPhotoCarousel' && (
+		<PhotoCarousel
+			autoplay={block.autoplay ?? true}
+			slides={(block.images ?? []).filter(nonNull).map((s) => ({
+				image: s.image ?? undefined,
+				imageFocalX: s.imageFocalX ?? undefined,
+				imageFocalY: s.imageFocalY ?? undefined,
+				label: s.label ?? '',
 				tinaFieldAttr: tinaField(s),
 			}))}
 		/>
@@ -126,6 +139,7 @@ const { lang, block } = Astro.props;
 	)}
 	{block.__typename === 'PagesBlocksRoleGrid' && (
 		<RoleGrid
+			lang={lang}
 			title={block.title}
 			showDisclaimer={block.showDisclaimer ?? false}
 			disclaimerText={block.disclaimerText ?? undefined}
@@ -149,6 +163,7 @@ const { lang, block } = Astro.props;
 	)}
 	{block.__typename === 'PagesBlocksCommitteeGrid' && (
 		<CommitteeGrid
+			lang={lang}
 			title={block.title}
 			showDisclaimer={block.showDisclaimer ?? false}
 			disclaimerText={block.disclaimerText ?? undefined}

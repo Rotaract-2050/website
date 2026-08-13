@@ -1,9 +1,12 @@
 ---
 import { Image } from 'astro:assets';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import ImageSlot from './ImageSlot.astro';
 import { tagPillStyle, customClubColor } from '../lib/news';
+import type { Lang } from '../data/ui-strings';
 
 interface Props {
+	lang: Lang;
 	name: string;
 	role: string;
 	photo?: string;
@@ -12,8 +15,8 @@ interface Props {
 	photoZoom?: number | null;
 	initials?: string;
 	email?: string;
-	/** Rotaract club (reference), rendered as a colored tag. Falls back to `clubCustom` when unset. */
-	club?: { name: string; zoneColor?: string | null } | null;
+	/** Rotaract club (reference), rendered as a colored tag linking to the club's page. Falls back to `clubCustom` when unset. */
+	club?: { name: string; zoneColor?: string | null; slug?: string | null } | null;
 	/** Free-text club label for members whose club isn't a Rotaract Club in the `clubs` collection (Rotary/Interact clubs). */
 	clubCustom?: string;
 	tinaFieldAttr?: string;
@@ -21,10 +24,11 @@ interface Props {
 	size?: 'md' | 'lg';
 }
 
-const { name, role, photo, photoFocalX, photoFocalY, photoZoom, initials, email, club, clubCustom, tinaFieldAttr, size = 'md' } = Astro.props;
+const { lang, name, role, photo, photoFocalX, photoFocalY, photoZoom, initials, email, club, clubCustom, tinaFieldAttr, size = 'md' } = Astro.props;
 const focalStyle = `--focal-x:${photoFocalX ?? 50}%;--focal-y:${photoFocalY ?? 50}%;--zoom:${(photoZoom ?? 100) / 100};`;
 const clubLabel = club?.name || clubCustom || undefined;
 const clubColor = club ? club.zoneColor : customClubColor(clubCustom);
+const clubHref = club?.slug ? getRelativeLocaleUrl(lang, `club/${club.slug}`) : undefined;
 ---
 
 <div class="person-card" data-size={size} data-tina-field={tinaFieldAttr}>
@@ -39,7 +43,11 @@ const clubColor = club ? club.zoneColor : customClubColor(clubCustom);
 	</div>
 	<div class="person-name">{name}</div>
 	{clubLabel && (
-		<span class="person-club" style={tagPillStyle(clubColor)}>{clubLabel}</span>
+		clubHref ? (
+			<a class="person-club" href={clubHref} style={tagPillStyle(clubColor)}>{clubLabel}</a>
+		) : (
+			<span class="person-club" style={tagPillStyle(clubColor)}>{clubLabel}</span>
+		)
 	)}
 	<div class="person-role">{role}</div>
 	{email && (
@@ -156,6 +164,12 @@ const clubColor = club ? club.zoneColor : customClubColor(clubCustom);
 		font-size: 10px;
 		font-weight: 600;
 		letter-spacing: 0.2px;
+		text-decoration: none;
+	}
+
+	a.person-club:hover,
+	a.person-club:focus-visible {
+		text-decoration: underline;
 	}
 
 	.person-card[data-size='lg'] .person-club {

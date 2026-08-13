@@ -41,6 +41,23 @@ blocks:
     ctaHref: "distretto"
     imageLabel: "Photo of members on a service project"
     imageSide: "right"
+  - _template: "PhotoCarousel"
+    autoplay: true
+    images:
+      - image: "/uploads/Paesaggi/Paesaggio-1.jpeg"
+        label: "Landscape of the District 2050 territory"
+      - image: "/uploads/Paesaggi/Paesaggio-2.jpeg"
+        label: "Panorama of southern Lombardy"
+      - image: "/uploads/Paesaggi/Paesaggio-3.jpeg"
+        label: "View of the Piacenza area"
+      - image: "/uploads/Paesaggi/Paesaggio-4.jpeg"
+        label: "Natural landscape of District 2050"
+      - image: "/uploads/Paesaggi/Paesaggio-5.jpeg"
+        label: "Glimpse of the district's territory"
+      - image: "/uploads/Paesaggi/Paesaggio-6.jpeg"
+        label: "Panorama of the province of Piacenza"
+      - image: "/uploads/Paesaggi/Paesaggio-7.jpeg"
+        label: "Landscape of Rotaract District 2050"
   - _template: "CardGrid"
     title: "CLUBS IN THE DISTRICT"
     items:
