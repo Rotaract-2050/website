@@ -171,7 +171,7 @@ blocks:
         name: Marco
         surname: Sgroi
         motto: Look Beyond Yourself
-      - yearRange: 1990/1991
+      - yearRange: 1990 - 1991
         name: Paolo
         surname: Pariset
         motto: Honor Rotary with Faith and Enthusiasm
