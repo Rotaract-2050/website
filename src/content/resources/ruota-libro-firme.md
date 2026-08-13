@@ -1,8 +1,9 @@
 ---
 title: 'Ruota / libro firme'
 titleEn: 'Signature book / wheel'
-category: 'Cerimoniale'
-categoryEn: 'Protocol'
+tags:
+  - Prefetto
+  - Cerimoniale
 order: 6
 excerpt: "Chi firma per primo, l'ordine del giro firme e l'eccezione per la visita del Rappresentante Distrettuale."
 excerptEn: "Who signs first, the order of the signature round, and the exception for the District Representative's visit."

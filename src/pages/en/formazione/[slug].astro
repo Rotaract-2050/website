@@ -56,7 +56,13 @@ const jsonLd = buildArticleJsonLd({
 	<article class="resource-article">
 		<div class="article-inner">
 			<a href={getRelativeLocaleUrl(lang, 'formazione')} class="back-link">{t.resources.backToArchive}</a>
-			<span class="article-category" data-tina-field={tinaField(resource, 'category')}>{localized.category}</span>
+			{localized.tags.length > 0 && (
+				<div class="article-tags" data-tina-field={tinaField(resource, 'tags')}>
+					{localized.tags.map((tag) => (
+						<span class="article-tag">{tag}</span>
+					))}
+				</div>
+			)}
 			<div data-tina-field={tinaField(resource, 'image')}>
 				{resource.image ? (
 					<Image src={resource.image} alt={localized.imageLabel} width={960} height={420} fit="contain" quality="high" class="article-image" />
@@ -95,7 +101,14 @@ const jsonLd = buildArticleJsonLd({
 		text-decoration: underline;
 	}
 
-	.article-category {
+	.article-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin-bottom: 20px;
+	}
+
+	.article-tag {
 		display: inline-block;
 		background: rgba(212, 19, 103, 0.1);
 		color: var(--color-pink);
@@ -105,7 +118,6 @@ const jsonLd = buildArticleJsonLd({
 		text-transform: uppercase;
 		padding: 4px 10px;
 		border-radius: 999px;
-		margin-bottom: 20px;
 	}
 
 	.article-inner :global(.article-image) {

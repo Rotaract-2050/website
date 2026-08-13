@@ -1,8 +1,9 @@
 ---
 title: 'Stendardo e guidoncino di club'
 titleEn: 'Club banner and pennant'
-category: 'Cerimoniale'
-categoryEn: 'Protocol'
+tags:
+  - Prefetto
+  - Cerimoniale
 order: 3
 excerpt: 'Dove posizionare stendardo, Roll-up e guidoncino durante gli incontri ufficiali di club.'
 excerptEn: 'Where to place the club banner, roll-up and pennant during official club meetings.'

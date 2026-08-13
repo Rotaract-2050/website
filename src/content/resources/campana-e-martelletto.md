@@ -1,8 +1,9 @@
 ---
 title: 'Campana e martelletto'
 titleEn: 'The bell and the gavel'
-category: 'Cerimoniale'
-categoryEn: 'Protocol'
+tags:
+  - Prefetto
+  - Cerimoniale
 order: 2
 excerpt: "Quando suona la campana, chi può suonarla e qual è l'unica eccezione, al Passaggio delle Consegne."
 excerptEn: 'When the bell is rung, who may ring it, and the one exception at the Handover Ceremony.'

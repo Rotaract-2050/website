@@ -684,13 +684,14 @@ export default defineConfig({
 					{ type: 'string', name: 'titleEn', label: 'Titolo (EN)' },
 					{
 						type: 'string',
-						name: 'category',
-						label: 'Categoria (IT)',
+						name: 'tags',
+						label: 'Tag',
+						list: true,
 						required: true,
+						options: ['Prefetto', 'Cerimoniale'],
 						description:
-							'Testo libero, diventa un filtro cliccabile nell\'elenco (es. "Prefetto", "Cerimoniale", "Tavoli", "Saluti"). Usare la stessa dicitura, identica tra schede correlate, così restano raggruppate sotto lo stesso filtro.',
+							'Diventano filtri cliccabili nell\'elenco — una scheda può avere più tag. Per un nuovo filtro aggiungere una nuova opzione qui (e la relativa traduzione in TAG_LABELS_EN, src/lib/resources.ts); il resto della granularità (es. "tavolo", "saluti") si copre con la ricerca testuale, non con altri tag.',
 					},
-					{ type: 'string', name: 'categoryEn', label: 'Categoria (EN)', description: 'Se vuoto, usa la Categoria (IT).' },
 					{
 						type: 'number',
 						name: 'order',

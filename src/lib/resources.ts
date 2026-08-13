@@ -12,12 +12,28 @@ export function resourceSlug(resource: Pick<Resource, '_sys'>): string {
 }
 
 /**
- * A resource's title/excerpt/body/imageLabel/category in the given language — one file holds
- * both (`title`/`titleEn`, like `news.title`/`titleEn`), falling back to the IT value when the
- * EN twin is empty, same fallback rule as `localizeNews`.
+ * English label for each `tags` option in `tina/config.ts`. `tags` is a fixed, options-constrained
+ * list (unlike free-text fields), so a small lookup map here covers every possible value without
+ * needing a parallel `tagsEn` list field for editors to keep in sync by index. Add a translation
+ * here whenever a new tag option is added to the schema.
+ */
+const TAG_LABELS_EN: Record<string, string> = {
+	Prefetto: 'Prefect',
+	Cerimoniale: 'Protocol',
+};
+
+/** A tag's label in the given language, falling back to the Italian value for any tag not yet in `TAG_LABELS_EN`. */
+export function localizeTag(tag: string, lang: Lang): string {
+	return lang === 'en' ? TAG_LABELS_EN[tag] ?? tag : tag;
+}
+
+/**
+ * A resource's title/excerpt/body/imageLabel/tags in the given language — one file holds both
+ * (`title`/`titleEn`, like `news.title`/`titleEn`), falling back to the IT value when the EN
+ * twin is empty, same fallback rule as `localizeNews`.
  */
 export function localizeResource(
-	resource: Pick<Resource, 'title' | 'titleEn' | 'excerpt' | 'excerptEn' | 'body' | 'bodyEn' | 'imageLabel' | 'imageLabelEn' | 'category' | 'categoryEn'>,
+	resource: Pick<Resource, 'title' | 'titleEn' | 'excerpt' | 'excerptEn' | 'body' | 'bodyEn' | 'imageLabel' | 'imageLabelEn' | 'tags'>,
 	lang: Lang,
 ) {
 	const isEn = lang === 'en';
@@ -26,13 +42,13 @@ export function localizeResource(
 		excerpt: (isEn && resource.excerptEn) || resource.excerpt,
 		body: (isEn && resource.bodyEn) || resource.body,
 		imageLabel: (isEn && resource.imageLabelEn) || resource.imageLabel,
-		category: (isEn && resource.categoryEn) || resource.category,
+		tags: (resource.tags ?? []).filter((tag): tag is string => Boolean(tag)).map((tag) => localizeTag(tag, lang)),
 	};
 }
 
-/** Stable filter key for a category label (lowercased, accents/punctuation collapsed to `-`) — the `data-category` value the archive's filter pills match against, independent of display casing/accents. */
-export function categorySlug(category: string): string {
-	return category
+/** Stable filter key for a tag label (lowercased, accents/punctuation collapsed to `-`) — the `data-tags` value the archive's filter pills match against, independent of display casing/accents. Applied to the canonical (Italian) tag so IT/EN pages share the same filter keys. */
+export function tagSlug(tag: string): string {
+	return tag
 		.normalize('NFD')
 		.replace(/\p{Diacritic}/gu, '')
 		.toLowerCase()
@@ -41,12 +57,13 @@ export function categorySlug(category: string): string {
 		.replace(/^-+|-+$/g, '');
 }
 
-/** Distinct category labels across a set of resources, in first-seen order (stable, not alphabetized away from editorial intent) — powers the archive's filter pills. */
-export function resourceCategories(resources: Pick<Resource, 'category' | 'categoryEn'>[], lang: Lang): string[] {
-	const isEn = lang === 'en';
+/** Distinct tags across a set of resources, in first-seen order (stable, not alphabetized away from editorial intent) — powers the archive's filter pills. */
+export function resourceTags(resources: Pick<Resource, 'tags'>[]): string[] {
 	const seen = new Set<string>();
 	for (const resource of resources) {
-		seen.add((isEn && resource.categoryEn) || resource.category);
+		for (const tag of resource.tags ?? []) {
+			if (tag) seen.add(tag);
+		}
 	}
 	return [...seen];
 }

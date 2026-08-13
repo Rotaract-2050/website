@@ -1,8 +1,9 @@
 ---
 title: 'Tavolo presidenziale — Visita del Rappresentante Distrettuale'
 titleEn: "Head table — District Representative's visit"
-category: 'Tavoli'
-categoryEn: 'Head tables'
+tags:
+  - Prefetto
+  - Cerimoniale
 order: 8
 excerpt: "Disposizione del tavolo per la visita ufficiale del RD: uno dei momenti più importanti per il club."
 excerptEn: "Head table seating for the District Representative's official visit — one of the most important moments for a club."

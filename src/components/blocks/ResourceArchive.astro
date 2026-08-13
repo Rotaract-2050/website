@@ -2,7 +2,7 @@
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { tinaField } from '@tinacms/astro';
 import ResourceCard from '../ResourceCard.astro';
-import { getKnowledgeResources, localizeResource, resourceSlug, categorySlug, resourceCategories } from '../../lib/resources';
+import { getKnowledgeResources, localizeResource, resourceSlug, tagSlug, resourceTags, localizeTag } from '../../lib/resources';
 import { uiStrings, type Lang } from '../../data/ui-strings';
 
 interface Props {
@@ -14,7 +14,7 @@ const { lang, emptyMessage } = Astro.props;
 const t = uiStrings[lang];
 
 const resources = await getKnowledgeResources();
-const categories = resourceCategories(resources, lang);
+const tags = resourceTags(resources);
 ---
 
 <section class="archive">
@@ -32,8 +32,8 @@ const categories = resourceCategories(resources, lang);
 					</label>
 					<div class="archive-filters" role="group" aria-label={t.resources.filterAll}>
 						<button type="button" class="filter-pill active" data-filter="all" aria-pressed="true">{t.resources.filterAll}</button>
-						{categories.map((category) => (
-							<button type="button" class="filter-pill" data-filter={categorySlug(category)} aria-pressed="false">{category}</button>
+						{tags.map((tag) => (
+							<button type="button" class="filter-pill" data-filter={tagSlug(tag)} aria-pressed="false">{localizeTag(tag, lang)}</button>
 						))}
 					</div>
 				</div>
@@ -43,8 +43,8 @@ const categories = resourceCategories(resources, lang);
 						return (
 							<ResourceCard
 								href={getRelativeLocaleUrl(lang, `formazione/${resourceSlug(resource)}`)}
-								category={localized.category}
-								categorySlug={categorySlug(localized.category)}
+								tags={localized.tags}
+								tagSlugs={(resource.tags ?? []).filter((tag): tag is string => Boolean(tag)).map(tagSlug)}
 								title={localized.title}
 								excerpt={localized.excerpt}
 								readMoreLabel={t.resources.readMore}
@@ -191,9 +191,10 @@ const categories = resourceCategories(resources, lang);
 			const query = (searchInput?.value ?? '').trim().toLowerCase();
 			let visibleCount = 0;
 			for (const card of cards) {
-				const matchesCategory = activeFilter === 'all' || card.dataset.category === activeFilter;
+				const cardTags = (card.dataset.tags ?? '').split(' ').filter(Boolean);
+				const matchesFilter = activeFilter === 'all' || cardTags.includes(activeFilter);
 				const matchesQuery = query === '' || (card.textContent ?? '').toLowerCase().includes(query);
-				const visible = matchesCategory && matchesQuery;
+				const visible = matchesFilter && matchesQuery;
 				card.hidden = !visible;
 				if (visible) visibleCount += 1;
 			}

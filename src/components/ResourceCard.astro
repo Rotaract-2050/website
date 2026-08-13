@@ -1,18 +1,18 @@
 ---
 interface Props {
 	href: string;
-	category: string;
-	categorySlug: string;
+	tags: string[];
+	tagSlugs: string[];
 	title: string;
 	excerpt: string;
 	readMoreLabel: string;
 	tinaFieldAttr?: string;
 }
 
-const { href, category, categorySlug, title, excerpt, readMoreLabel, tinaFieldAttr } = Astro.props;
+const { href, tags, tagSlugs, title, excerpt, readMoreLabel, tinaFieldAttr } = Astro.props;
 ---
 
-<article class="resource-card" data-category={categorySlug} data-tina-field={tinaFieldAttr}>
+<article class="resource-card" data-tags={tagSlugs.join(' ')} data-tina-field={tinaFieldAttr}>
 	<a href={href} class="resource-link">
 		<div class="resource-top">
 			<!-- Placeholder glyph: a per-topic icon set is still to be designed, see PR discussion. -->
@@ -22,7 +22,13 @@ const { href, category, categorySlug, title, excerpt, readMoreLabel, tinaFieldAt
 					<path d="m9 12 2 2 4-4"></path>
 				</svg>
 			</span>
-			<span class="resource-category">{category}</span>
+			{tags.length > 0 && (
+				<div class="resource-tags">
+					{tags.map((tag) => (
+						<span class="resource-tag">{tag}</span>
+					))}
+				</div>
+			)}
 		</div>
 		<h3 class="resource-title">{title}</h3>
 		<p class="resource-excerpt">{excerpt}</p>
@@ -53,6 +59,8 @@ const { href, category, categorySlug, title, excerpt, readMoreLabel, tinaFieldAt
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 10px;
 		margin-bottom: 20px;
 	}
 
@@ -62,12 +70,20 @@ const { href, category, categorySlug, title, excerpt, readMoreLabel, tinaFieldAt
 		justify-content: center;
 		width: 44px;
 		height: 44px;
+		flex-shrink: 0;
 		border-radius: var(--shape-medium);
 		background: rgba(212, 19, 103, 0.12);
 		color: var(--color-pink);
 	}
 
-	.resource-category {
+	.resource-tags {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		gap: 6px;
+	}
+
+	.resource-tag {
 		display: inline-block;
 		background: #fff;
 		color: var(--color-pink);

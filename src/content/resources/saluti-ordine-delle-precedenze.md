@@ -1,8 +1,9 @@
 ---
 title: 'Saluti: ordine delle precedenze'
 titleEn: 'Welcome remarks: order of precedence'
-category: 'Saluti'
-categoryEn: 'Welcome remarks'
+tags:
+  - Prefetto
+  - Cerimoniale
 order: 11
 excerpt: 'Le regole generali per stabilire chi si saluta per primo: cariche attuali, past, elette, nominate e coniugi.'
 excerptEn: 'The general rules for deciding who is welcomed first — current, past, elected and appointed officers, and spouses.'
