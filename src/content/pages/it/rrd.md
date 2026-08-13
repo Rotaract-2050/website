@@ -111,7 +111,7 @@ blocks:
         name: Francesca
         surname: Roncai
         motto: Lead the Way
-      - yearRange: 2005/2006
+      - yearRange: 2005 - 2006
         name: Riccardo
         surname: Truppo
         motto: Service Above Self
