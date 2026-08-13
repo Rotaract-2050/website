@@ -229,7 +229,7 @@ blocks:
         name: Giovanbattista
         surname: Gallazzi
         motto: Serve to Unite Mankind
-      - yearRange: 1976/1977
+      - yearRange: 1976 - 1977
         name: Giampaolo
         surname: Gamba
         motto: I Believe in Rotary
