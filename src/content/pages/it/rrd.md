@@ -99,7 +99,7 @@ blocks:
         name: Luca
         surname: Metelli
         motto: The Future of Rotary is in Your Hands
-      - yearRange: 2008/2009
+      - yearRange: 2008 - 2009
         name: Roberto Maria
         surname: Dall'Olmo
         motto: Make Dreams Real
