@@ -167,7 +167,7 @@ blocks:
         name: Michele
         surname: Siena
         motto: Real Happiness is Helping Others
-      - yearRange: 1991 - 1992
+      - yearRange: 1991-1992
         name: Marco
         surname: Sgroi
         motto: Look Beyond Yourself
