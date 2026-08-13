@@ -34,7 +34,7 @@ blocks:
     _template: NewsTicker
   - kicker: CHI SIAMO
     title: IL ROTARACT NEL DISTRETTO 2050
-    body: 'Il Rotaract è l''organizzazione partner del Rotary International che trasforma la passione giovanile per il servizio e la leadership in progetti dal profondo impatto locale e globale, sotto la guida del motto Fellowship through Service. '
+    body: 'Il Rotaract è l''organizzazione partner del Rotary International che trasforma la passione giovanile per il servizio e la leadership in progetti dal profondo impatto locale e globale, sotto la guida del motto "Fellowship through Service". '
     body2: 'Espressione viva di questa missione, il Distretto 2050 unisce i Club della Lombardia meridionale e della Provincia di Piacenza: una rete coesa e dinamica che valorizza le energie del territorio per generare un cambiamento concreto, positivo e duraturo.'
     ctaLabel: SCOPRI IL DISTRETTO
     ctaHref: distretto
