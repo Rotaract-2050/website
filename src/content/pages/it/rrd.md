@@ -60,7 +60,7 @@ blocks:
         surname: Sassi
         motto: 'Rotary: Making a Difference'
         mottoDistretto: Il merito e il bisogno
-      - yearRange: 2016 - 2017
+      - yearRange: 2016-2017
         name: Stefania
         surname: Filippi
         motto: Rotary Serving Humanity
