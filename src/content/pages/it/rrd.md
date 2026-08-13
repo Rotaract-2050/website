@@ -40,7 +40,7 @@ blocks:
         surname: Mor
         motto: Serve to Change Lives
         mottoDistretto: Servire per cambiare vite
-      - yearRange: 2020 - 2021
+      - yearRange: 2020-2021
         name: Lorenzo
         surname: Basola
         motto: Rotary Opens Opportunities
