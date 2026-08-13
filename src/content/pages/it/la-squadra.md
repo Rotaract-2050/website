@@ -144,7 +144,7 @@ blocks:
             name: Simone Costa
             club: src/content/clubs/rotaract-club-fiorenzuola-d-arda.md
       - name: Azione di Pubblico Interesse
-        description: 'Coordina e supporta i progetti di service dei Club, rispondendo ai bisogni del territorio per generare un cambiamento positivo e duraturo nella comunità.'
+        description: 'Promuove progetti, gemellaggi e scambi culturali per favorire la comprensione, la buona volontà e la pace nel mondo, guidando i soci nella cooperazione internazionale.'
         leadLabel: Presidente
         membersLabel: Membro
         lead:
