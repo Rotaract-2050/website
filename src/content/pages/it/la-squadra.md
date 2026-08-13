@@ -144,7 +144,7 @@ blocks:
             name: Simone Costa
             club: src/content/clubs/rotaract-club-fiorenzuola-d-arda.md
       - name: Azione di Pubblico Interesse
-        description: 'La Commissione coordina e valorizza le iniziative volte al miglioramento della comunità locale e globale. Supporta concretamente i Club in tutte le fasi dei progetti, facilitando l''accesso alle sovvenzioni e garantendo l''efficacia dei service distrettuali, nazionali e internazionali. Attraverso la rilevazione capillare dei bisogni del territorio e la fornitura di linee guida strategiche, orienta l''impegno dei soci verso un impatto sociale tangibile, rispondendo con prontezza e senso di responsabilità alle sfide della collettività.'
+        description: 'Coordina e supporta i progetti di service dei Club, rispondendo ai bisogni del territorio per generare un cambiamento positivo e duraturo nella comunità.'
         leadLabel: Presidente
         membersLabel: Membro
         lead:
