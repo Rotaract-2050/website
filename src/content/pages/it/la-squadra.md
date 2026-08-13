@@ -166,7 +166,7 @@ blocks:
             name: Clara Brugali
             club: src/content/clubs/rotaract-club-brescia-franciacorta.md
       - name: Azione Internazionale
-        description: 'Promuove lo sviluppo personale e la leadership dei giovani, unendo Rotary, Rotaract e Interact in percorsi di formazione, cittadinanza attiva e condivisione dei valori della famiglia rotariana.'
+        description: 'Promuove progetti, gemellaggi e scambi culturali per favorire la comprensione, la buona volontà e la pace nel mondo, guidando i soci nella cooperazione internazionale.'
         leadLabel: Presidente
         membersLabel: Membro
         lead:
