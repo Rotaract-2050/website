@@ -106,8 +106,8 @@ blocks:
         title: 'Risponde '
         description: a VERITÀ?
       - letter: '2'
-        title: Equità
-        description: È giusto per tutti gli interessati?
+        title: È GIUSTO
+        description: per tutti gli interessati?
       - letter: '3'
         title: Amicizia
         description: Promuoverà buona volontà e migliori rapporti di amicizia?
