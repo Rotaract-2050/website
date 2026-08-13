@@ -30,7 +30,7 @@ blocks:
         surname: Di Martino
         motto: Create Hope in the World
         mottoDistretto: To be good is non enough when you dream of being great
-      - yearRange: 2022 - 2023
+      - yearRange: 2022-2023
         name: Alessandro
         surname: Friggi
         motto: Imagine Rotary
