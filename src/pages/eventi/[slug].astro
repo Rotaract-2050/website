@@ -8,8 +8,8 @@ import { Image } from 'astro:assets';
 import ImageSlot from '../../components/ImageSlot.astro';
 import { uiStrings } from '../../data/ui-strings';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { localizeEvent, eventTags, isUpcomingEvent } from '../../lib/events';
-import { tagPillStyle } from '../../lib/news';
+import { localizeEvent, eventTypeTag, isUpcomingEvent } from '../../lib/events';
+import { tagPillStyle, clubTagLabels } from '../../lib/news';
 import { buildEventJsonLd } from '../../lib/jsonld';
 
 const lang = 'it' as const;
@@ -26,7 +26,8 @@ if (!event || event.visible === false) {
 }
 
 const dateFormatter = new Intl.DateTimeFormat('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
-const tags = eventTags(event);
+const typeTags = eventTypeTag(event);
+const clubTags = clubTagLabels(event.clubs);
 const localized = localizeEvent(event, lang);
 // `ticketsOpen` gates the ticket button/widget only, indipendentemente da `visible` (che
 // controlla l'intera pagina evento): un socio può preparare link/snippet in anticipo e aprirli
@@ -66,9 +67,9 @@ const jsonLd = buildEventJsonLd({
 		<div class="event-detail-inner">
 			<a href={getRelativeLocaleUrl(lang, 'eventi')} class="back-link">{t.events.backToArchive}</a>
 			<div class="event-detail-meta">
-				{tags.length > 0 && (
+				{typeTags.length > 0 && (
 					<div class="event-detail-tags">
-						{tags.map((tag) => (
+						{typeTags.map((tag) => (
 							<span class="event-detail-tag" style={tagPillStyle(tag.color)}>{tag.label}</span>
 						))}
 					</div>
@@ -78,6 +79,14 @@ const jsonLd = buildEventJsonLd({
 					{dateFormatter.format(new Date(event.date))}
 				</span>
 			</div>
+			{clubTags.length > 0 && (
+				<div class="event-detail-clubs">
+					<span class="event-detail-clubs-label">{t.events.hostClubLabel}</span>
+					{clubTags.map((tag) => (
+						<span class="event-detail-tag" style={tagPillStyle(tag.color)}>{tag.label}</span>
+					))}
+				</div>
+			)}
 			<div data-tina-field={tinaField(event, 'image')}>
 				{event.image ? (
 					<Image
@@ -164,6 +173,22 @@ const jsonLd = buildEventJsonLd({
 		display: flex;
 		flex-wrap: wrap;
 		gap: 6px;
+	}
+
+	.event-detail-clubs {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin-bottom: 20px;
+	}
+
+	.event-detail-clubs-label {
+		font-size: 12px;
+		font-weight: 700;
+		color: var(--color-navy);
+		text-transform: uppercase;
+		letter-spacing: 0.4px;
 	}
 
 	.event-detail-tag {
