@@ -75,7 +75,7 @@ blocks:
         surname: Pavesi
         motto: Light up Rotary
         mottoDistretto: Make it Happen!
-      - yearRange: 2013/2014
+      - yearRange: 2013 - 2014
         name: Patrizia
         surname: Volonghi
         motto: 'Engage Rotary, Change Lives'
