@@ -6,6 +6,7 @@ interface Person {
 	photo?: string;
 	photoFocalX?: number | null;
 	photoFocalY?: number | null;
+	photoZoom?: number | null;
 	email?: string;
 	tinaFieldAttr?: string;
 }
@@ -47,6 +48,7 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 							photo={item.lead.photo}
 							photoFocalX={item.lead.photoFocalX}
 							photoFocalY={item.lead.photoFocalY}
+							photoZoom={item.lead.photoZoom}
 							email={item.lead.email}
 							tinaFieldAttr={item.lead.tinaFieldAttr}
 						/>
@@ -60,6 +62,7 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 									photo={member.photo}
 									photoFocalX={member.photoFocalX}
 									photoFocalY={member.photoFocalY}
+									photoZoom={member.photoZoom}
 									email={member.email}
 									tinaFieldAttr={member.tinaFieldAttr}
 								/>
