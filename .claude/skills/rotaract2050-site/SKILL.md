@@ -11,7 +11,7 @@ description: Sviluppo e manutenzione del sito Rotaract Distretto 2050 (Astro + T
 - **TinaCMS** come CMS git-backed: ogni contenuto che un socio non tecnico deve poter modificare va esposto come collection/field Tina, mai come testo hardcoded nel componente.
 - Zero-JS di default (principio Astro): niente framework component (`.tsx`/`.vue`) a meno che serva vera interattività client. La maggior parte del sito è HTML statico a build time.
 - **Sito bilingue obbligatorio, italiano (default) + inglese**: ogni pagina, blocco e stringa editoriale esiste in entrambe le lingue, nessuna pagina solo-IT o solo-EN. Routing e convenzioni in `references/astro.md` (sezione Internazionalizzazione).
-- **Hosting: Netlify** (piano free), deploy automatico da git push. Adapter `@astrojs/netlify`. Dettagli setup Tina+Netlify e vincolo utenti Tina Cloud free (2 editor) in `references/tina.md`.
+- **Hosting: Cloudflare Pages** (migrato da Netlify), deploy automatico da git push, gestito via MCP Cloudflare. Adapter `@astrojs/cloudflare` (`wrangler.jsonc` alla root). Ambiente beta live su https://beta.rotaract2050.org/. Dettagli setup Tina+Cloudflare, il vincolo utenti Tina Cloud free (2 editor) e il gotcha della whitelist referrer della Google Drive API key in `references/tina.md`.
 
 ## Avviare il sito in locale
 
