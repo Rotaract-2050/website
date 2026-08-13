@@ -15,7 +15,7 @@ blocks:
         motto: Create Lasting Impact
         mottoDistretto: Prendi il largo con entusiasmo
         eraLabel: Rotaract Distretto 2050
-      - yearRange: 2025/2026
+      - yearRange: 2025 - 2026
         name: Lorenzo
         surname: Pancini
         motto: Unite for Good
