@@ -225,7 +225,7 @@ blocks:
         name: Giorgio
         surname: Aletti
         motto: Reach Out
-      - yearRange: 1977 - 1978
+      - yearRange: 1977-1978
         name: Giovanbattista
         surname: Gallazzi
         motto: Serve to Unite Mankind
