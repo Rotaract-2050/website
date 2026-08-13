@@ -267,8 +267,8 @@ blocks:
           - photo: /uploads/Squadra/2026-2027/Profili/Cantini-Filippo.jpeg
             name: Filippo Cantini
             club: src/content/clubs/rotaract-club-casalmaggiore-viadana-sabbioneta.md
-      - name: 'Risoluzione Controversie, Regolamento e Bilancio'
-        description: 'La Commissione opera quale organo di garanzia, trasparenza ed equità a tutela del Distretto, vigilando sul rispetto delle norme regolamentari e sulla correttezza contabile. È competente a interpretare il Regolamento e a dirimere le controversie di interesse distrettuale o interne ai singoli Club, su istanza delle parti coinvolte, dei Presidenti di Club o del Rappresentante Distrettuale. Attraverso il controllo di bilancio e un''imparziale attività arbitrale, assicura il rigore amministrativo e la conformità statutaria, preservando l''armonia, la legalità e la stabilità della vita associativa.'
+      - name: 'Risoluzione delle Controversie, controversie Bilancio e Regolamento'
+        description: 'Vigila sul rispetto delle norme e sulla correttezza contabile del Distretto, fornendo interpretazione regolamentare e supporto arbitrale a tutela della trasparenza e dell''armonia associativa.'
         leadLabel: Presidente
         membersLabel: Membro
         lead:
