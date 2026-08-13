@@ -1,41 +1,24 @@
 ---
-import { requestWithMetadata, tinaField } from '@tinacms/astro';
-import client from '../../tina/__generated__/client';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import PageBanner from '../components/PageBanner.astro';
-import BlockRenderer from '../components/BlockRenderer.astro';
-import type { PageKey } from '../data/routes';
-
 const lang = 'it' as const;
 const slug = Astro.params.slug ?? 'home';
-const relativePath = `it/${slug}.md`;
 
-const result = await requestWithMetadata(client.queries.pages({ relativePath }), { priority: 'primary' });
-const page = result.data.pages;
-
-if (!page) {
-	return Astro.redirect('/');
-}
-
-const current = slug as PageKey;
+// Astro's router matches this catch-all instead of the dedicated `news/[slug].astro`
+// for `/news/<article>` (a nested single-segment dynamic route losing to this root
+// rest-param route — reproducible in both `astro dev` and the deployed Cloudflare
+// Worker; root cause not identified after investigation). Rendering the article here
+// directly, via the same component `news/[slug].astro` uses, sidesteps that routing
+// bug rather than depending on a fix landing in Astro itself.
+//
+// Imported dynamically (not as a static top-level import) so its dependency chain
+// only loads for actual `/news/*` requests — a static import would pull it into
+// every single page's module graph, including the homepage.
+const newsSlug = slug.startsWith('news/') ? slug.slice('news/'.length) : null;
+const NewsArticleView = newsSlug !== null ? (await import('../components/NewsArticleView.astro')).default : null;
+const GenericPageView = newsSlug === null ? (await import('../components/GenericPageView.astro')).default : null;
 ---
 
-<BaseLayout
-	lang={lang}
-	current={current}
-	title={page.seo?.title || page.title}
-	description={page.seo?.description ?? ''}
-	image={page.seo?.ogImage}
-	noindex={page.seo?.noindex ?? false}
->
-	{slug !== 'home' && page.eyebrow && page.breadcrumbCurrent && (
-		<PageBanner
-			lang={lang}
-			eyebrow={page.eyebrow}
-			title={page.title}
-			breadcrumbCurrent={page.breadcrumbCurrent}
-			titleField={tinaField(page, 'title')}
-		/>
-	)}
-	<BlockRenderer lang={lang} blocks={page.blocks ?? []} />
-</BaseLayout>
+{NewsArticleView && newsSlug !== null ? (
+	<NewsArticleView lang={lang} slug={newsSlug} />
+) : GenericPageView ? (
+	<GenericPageView lang={lang} slug={slug} />
+) : null}
