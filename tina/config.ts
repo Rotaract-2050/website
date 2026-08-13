@@ -201,7 +201,7 @@ const roleGridTemplate = {
 			ui: { itemProps: (item: { role?: string }) => ({ label: item.role }) },
 			fields: [
 				{ type: 'string' as const, name: 'initials', label: 'Iniziali (fallback se manca la foto)' },
-				...focalImageFields('photo', 'Foto'),
+				...focalImageFields('photo', 'Foto', { zoom: true }),
 				{ type: 'string' as const, name: 'name', label: 'Nome e cognome' },
 				{ type: 'string' as const, name: 'role', label: 'Ruolo' },
 				{ type: 'string' as const, name: 'email', label: 'Email (se disponibile)' },
@@ -247,7 +247,7 @@ const committeeGridTemplate = {
 					name: 'lead',
 					label: 'Responsabile',
 					fields: [
-						...focalImageFields('photo', 'Foto'),
+						...focalImageFields('photo', 'Foto', { zoom: true }),
 						{ type: 'string' as const, name: 'name', label: 'Nome e cognome' },
 						{ type: 'string' as const, name: 'email', label: 'Email (se disponibile)' },
 					],
@@ -258,7 +258,7 @@ const committeeGridTemplate = {
 					label: 'Membri',
 					list: true,
 					fields: [
-						...focalImageFields('photo', 'Foto'),
+						...focalImageFields('photo', 'Foto', { zoom: true }),
 						{ type: 'string' as const, name: 'name', label: 'Nome e cognome' },
 						{ type: 'string' as const, name: 'email', label: 'Email (se disponibile)' },
 					],
