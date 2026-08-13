@@ -66,6 +66,8 @@ blocks:
         photo: /uploads/Squadra/2026-2027/Profili/Pancini-Lorenzo.jpg
         name: Lorenzo Pancini
         role: Rappresentante Distrettuale A.R. 2025/2026 (Past RD)
+        club: src/content/clubs/rotaract-club-piacenza.md
+        themeMotto: prova
     _template: RoleGrid
   - title: Delegati di Zona
     items:
