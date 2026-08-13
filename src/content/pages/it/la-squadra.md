@@ -224,27 +224,6 @@ blocks:
           name: Sofia Somenzi
           email: scambio.giovani@rotaract2050.org
           clubCustom: Interact Club Casalmaggiore Oglio Po
-      - name: Cultura
-        description: 'Valorizza il patrimonio artistico e culturale locale, guidando i Club in iniziative di service volte a promuovere le eccellenze del territorio e la crescita della comunità.'
-        leadLabel: Presidente
-        membersLabel: Membro
-        lead:
-          photo: /uploads/Squadra/2026-2027/Profili/Magni-Federico.jpeg
-          name: Federico Magni
-          email: cultura@rotaract2050.org
-          club: src/content/clubs/rotaract-club-abbiategrasso.md
-        members:
-          - name: Francesco Locatelli
-            club: src/content/clubs/rotaract-club-vigevano-castello.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Balasini-Filippo.jpeg
-            name: Filippo Balasini
-            club: src/content/clubs/rotaract-club-gonzaga-suzzara.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Brignani-Daniele.jpeg
-            name: Daniele Brignani
-            club: src/content/clubs/rotaract-club-brescia-vittoria-alata.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Zandon-Lucrezia-Giuseppina.jpeg
-            name: Lucrezia Giuseppina Zandon
-            club: src/content/clubs/rotaract-club-vigevano-castello.md
       - name: Immagine Pubblica
         description: 'Custodisce l''immagine del Distretto e supporta i Club nella comunicazione, raccontando l''impatto dei service per diffondere i valori e la cultura del Rotaract.'
         leadLabel: Presidente
@@ -267,6 +246,27 @@ blocks:
           - photo: /uploads/Squadra/2026-2027/Profili/Cantini-Filippo.jpeg
             name: Filippo Cantini
             club: src/content/clubs/rotaract-club-casalmaggiore-viadana-sabbioneta.md
+      - name: Cultura
+        description: 'Valorizza il patrimonio artistico e culturale locale, guidando i Club in iniziative di service volte a promuovere le eccellenze del territorio e la crescita della comunità.'
+        leadLabel: Presidente
+        membersLabel: Membro
+        lead:
+          photo: /uploads/Squadra/2026-2027/Profili/Magni-Federico.jpeg
+          name: Federico Magni
+          email: cultura@rotaract2050.org
+          club: src/content/clubs/rotaract-club-abbiategrasso.md
+        members:
+          - name: Francesco Locatelli
+            club: src/content/clubs/rotaract-club-vigevano-castello.md
+          - photo: /uploads/Squadra/2026-2027/Profili/Balasini-Filippo.jpeg
+            name: Filippo Balasini
+            club: src/content/clubs/rotaract-club-gonzaga-suzzara.md
+          - photo: /uploads/Squadra/2026-2027/Profili/Brignani-Daniele.jpeg
+            name: Daniele Brignani
+            club: src/content/clubs/rotaract-club-brescia-vittoria-alata.md
+          - photo: /uploads/Squadra/2026-2027/Profili/Zandon-Lucrezia-Giuseppina.jpeg
+            name: Lucrezia Giuseppina Zandon
+            club: src/content/clubs/rotaract-club-vigevano-castello.md
       - name: 'Risoluzione delle Controversie, controversie Bilancio e Regolamento'
         description: 'Vigila sul rispetto delle norme e sulla correttezza contabile del Distretto, fornendo interpretazione regolamentare e supporto arbitrale a tutela della trasparenza e dell''armonia associativa.'
         leadLabel: Presidente
@@ -294,20 +294,6 @@ blocks:
           email: alberto@studiogpesce.it
           club: src/content/clubs/rotaract-club-brescia-franciacorta.md
           clubCustom: RC Zerotrenta
-      - name: Delegato IT
-        description: 'Cura e innova le piattaforme digitali distrettuali, garantendo l''efficienza dei sistemi e offrendo strumenti informatici avanzati a supporto della comunicazione, della formazione e delle attività di service.'
-        leadLabel: Delegato
-        lead:
-          name: Alessandro Gorla
-          email: it@rotaract2050.org
-          club: src/content/clubs/rotaract-club-abbiategrasso.md
-      - name: Delegato per la Rotary Foundation
-        description: 'Promuove i valori e le risorse della Fondazione Rotary, orientando i Club nell''accesso alle sovvenzioni e coordinando lo sviluppo di progetti umanitari ad alto impatto locale e globale.'
-        leadLabel: Delegato
-        lead:
-          name: Davide Cappello
-          email: rotary.foundation@rotaract2050.org
-          club: src/content/clubs/rotaract-club-brescia-ovest-castello.md
       - name: Delegato Rotaract per l'Interact
         description: 'Rappresenta l''organo di supporto e indirizzo per l''Interact, facilitando la cooperazione con il Rotaract e custodendo la continuità associativa all''interno della famiglia rotariana.'
         leadLabel: Delegato
@@ -315,6 +301,20 @@ blocks:
           photo: /uploads/Squadra/2026-2027/Profili/Gilardi-Benedetta.jpeg
           name: Benedetta Gilardi
           club: src/content/clubs/rotaract-club-morimondo-abbazia.md
+      - name: Delegato per la Rotary Foundation
+        description: 'Promuove i valori e le risorse della Fondazione Rotary, orientando i Club nell''accesso alle sovvenzioni e coordinando lo sviluppo di progetti umanitari ad alto impatto locale e globale.'
+        leadLabel: Delegato
+        lead:
+          name: Davide Cappello
+          email: rotary.foundation@rotaract2050.org
+          club: src/content/clubs/rotaract-club-brescia-ovest-castello.md
+      - name: Delegato IT
+        description: 'Cura e innova le piattaforme digitali distrettuali, garantendo l''efficienza dei sistemi e offrendo strumenti informatici avanzati a supporto della comunicazione, della formazione e delle attività di service.'
+        leadLabel: Delegato
+        lead:
+          name: Alessandro Gorla
+          email: it@rotaract2050.org
+          club: src/content/clubs/rotaract-club-abbiategrasso.md
     _template: CommitteeGrid
 ---
 
