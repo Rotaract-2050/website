@@ -196,7 +196,7 @@ blocks:
           club: src/content/clubs/rotaract-club-piacenza.md
           clubCustom: RC Piacenza Primogenita
       - name: Azione Giovani
-        description: 'La Commissione riconosce l''impronta fondamentale del servizio nella vita dei giovani, favorendone la crescita etica e sociale. Agisce da anello di congiunzione tra Rotary, Rotaract e Interact, affiancando i Club nello sviluppo di progetti e nella promozione della leadership. Si occupa della gestione di momenti formativi centrali per approfondire la conoscenza dell''organizzazione. Attraverso percorsi di cittadinanza attiva e scambi culturali, la Commissione accompagna le nuove generazioni, custodendo e tramandando i valori della famiglia rotariana.'
+        description: 'Promuove lo sviluppo personale e la leadership dei giovani, unendo Rotary, Rotaract e Interact in percorsi di formazione, cittadinanza attiva e condivisione dei valori della famiglia rotariana.'
         leadLabel: Presidente
         membersLabel: Membro
         lead:
