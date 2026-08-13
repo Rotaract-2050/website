@@ -176,7 +176,7 @@ blocks:
         surname: Pariset
         motto: Honor Rotary with Faith and Enthusiasm
         eraLabel: Rotaract Distretto 205
-      - yearRange: 1989/1990
+      - yearRange: 1989 - 1990
         name: Giuseppe
         surname: Manfredi
         motto: Enjoy Rotary!
