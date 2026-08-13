@@ -112,8 +112,8 @@ blocks:
         title: 'Promuoverà '
         description: BUONA VOLONTÀ e MIGLIORI RAPPORTI DI AMICIZIA?
       - letter: '4'
-        title: Beneficio
-        description: Sarà vantaggioso per tutti gli interessati?
+        title: Sarà VANTAGGIOSO
+        description: per tutti gli interessati?
     _template: ValuesGrid
 ---
 
