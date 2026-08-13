@@ -1,6 +1,6 @@
 ---
 title: IL DISTRETTO
-eyebrow: DISTRETTO ROTARACT 2050
+eyebrow: ROTARACT DISTRETTO 2050
 breadcrumbCurrent: IL DISTRETTO
 seo:
   description: 'Il Distretto Rotaract 2050 riunisce i club attivi nelle province di Cremona, Brescia, Lodi, Mantova, Milano Sud, Pavia e Piacenza, sotto gli auspici del Rotary Distretto 2050.'
