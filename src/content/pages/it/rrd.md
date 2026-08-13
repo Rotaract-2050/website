@@ -35,7 +35,7 @@ blocks:
         surname: Friggi
         motto: Imagine Rotary
         mottoDistretto: Pensa Credi Sogna Osa
-      - yearRange: 2021/2022
+      - yearRange: 2021 - 2022
         name: Michela
         surname: Mor
         motto: Serve to Change Lives
