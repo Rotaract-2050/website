@@ -196,7 +196,7 @@ blocks:
         name: Carlo
         surname: Vittori
         motto: You are the Key
-      - yearRange: 1984 - 1985
+      - yearRange: 1984-1985
         name: Roberto
         surname: Bosia
         motto: Discover a New World of Service
