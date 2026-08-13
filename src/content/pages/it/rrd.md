@@ -250,7 +250,7 @@ blocks:
         name: Germano
         surname: Buzzi
         motto: Let's Take a New Look – And Act
-      - yearRange: 1971 - 1972
+      - yearRange: 1971-1972
         name: Antonio
         surname: Ioli
         motto: Good Will Begins With You
