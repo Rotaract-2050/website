@@ -5,12 +5,13 @@ import {
 	getArchiveEvents,
 	groupEventsByYear,
 	eventSlug,
-	eventTags,
+	eventTypeTag,
 	isUpcomingEvent,
 	currentRotaryYearLabel,
 	localizeEvent,
 	yearLabelSlug,
 } from '../../lib/events';
+import { clubTagLabels } from '../../lib/news';
 import { uiStrings, type Lang } from '../../data/ui-strings';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
@@ -76,7 +77,9 @@ const activeYear =
 									imageFocalX={event.imageFocalX}
 									imageFocalY={event.imageFocalY}
 									imageLabel={localized.imageLabel}
-									tags={eventTags(event)}
+									typeTags={eventTypeTag(event)}
+									clubTags={clubTagLabels(event.clubs)}
+									hostClubLabel={t.events.hostClubLabel}
 									title={localized.title}
 									dateLabel={dateFormatter.format(new Date(event.date))}
 									upcoming={isUpcomingEvent(event.date)}

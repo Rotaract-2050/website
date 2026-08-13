@@ -81,6 +81,7 @@ export interface UiStrings {
 		locationLabel: string;
 		worksLocationLabel: string;
 		dinnerLocationLabel: string;
+		hostClubLabel: string;
 		ticketsButtonLabel: string;
 		photoButtonLabel: string;
 		detailEyebrow: string;
@@ -212,6 +213,7 @@ const IT: UiStrings = {
 		locationLabel: 'Location',
 		worksLocationLabel: 'Lavori',
 		dinnerLocationLabel: 'Cena',
+		hostClubLabel: 'Club ospitante:',
 		ticketsButtonLabel: 'Info e biglietti',
 		photoButtonLabel: 'Guarda le foto',
 		detailEyebrow: 'EVENTI DEL DISTRETTO',
@@ -325,6 +327,7 @@ const EN: UiStrings = {
 		locationLabel: 'Location',
 		worksLocationLabel: 'Sessions',
 		dinnerLocationLabel: 'Dinner',
+		hostClubLabel: 'Host club:',
 		ticketsButtonLabel: 'Info & tickets',
 		photoButtonLabel: 'View the photos',
 		detailEyebrow: 'DISTRICT EVENTS',

@@ -160,8 +160,12 @@ const clubColor = club ? club.zoneColor : customClubColor(clubCustom);
 
 	.person-card[data-size='lg'] .person-club {
 		font-size: 12px;
-		background: var(--tag-bg, rgba(255, 255, 255, 0.16));
-		color: var(--tag-color, #fff);
+		/* Always solid white, ignoring --tag-bg: a zone-tinted translucent pill (fine on the
+		   light page background elsewhere) all but disappears on the solid Cranberry card here,
+		   and its paired solid-color text reads with poor contrast against Cranberry regardless
+		   of hue. Solid white + colored text keeps the zone color legible either way. */
+		background: #fff;
+		color: var(--tag-color, var(--color-navy));
 	}
 
 	.person-email {

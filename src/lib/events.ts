@@ -14,8 +14,12 @@ export type DistrictEvent = NonNullable<NonNullable<EventEdge>['node']>;
  * news club tags.
  */
 export function eventTags(event: Pick<DistrictEvent, 'clubs' | 'eventType'>): NewsTag[] {
-	const typeTag: NewsTag[] = event.eventType === 'Distrettuale' ? [{ label: event.eventType }] : [];
-	return [...typeTag, ...clubTagLabels(event.clubs)];
+	return [...eventTypeTag(event), ...clubTagLabels(event.clubs)];
+}
+
+/** Just the "Distrettuale" type badge (no club tags) — for callers that render club tags separately. */
+export function eventTypeTag(event: Pick<DistrictEvent, 'eventType'>): NewsTag[] {
+	return event.eventType === 'Distrettuale' ? [{ label: event.eventType }] : [];
 }
 
 /** Slug for an event, e.g. `passaggio-consegne-2026.md` -> `passaggio-consegne-2026`. */
