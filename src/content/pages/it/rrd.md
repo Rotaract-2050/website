@@ -184,7 +184,7 @@ blocks:
         name: Dante Valerio
         surname: Ghisi
         motto: Put Life into Rotary — Your Life
-      - yearRange: 1987/1988
+      - yearRange: 1987 - 1988
         name: Fabio
         surname: Minoli Rota
         motto: Rotarians – United in Service – Dedicated to Peace
