@@ -221,7 +221,7 @@ blocks:
         name: Pierluigi
         surname: De Biasi
         motto: Let Service Light the Way
-      - yearRange: 1978/1979
+      - yearRange: 1978 - 1979
         name: Giorgio
         surname: Aletti
         motto: Reach Out
