@@ -107,7 +107,7 @@ blocks:
         name: Alessandro
         surname: Escalona
         motto: Rotary Shares
-      - yearRange: 2006/2007
+      - yearRange: 2006 - 2007
         name: Francesca
         surname: Roncai
         motto: Lead the Way
