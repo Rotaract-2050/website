@@ -109,8 +109,8 @@ blocks:
         title: È GIUSTO
         description: per tutti gli interessati?
       - letter: '3'
-        title: 'Promuoverà BUONA VOLONTÀ '
-        description: e MIGLIORI RAPPORTI DI AMICIZIA?
+        title: 'Promuoverà '
+        description: BUONA VOLONTÀ e MIGLIORI RAPPORTI DI AMICIZIA?
       - letter: '4'
         title: Beneficio
         description: Sarà vantaggioso per tutti gli interessati?
