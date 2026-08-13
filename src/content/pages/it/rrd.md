@@ -213,7 +213,7 @@ blocks:
         name: Gianfranco
         surname: Ranieri
         motto: World Understanding and Peace Through Rotary
-      - yearRange: 1980 - 1981
+      - yearRange: 1980-1981
         name: Daniele
         surname: Roncoroni
         motto: Take Time to Serve
