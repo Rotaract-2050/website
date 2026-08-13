@@ -147,7 +147,7 @@ blocks:
         name: Nicola
         surname: Scopetta
         motto: Show Rotary Cares for your community for our world for its people
-      - yearRange: 1996 - 1997
+      - yearRange: 1996-1997
         name: Guido
         surname: Neri
         motto: Build the Future with Action and Vision
