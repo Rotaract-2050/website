@@ -70,7 +70,7 @@ blocks:
         surname: Bianchini
         motto: Be a Gift to the World
         mottoDistretto: Level up together
-      - yearRange: 2014 - 2015
+      - yearRange: 2014-2015
         name: Clara
         surname: Pavesi
         motto: Light up Rotary
