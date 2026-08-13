@@ -9,7 +9,7 @@ blocks:
     showDisclaimer: false
     disclaimerText: ''
     items:
-      - yearRange: 2026/2027
+      - yearRange: 2026 - 2027
         name: Sebastiano
         surname: Fortugno
         motto: Create Lasting Impact
