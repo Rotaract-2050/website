@@ -284,7 +284,7 @@ blocks:
             name: Valeria Goi
             club: src/content/clubs/rotaract-club-casalmaggiore-viadana-sabbioneta.md
       - name: Delegato Rotary per il Rotaract
-        description: '[todo]'
+        description: 'Agisce da organo di raccordo e supporto strategico tra Rotary e Rotaract, guidando le nuove generazioni nello sviluppo della leadership e promuovendo l''azione comune nell''ambito del service.'
         leadLabel: Delegato
         lead:
           photo: /uploads/Squadra/2026-2027/Profili/Pesce-Alberto.jpeg
