@@ -95,7 +95,7 @@ blocks:
         surname: Monticolombi
         motto: Building Communities — Bridging Continents
         mottoDistretto: Gutta Cavat Lapidem
-      - yearRange: 2009/2010
+      - yearRange: 2009 - 2010
         name: Luca
         surname: Metelli
         motto: The Future of Rotary is in Your Hands
