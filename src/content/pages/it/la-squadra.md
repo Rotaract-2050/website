@@ -178,6 +178,9 @@ blocks:
             name: Federica Maria Di Mola
             club: src/content/clubs/rotaract-club-pavia.md
           - photo: /uploads/Squadra/2026-2027/Profili/Iembo-Francesca.jpeg
+            photoFocalX: 34
+            photoFocalY: 27
+            photoZoom: 250
             name: Francesca Iembo
             club: src/content/clubs/rotaract-club-gonzaga-suzzara.md
           - photo: /uploads/Squadra/2026-2027/Profili/Romani-Benedetta.jpeg
