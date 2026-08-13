@@ -15,7 +15,7 @@ blocks:
         ctaLabel: I NOSTRI CLUB
       - eyebrow: UNISCITI A NOI
         title: LA TUA RETE PARTE DA QUI
-        subtitle: 'Rotaract è la community di giovani 18-30 anni che unisce crescita personale, amicizia e service.'
+        subtitle: 'Il Rotaract è la rete di giovani dai 18 anni che unisce crescita personale, amicizia e servizio.'
         ctaLabel: ENTRA NEL ROTARACT
     _template: Hero
   - items:
