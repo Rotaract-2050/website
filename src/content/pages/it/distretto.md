@@ -98,13 +98,13 @@ blocks:
         title: Tutela dell'ambiente
         description: Proteggiamo le risorse naturali e promuoviamo la sostenibilità.
     _template: ValuesGrid
-  - title: 'Ciò che penso, dico o faccio'
+  - title: LA PROVA DELLE QUATTRO DOMANDE
     intro: 'Ciò che penso, dico o faccio:'
     accent: '#657F99'
     items:
       - letter: '1'
-        title: 'Risponde a '
-        description: VERITÀ?
+        title: 'Risponde '
+        description: a VERITÀ?
       - letter: '2'
         title: Equità
         description: È giusto per tutti gli interessati?
