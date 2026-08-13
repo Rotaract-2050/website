@@ -1,8 +1,10 @@
 ---
 import { Image } from 'astro:assets';
 import PersonCard from '../PersonCard.astro';
+import type { Lang } from '../../data/ui-strings';
 
 interface Props {
+	lang: Lang;
 	title: string;
 	showDisclaimer?: boolean;
 	disclaimerText?: string;
@@ -16,7 +18,7 @@ interface Props {
 		name: string;
 		role: string;
 		email?: string;
-		club?: { name: string; zoneColor?: string | null } | null;
+		club?: { name: string; zoneColor?: string | null; slug?: string | null } | null;
 		clubCustom?: string;
 		themeMotto?: string;
 		themeLogo?: string;
@@ -24,7 +26,7 @@ interface Props {
 	}[];
 }
 
-const { title, showDisclaimer = false, disclaimerText, highlightFirst = false, items } = Astro.props;
+const { lang, title, showDisclaimer = false, disclaimerText, highlightFirst = false, items } = Astro.props;
 const [featured, ...rest] = items;
 const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 ---
@@ -39,6 +41,7 @@ const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 					<Image src={featured.themeLogo} alt={`Logo del tema distrettuale — ${featured.themeMotto ?? title}`} width={520} height={520} quality="high" class="theme-logo" />
 				)}
 				<PersonCard
+					lang={lang}
 					name={featured.name}
 					role={featured.role}
 					photo={featured.photo}
@@ -58,6 +61,7 @@ const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 		<div class="roles-grid">
 			{(highlightFirst ? rest : items).map((role) => (
 				<PersonCard
+					lang={lang}
 					name={role.name}
 					role={role.role}
 					photo={role.photo}

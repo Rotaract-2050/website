@@ -1,5 +1,6 @@
 ---
 import PersonCard from '../PersonCard.astro';
+import type { Lang } from '../../data/ui-strings';
 
 interface Person {
 	name: string;
@@ -8,7 +9,7 @@ interface Person {
 	photoFocalY?: number | null;
 	photoZoom?: number | null;
 	email?: string;
-	club?: { name: string; zoneColor?: string | null } | null;
+	club?: { name: string; zoneColor?: string | null; slug?: string | null } | null;
 	clubCustom?: string;
 	tinaFieldAttr?: string;
 }
@@ -25,13 +26,14 @@ interface CommitteeItem {
 }
 
 interface Props {
+	lang: Lang;
 	title: string;
 	showDisclaimer?: boolean;
 	disclaimerText?: string;
 	items: CommitteeItem[];
 }
 
-const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
+const { lang, title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 ---
 
 <section class="committees">
@@ -45,6 +47,7 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 						{item.description && <p class="committee-description" data-tina-field={item.descriptionFieldAttr}>{item.description}</p>}
 					<div class="lead-row">
 						<PersonCard
+							lang={lang}
 							name={item.lead.name}
 							role={item.leadLabel}
 							photo={item.lead.photo}
@@ -61,6 +64,7 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 						<div class="members-row">
 							{item.members.map((member) => (
 								<PersonCard
+									lang={lang}
 									name={member.name}
 									role={item.membersLabel}
 									photo={member.photo}
