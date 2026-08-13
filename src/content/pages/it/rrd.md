@@ -151,7 +151,7 @@ blocks:
         name: Guido
         surname: Neri
         motto: Build the Future with Action and Vision
-      - yearRange: 1995 - 1996
+      - yearRange: 1995-1996
         name: Giampiero
         surname: Duina
         motto: 'Act with integrity, serve with love, work for peace'
