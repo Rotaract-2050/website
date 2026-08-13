@@ -216,8 +216,11 @@ const configured = Boolean(driveFolderId && driveApiKey);
 		transform: translateY(-4px);
 	}
 
-	/* Folder/file icons sit in a filled navy circle — same "icon-in-a-disc" chip as
-	   .role-initials/.value-marker elsewhere, instead of the old bare colored stroke icon. */
+	/* Folder/file icons sit in a filled Cranberry (--color-pink) circle — same
+	   "icon-in-a-disc" chip shape as .role-initials/.value-marker elsewhere, but in
+	   Cranberry rather than Navy: Cranberry #D41367 is the brandcenter's own color for
+	   the Rotaract logo, and a solid navy disc here read as Rotary's blue rather than
+	   Rotaract's. See references/rotary-brand.md. */
 	:global(.materials-folder-icon) {
 		flex: none;
 		width: 56px;
@@ -226,7 +229,7 @@ const configured = Boolean(driveFolderId && driveApiKey);
 		align-items: center;
 		justify-content: center;
 		border-radius: 50%;
-		background: var(--color-navy);
+		background: var(--color-pink);
 		color: #fff;
 	}
 
@@ -286,7 +289,7 @@ const configured = Boolean(driveFolderId && driveApiKey);
 		align-items: center;
 		justify-content: center;
 		border-radius: 50%;
-		background: var(--color-navy);
+		background: var(--color-pink);
 		color: #fff;
 	}
 
