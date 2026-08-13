@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "bash scripts/dev.sh",
     "dev:raw": "tinacms dev -c \"astro dev\"",
-    "build": "tinacms build -c \"astro build\"",
+    "build": "NODE_OPTIONS=--max-old-space-size=4096 tinacms build -c \"astro build\"",
     "preview": "astro preview",
     "astro": "astro",
     "fetch:zone-boundaries": "node scripts/fetch-zone-boundaries.mjs"
