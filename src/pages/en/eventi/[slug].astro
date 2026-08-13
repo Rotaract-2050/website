@@ -29,6 +29,12 @@ const dateFormatter = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 
 const tags = eventTags(event);
 const localized = localizeEvent(event, lang);
 const titleField = event.titleEn ? 'titleEn' : 'title';
+// `ticketsOpen` gates the ticket button/widget only, independent from `visible` (which controls
+// the whole event page): a socio can prep the link/snippet in advance and open it only once
+// ticket sales are ready, without having to re-fill them. Absent = true, same as `visible`.
+const ticketsOpen = event.ticketsOpen ?? true;
+const showTicketsButton = ticketsOpen && Boolean(event.ticketsUrl);
+const showTicketWidget = ticketsOpen && Boolean(event.ticketWidgetEmbed);
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 const jsonLd = buildEventJsonLd({
 	name: localized.title,
@@ -102,9 +108,9 @@ const jsonLd = buildEventJsonLd({
 				)
 			)}
 			{localized.excerpt && <p class="event-detail-excerpt">{localized.excerpt}</p>}
-			{(event.ticketsUrl || event.photoAlbumUrl) && (
+			{(showTicketsButton || event.photoAlbumUrl) && (
 				<div class="event-detail-actions">
-					{event.ticketsUrl && (
+					{showTicketsButton && (
 						<a class="event-detail-tickets-btn" href={event.ticketsUrl} target="_blank" rel="noopener">
 							{t.events.ticketsButtonLabel}
 						</a>
@@ -115,6 +121,9 @@ const jsonLd = buildEventJsonLd({
 						</a>
 					)}
 				</div>
+			)}
+			{showTicketWidget && (
+				<div class="event-detail-ticket-widget" set:html={event.ticketWidgetEmbed} />
 			)}
 		</div>
 	</article>
@@ -257,6 +266,10 @@ const jsonLd = buildEventJsonLd({
 	.event-detail-photo-btn:hover {
 		background: var(--color-navy);
 		color: #fff;
+	}
+
+	.event-detail-ticket-widget {
+		margin-top: 32px;
 	}
 
 	@media (max-width: 720px) {
