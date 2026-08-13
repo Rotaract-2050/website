@@ -302,7 +302,7 @@ blocks:
           email: it@rotaract2050.org
           club: src/content/clubs/rotaract-club-abbiategrasso.md
       - name: Delegato per la Rotary Foundation
-        description: '[todo]'
+        description: 'Promuove i valori e le risorse della Fondazione Rotary, orientando i Club nell''accesso alle sovvenzioni e coordinando lo sviluppo di progetti umanitari ad alto impatto locale e globale.'
         leadLabel: Delegato
         lead:
           name: Davide Cappello
