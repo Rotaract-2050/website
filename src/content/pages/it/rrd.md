@@ -50,7 +50,7 @@ blocks:
         surname: Pesce
         motto: Rotary Connects the World
         mottoDistretto: Senza Ambizione non c'è Talento
-      - yearRange: 2018 - 2019
+      - yearRange: 2018-2019
         name: Samuele
         surname: Soldo
         motto: Be the Inspiration
