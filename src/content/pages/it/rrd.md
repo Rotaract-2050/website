@@ -159,7 +159,7 @@ blocks:
         name: Davide
         surname: Bertola
         motto: Be a Friend
-      - yearRange: 1993 - 1994
+      - yearRange: 1993-1994
         name: Davide
         surname: Bruno
         motto: Believe in What You Do - Do What You Believe in
