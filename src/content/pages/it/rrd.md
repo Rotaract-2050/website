@@ -20,7 +20,7 @@ blocks:
         surname: Pancini
         motto: Unite for Good
         mottoDistretto: 'Quando l''Amicizia guida il Servizio, il Progresso plasma il Destino'
-      - yearRange: 2024/2025
+      - yearRange: 2024 - 2025
         name: Guido
         surname: Bosi
         motto: The Magic of Rotary
