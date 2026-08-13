@@ -11,7 +11,7 @@ blocks:
         ctaLabel: SCOPRI I CLUB
       - eyebrow: SERVIZIO E LEADERSHIP
         title: PROGETTI CHE LASCIANO IL SEGNO
-        subtitle: 'Dalla lotta alla povertà alla tutela dell''ambiente: ogni club Rotaract sceglie una causa e la porta avanti.'
+        subtitle: 'Dalla promozione della pace alla tutela dell''ambiente: ogni Club Rotaract individua una causa e la trasforma in azioni concrete al servizio della comunità.'
         ctaLabel: I NOSTRI CLUB
       - eyebrow: UNISCITI A NOI
         title: LA TUA RETE PARTE DA QUI
