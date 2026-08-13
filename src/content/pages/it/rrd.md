@@ -238,7 +238,7 @@ blocks:
         surname: Rausse
         motto: To Dignify the Human Being
         eraLabel: Rotaract Distretto 184
-      - yearRange: 1974/1975
+      - yearRange: 1974 - 1975
         name: Gianpietro
         surname: Rausse
         motto: Renew the Spirit of Rotary
