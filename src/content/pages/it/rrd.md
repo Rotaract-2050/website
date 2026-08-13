@@ -246,7 +246,7 @@ blocks:
         name: Cesare
         surname: Suriani
         motto: A Time for Action
-      - yearRange: 1972/1973
+      - yearRange: 1972 - 1973
         name: Germano
         surname: Buzzi
         motto: Let's Take a New Look – And Act
