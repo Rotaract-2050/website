@@ -192,7 +192,7 @@ blocks:
         name: Maurizio
         surname: Bernardo
         motto: Rotary Brings Hope
-      - yearRange: 1985 - 1986
+      - yearRange: 1985-1986
         name: Carlo
         surname: Vittori
         motto: You are the Key
