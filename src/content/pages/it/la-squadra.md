@@ -308,7 +308,7 @@ blocks:
           name: Davide Cappello
           email: rotary.foundation@rotaract2050.org
           club: src/content/clubs/rotaract-club-brescia-ovest-castello.md
-      - name: Delegato per l'Interact
+      - name: Delegato Rotaract per l'Interact
         description: '[todo]'
         leadLabel: Delegato
         lead:
