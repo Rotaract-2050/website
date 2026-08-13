@@ -9,17 +9,14 @@ blocks:
         title: GIOVANI CHE COSTRUISCONO IL CAMBIAMENTO
         subtitle: 'Lombardia meridionale e Provincia di Piacenza: 7 provincie, un solo distretto di giovani leader al servizio della comunità.'
         ctaLabel: SCOPRI I CLUB
-        image: /uploads/Paesaggi/Paesaggio-1.jpeg
       - eyebrow: SERVIZIO E LEADERSHIP
         title: PROGETTI CHE LASCIANO IL SEGNO
         subtitle: 'Dalla lotta alla povertà alla tutela dell''ambiente: ogni club Rotaract sceglie una causa e la porta avanti.'
         ctaLabel: I NOSTRI CLUB
-        image: /uploads/Paesaggi/Paesaggio-2.jpeg
       - eyebrow: UNISCITI A NOI
         title: LA TUA RETE PARTE DA QUI
         subtitle: 'Rotaract è la community di giovani 18-30 anni che unisce crescita personale, amicizia e service.'
         ctaLabel: ENTRA NEL ROTARACT
-        image: /uploads/Paesaggi/Paesaggio-3.jpeg
     _template: Hero
   - items:
       - value: '30'
@@ -37,30 +34,13 @@ blocks:
     _template: NewsTicker
   - kicker: CHI SIAMO
     title: IL ROTARACT NEL DISTRETTO 2050
-    body: 'Il Rotaract è un''organizzazione partner del Rotary International che riunisce giovani dai 18 anni in su, orientati al servizio della comunità, alla crescita personale e allo sviluppo della leadership. Fondato sulla promozione integrale dell''essere umano, offre ai soci l''opportunità di passare all''azione, realizzando progetti ad impatto locale e globale in uno spirito di amicizia e collaborazione (Fellowship through Service).'
+    body: 'Organizzazione partner del Rotary International, il Rotaract riunisce giovani dai 18 anni animati dalla volontà di servire la comunità e sviluppare le proprie doti di leadership. Fondato sulla piena valorizzazione dell''essere umano, traduce i propri ideali in azione realizzando progetti dal profondo impatto locale e globale, guidato in ogni passo dal motto "Fellowship through Service".'
     body2: Il Rotaract Distretto 2050 riunisce i sodalizi attivi nella Lombardia meridionale e nella Provincia di Piacenza.
     ctaLabel: SCOPRI IL DISTRETTO
     ctaHref: distretto
     imageLabel: Foto socie/i in un progetto di servizio
     imageSide: right
     _template: SplitSection
-  - autoplay: true
-    images:
-      - image: /uploads/Paesaggi/Paesaggio-1.jpeg
-        label: Paesaggio del territorio del Distretto 2050
-      - image: /uploads/Paesaggi/Paesaggio-2.jpeg
-        label: Panorama della Lombardia meridionale
-      - image: /uploads/Paesaggi/Paesaggio-3.jpeg
-        label: Veduta del territorio piacentino
-      - image: /uploads/Paesaggi/Paesaggio-4.jpeg
-        label: Paesaggio naturale del Distretto 2050
-      - image: /uploads/Paesaggi/Paesaggio-5.jpeg
-        label: Scorcio del territorio distrettuale
-      - image: /uploads/Paesaggi/Paesaggio-6.jpeg
-        label: Panorama della provincia di Piacenza
-      - image: /uploads/Paesaggi/Paesaggio-7.jpeg
-        label: Paesaggio del Distretto Rotaract 2050
-    _template: PhotoCarousel
   - title: I CLUB DEL DISTRETTO
     items:
       - title: Francigena
