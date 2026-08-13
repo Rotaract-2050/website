@@ -143,7 +143,7 @@ blocks:
         name: Francesca Esther
         surname: Addamonte
         motto: Follow your Rotary Dream
-      - yearRange: 1997/1998
+      - yearRange: 1997 - 1998
         name: Nicola
         surname: Scopetta
         motto: Show Rotary Cares for your community for our world for its people
