@@ -187,7 +187,7 @@ blocks:
             name: Benedetta Romani
             club: src/content/clubs/rotaract-club-brescia.md
       - name: Delegato E.R.I.C.
-        description: '[todo]'
+        description: 'L''E.R.I.C. (European Rotaract Information Center) è l''organizzazione multidistrettuale europea che unisce i Club Rotaract per facilitare lo scambio di informazioni, promuovere la cooperazione internazionale e coordinare progetti e relazioni tra i vari Paesi.'
         leadLabel: Delegato
         lead:
           photo: /uploads/Squadra/2026-2027/Profili/Calori-Leonardo.jpeg
