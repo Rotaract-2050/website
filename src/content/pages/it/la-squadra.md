@@ -121,7 +121,7 @@ blocks:
             name: Jessica Bontempi
             club: src/content/clubs/rotaract-club-garda-valle-sabbia.md
       - name: Azione Professionale
-        description: 'La Commissione promuove l''osservanza di elevati principi etici nell''esercizio di ogni professione, valorizzando il lavoro come strumento di servizio per la collettività. Offre ai soci strumenti per l''orientamento lavorativo e il potenziamento delle competenze trasversali. Attraverso incontri con realtà imprenditoriali, percorsi formativi e la creazione di una solida rete di mentorship e networking con il Rotary, la Commissione sostiene le aspirazioni dei giovani, incoraggiandoli a mettere le proprie professionalità al servizio dei progetti del Distretto 2050.'
+        description: 'Promuove l’etica e valorizza il lavoro come concreto strumento di servizio, guidando la crescita professionale dei giovani attraverso formazione, mentorship e networking con il Rotary per mettere il talento di ciascuno a disposizione della comunità.'
         leadLabel: Presidente
         membersLabel: Membro
         lead:
