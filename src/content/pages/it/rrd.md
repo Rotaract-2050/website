@@ -188,7 +188,7 @@ blocks:
         name: Fabio
         surname: Minoli Rota
         motto: Rotarians – United in Service – Dedicated to Peace
-      - yearRange: 1986/1987
+      - yearRange: '1986 - 1987 '
         name: Maurizio
         surname: Bernardo
         motto: Rotary Brings Hope
