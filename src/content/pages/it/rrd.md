@@ -266,11 +266,11 @@ blocks:
         name: Gabriele
         surname: Pizzorno
         motto: Participate!
-      - yearRange: 1967/1968
+      - yearRange: 1967 - 1968
         name: Umberto
         surname: Ranzi
         motto: Make Your Rotary Membership Effective
-      - yearRange: 1966/1967
+      - yearRange: 1966 - 1967
         name: Franco
         surname: Spreafico
         motto: A Better World Through Rotary
