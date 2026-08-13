@@ -246,7 +246,7 @@ blocks:
             name: Lucrezia Giuseppina Zandon
             club: src/content/clubs/rotaract-club-vigevano-castello.md
       - name: Immagine Pubblica
-        description: 'La Commissione custodisce e promuove l''immagine pubblica del Distretto, valorizzando l''impegno dei soci e l''impatto dei service sul territorio. Offre supporto strategico e grafico a Club e Zone, curando la presenza digitale sui canali social e sulle piattaforme web. Attraverso contenuti incisivi, piani editoriali dinamici e una narrazione coordinata, la Commissione consolida le pubbliche relazioni e diffonde la cultura rotaractiana. Trasforma la comunicazione in uno strumento d''ingaggio e divulgazione, garantendo autorevolezza, trasparenza e visibilità ai valori dell''organizzazione.'
+        description: 'Custodisce l''immagine del Distretto e supporta i Club nella comunicazione, raccontando l''impatto dei service per diffondere i valori e la cultura del Rotaract.'
         leadLabel: Presidente
         membersLabel: Membro
         lead:
