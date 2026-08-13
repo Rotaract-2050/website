@@ -254,7 +254,7 @@ blocks:
         name: Antonio
         surname: Ioli
         motto: Good Will Begins With You
-      - yearRange: 1970 - 1971
+      - yearRange: 1970-1971
         name: Gianfranco
         surname: Mossetto
         motto: Bridge the Gaps
