@@ -123,7 +123,7 @@ blocks:
         name: Diego
         surname: Gasperi
         motto: Lend a Hand
-      - yearRange: 2002/2003
+      - yearRange: 2002 - 2003
         name: Alessandra
         surname: Pedercini
         motto: Sow the Seeds of Love
