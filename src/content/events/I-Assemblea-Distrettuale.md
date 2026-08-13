@@ -5,6 +5,8 @@ visible: true
 date: 2026-09-20T21:45:41.984Z
 calendarDate: 2026-09-20T21:45:47.688Z
 eventType: Distrettuale
+clubs:
+  - club: src/content/clubs/rotaract-club-brescia-ovest-castello.md
 imageLabel: Sale Marasino immagine
 ticketsOpen: false
 ticketsUrl: Partecipa
