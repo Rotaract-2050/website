@@ -25,7 +25,7 @@ blocks:
         surname: Bosi
         motto: The Magic of Rotary
         mottoDistretto: 'Formiamoci, per non fermarci mai'
-      - yearRange: 2023 - 2024
+      - yearRange: 2023-2024
         name: Francesco
         surname: Di Martino
         motto: Create Hope in the World
