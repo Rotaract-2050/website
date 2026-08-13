@@ -233,7 +233,7 @@ blocks:
         name: Giampaolo
         surname: Gamba
         motto: I Believe in Rotary
-      - yearRange: 1975 - 1976
+      - yearRange: 1975-1976
         name: Gianpietro
         surname: Rausse
         motto: To Dignify the Human Being
