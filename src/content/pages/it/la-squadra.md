@@ -295,7 +295,7 @@ blocks:
           club: src/content/clubs/rotaract-club-brescia-franciacorta.md
           clubCustom: RC Zerotrenta
       - name: Delegato IT
-        description: '[todo]'
+        description: 'Cura e innova le piattaforme digitali distrettuali, garantendo l''efficienza dei sistemi e offrendo strumenti informatici avanzati a supporto della comunicazione, della formazione e delle attività di service.'
         leadLabel: Delegato
         lead:
           name: Alessandro Gorla
