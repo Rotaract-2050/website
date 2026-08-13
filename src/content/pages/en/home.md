@@ -35,7 +35,7 @@ blocks:
   - _template: "SplitSection"
     kicker: "WHO WE ARE"
     title: "ROTARACT IN DISTRICT 2050"
-    body: "Rotaract is a service club organization partnered with Rotary International, welcoming young adults distinguished by integrity, strong moral character, leadership ability, and a genuine commitment to serving their communities, both locally and internationally."
+    body: "Rotaract is a service organization partnered with Rotary International, bringing together young people aged 18 and up who are committed to community service, personal growth, and leadership development. Grounded in the holistic development of the individual, it gives members the chance to take action, carrying out projects with local and global impact in a spirit of friendship and collaboration (Fellowship through Service)."
     body2: "Rotaract District 2050 brings together clubs active across southern Lombardy and the Province of Piacenza."
     ctaLabel: "DISCOVER THE DISTRICT"
     ctaHref: "distretto"

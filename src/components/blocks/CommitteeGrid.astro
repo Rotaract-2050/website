@@ -8,6 +8,8 @@ interface Person {
 	photoFocalY?: number | null;
 	photoZoom?: number | null;
 	email?: string;
+	club?: { name: string; zoneColor?: string | null } | null;
+	clubCustom?: string;
 	tinaFieldAttr?: string;
 }
 
@@ -50,6 +52,8 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 							photoFocalY={item.lead.photoFocalY}
 							photoZoom={item.lead.photoZoom}
 							email={item.lead.email}
+							club={item.lead.club}
+							clubCustom={item.lead.clubCustom}
 							tinaFieldAttr={item.lead.tinaFieldAttr}
 						/>
 					</div>
@@ -64,6 +68,8 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 									photoFocalY={member.photoFocalY}
 									photoZoom={member.photoZoom}
 									email={member.email}
+									club={member.club}
+									clubCustom={member.clubCustom}
 									tinaFieldAttr={member.tinaFieldAttr}
 								/>
 							))}
