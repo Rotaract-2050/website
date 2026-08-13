@@ -225,7 +225,7 @@ blocks:
           email: scambio.giovani@rotaract2050.org
           clubCustom: Interact Club Casalmaggiore Oglio Po
       - name: Cultura
-        description: 'La Commissione sostiene la valorizzazione del patrimonio artistico e intellettuale, riconoscendo nella cultura un fattore primario di crescita personale e sociale. Incoraggia e coordina la realizzazione di progetti che pongano al centro la promozione delle eccellenze territoriali tra i soci e nelle comunità di riferimento. Supporta le iniziative dei Club, creando sinergie e spazi di divulgazione. Attraverso percorsi dedicati all''arte e alla conoscenza, stimola la sensibilità dei giovani, rafforzando il legame osmotico tra l''azione del Rotaract e la ricchezza delle identità locali.'
+        description: 'Valorizza il patrimonio artistico e culturale locale, guidando i Club in iniziative di service volte a promuovere le eccellenze del territorio e la crescita della comunità.'
         leadLabel: Presidente
         membersLabel: Membro
         lead:
