@@ -309,7 +309,7 @@ blocks:
           email: rotary.foundation@rotaract2050.org
           club: src/content/clubs/rotaract-club-brescia-ovest-castello.md
       - name: Delegato Rotaract per l'Interact
-        description: '[todo]'
+        description: 'Rappresenta l''organo di supporto e indirizzo per l''Interact, facilitando la cooperazione con il Rotaract e custodendo la continuità associativa all''interno della famiglia rotariana.'
         leadLabel: Delegato
         lead:
           photo: /uploads/Squadra/2026-2027/Profili/Gilardi-Benedetta.jpeg
