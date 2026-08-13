@@ -258,7 +258,7 @@ blocks:
         name: Gianfranco
         surname: Mossetto
         motto: Bridge the Gaps
-      - yearRange: 1969/1970
+      - yearRange: 1969 - 1970
         name: Paolo
         surname: Moretti
         motto: Review and Renew
