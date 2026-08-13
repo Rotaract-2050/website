@@ -135,7 +135,7 @@ blocks:
         name: Alessia
         surname: Zucchi
         motto: Create Awareness - Take Action
-      - yearRange: 1999 - 2000
+      - yearRange: 1999-2000
         name: Alberto
         surname: Roveda
         motto: 'Rotary 2000: Act with Consistency, Credibility, Continuity'
