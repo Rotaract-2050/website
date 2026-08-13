@@ -131,7 +131,7 @@ blocks:
         name: Davide
         surname: Astori
         motto: Mankind is our business
-      - yearRange: 2000/2001
+      - yearRange: 2000 - 2001
         name: Alessia
         surname: Zucchi
         motto: Create Awareness - Take Action
