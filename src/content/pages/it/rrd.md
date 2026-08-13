@@ -205,7 +205,7 @@ blocks:
         name: Marco
         surname: Rapini
         motto: Share Rotary – Serve People
-      - yearRange: 1982 - 1983
+      - yearRange: 1982-1983
         name: Alberto
         surname: Bollini
         motto: Mankind is One – Build Bridges of Friendship Throughout the World
