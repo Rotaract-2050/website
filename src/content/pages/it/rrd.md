@@ -180,7 +180,7 @@ blocks:
         name: Giuseppe
         surname: Manfredi
         motto: Enjoy Rotary!
-      - yearRange: 1988/1989
+      - yearRange: 1988 - 1989
         name: Dante Valerio
         surname: Ghisi
         motto: Put Life into Rotary — Your Life
