@@ -166,7 +166,7 @@ blocks:
             name: Clara Brugali
             club: src/content/clubs/rotaract-club-brescia-franciacorta.md
       - name: Azione Internazionale
-        description: 'La Commissione promuove la comprensione, la tolleranza e la pace tra i popoli, espandendo la visione del servizio oltre i confini nazionali. Guida i soci nell''esplorazione delle opportunità internazionali del Rotaract, agevolando gemellaggi interclub, progetti cooperativi e l''accesso ai programmi della Fondazione Rotary. Si pone come punto di riferimento per l''accoglienza di membri esteri e la partecipazione a eventi europei. Attraverso scambi culturali, iniziative sul campo e la collaborazione con l''E.R.I.C., forma cittadini del mondo guidati dai valori dell''amicizia e della solidarietà globale.'
+        description: 'Promuove progetti, gemellaggi e scambi culturali per favorire la comprensione, la buona volontà e la pace nel mondo, guidando i soci nella cooperazione internazionale.'
         leadLabel: Presidente
         membersLabel: Membro
         lead:
