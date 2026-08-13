@@ -56,7 +56,7 @@ const jsonLd = buildArticleJsonLd({
 	<article class="resource-article">
 		<div class="article-inner">
 			<a href={getRelativeLocaleUrl(lang, 'formazione')} class="back-link">{t.resources.backToArchive}</a>
-			<span class="article-category" data-tina-field={tinaField(resource, 'category')}>{resource.category}</span>
+			<span class="article-category" data-tina-field={tinaField(resource, 'category')}>{localized.category}</span>
 			<div data-tina-field={tinaField(resource, 'image')}>
 				{resource.image ? (
 					<Image src={resource.image} alt={localized.imageLabel} width={960} height={420} fit="contain" quality="high" class="article-image" />

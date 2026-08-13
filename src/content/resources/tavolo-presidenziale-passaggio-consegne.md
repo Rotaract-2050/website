@@ -1,7 +1,8 @@
 ---
 title: 'Tavolo presidenziale — Passaggio delle consegne'
 titleEn: 'Head table — Handover Ceremony'
-category: 'Cerimoniale'
+category: 'Tavoli'
+categoryEn: 'Head tables'
 order: 9
 excerpt: "L'ultima conviviale dell'anno: disposizione del tavolo e come si svolge il passaggio del collare."
 excerptEn: "The Rotary year's final gathering: head table seating and how the handover of the collar unfolds."

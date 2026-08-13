@@ -1,7 +1,8 @@
 ---
 title: 'Tavolo presidenziale — Interclub'
 titleEn: 'Head table — Interclub'
-category: 'Cerimoniale'
+category: 'Tavoli'
+categoryEn: 'Head tables'
 order: 10
 excerpt: 'Chi organizza, chi siede al centro e come si dispongono i club ospiti in un evento in interclub.'
 excerptEn: 'Who organizes, who sits at the centre, and how host clubs are seated at an interclub event.'

@@ -60,6 +60,9 @@ export interface UiStrings {
 		empty: string;
 		detailEyebrow: string;
 		backToArchive: string;
+		searchPlaceholder: string;
+		filterAll: string;
+		noResults: string;
 	};
 	clubDetail: {
 		eyebrow: string;
@@ -199,6 +202,9 @@ const IT: UiStrings = {
 		empty: 'Nessuna scheda pubblicata al momento.',
 		detailEyebrow: 'FORMAZIONE E RISORSE',
 		backToArchive: '← Tutte le schede',
+		searchPlaceholder: 'Cerca tra le schede…',
+		filterAll: 'Tutte',
+		noResults: 'Nessuna scheda corrisponde alla ricerca o al filtro scelto.',
 	},
 	clubDetail: {
 		eyebrow: 'I CLUB',
@@ -320,6 +326,9 @@ const EN: UiStrings = {
 		empty: 'No guide published yet.',
 		detailEyebrow: 'TRAINING & RESOURCES',
 		backToArchive: '← All guides',
+		searchPlaceholder: 'Search the guides…',
+		filterAll: 'All',
+		noResults: 'No guide matches this search or filter.',
 	},
 	clubDetail: {
 		eyebrow: 'CLUBS',

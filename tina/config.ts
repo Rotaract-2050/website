@@ -685,11 +685,12 @@ export default defineConfig({
 					{
 						type: 'string',
 						name: 'category',
-						label: 'Categoria',
+						label: 'Categoria (IT)',
 						required: true,
 						description:
-							'Testo libero, per raggruppare le schede (es. "Cerimoniale"). Usare la stessa dicitura, identica in IT ed EN, tra schede correlate così restano raggruppate.',
+							'Testo libero, diventa un filtro cliccabile nell\'elenco (es. "Prefetto", "Cerimoniale", "Tavoli", "Saluti"). Usare la stessa dicitura, identica tra schede correlate, così restano raggruppate sotto lo stesso filtro.',
 					},
+					{ type: 'string', name: 'categoryEn', label: 'Categoria (EN)', description: 'Se vuoto, usa la Categoria (IT).' },
 					{
 						type: 'number',
 						name: 'order',

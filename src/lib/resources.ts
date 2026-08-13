@@ -12,12 +12,12 @@ export function resourceSlug(resource: Pick<Resource, '_sys'>): string {
 }
 
 /**
- * A resource's title/excerpt/body/imageLabel in the given language — one file holds both
- * (`title`/`titleEn`, like `news.title`/`titleEn`), falling back to the IT value when the EN
- * twin is empty, same fallback rule as `localizeNews`.
+ * A resource's title/excerpt/body/imageLabel/category in the given language — one file holds
+ * both (`title`/`titleEn`, like `news.title`/`titleEn`), falling back to the IT value when the
+ * EN twin is empty, same fallback rule as `localizeNews`.
  */
 export function localizeResource(
-	resource: Pick<Resource, 'title' | 'titleEn' | 'excerpt' | 'excerptEn' | 'body' | 'bodyEn' | 'imageLabel' | 'imageLabelEn'>,
+	resource: Pick<Resource, 'title' | 'titleEn' | 'excerpt' | 'excerptEn' | 'body' | 'bodyEn' | 'imageLabel' | 'imageLabelEn' | 'category' | 'categoryEn'>,
 	lang: Lang,
 ) {
 	const isEn = lang === 'en';
@@ -26,7 +26,29 @@ export function localizeResource(
 		excerpt: (isEn && resource.excerptEn) || resource.excerpt,
 		body: (isEn && resource.bodyEn) || resource.body,
 		imageLabel: (isEn && resource.imageLabelEn) || resource.imageLabel,
+		category: (isEn && resource.categoryEn) || resource.category,
 	};
+}
+
+/** Stable filter key for a category label (lowercased, accents/punctuation collapsed to `-`) — the `data-category` value the archive's filter pills match against, independent of display casing/accents. */
+export function categorySlug(category: string): string {
+	return category
+		.normalize('NFD')
+		.replace(/\p{Diacritic}/gu, '')
+		.toLowerCase()
+		.trim()
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/^-+|-+$/g, '');
+}
+
+/** Distinct category labels across a set of resources, in first-seen order (stable, not alphabetized away from editorial intent) — powers the archive's filter pills. */
+export function resourceCategories(resources: Pick<Resource, 'category' | 'categoryEn'>[], lang: Lang): string[] {
+	const isEn = lang === 'en';
+	const seen = new Set<string>();
+	for (const resource of resources) {
+		seen.add((isEn && resource.categoryEn) || resource.category);
+	}
+	return [...seen];
 }
 
 /**

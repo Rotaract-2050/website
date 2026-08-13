@@ -1,7 +1,8 @@
 ---
 title: 'Saluti: cariche distrettuali, interclub e internazionali'
 titleEn: 'Welcome remarks: district, interclub and international officers'
-category: 'Cerimoniale'
+category: 'Saluti'
+categoryEn: 'Welcome remarks'
 order: 12
 excerpt: "L'ordine di saluto per il Consiglio Distrettuale, l'interclub con un Rotary Club e le cariche internazionali."
 excerptEn: 'Welcome order for the District Council, an interclub event with a Rotary Club, and international/interdistrict officers.'
