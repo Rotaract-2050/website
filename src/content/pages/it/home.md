@@ -9,14 +9,17 @@ blocks:
         title: GIOVANI CHE COSTRUISCONO IL CAMBIAMENTO
         subtitle: 'Lombardia meridionale e Provincia di Piacenza: 7 provincie, un solo distretto di giovani leader al servizio della comunità.'
         ctaLabel: SCOPRI I CLUB
+        image: /uploads/Paesaggi/Paesaggio-1.jpeg
       - eyebrow: SERVIZIO E LEADERSHIP
         title: PROGETTI CHE LASCIANO IL SEGNO
         subtitle: 'Dalla lotta alla povertà alla tutela dell''ambiente: ogni club Rotaract sceglie una causa e la porta avanti.'
         ctaLabel: I NOSTRI CLUB
+        image: /uploads/Paesaggi/Paesaggio-2.jpeg
       - eyebrow: UNISCITI A NOI
         title: LA TUA RETE PARTE DA QUI
         subtitle: 'Rotaract è la community di giovani 18-30 anni che unisce crescita personale, amicizia e service.'
         ctaLabel: ENTRA NEL ROTARACT
+        image: /uploads/Paesaggi/Paesaggio-3.jpeg
     _template: Hero
   - items:
       - value: '30'
