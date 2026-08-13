@@ -201,7 +201,7 @@ blocks:
         surname: Bosia
         motto: Discover a New World of Service
         eraLabel: Rotaract Distretto 204
-      - yearRange: 1983/1984
+      - yearRange: 1983 - 1984
         name: Marco
         surname: Rapini
         motto: Share Rotary – Serve People
