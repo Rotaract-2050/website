@@ -103,7 +103,7 @@ blocks:
         name: Roberto Maria
         surname: Dall'Olmo
         motto: Make Dreams Real
-      - yearRange: 2007 - 2008
+      - yearRange: 2007-2008
         name: Alessandro
         surname: Escalona
         motto: Rotary Shares
