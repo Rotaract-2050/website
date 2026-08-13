@@ -1,6 +1,6 @@
 ---
 title: ALBO RRD
-eyebrow: DISTRETTO ROTARACT 2050
+eyebrow: ROTARACT DISTRETTO 2050
 breadcrumbCurrent: ALBO RRD
 seo:
   description: 'La timeline dei Rappresentanti Rotaract Distrettuali (RRD), dall''annata più recente alla più antica.'
@@ -13,18 +13,18 @@ blocks:
         name: Sebastiano
         surname: Fortugno
         motto: Create Lasting Impact
-        eraLabel: Rotaract Distretto 2050
         mottoDistretto: Prendi il largo con entusiasmo
+        eraLabel: Rotaract Distretto 2050
       - yearRange: 2025/2026
         name: Lorenzo
         surname: Pancini
         motto: Unite for Good
-        mottoDistretto: Quando l'Amicizia guida il Servizio, il Progresso plasma il Destino
+        mottoDistretto: 'Quando l''Amicizia guida il Servizio, il Progresso plasma il Destino'
       - yearRange: 2024/2025
         name: Guido
         surname: Bosi
         motto: The Magic of Rotary
-        mottoDistretto: Formiamoci, per non fermarci mai
+        mottoDistretto: 'Formiamoci, per non fermarci mai'
       - yearRange: 2023/2024
         name: Francesco
         surname: Di Martino
@@ -79,7 +79,7 @@ blocks:
         name: Patrizia
         surname: Volonghi
         motto: 'Engage Rotary, Change Lives'
-        mottoDistretto: Scopri te stesso, gli altri, il mondo
+        mottoDistretto: 'Scopri te stesso, gli altri, il mondo'
       - yearRange: 2012/2013
         name: Andrea
         surname: Morandi
@@ -276,3 +276,4 @@ blocks:
         motto: A Better World Through Rotary
     _template: RrdTimeline
 ---
+
