@@ -30,6 +30,9 @@ blocks:
         club: src/content/clubs/rotaract-club-vigevano-lomellina.md
       - initials: TD
         photo: /uploads/Squadra/2026-2027/Profili/Goffredi-Virginia.jpg
+        photoFocalX: 34
+        photoFocalY: 20
+        photoZoom: 180
         name: Virginia Goffredi
         role: Tesoriere
         email: tesoreria@rotaract2050.org
@@ -172,8 +175,8 @@ blocks:
           - photo: /uploads/Squadra/2026-2027/Profili/Di-Mola-Federica-Maria.jpeg
             name: Federica Maria Di Mola
             club: src/content/clubs/rotaract-club-pavia.md
-          - name: Francesca Iembo
-            photo: /uploads/Squadra/2026-2027/Profili/Iembo-Francesca.jpeg
+          - photo: /uploads/Squadra/2026-2027/Profili/Iembo-Francesca.jpeg
+            name: Francesca Iembo
             club: src/content/clubs/rotaract-club-gonzaga-suzzara.md
           - photo: /uploads/Squadra/2026-2027/Profili/Romani-Benedetta.jpeg
             name: Benedetta Romani
@@ -215,6 +218,7 @@ blocks:
           photo: /uploads/Squadra/2026-2027/Profili/Somenzi-Sofia.jpeg
           name: Sofia Somenzi
           email: scambio.giovani@rotaract2050.org
+          club: ''
           clubCustom: Interact Club Casalmaggiore Oglio Po
       - name: Cultura
         description: 'La Commissione sostiene la valorizzazione del patrimonio artistico e intellettuale, riconoscendo nella cultura un fattore primario di crescita personale e sociale. Incoraggia e coordina la realizzazione di progetti che pongano al centro la promozione delle eccellenze territoriali tra i soci e nelle comunità di riferimento. Supporta le iniziative dei Club, creando sinergie e spazi di divulgazione. Attraverso percorsi dedicati all''arte e alla conoscenza, stimola la sensibilità dei giovani, rafforzando il legame osmotico tra l''azione del Rotaract e la ricchezza delle identità locali.'
@@ -309,3 +313,4 @@ blocks:
           club: src/content/clubs/rotaract-club-morimondo-abbazia.md
     _template: CommitteeGrid
 ---
+
