@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import ImageSlot from './ImageSlot.astro';
+import { tagPillStyle } from '../lib/news';
 
 interface Props {
 	name: string;
@@ -11,13 +12,19 @@ interface Props {
 	photoZoom?: number | null;
 	initials?: string;
 	email?: string;
+	/** Rotaract club (reference), rendered as a colored tag. Falls back to `clubCustom` when unset. */
+	club?: { name: string; zoneColor?: string | null } | null;
+	/** Free-text club label for members whose club isn't a Rotaract Club in the `clubs` collection (Rotary/Interact clubs). */
+	clubCustom?: string;
 	tinaFieldAttr?: string;
 	/** 'lg' renders a bigger, standalone card (e.g. the RD featured above the rest). */
 	size?: 'md' | 'lg';
 }
 
-const { name, role, photo, photoFocalX, photoFocalY, photoZoom, initials, email, tinaFieldAttr, size = 'md' } = Astro.props;
+const { name, role, photo, photoFocalX, photoFocalY, photoZoom, initials, email, club, clubCustom, tinaFieldAttr, size = 'md' } = Astro.props;
 const focalStyle = `--focal-x:${photoFocalX ?? 50}%;--focal-y:${photoFocalY ?? 50}%;--zoom:${(photoZoom ?? 100) / 100};`;
+const clubLabel = club?.name || clubCustom || undefined;
+const clubColor = club ? club.zoneColor : undefined;
 ---
 
 <div class="person-card" data-size={size} data-tina-field={tinaFieldAttr}>
@@ -32,6 +39,9 @@ const focalStyle = `--focal-x:${photoFocalX ?? 50}%;--focal-y:${photoFocalY ?? 5
 	</div>
 	<div class="person-name">{name}</div>
 	<div class="person-role">{role}</div>
+	{clubLabel && (
+		<span class="person-club" style={tagPillStyle(clubColor)}>{clubLabel}</span>
+	)}
 	{email && (
 		<a class="person-email" href={`mailto:${email}`}>{email}</a>
 	)}
@@ -134,6 +144,24 @@ const focalStyle = `--focal-x:${photoFocalX ?? 50}%;--focal-y:${photoFocalY ?? 5
 		letter-spacing: 0.5px;
 		text-transform: uppercase;
 		color: var(--color-gold);
+	}
+
+	.person-club {
+		display: inline-block;
+		margin-top: 6px;
+		padding: 3px 10px;
+		border-radius: var(--shape-full, 999px);
+		background: var(--tag-bg, var(--color-navy-container));
+		color: var(--tag-color, var(--color-navy));
+		font-size: 10px;
+		font-weight: 600;
+		letter-spacing: 0.2px;
+	}
+
+	.person-card[data-size='lg'] .person-club {
+		font-size: 12px;
+		background: var(--tag-bg, rgba(255, 255, 255, 0.16));
+		color: var(--tag-color, #fff);
 	}
 
 	.person-email {

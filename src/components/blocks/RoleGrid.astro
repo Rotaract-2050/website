@@ -16,6 +16,8 @@ interface Props {
 		name: string;
 		role: string;
 		email?: string;
+		club?: { name: string; zoneColor?: string | null } | null;
+		clubCustom?: string;
 		themeMotto?: string;
 		themeLogo?: string;
 		tinaFieldAttr?: string;
@@ -45,6 +47,8 @@ const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 					photoZoom={featured.photoZoom}
 					initials={featured.initials}
 					email={featured.email}
+					club={featured.club}
+					clubCustom={featured.clubCustom}
 					tinaFieldAttr={featured.tinaFieldAttr}
 					size="lg"
 				/>
@@ -62,6 +66,8 @@ const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 					photoZoom={role.photoZoom}
 					initials={role.initials}
 					email={role.email}
+					club={role.club}
+					clubCustom={role.clubCustom}
 					tinaFieldAttr={role.tinaFieldAttr}
 				/>
 			))}
