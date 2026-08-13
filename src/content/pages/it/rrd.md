@@ -90,7 +90,7 @@ blocks:
         surname: Lonati
         motto: Reach Within to Embrace Humanity
         mottoDistretto: Facta non Verba
-      - yearRange: 2010 - 2011
+      - yearRange: 2010-2011
         name: Anthony George
         surname: Monticolombi
         motto: Building Communities — Bridging Continents
