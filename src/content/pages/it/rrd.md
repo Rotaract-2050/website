@@ -65,7 +65,7 @@ blocks:
         surname: Filippi
         motto: Rotary Serving Humanity
         mottoDistretto: Together to make a difference
-      - yearRange: 2015 - 2016
+      - yearRange: 2015-2016
         name: Luca
         surname: Bianchini
         motto: Be a Gift to the World
