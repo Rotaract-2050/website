@@ -103,8 +103,8 @@ blocks:
     accent: '#657F99'
     items:
       - letter: '1'
-        title: Verità
-        description: Risponde a verità?
+        title: 'Risponde a '
+        description: VERITÀ?
       - letter: '2'
         title: Equità
         description: È giusto per tutti gli interessati?
