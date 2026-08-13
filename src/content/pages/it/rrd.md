@@ -85,7 +85,7 @@ blocks:
         surname: Morandi
         motto: Peace through Service
         mottoDistretto: Diversità è ricchezza
-      - yearRange: 2011 - 2012
+      - yearRange: 2011-2012
         name: Alessandro
         surname: Lonati
         motto: Reach Within to Embrace Humanity
