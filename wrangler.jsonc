@@ -4,6 +4,13 @@
 	// Set this to today's date when bumping
 	"compatibility_date": "2026-08-11",
 	"compatibility_flags": ["nodejs_compat"],
+	// Powers astro:assets image resizing/conversion (see astro.config.mjs imageService).
+	// remote: true makes `wrangler dev` hit the real Images API instead of the limited
+	// local simulator, so resize/format previews match production.
+	"images": {
+		"binding": "IMAGES",
+		"remote": true
+	},
 	"observability": {
 		"enabled": true,
 		"head_sampling_rate": 1,
