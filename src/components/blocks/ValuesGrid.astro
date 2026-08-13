@@ -103,11 +103,17 @@ const AOF_ICON_COLOR: Record<string, string> = {
 		text-align: center;
 	}
 
+	/* Not a caption — this is the governing question the item cards below are all
+	   answering (e.g. "Ciò che penso, dico o faccio:" above the Four-Way Test's 4
+	   cards), so it reads as a large secondary subtitle under the section title
+	   rather than a small muted note. */
 	.values-intro {
 		max-width: 640px;
-		margin: -14px auto 34px;
-		font-size: 15px;
-		color: var(--color-text);
+		margin: -8px auto 34px;
+		font-family: var(--font-heading);
+		font-size: 22px;
+		font-weight: 600;
+		color: var(--color-navy);
 		font-style: italic;
 		text-align: center;
 	}
