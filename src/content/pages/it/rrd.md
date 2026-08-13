@@ -115,7 +115,7 @@ blocks:
         name: Riccardo
         surname: Truppo
         motto: Service Above Self
-      - yearRange: 2004/2005
+      - yearRange: 2004 - 2005
         name: Stefano
         surname: Cò
         motto: Celebrate Rotary
