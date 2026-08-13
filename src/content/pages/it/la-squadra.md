@@ -100,7 +100,7 @@ blocks:
     items:
       - name: Azione Interna
         description: |-
-          La Commissione sostiene il buon funzionamento dei Club guidando la formazione, il problem solving e la coesione tra i Soci.
+          La Commissione sostiene il buon funzionamento dei Club guidando la formazione, il problem solving e la coesione tra i soci.
 
           Promuovendo la cultura rotariana e la fellowship, stimola il senso di appartenenza e la collaborazione interclub.
 
