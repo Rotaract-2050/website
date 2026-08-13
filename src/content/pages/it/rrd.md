@@ -155,7 +155,7 @@ blocks:
         name: Giampiero
         surname: Duina
         motto: 'Act with integrity, serve with love, work for peace'
-      - yearRange: 1994/1995
+      - yearRange: 1994 - 1995
         name: Davide
         surname: Bertola
         motto: Be a Friend
