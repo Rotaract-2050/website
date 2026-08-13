@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import ImageSlot from './ImageSlot.astro';
-import { tagPillStyle } from '../lib/news';
+import { tagPillStyle, customClubColor } from '../lib/news';
 
 interface Props {
 	name: string;
@@ -24,7 +24,7 @@ interface Props {
 const { name, role, photo, photoFocalX, photoFocalY, photoZoom, initials, email, club, clubCustom, tinaFieldAttr, size = 'md' } = Astro.props;
 const focalStyle = `--focal-x:${photoFocalX ?? 50}%;--focal-y:${photoFocalY ?? 50}%;--zoom:${(photoZoom ?? 100) / 100};`;
 const clubLabel = club?.name || clubCustom || undefined;
-const clubColor = club ? club.zoneColor : undefined;
+const clubColor = club ? club.zoneColor : customClubColor(clubCustom);
 ---
 
 <div class="person-card" data-size={size} data-tina-field={tinaFieldAttr}>
@@ -38,10 +38,10 @@ const clubColor = club ? club.zoneColor : undefined;
 		)}
 	</div>
 	<div class="person-name">{name}</div>
-	<div class="person-role">{role}</div>
 	{clubLabel && (
 		<span class="person-club" style={tagPillStyle(clubColor)}>{clubLabel}</span>
 	)}
+	<div class="person-role">{role}</div>
 	{email && (
 		<a class="person-email" href={`mailto:${email}`}>{email}</a>
 	)}
@@ -148,7 +148,7 @@ const clubColor = club ? club.zoneColor : undefined;
 
 	.person-club {
 		display: inline-block;
-		margin-top: 6px;
+		margin: 6px 0;
 		padding: 3px 10px;
 		border-radius: var(--shape-full, 999px);
 		background: var(--tag-bg, var(--color-navy-container));

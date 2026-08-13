@@ -89,6 +89,21 @@ export function tagPillStyle(color?: string | null): string | undefined {
 }
 
 /**
+ * Tag color for a free-text club label that isn't a Rotaract Club reference (e.g. a person's
+ * secondary Rotary/Interact affiliation, typed by hand — see references/news-tags.md /
+ * "campo custom" on la-squadra.md). Official Rotary Brand Center colors: Sky Blue `#00A2E0` is
+ * the color "as seen in the Interact logo"; Rotary Royal Blue `#17458F` is the "Rotary" wordmark
+ * color (same hex as `--color-royal-blue`). Returns undefined for anything else, so the pill
+ * falls back to the default pink in CSS.
+ */
+export function customClubColor(label?: string | null): string | undefined {
+	if (!label) return undefined;
+	if (/interact/i.test(label)) return '#00A2E0';
+	if (/\brotary\b/i.test(label) || /\brc\b/i.test(label)) return '#17458F';
+	return undefined;
+}
+
+/**
  * All published district news, newest first, in both languages (one doc per article, like
  * clubs/zones — see `localizeNews`). Backed by the `news` Tina collection, so any article a
  * socio adds shows up here without touching a page block. Pass `limit` to cap how many are
