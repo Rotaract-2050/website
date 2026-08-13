@@ -139,7 +139,7 @@ blocks:
         name: Alberto
         surname: Roveda
         motto: 'Rotary 2000: Act with Consistency, Credibility, Continuity'
-      - yearRange: 1998 - 1999
+      - yearRange: 1998-1999
         name: Francesca Esther
         surname: Addamonte
         motto: Follow your Rotary Dream
