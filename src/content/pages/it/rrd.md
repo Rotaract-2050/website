@@ -45,7 +45,7 @@ blocks:
         surname: Basola
         motto: Rotary Opens Opportunities
         mottoDistretto: Il Rotary crea opportunità
-      - yearRange: 2019/2020
+      - yearRange: 2019 - 2020
         name: Alberto
         surname: Pesce
         motto: Rotary Connects the World
