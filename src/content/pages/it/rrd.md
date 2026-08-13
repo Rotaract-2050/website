@@ -119,7 +119,7 @@ blocks:
         name: Stefano
         surname: Cò
         motto: Celebrate Rotary
-      - yearRange: 2003/2004
+      - yearRange: 2003 - 2004
         name: Diego
         surname: Gasperi
         motto: Lend a Hand
