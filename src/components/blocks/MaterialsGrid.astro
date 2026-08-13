@@ -24,42 +24,49 @@ const configured = Boolean(driveFolderId && driveApiKey);
 
 <section class="materials-grid">
 	<div class="section-inner">
-		<h2 class="section-title">{title}</h2>
-
-		{!configured && <p class="materials-status">{t.notConfigured}</p>}
-
-		{configured && (
-			<div
-				class="materials-app"
-				data-materials-app
-				data-root-folder-id={driveFolderId}
-				data-api-key={driveApiKey}
-				data-root-label={t.rootLabel}
-				data-open-folder-label={t.openFolderLabel}
-				data-loading-message={t.loading}
-				data-error-message={t.unavailable}
-				data-empty-message={emptyMessage || t.empty}
-			>
-				<div class="materials-toolbar">
-					<nav class="materials-breadcrumb" aria-label={t.breadcrumbLabel} data-materials-breadcrumb></nav>
+		<!-- Same "flat panel -> big rounded elevated card" treatment already applied to
+		     EventsCalendar.astro (see .calendar-card there) — this was the other section
+		     still flush with the page background instead of floating as a card. -->
+		<div class="materials-card">
+			<div class="materials-header">
+				<h2 class="section-title">{title}</h2>
+				{configured && (
 					<a class="materials-drive-link" data-materials-drive-link href={`https://drive.google.com/drive/folders/${driveFolderId}`} target="_blank" rel="noopener">
 						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><path d="M15 3h6v6" /><path d="M10 14 21 3" /></svg>
 						{t.openInDriveLabel}
 					</a>
-				</div>
-				<p class="materials-status" data-materials-status hidden></p>
-				<h3 class="materials-subhead" data-materials-folders-label hidden>{t.foldersLabel}</h3>
-				<div class="materials-folders" data-materials-folders></div>
-				<h3 class="materials-subhead" data-materials-files-label hidden>{t.filesLabel}</h3>
-				<ul class="materials-list" data-materials-list></ul>
+				)}
 			</div>
-		)}
+
+			{!configured && <p class="materials-status">{t.notConfigured}</p>}
+
+			{configured && (
+				<div
+					class="materials-app"
+					data-materials-app
+					data-root-folder-id={driveFolderId}
+					data-api-key={driveApiKey}
+					data-root-label={t.rootLabel}
+					data-open-folder-label={t.openFolderLabel}
+					data-loading-message={t.loading}
+					data-error-message={t.unavailable}
+					data-empty-message={emptyMessage || t.empty}
+				>
+					<nav class="materials-breadcrumb" aria-label={t.breadcrumbLabel} data-materials-breadcrumb></nav>
+					<p class="materials-status" data-materials-status hidden></p>
+					<h3 class="materials-subhead" data-materials-folders-label hidden>{t.foldersLabel}</h3>
+					<div class="materials-folders" data-materials-folders></div>
+					<h3 class="materials-subhead" data-materials-files-label hidden>{t.filesLabel}</h3>
+					<ul class="materials-list" data-materials-list></ul>
+				</div>
+			)}
+		</div>
 	</div>
 </section>
 
 <style>
 	.materials-grid {
-		background: #fff;
+		background: var(--color-bg);
 		padding: 80px 40px;
 	}
 
@@ -68,13 +75,29 @@ const configured = Boolean(driveFolderId && driveApiKey);
 		margin: 0 auto;
 	}
 
+	.materials-card {
+		background: #fff;
+		border-radius: var(--shape-extra-large);
+		box-shadow: var(--elevation-3);
+		padding: 48px 40px;
+	}
+
+	.materials-header {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 8px 20px;
+		margin: 0 0 28px;
+	}
+
 	.section-title {
 		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: 34px;
 		color: var(--color-navy);
 		text-transform: uppercase;
-		margin: 0 0 34px;
+		margin: 0;
 	}
 
 	.materials-status {
@@ -83,20 +106,12 @@ const configured = Boolean(driveFolderId && driveApiKey);
 		font-style: italic;
 	}
 
-	.materials-toolbar {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		justify-content: space-between;
-		gap: 10px 20px;
-		margin-bottom: 18px;
-	}
-
 	.materials-breadcrumb {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
 		gap: 6px;
+		margin-bottom: 22px;
 	}
 
 	.materials-drive-link {
@@ -170,7 +185,9 @@ const configured = Boolean(driveFolderId && driveApiKey);
 	}
 
 	/* Folder tiles: big square-ish cards, native-Google-Drive style — bigger icon, name below,
-	   as opposed to the compact row style used for files further down. */
+	   as opposed to the compact row style used for files further down. Same hover-lift
+	   language as .card/.value-card/.event-row elsewhere on the site (translateY + a step up
+	   in elevation), instead of the old border-color-only hover. */
 	:global(.materials-folder-tile) {
 		display: flex;
 		flex-direction: column;
@@ -186,23 +203,39 @@ const configured = Boolean(driveFolderId && driveApiKey);
 		text-align: center;
 		font-family: inherit;
 		cursor: pointer;
+		box-shadow: var(--elevation-1);
+		transition:
+			transform var(--motion-duration-medium) var(--motion-easing-emphasized),
+			box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized),
+			border-color var(--motion-duration-short) var(--motion-easing-standard);
 	}
 
 	:global(.materials-folder-tile:hover) {
 		border-color: var(--color-pink);
-		box-shadow: var(--elevation-2);
+		box-shadow: var(--elevation-3);
+		transform: translateY(-4px);
 	}
 
+	/* Folder/file icons sit in a filled Cranberry (--color-pink) circle — same
+	   "icon-in-a-disc" chip shape as .role-initials/.value-marker elsewhere, but in
+	   Cranberry rather than Navy: Cranberry #D41367 is the brandcenter's own color for
+	   the Rotaract logo, and a solid navy disc here read as Rotary's blue rather than
+	   Rotaract's. See references/rotary-brand.md. */
 	:global(.materials-folder-icon) {
 		flex: none;
 		width: 56px;
 		height: 56px;
-		color: var(--color-pink);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		background: var(--color-pink);
+		color: #fff;
 	}
 
 	:global(.materials-folder-icon svg) {
-		width: 100%;
-		height: 100%;
+		width: 28px;
+		height: 28px;
 	}
 
 	:global(.materials-folder-name) {
@@ -224,7 +257,7 @@ const configured = Boolean(driveFolderId && driveApiKey);
 	:global(.materials-entry) {
 		display: flex;
 		align-items: center;
-		gap: 14px;
+		gap: 16px;
 		width: 100%;
 		background: var(--color-bg);
 		border: 1px solid var(--color-border);
@@ -235,22 +268,34 @@ const configured = Boolean(driveFolderId && driveApiKey);
 		font-size: 15px;
 		color: var(--color-text);
 		cursor: pointer;
+		box-shadow: var(--elevation-1);
+		transition:
+			transform var(--motion-duration-medium) var(--motion-easing-emphasized),
+			box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized),
+			border-color var(--motion-duration-short) var(--motion-easing-standard);
 	}
 
 	:global(.materials-entry:hover) {
 		border-color: var(--color-pink);
+		box-shadow: var(--elevation-2);
+		transform: translateY(-2px);
 	}
 
 	:global(.materials-icon) {
 		flex: none;
-		width: 24px;
-		height: 24px;
-		color: var(--color-pink);
+		width: 40px;
+		height: 40px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		background: var(--color-pink);
+		color: #fff;
 	}
 
 	:global(.materials-icon svg) {
-		width: 100%;
-		height: 100%;
+		width: 20px;
+		height: 20px;
 	}
 
 	:global(.materials-name) {
@@ -270,6 +315,15 @@ const configured = Boolean(driveFolderId && driveApiKey);
 			padding: 50px 20px 70px;
 		}
 
+		.materials-card {
+			border-radius: var(--shape-large);
+			padding: 28px 20px;
+		}
+
+		.section-title {
+			font-size: 26px;
+		}
+
 		.materials-folders {
 			grid-template-columns: repeat(auto-fill, minmax(108px, 1fr));
 			gap: 12px;
@@ -278,6 +332,8 @@ const configured = Boolean(driveFolderId && driveApiKey);
 </style>
 
 <script>
+	import { revealOnScroll, cappedStagger } from '../../lib/motion';
+
 	interface DriveFile {
 		id: string;
 		name: string;
@@ -329,7 +385,7 @@ const configured = Boolean(driveFolderId && driveApiKey);
 		return `${value.toFixed(unit === 0 ? 0 : 1)} ${units[unit]}`;
 	}
 
-	function initMaterials(app: HTMLElement) {
+	function initMaterials(app: HTMLElement, section: HTMLElement) {
 		const apiKey = app.dataset.apiKey ?? '';
 		const rootFolderId = app.dataset.rootFolderId ?? '';
 		const rootLabel = app.dataset.rootLabel ?? '';
@@ -338,14 +394,14 @@ const configured = Boolean(driveFolderId && driveApiKey);
 		const errorMessage = app.dataset.errorMessage ?? '';
 		const emptyMessage = app.dataset.emptyMessage ?? '';
 
+		const driveLink = section.querySelector<HTMLAnchorElement>('[data-materials-drive-link]');
 		const breadcrumb = app.querySelector<HTMLElement>('[data-materials-breadcrumb]');
-		const driveLink = app.querySelector<HTMLAnchorElement>('[data-materials-drive-link]');
 		const status = app.querySelector<HTMLElement>('[data-materials-status]');
 		const foldersLabel = app.querySelector<HTMLElement>('[data-materials-folders-label]');
 		const folders = app.querySelector<HTMLElement>('[data-materials-folders]');
 		const filesLabel = app.querySelector<HTMLElement>('[data-materials-files-label]');
 		const list = app.querySelector<HTMLUListElement>('[data-materials-list]');
-		if (!breadcrumb || !driveLink || !status || !folders || !list || !foldersLabel || !filesLabel) return;
+		if (!breadcrumb || !status || !folders || !list || !foldersLabel || !filesLabel) return;
 
 		// Stack of folders entered so far (root excluded, it's rendered separately).
 		let path: { id: string; name: string }[] = [];
@@ -460,14 +516,14 @@ const configured = Boolean(driveFolderId && driveApiKey);
 		}
 
 		async function load(folderId: string) {
-			if (!folders || !list || !foldersLabel || !filesLabel || !driveLink) return;
+			if (!folders || !list || !foldersLabel || !filesLabel) return;
 			folders.innerHTML = '';
 			list.innerHTML = '';
 			foldersLabel.hidden = true;
 			filesLabel.hidden = true;
 			setStatus(loadingMessage);
 			renderBreadcrumb();
-			driveLink.href = `https://drive.google.com/drive/folders/${folderId}`;
+			if (driveLink) driveLink.href = `https://drive.google.com/drive/folders/${folderId}`;
 
 			const url = new URL('https://www.googleapis.com/drive/v3/files');
 			url.searchParams.set('q', `'${folderId}' in parents and trashed = false`);
@@ -497,6 +553,12 @@ const configured = Boolean(driveFolderId && driveApiKey);
 					filesLabel.hidden = false;
 					renderFiles(fileItems);
 				}
+
+				// Same staggered scroll/entrance reveal as every other card grid on the site
+				// (CardGrid, NewsGrid, EventsCalendar's agenda rows) — re-run on every folder
+				// navigation, not just first load, since the tiles/rows are replaced each time.
+				const entrance = [...folders.children, ...list.children] as HTMLElement[];
+				revealOnScroll(section, entrance, { opacity: [0, 1], scale: [0.94, 1] }, { delay: cappedStagger(0.05) });
 			} catch {
 				setStatus(errorMessage);
 			}
@@ -505,5 +567,8 @@ const configured = Boolean(driveFolderId && driveApiKey);
 		load(rootFolderId);
 	}
 
-	document.querySelectorAll<HTMLElement>('[data-materials-app]').forEach(initMaterials);
+	document.querySelectorAll<HTMLElement>('.materials-grid').forEach((section) => {
+		const app = section.querySelector<HTMLElement>('[data-materials-app]');
+		if (app) initMaterials(app, section);
+	});
 </script>
