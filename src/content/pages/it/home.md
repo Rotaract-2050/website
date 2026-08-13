@@ -41,6 +41,23 @@ blocks:
     imageLabel: Foto socie/i in un progetto di servizio
     imageSide: right
     _template: SplitSection
+  - autoplay: true
+    images:
+      - image: /uploads/Paesaggi/Paesaggio-1.jpeg
+        label: Paesaggio del territorio del Distretto 2050
+      - image: /uploads/Paesaggi/Paesaggio-2.jpeg
+        label: Panorama della Lombardia meridionale
+      - image: /uploads/Paesaggi/Paesaggio-3.jpeg
+        label: Veduta del territorio piacentino
+      - image: /uploads/Paesaggi/Paesaggio-4.jpeg
+        label: Paesaggio naturale del Distretto 2050
+      - image: /uploads/Paesaggi/Paesaggio-5.jpeg
+        label: Scorcio del territorio distrettuale
+      - image: /uploads/Paesaggi/Paesaggio-6.jpeg
+        label: Panorama della provincia di Piacenza
+      - image: /uploads/Paesaggi/Paesaggio-7.jpeg
+        label: Paesaggio del Distretto Rotaract 2050
+    _template: PhotoCarousel
   - title: I CLUB DEL DISTRETTO
     items:
       - title: Francigena

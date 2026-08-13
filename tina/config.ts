@@ -289,6 +289,25 @@ const committeeGridTemplate = {
 	],
 };
 
+const photoCarouselTemplate = {
+	name: 'PhotoCarousel',
+	label: 'Carosello foto',
+	fields: [
+		{ type: 'boolean' as const, name: 'autoplay', label: 'Scorrimento automatico' },
+		{
+			type: 'object' as const,
+			name: 'images',
+			label: 'Foto',
+			list: true,
+			ui: { itemProps: (item: { label?: string }) => ({ label: item.label }) },
+			fields: [
+				...focalImageFields('image', 'Foto'),
+				{ type: 'string' as const, name: 'label', label: 'Didascalia (testo alternativo per accessibilità, non visibile)', required: true },
+			],
+		},
+	],
+};
+
 // Events themselves are not Tina content: EventsCalendar.astro fetches them live from the
 // district's public Google Calendar (src/lib/calendar.ts), whose ID is set below (calendarId).
 // Only the events themselves are non-editorial — title and calendar source are.
@@ -510,6 +529,7 @@ export default defineConfig({
 						list: true,
 						templates: [
 							heroTemplate,
+							photoCarouselTemplate,
 							statsBarTemplate,
 							splitSectionTemplate,
 							cardGridTemplate,
