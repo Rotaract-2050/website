@@ -127,7 +127,7 @@ blocks:
         name: Alessandra
         surname: Pedercini
         motto: Sow the Seeds of Love
-      - yearRange: 2001/2002
+      - yearRange: 2001 - 2002
         name: Davide
         surname: Astori
         motto: Mankind is our business
