@@ -99,12 +99,7 @@ blocks:
   - title: Commissioni Distrettuali
     items:
       - name: Azione Interna
-        description: |-
-          La Commissione sostiene il buon funzionamento dei Club guidando la formazione, il problem solving e la coesione tra i soci.
-
-          Promuovendo la cultura rotariana e la fellowship, stimola il senso di appartenenza e la collaborazione interclub.
-
-          Favorisce l’attrazione di nuovi membri e lo sviluppo della leadership.
+        description: 'Sostiene la crescita e la coesione dei Club attraverso il supporto strategico, la formazione e la fellowship, trasformando la partecipazione di ciascun Socio nel vero motore della vita distrettuale.'
         leadLabel: Presidente
         membersLabel: Membro
         lead:
