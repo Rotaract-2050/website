@@ -205,6 +205,13 @@ const roleGridTemplate = {
 				{ type: 'string' as const, name: 'name', label: 'Nome e cognome' },
 				{ type: 'string' as const, name: 'role', label: 'Ruolo' },
 				{ type: 'string' as const, name: 'email', label: 'Email (se disponibile)' },
+				{ type: 'reference' as const, name: 'club', label: 'Club', collections: ['clubs'] },
+				{
+					type: 'string' as const,
+					name: 'clubCustom',
+					label: 'Club (se non in elenco — es. club Rotary/Interact)',
+					description: 'Usato solo se il club non è un Rotaract Club presente in "Club". Es. "RC Zerotrenta", "Interact Club Piacenza".',
+				},
 				{
 					type: 'string' as const,
 					name: 'themeMotto',
@@ -250,6 +257,13 @@ const committeeGridTemplate = {
 						...focalImageFields('photo', 'Foto', { zoom: true }),
 						{ type: 'string' as const, name: 'name', label: 'Nome e cognome' },
 						{ type: 'string' as const, name: 'email', label: 'Email (se disponibile)' },
+						{ type: 'reference' as const, name: 'club', label: 'Club', collections: ['clubs'] },
+						{
+							type: 'string' as const,
+							name: 'clubCustom',
+							label: 'Club (se non in elenco — es. club Rotary/Interact)',
+							description: 'Usato solo se il club non è un Rotaract Club presente in "Club". Es. "RC Zerotrenta", "Interact Club Piacenza".',
+						},
 					],
 				},
 				{
@@ -261,6 +275,13 @@ const committeeGridTemplate = {
 						...focalImageFields('photo', 'Foto', { zoom: true }),
 						{ type: 'string' as const, name: 'name', label: 'Nome e cognome' },
 						{ type: 'string' as const, name: 'email', label: 'Email (se disponibile)' },
+						{ type: 'reference' as const, name: 'club', label: 'Club', collections: ['clubs'] },
+						{
+							type: 'string' as const,
+							name: 'clubCustom',
+							label: 'Club (se non in elenco — es. club Rotary/Interact)',
+							description: 'Usato solo se il club non è un Rotaract Club presente in "Club". Es. "RC Zerotrenta", "Interact Club Piacenza".',
+						},
 					],
 				},
 			],

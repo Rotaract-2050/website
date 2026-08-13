@@ -24,6 +24,13 @@ function nonNull<T>(value: T | null | undefined): value is T {
 	return value != null;
 }
 
+type PersonClubRef = { name: string; zone?: { color?: string | null } | null } | null | undefined;
+
+/** A person's club tag: the referenced Rotaract Club (colored by its zone), or the free-text fallback for Rotary/Interact clubs not in the `clubs` collection. */
+function personClub(club: PersonClubRef) {
+	return club ? { name: club.name, zoneColor: club.zone?.color ?? null } : null;
+}
+
 type Block = NonNullable<NonNullable<PagesQuery['pages']['blocks']>[number]>;
 
 interface Props {
@@ -132,6 +139,8 @@ const { lang, block } = Astro.props;
 				name: i.name ?? '',
 				role: i.role ?? '',
 				email: i.email ?? undefined,
+				club: personClub(i.club),
+				clubCustom: i.clubCustom ?? undefined,
 				themeMotto: i.themeMotto ?? undefined,
 				themeLogo: i.themeLogo ?? undefined,
 				tinaFieldAttr: tinaField(i),
@@ -157,6 +166,8 @@ const { lang, block } = Astro.props;
 					photoFocalY: i.lead?.photoFocalY ?? undefined,
 					photoZoom: i.lead?.photoZoom ?? undefined,
 					email: i.lead?.email ?? undefined,
+					club: personClub(i.lead?.club),
+					clubCustom: i.lead?.clubCustom ?? undefined,
 					tinaFieldAttr: i.lead ? tinaField(i.lead) : undefined,
 				},
 				members: (i.members ?? []).filter(nonNull).map((m) => ({
@@ -166,6 +177,8 @@ const { lang, block } = Astro.props;
 					photoFocalY: m.photoFocalY ?? undefined,
 					photoZoom: m.photoZoom ?? undefined,
 					email: m.email ?? undefined,
+					club: personClub(m.club),
+					clubCustom: m.clubCustom ?? undefined,
 					tinaFieldAttr: tinaField(m),
 				})),
 			}))}
