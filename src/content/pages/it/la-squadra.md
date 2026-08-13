@@ -217,7 +217,7 @@ blocks:
             name: Alma Lauricella
             club: src/content/clubs/rotaract-club-brescia.md
       - name: Delegato per lo Scambio Giovani
-        description: '[todo]'
+        description: Il programma "Scambio Giovani" promuove la pace e la comprensione tra i popoli offrendo ai giovani esperienze di studio e immersione culturale all'estero.
         leadLabel: Delegato
         lead:
           photo: /uploads/Squadra/2026-2027/Profili/Somenzi-Sofia.jpeg
