@@ -163,7 +163,7 @@ blocks:
         name: Davide
         surname: Bruno
         motto: Believe in What You Do - Do What You Believe in
-      - yearRange: 1992/1993
+      - yearRange: 1992 - 1993
         name: Michele
         surname: Siena
         motto: Real Happiness is Helping Others
