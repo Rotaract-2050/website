@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "bash scripts/dev.sh",
     "dev:raw": "tinacms dev -c \"astro dev\"",
-    "build": "tinacms build -c \"astro build\"",
+    "build": "NODE_OPTIONS=--max-old-space-size=4096 tinacms build -c \"astro build\"",
     "preview": "astro preview",
     "astro": "astro",
     "fetch:zone-boundaries": "node scripts/fetch-zone-boundaries.mjs"
@@ -44,6 +44,7 @@
     "better-sqlite3@12.11.1": true,
     "core-js@3.49.0": true,
     "sharp@0.34.5": true,
-    "sharp@0.35.3": true
+    "sharp@0.35.3": true,
+    "workerd@1.20260804.1": true
   }
 }
