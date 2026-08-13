@@ -1,0 +1,170 @@
+---
+import { requestWithMetadata, tinaField } from '@tinacms/astro';
+import { StaticTinaMarkdown } from 'tinacms/dist/rich-text/static';
+import client from '../../../tina/__generated__/client';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageBanner from '../../components/PageBanner.astro';
+import { Image } from 'astro:assets';
+import ImageSlot from '../../components/ImageSlot.astro';
+import { uiStrings } from '../../data/ui-strings';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { localizeResource } from '../../lib/resources';
+import JsonLd from '../../components/JsonLd.astro';
+import { buildArticleJsonLd } from '../../lib/jsonld';
+
+const lang = 'it' as const;
+const t = uiStrings[lang];
+const slug = Astro.params.slug ?? '';
+const relativePath = `${slug}.md`;
+
+const result = await requestWithMetadata(client.queries.resources({ relativePath }), { priority: 'primary' });
+const resource = result.data.resources;
+
+if (!resource) {
+	return Astro.redirect(getRelativeLocaleUrl(lang, 'formazione'));
+}
+
+const localized = localizeResource(resource, lang);
+const jsonLd = buildArticleJsonLd({
+	headline: localized.title,
+	description: localized.excerpt,
+	imageUrl: new URL(resource.image || '/uploads/Loghi/Logo-distretto.png', Astro.site).toString(),
+	url: new URL(Astro.url.pathname, Astro.site).toString(),
+	lang,
+	publisherLogoUrl: new URL('/uploads/Loghi/Logo-distretto.png', Astro.site).toString(),
+});
+---
+
+<BaseLayout
+	lang={lang}
+	current="formazione"
+	title={localized.title}
+	description={localized.excerpt}
+	alternateHref={getRelativeLocaleUrl('en', `formazione/${slug}`)}
+	image={resource.image}
+	type="article"
+>
+	<PageBanner
+		lang={lang}
+		eyebrow={t.resources.detailEyebrow}
+		title={localized.title}
+		breadcrumbCurrent={t.nav.formazione}
+		titleField={tinaField(resource, 'title')}
+	/>
+	<article class="resource-article">
+		<div class="article-inner">
+			<a href={getRelativeLocaleUrl(lang, 'formazione')} class="back-link">{t.resources.backToArchive}</a>
+			<span class="article-category" data-tina-field={tinaField(resource, 'category')}>{resource.category}</span>
+			<div data-tina-field={tinaField(resource, 'image')}>
+				{resource.image ? (
+					<Image src={resource.image} alt={localized.imageLabel} width={960} height={420} fit="contain" quality="high" class="article-image" />
+				) : (
+					<ImageSlot label={localized.imageLabel} class="article-image" />
+				)}
+			</div>
+			<div class="article-body" data-tina-field={tinaField(resource, 'body')}>
+				<StaticTinaMarkdown content={localized.body} />
+			</div>
+		</div>
+	</article>
+	<JsonLd data={jsonLd} />
+</BaseLayout>
+
+<style>
+	.resource-article {
+		background: #fff;
+		padding: 50px 40px 90px;
+	}
+
+	.article-inner {
+		max-width: 760px;
+		margin: 0 auto;
+	}
+
+	.back-link {
+		display: inline-block;
+		margin-bottom: 24px;
+		color: var(--color-pink);
+		font-weight: 700;
+		font-size: 14px;
+	}
+
+	.back-link:hover {
+		text-decoration: underline;
+	}
+
+	.article-category {
+		display: inline-block;
+		background: rgba(212, 19, 103, 0.1);
+		color: var(--color-pink);
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.5px;
+		text-transform: uppercase;
+		padding: 4px 10px;
+		border-radius: 999px;
+		margin-bottom: 20px;
+	}
+
+	.article-inner :global(.article-image) {
+		width: 100%;
+		height: 340px;
+		object-fit: contain;
+		border-radius: 14px;
+		margin: 0 0 30px;
+	}
+
+	.article-body {
+		font-size: 16px;
+		color: var(--color-text);
+		line-height: 1.75;
+	}
+
+	.article-body :global(p) {
+		margin: 0 0 20px;
+	}
+
+	.article-body :global(h2),
+	.article-body :global(h3) {
+		font-family: var(--font-heading);
+		color: var(--color-navy);
+		margin: 32px 0 14px;
+	}
+
+	.article-body :global(ul),
+	.article-body :global(ol) {
+		margin: 0 0 20px;
+		padding-left: 22px;
+	}
+
+	.article-body :global(li) {
+		margin-bottom: 8px;
+	}
+
+	.article-body :global(blockquote) {
+		margin: 0 0 20px;
+		padding: 14px 20px;
+		background: var(--color-bg);
+		border-left: 4px solid var(--color-pink);
+		border-radius: var(--shape-small);
+		color: var(--color-navy);
+	}
+
+	.article-body :global(blockquote p:last-child) {
+		margin-bottom: 0;
+	}
+
+	.article-body :global(a) {
+		color: var(--color-pink);
+	}
+
+	@media (max-width: 720px) {
+		.resource-article {
+			padding: 40px 20px 60px;
+		}
+
+		.article-inner :global(.article-image) {
+			height: 220px;
+		}
+	}
+</style>

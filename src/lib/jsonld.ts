@@ -64,6 +64,21 @@ export function buildNewsArticleJsonLd(p: {
 	};
 }
 
+/** Generic Article schema for evergreen knowledge-base content (no publish date semantics like NewsArticle). */
+export function buildArticleJsonLd(p: { headline: string; description: string; imageUrl: string; url: string; lang: Lang; publisherLogoUrl: string }) {
+	return {
+		'@context': 'https://schema.org',
+		'@type': 'Article',
+		headline: p.headline,
+		description: p.description,
+		image: [p.imageUrl],
+		inLanguage: p.lang,
+		mainEntityOfPage: { '@type': 'WebPage', '@id': p.url },
+		author: { '@type': 'Organization', name: SITE_NAME },
+		publisher: { '@type': 'Organization', name: SITE_NAME, logo: { '@type': 'ImageObject', url: p.publisherLogoUrl } },
+	};
+}
+
 export function buildEventJsonLd(p: {
 	name: string;
 	description?: string | null;

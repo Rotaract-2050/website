@@ -22,6 +22,13 @@ const eventsRouter = ({ document }: { document: { _sys: { breadcrumbs: string[] 
 	return `/eventi/${slug}`;
 };
 
+// Resources (knowledge base articles, e.g. il Cerimoniale) are single files (IT + EN fields
+// together, same reasoning as news/events) with a real detail page under /formazione/<slug>.
+const resourcesRouter = ({ document }: { document: { _sys: { breadcrumbs: string[] } } }) => {
+	const slug = document._sys.breadcrumbs.join('/');
+	return `/formazione/${slug}`;
+};
+
 const heroTemplate = {
 	name: 'Hero',
 	label: 'Hero (Carosello)',
@@ -397,6 +404,23 @@ const materialsGridTemplate = {
 	],
 };
 
+// Resources themselves are not authored inline: they live in the dedicated `resources`
+// collection (like NewsArchive/`news`), so adding a knowledge-base article anywhere shows up
+// on the /formazione archive automatically. The page's own title/eyebrow already serve as the
+// archive's banner — the only editorial field here is an optional empty-state message override.
+const resourceArchiveTemplate = {
+	name: 'ResourceArchive',
+	label: 'Archivio formazione/risorse (elenco)',
+	fields: [
+		{
+			type: 'string' as const,
+			name: 'emptyMessage',
+			label: 'Messaggio se non ci sono risorse (opzionale)',
+			ui: { component: 'textarea' },
+		},
+	],
+};
+
 const pagePlaceholderTemplate = {
 	name: 'PagePlaceholder',
 	label: 'Pagina in preparazione',
@@ -547,6 +571,7 @@ export default defineConfig({
 							eventsArchiveTemplate,
 							newsArchiveTemplate,
 							materialsGridTemplate,
+							resourceArchiveTemplate,
 						],
 					},
 				],
@@ -646,6 +671,38 @@ export default defineConfig({
 					{ type: 'string', name: 'imageLabelEn', label: 'Didascalia segnaposto immagine (EN)' },
 					{ type: 'rich-text', name: 'body', label: 'Corpo articolo (IT)', isBody: true },
 					{ type: 'rich-text', name: 'bodyEn', label: 'Corpo articolo (EN)' },
+				],
+			},
+			{
+				name: 'resources',
+				label: 'Formazione e risorse',
+				path: 'src/content/resources',
+				format: 'md',
+				ui: { router: resourcesRouter },
+				fields: [
+					{ type: 'string', name: 'title', label: 'Titolo (IT)', isTitle: true, required: true },
+					{ type: 'string', name: 'titleEn', label: 'Titolo (EN)' },
+					{
+						type: 'string',
+						name: 'category',
+						label: 'Categoria',
+						required: true,
+						description:
+							'Testo libero, per raggruppare le schede (es. "Cerimoniale"). Usare la stessa dicitura, identica in IT ed EN, tra schede correlate così restano raggruppate.',
+					},
+					{
+						type: 'number',
+						name: 'order',
+						label: 'Ordine (opzionale)',
+						description: 'Le schede sono ordinate dal numero più basso al più alto; a parità di numero (o se vuoto) in ordine alfabetico per titolo.',
+					},
+					{ type: 'string', name: 'excerpt', label: 'Estratto (IT)', ui: { component: 'textarea' }, required: true },
+					{ type: 'string', name: 'excerptEn', label: 'Estratto (EN)', ui: { component: 'textarea' } },
+					...focalImageFields('image', 'Immagine copertina (opzionale)'),
+					{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine (IT)', required: true },
+					{ type: 'string', name: 'imageLabelEn', label: 'Didascalia segnaposto immagine (EN)' },
+					{ type: 'rich-text', name: 'body', label: 'Contenuto scheda (IT)', isBody: true },
+					{ type: 'rich-text', name: 'bodyEn', label: 'Contenuto scheda (EN)' },
 				],
 			},
 			{

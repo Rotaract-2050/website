@@ -1,0 +1,89 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { tinaField } from '@tinacms/astro';
+import ResourceCard from '../ResourceCard.astro';
+import { getKnowledgeResources, localizeResource, resourceSlug } from '../../lib/resources';
+import { uiStrings, type Lang } from '../../data/ui-strings';
+
+interface Props {
+	lang: Lang;
+	emptyMessage?: string;
+}
+
+const { lang, emptyMessage } = Astro.props;
+const t = uiStrings[lang];
+
+const resources = await getKnowledgeResources();
+---
+
+<section class="archive">
+	<div class="archive-inner">
+		{resources.length > 0 ? (
+			<div class="resource-grid">
+				{resources.map((resource) => {
+					const localized = localizeResource(resource, lang);
+					return (
+						<ResourceCard
+							href={getRelativeLocaleUrl(lang, `formazione/${resourceSlug(resource)}`)}
+							image={resource.image}
+							imageFocalX={resource.imageFocalX}
+							imageFocalY={resource.imageFocalY}
+							imageLabel={localized.imageLabel}
+							category={resource.category}
+							title={localized.title}
+							excerpt={localized.excerpt}
+							readMoreLabel={t.resources.readMore}
+							tinaFieldAttr={tinaField(resource)}
+						/>
+					);
+				})}
+			</div>
+		) : (
+			<p class="resource-empty">{emptyMessage || t.resources.empty}</p>
+		)}
+	</div>
+</section>
+
+<style>
+	.archive {
+		padding: 70px 40px 90px;
+	}
+
+	.archive-inner {
+		max-width: var(--content-max);
+		margin: 0 auto;
+	}
+
+	.resource-empty {
+		font-size: 14px;
+		color: var(--color-muted);
+		font-style: italic;
+	}
+
+	.resource-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 28px;
+	}
+
+	@media (max-width: 900px) {
+		.resource-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 720px) {
+		.archive {
+			padding: 50px 20px 70px;
+		}
+	}
+</style>
+
+<script>
+	import { revealOnScroll, cappedStagger } from '../../lib/motion';
+
+	document.querySelectorAll<HTMLElement>('.archive').forEach((section) => {
+		const cards = Array.from(section.querySelectorAll<HTMLElement>('.resource-card'));
+		revealOnScroll(section, cards, { opacity: [0, 1], scale: [0.92, 1] }, { delay: cappedStagger(0.08) });
+	});
+</script>

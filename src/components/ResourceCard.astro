@@ -1,0 +1,144 @@
+---
+import { Image } from 'astro:assets';
+import ImageSlot from './ImageSlot.astro';
+
+interface Props {
+	href: string;
+	image?: string | null;
+	imageFocalX?: number | null;
+	imageFocalY?: number | null;
+	imageLabel: string;
+	category: string;
+	title: string;
+	excerpt: string;
+	readMoreLabel: string;
+	tinaFieldAttr?: string;
+}
+
+const { href, image, imageFocalX, imageFocalY, imageLabel, category, title, excerpt, readMoreLabel, tinaFieldAttr } = Astro.props;
+const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 50}%;`;
+---
+
+<article class="resource-card" data-tina-field={tinaFieldAttr}>
+	<a href={href} class="resource-link">
+		<div class="resource-media">
+			{image ? (
+				<Image src={image} alt={imageLabel} width={400} height={170} quality="high" class="resource-image" style={focalStyle} />
+			) : (
+				<ImageSlot label={imageLabel} class="resource-image" />
+			)}
+			<div class="resource-media-scrim" aria-hidden="true"></div>
+			<span class="resource-category">{category}</span>
+		</div>
+		<div class="resource-body">
+			<h3 class="resource-title">{title}</h3>
+			<p class="resource-excerpt">{excerpt}</p>
+			<span class="resource-read-more">{readMoreLabel}</span>
+		</div>
+	</a>
+</article>
+
+<style>
+	.resource-card {
+		background: #fff;
+		border-radius: var(--shape-extra-large);
+		overflow: hidden;
+		box-shadow: var(--elevation-1);
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
+	}
+
+	.resource-card:hover {
+		transform: translateY(-8px) scale(1.015);
+		box-shadow: var(--elevation-4);
+	}
+
+	.resource-link {
+		display: block;
+		color: inherit;
+	}
+
+	.resource-media {
+		position: relative;
+	}
+
+	.resource-card :global(.resource-image) {
+		width: 100%;
+		height: 216px;
+		object-fit: cover;
+		object-position: var(--focal-x, 50%) var(--focal-y, 50%);
+		transition: transform var(--motion-duration-long) var(--motion-easing-emphasized);
+	}
+
+	.resource-card:hover :global(.resource-image) {
+		transform: scale(1.06);
+	}
+
+	.resource-media-scrim {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(180deg, rgba(11, 37, 69, 0.5) 0%, rgba(11, 37, 69, 0) 45%);
+		pointer-events: none;
+	}
+
+	.resource-category {
+		position: absolute;
+		top: 16px;
+		left: 16px;
+		display: inline-block;
+		background: rgba(255, 255, 255, 0.85);
+		color: var(--color-pink);
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.5px;
+		text-transform: uppercase;
+		padding: 6px 12px;
+		border-radius: var(--shape-small);
+		backdrop-filter: blur(6px);
+		-webkit-backdrop-filter: blur(6px);
+		box-shadow: var(--elevation-1);
+	}
+
+	.resource-body {
+		padding: 24px;
+	}
+
+	.resource-title {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 19px;
+		color: var(--color-navy);
+		line-height: 1.3;
+		margin: 0 0 10px;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		transition: color var(--motion-duration-short) var(--motion-easing-standard);
+	}
+
+	.resource-card:hover .resource-title {
+		color: var(--color-pink);
+	}
+
+	.resource-excerpt {
+		font-size: 14px;
+		color: var(--color-text);
+		line-height: 1.55;
+		margin: 0 0 16px;
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.resource-read-more {
+		display: inline-block;
+		color: var(--color-pink);
+		font-weight: 700;
+		font-size: 13px;
+	}
+
+	.resource-card:hover .resource-read-more {
+		text-decoration: underline;
+	}
+</style>
