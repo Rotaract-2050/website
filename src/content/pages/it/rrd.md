@@ -209,7 +209,7 @@ blocks:
         name: Alberto
         surname: Bollini
         motto: Mankind is One – Build Bridges of Friendship Throughout the World
-      - yearRange: 1981 - 1982
+      - yearRange: 1981-1982
         name: Gianfranco
         surname: Ranieri
         motto: World Understanding and Peace Through Rotary
