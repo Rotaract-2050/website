@@ -84,11 +84,12 @@ export default defineConfig({
 	output: 'server',
 	// Every page is server-rendered (see PAGE_SLUGS comment above), so astro:assets runs
 	// on every request, not just at build time. Sharp (Astro's default image service)
-	// cannot run in the Workers `workerd` isolate at all — no native binaries — so
-	// 'passthrough' is the only zero-cost option here; it serves images unresized/
-	// unconverted rather than failing. Revisit with 'cloudflare-binding' (Cloudflare
-	// Images, paid) if unoptimized image payloads become a real performance problem.
-	adapter: cloudflare({ imageService: 'passthrough' }),
+	// cannot run in the Workers `workerd` isolate at all — no native binaries — so we
+	// use Cloudflare's Images binding instead: it resizes/converts (webp/avif) at the
+	// edge for every astro:assets <Image>/<Picture> call. First 5,000 unique
+	// transformations/month are free (Images Free plan), then $0.50/1,000 — see
+	// https://developers.cloudflare.com/images/pricing/.
+	adapter: cloudflare({ imageService: 'cloudflare-binding' }),
 	i18n: {
 		locales: ['it', 'en'],
 		defaultLocale: 'it',
