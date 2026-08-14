@@ -256,7 +256,7 @@ blocks:
           email: cultura@rotaract2050.org
           club: src/content/clubs/rotaract-club-abbiategrasso.md
         members:
-          - name: Francesco Locatelli
+          - name: Francesco Pietro Locatelli
             club: src/content/clubs/rotaract-club-vigevano-castello.md
           - photo: /uploads/Squadra/2026-2027/Profili/Balasini-Filippo.jpeg
             name: Filippo Balasini
