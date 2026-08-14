@@ -5,21 +5,21 @@ seo:
 blocks:
   - ctaHref: club
     slides:
-      - eyebrow: DISTRETTO ROTARACT 2050
+      - image: /uploads/Paesaggi/Paesaggio-1.jpeg
+        eyebrow: DISTRETTO ROTARACT 2050
         title: GIOVANI CHE COSTRUISCONO IL CAMBIAMENTO
         subtitle: 'Lombardia meridionale e Provincia di Piacenza: 7 provincie, un solo distretto di giovani leader al servizio della comunità.'
         ctaLabel: SCOPRI I CLUB
-        image: /uploads/Paesaggi/Paesaggio-1.jpeg
-      - eyebrow: SERVIZIO E LEADERSHIP
+      - image: /uploads/Paesaggi/Paesaggio-2.jpeg
+        eyebrow: SERVIZIO E LEADERSHIP
         title: PROGETTI CHE LASCIANO IL SEGNO
         subtitle: 'Dalla promozione della pace alla tutela dell''ambiente: ogni Club Rotaract individua una causa e la trasforma in azioni concrete al servizio della comunità.'
         ctaLabel: I NOSTRI CLUB
-        image: /uploads/Paesaggi/Paesaggio-2.jpeg
-      - eyebrow: UNISCITI A NOI
+      - image: /uploads/Paesaggi/Paesaggio-3.jpeg
+        eyebrow: UNISCITI A NOI
         title: LA TUA RETE PARTE DA QUI
         subtitle: 'Il Rotaract è la rete di giovani dai 18 anni che unisce crescita personale, amicizia e servizio.'
         ctaLabel: ENTRA NEL ROTARACT
-        image: /uploads/Paesaggi/Paesaggio-3.jpeg
     _template: Hero
   - items:
       - value: '30'
@@ -37,7 +37,7 @@ blocks:
     _template: NewsTicker
   - kicker: CHI SIAMO
     title: IL ROTARACT NEL DISTRETTO 2050
-    body: 'Il Rotaract è l''organizzazione partner del Rotary International che trasforma la passione giovanile per il servizio e la leadership in progetti dal profondo impatto locale e globale, sotto la guida del motto "Fellowship through Service". '
+    body: 'Il Rotaract è l''organizzazione partner del Rotary International che trasforma la passione giovanile per il servizio e la leadership in progetti dal profondo impatto locale e globale, ispirati dal motto "Fellowship through Service". '
     body2: 'Espressione viva di questa missione, il Distretto 2050 unisce i Club della Lombardia meridionale e della Provincia di Piacenza: una rete coesa e dinamica che valorizza le energie del territorio per generare un cambiamento concreto, positivo e duraturo.'
     ctaLabel: SCOPRI IL DISTRETTO
     ctaHref: distretto
