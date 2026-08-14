@@ -8,6 +8,7 @@ blocks:
   - kicker: DEFINIZIONE
     title: Cos'è il Rotaract
     body: 'Il Rotaract è un''organizzazione partner del Rotary International, costituita da giovani adulti il cui scopo è fornire servizi alla comunità e a livello internazionale, sviluppare le capacità di leadership e partecipare a programmi di sviluppo professionale.'
+    image: /uploads/Paesaggi/WhatsApp-Image-2026-08-14-at-23.50.51.jpeg
     imageLabel: Foto socie e soci in un evento Rotaract
     imageSide: right
     _template: SplitSection
