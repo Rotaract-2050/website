@@ -18,6 +18,7 @@ blocks:
     body2: 'Oggi il nostro Distretto si propone come un network dinamico e coeso di giovani leader: una comunità unita da oltre mezzo secolo di storia, guidata dalla forza di valori condivisi e animata dal costante impegno a servire al di sopra di ogni interesse personale, nello spirito del motto Fellowship through Service.'
     ctaLabel: SCOPRI L'ALBO RRD
     ctaHref: rrd
+    image: /uploads/Paesaggi/WhatsApp-Image-2026-08-14-at-22.50.54.jpeg
     imageLabel: Foto socie e soci del Distretto 2050
     imageSide: left
     _template: SplitSection
