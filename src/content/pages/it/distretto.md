@@ -21,6 +21,9 @@ blocks:
   - kicker: IL NOSTRO IMPEGNO
     title: Missione
     body: 'Forniamo service al prossimo, promuoviamo l''integrità e avanziamo la comprensione internazionale, la buona volontà e la pace attraverso la nostra community di imprenditori, professionisti e leader della comunità.'
+    image: /uploads/Paesaggi/WhatsApp-Image-2026-08-14-at-23.02.45.jpeg
+    imageFocalX: 48
+    imageFocalY: 88
     imageLabel: Foto socie e soci in un progetto di servizio
     imageSide: left
     _template: SplitSection
