@@ -6,7 +6,7 @@ blocks:
   - ctaHref: club
     slides:
       - image: /uploads/Paesaggi/Paesaggio-1.jpeg
-        eyebrow: DISTRETTO ROTARACT 2050
+        eyebrow: ROTARACT DISTRETTO 2050
         title: GIOVANI CHE COSTRUISCONO IL CAMBIAMENTO
         subtitle: 'Lombardia meridionale e Provincia di Piacenza: 7 provincie, un solo distretto di giovani leader al servizio della comunità.'
         ctaLabel: SCOPRI I CLUB
