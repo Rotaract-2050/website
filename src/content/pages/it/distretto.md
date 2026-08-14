@@ -18,7 +18,7 @@ blocks:
     title: Visione
     quote: 'Crediamo in un mondo dove tutti i popoli, insieme, promuovono cambiamenti positivi e duraturi nelle comunità vicine, in quelle lontane, in ognuno di noi.'
     body: Il faro che guida le Rotaractiane e i Rotaractiani in ogni angolo del mondo.
-    image: /uploads/Paesaggi/Aggiungi-un-titolo-2.pdf
+    image: /uploads/Paesaggi/Aggiungi-un-titolo-3.pdf
     imageLabel: Foto socie e soci del Distretto 2050
     imageSide: right
     _template: SplitSection
