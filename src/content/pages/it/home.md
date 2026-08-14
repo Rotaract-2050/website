@@ -41,7 +41,6 @@ blocks:
     body2: 'Espressione viva di questa missione, il Distretto 2050 unisce i Club della Lombardia meridionale e della Provincia di Piacenza: una rete coesa e dinamica che valorizza le energie del territorio per generare un cambiamento concreto, positivo e duraturo.'
     ctaLabel: SCOPRI IL DISTRETTO
     ctaHref: distretto
-    image: /uploads/Paesaggi/Aggiungi-un-titolo.pdf
     imageLabel: Foto socie/i in un progetto di servizio
     imageSide: right
     _template: SplitSection
