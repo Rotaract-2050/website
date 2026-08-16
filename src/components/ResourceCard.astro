@@ -309,6 +309,11 @@ const hiddenTags = tags.slice(MAX_VISIBLE_TAGS);
 
 	.resource-tag {
 		display: inline-block;
+		min-width: 0;
+		flex-shrink: 1;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 		background: var(--tag-bg, #fff);
 		color: var(--tag-color, var(--color-pink));
 		font-size: 11px;
