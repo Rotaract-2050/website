@@ -22,6 +22,7 @@ export function resourceSlug(resource: Pick<Resource, '_sys'>): string {
 const TAG_LABELS_EN: Record<string, string> = {
 	Prefetto: 'Prefect',
 	Cerimoniale: 'Protocol',
+	Segretario: 'Secretary',
 };
 
 /** A tag's label in the given language, falling back to the Italian value for any tag not yet in `TAG_LABELS_EN`. */
@@ -38,6 +39,7 @@ export function localizeTag(tag: string, lang: Lang): string {
 const TAG_COLORS: Record<string, string> = {
 	Prefetto: '#FF7600', // Orange
 	Cerimoniale: '#00ADBB', // Turquoise
+	Segretario: '#00A2E0', // Sky Blue
 };
 const DEFAULT_TAG_COLOR = '#D41367'; // Cranberry — brand default, also used when a resource has no tags at all
 
