@@ -72,6 +72,11 @@ const tagKeys = (resource.tags ?? []).filter((tag): tag is string => Boolean(tag
 				</div>
 			)}
 			<div class="article-body" data-tina-field={tinaField(resource, bodyField)} set:html={bodyHtml} />
+			<span
+				aria-hidden="true"
+				data-track-sentinel="formazione_read_complete"
+				data-track-params={JSON.stringify({ resource_title: localized.title })}
+			/>
 		</div>
 	</article>
 	<JsonLd data={jsonLd} />

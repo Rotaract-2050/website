@@ -119,12 +119,26 @@ const jsonLd = buildEventJsonLd({
 			{(showTicketsButton || event.photoAlbumUrl) && (
 				<div class="event-detail-actions">
 					{showTicketsButton && (
-						<a class="event-detail-tickets-btn" href={event.ticketsUrl} target="_blank" rel="noopener">
+						<a
+							class="event-detail-tickets-btn"
+							href={event.ticketsUrl}
+							target="_blank"
+							rel="noopener"
+							data-track="event_tickets_click"
+							data-track-params={JSON.stringify({ event_name: localized.title })}
+						>
 							{t.events.ticketsButtonLabel}
 						</a>
 					)}
 					{event.photoAlbumUrl && (
-						<a class="event-detail-photo-btn" href={event.photoAlbumUrl} target="_blank" rel="noopener">
+						<a
+							class="event-detail-photo-btn"
+							href={event.photoAlbumUrl}
+							target="_blank"
+							rel="noopener"
+							data-track="event_photos_click"
+							data-track-params={JSON.stringify({ event_name: localized.title })}
+						>
 							{t.events.photoButtonLabel}
 						</a>
 					)}

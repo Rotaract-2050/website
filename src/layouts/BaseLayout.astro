@@ -145,5 +145,60 @@ const organizationGraph = buildOrganizationGraph(
 		els.forEach((el) => observer.observe(el));
 	}
 
+	declare global {
+		interface Window {
+			/** No-ops until CookieConsent's loadGa() defines the real gtag after consent — safe to call anywhere, anytime. */
+			trackEvent?: (name: string, params?: Record<string, unknown>) => void;
+			gtag?: (...args: unknown[]) => void;
+		}
+	}
+
+	// Generic GA4 event tracking, opt-in via data attributes so components stay plain HTML —
+	// no per-component script needed for a click or a "scrolled this far" signal.
+	window.trackEvent = (name, params) => {
+		if (typeof window.gtag === 'function') window.gtag('event', name, params ?? {});
+	};
+
+	function readTrackParams(el: HTMLElement): Record<string, unknown> {
+		if (!el.dataset.trackParams) return {};
+		try {
+			return JSON.parse(el.dataset.trackParams);
+		} catch {
+			return {};
+		}
+	}
+
+	/** Any element with `data-track="event_name"` (+ optional `data-track-params='{"k":"v"}'`) fires a GA4 event on click. */
+	function initClickTracking() {
+		document.addEventListener('click', (e) => {
+			const el = (e.target as HTMLElement).closest<HTMLElement>('[data-track]');
+			if (!el?.dataset.track) return;
+			window.trackEvent?.(el.dataset.track, readTrackParams(el));
+		});
+	}
+
+	/** Any element with `data-track-sentinel="event_name"` fires a GA4 event once, the first time it scrolls into view
+	 * — used for "read to the end" style signals (e.g. reaching the bottom of a Formazione article). */
+	function initScrollTracking() {
+		const els = document.querySelectorAll<HTMLElement>('[data-track-sentinel]');
+		if (!els.length || !('IntersectionObserver' in window)) return;
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (!entry.isIntersecting) continue;
+					const el = entry.target as HTMLElement;
+					if (el.dataset.trackSentinel) window.trackEvent?.(el.dataset.trackSentinel, readTrackParams(el));
+					observer.unobserve(el);
+				}
+			},
+			{ threshold: 0 }
+		);
+
+		els.forEach((el) => observer.observe(el));
+	}
+
 	initScrollReveal();
+	initClickTracking();
+	initScrollTracking();
 </script>

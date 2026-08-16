@@ -154,6 +154,8 @@ const zoneAreas = zones
 				const link = document.createElement('a');
 				link.href = club.href;
 				link.textContent = viewClubLabel;
+				link.dataset.track = 'club_click';
+				link.dataset.trackParams = JSON.stringify({ club_name: club.name, zone_name: 'map' });
 				wrapper.appendChild(title);
 				wrapper.appendChild(document.createElement('br'));
 				wrapper.appendChild(link);
