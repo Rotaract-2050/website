@@ -9,6 +9,7 @@ gaMeasurementId: G-3VJ2ZNEE5H
 chatAssistant:
   title: 'Assistente Formazione'
   greeting: 'Ciao! Chiedimi qualcosa sulle schede di Formazione: cerimoniale, ruoli del club, cultura rotariana.'
+  extraInstructions: 'Rispondi in modo informale, dai del tu, usa qualche emoji'
   autoOpen: true
 ---
 
