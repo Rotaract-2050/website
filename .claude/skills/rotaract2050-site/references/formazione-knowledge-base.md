@@ -56,6 +56,16 @@ Implementato in `src/lib/resource-markdown.ts` (nuovo, dedicato — non tocca `l
 
 Una route dinamica annidata a un livello (`src/pages/formazione/[slug].astro`, e allo stesso modo `src/pages/news/[slug].astro`) **perde sempre** contro la route catch-all alla radice (`src/pages/[...slug].astro`), sia in `astro dev` che sul Worker Cloudflare deployato — causa non identificata dopo investigazione, non un problema del codice di questo progetto ma (probabilmente) di Astro stesso o dell'integrazione con l'adapter Cloudflare. I file `formazione/[slug].astro` (IT/EN) **esistono ancora ma sono codice morto**, irraggiungibili: il vero dispatch avviene dentro `[...slug].astro`/`en/[...slug].astro`, che riconoscono il prefisso (`formazione/`, `news/`) su `Astro.params.slug` e importano dinamicamente (`await import(...)`, non import statico in cima al file — un import statico porterebbe l'intera catena di dipendenze di *ogni* sezione dentro il modulo di *ogni* pagina, homepage inclusa, e sotto il runtime Cloudflare Workers di dev questo manda in crash l'intera route table) il componente vista giusto (`ResourceView.astro`, `NewsArticleView.astro`, o `GenericPageView.astro` per tutto il resto). Se in futuro Astro corregge questo bug di routing, i file `formazione/[slug].astro`/`news/[slug].astro` tornerebbero attivi automaticamente (sono ancora corretti, solo non raggiunti) — da verificare prima di rimuoverli.
 
+## SEO — obiettivo esplicito: farsi trovare da Google
+
+L'ambizione dichiarata di questa sezione è diventare una fonte pubblica che i club italiani trovino cercando su Google, non solo un'area riservata al Distretto — quindi la crawlabilità/indicizzazione non è un dettaglio, è parte dello scopo della sezione:
+
+- **Sitemap**: ogni scheda (`src/content/resources/*.md`) è elencata esplicitamente in `astro.config.mjs` (`resourceSlugs`, stesso pattern di `newsSlugs`/`clubSlugs`/`eventSlugs` — il sito è tutto SSR, `@astrojs/sitemap` non scopre nulla da solo, va tutto in `customPages`). Una scheda nuova aggiunta come file finisce in sitemap al prossimo build senza toccare `astro.config.mjs`.
+- **`public/robots.txt`** (non esisteva prima) — `Allow: /`, `Disallow: /admin` (l'admin Tina non ha motivo di essere indicizzato), riga `Sitemap:` che punta a `sitemap-index.xml`.
+- **`ItemList` JSON-LD** sull'archivio (`ResourceArchive.astro`, `buildItemListJsonLd` in `lib/jsonld.ts`) — segnala esplicitamente ai motori di ricerca che la pagina è un hub verso N schede, non solo prosa.
+- Il resto (canonical, hreflang it/en + x-default, OG/Twitter card, `Article` JSON-LD per scheda, niente `noindex`) arriva gratis da `BaseLayout`/`SeoHead.astro`/`buildArticleJsonLd` — infrastruttura sitewide già esistente, non specifica di questa sezione, ma su cui `/formazione` si appoggia interamente.
+- I wikilink `[[slug]]` (vedi sopra) costruiscono da soli un grafo di link interni tra le schede — buon segnale per i crawler oltre che comodo per chi legge.
+
 ## Mappa file
 
 - `tina/config.ts` — collection `resources` + template blocco `ResourceArchive`.

@@ -79,6 +79,15 @@ export function buildArticleJsonLd(p: { headline: string; description: string; i
 	};
 }
 
+/** ItemList — tells search engines a page is a hub linking to N other pages (e.g. the /formazione archive), not just prose. Each entry is a full ListItem with its own `url` (schema.org allows a bare string too, but explicit ListItems are what's shown in examples for indexable collection pages). */
+export function buildItemListJsonLd(items: { name: string; url: string }[]) {
+	return {
+		'@context': 'https://schema.org',
+		'@type': 'ItemList',
+		itemListElement: items.map((item, i) => ({ '@type': 'ListItem', position: i + 1, name: item.name, url: item.url })),
+	};
+}
+
 export function buildEventJsonLd(p: {
 	name: string;
 	description?: string | null;

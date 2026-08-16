@@ -25,6 +25,10 @@ const clubSlugs = readdirSync(fileURLToPath(new URL('./src/content/clubs', impor
 	.filter((file) => file.endsWith('.md'))
 	.map((file) => file.replace(/\.md$/, ''));
 
+const resourceSlugs = readdirSync(fileURLToPath(new URL('./src/content/resources', import.meta.url)))
+	.filter((file) => file.endsWith('.md'))
+	.map((file) => file.replace(/\.md$/, ''));
+
 // `visible: false` events (drafts) are excluded from the archive list (see getArchiveEvents() in
 // src/lib/events.ts) and must stay out of the sitemap for the same reason.
 const eventsDir = fileURLToPath(new URL('./src/content/events', import.meta.url));
@@ -38,6 +42,7 @@ const customPages = [
 	...newsSlugs.flatMap((slug) => [`${SITE}/news/${slug}`, `${SITE}/en/news/${slug}`]),
 	...clubSlugs.flatMap((slug) => [`${SITE}/club/${slug}`, `${SITE}/en/club/${slug}`]),
 	...eventSlugs.flatMap((slug) => [`${SITE}/eventi/${slug}`, `${SITE}/en/eventi/${slug}`]),
+	...resourceSlugs.flatMap((slug) => [`${SITE}/formazione/${slug}`, `${SITE}/en/formazione/${slug}`]),
 ];
 
 // @tinacms/astro ships its own dev-time auto-reload plugin, but it only watches

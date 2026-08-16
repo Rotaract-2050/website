@@ -4,6 +4,8 @@ import { tinaField } from '@tinacms/astro';
 import ResourceCard from '../ResourceCard.astro';
 import { getKnowledgeResources, localizeResource, resourceSlug, tagSlug, tagColor, resourceTags, localizeTag, buildWikilinkResolver } from '../../lib/resources';
 import { extractResourcePlainText } from '../../lib/resource-markdown';
+import { buildItemListJsonLd } from '../../lib/jsonld';
+import JsonLd from '../JsonLd.astro';
 import { uiStrings, type Lang } from '../../data/ui-strings';
 
 interface Props {
@@ -17,9 +19,19 @@ const t = uiStrings[lang];
 const resources = await getKnowledgeResources();
 const tags = resourceTags(resources);
 const resolveWikilink = buildWikilinkResolver(resources, lang);
+// Tells search engines this page is a hub linking to N articles, not just prose — see
+// buildItemListJsonLd in lib/jsonld.ts. Absolute URLs (schema.org's own examples use them
+// for ItemList) since Astro.site is always configured (see astro.config.mjs).
+const itemListJsonLd = buildItemListJsonLd(
+	resources.map((resource) => ({
+		name: localizeResource(resource, lang).title,
+		url: new URL(getRelativeLocaleUrl(lang, `formazione/${resourceSlug(resource)}`), Astro.site).toString(),
+	})),
+);
 ---
 
 <section class="archive">
+	{resources.length > 0 && <JsonLd data={itemListJsonLd} />}
 	<div class="archive-inner">
 		{resources.length > 0 ? (
 			<>
