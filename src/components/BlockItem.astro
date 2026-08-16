@@ -136,8 +136,9 @@ function loc(itValue: string | null | undefined, enValue: string | null | undefi
 	{block.__typename === 'PagesBlocksValuesGrid' && (
 		<ValuesGrid
 			title={loc(block.title, block.titleEn)}
+			intro={loc(block.intro, block.introEn) || undefined}
 			accent={block.accent ?? undefined}
-			layout={(block.layout as 'badge' | 'path' | 'icon' | null) ?? undefined}
+			layout={(block.layout as 'badge' | 'path' | 'icon' | 'statement' | null) ?? undefined}
 			items={(block.items ?? []).filter(nonNull).map((i) => ({
 				letter: i.letter ?? '',
 				icon: i.icon ?? undefined,

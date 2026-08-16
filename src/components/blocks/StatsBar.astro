@@ -29,30 +29,28 @@ const { items } = Astro.props;
 	.stats-card {
 		max-width: var(--content-max);
 		margin: 0 auto;
-		background: #fff;
+		background: #f6f8fa;
 		border-radius: var(--shape-extra-large);
-		box-shadow: var(--elevation-4);
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
+		padding: 32px;
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 20px;
 	}
 
 	.stat {
 		--tone: var(--color-pink);
 		position: relative;
-		flex: 1 1 180px;
 		text-align: center;
-		padding: 44px 32px;
+		padding: 44px 20px;
+		background: #ffffff;
+		border-radius: var(--shape-large);
+		box-shadow: var(--elevation-1);
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
-	.stat:not(:last-child)::after {
-		content: '';
-		position: absolute;
-		top: 22%;
-		bottom: 22%;
-		right: 0;
-		width: 1px;
-		background: var(--color-border);
+	.stat:hover {
+		transform: translateY(-4px);
+		box-shadow: var(--elevation-2);
 	}
 
 	.stat:nth-child(4n + 2) {
@@ -84,14 +82,18 @@ const { items } = Astro.props;
 		margin-top: 8px;
 	}
 
-	@media (max-width: 640px) {
-		.stat {
-			flex: 1 1 45%;
-			padding: 28px 16px;
+	@media (max-width: 768px) {
+		.stats-card {
+			grid-template-columns: repeat(2, 1fr);
 		}
+	}
 
-		.stat:nth-child(2n)::after {
-			display: none;
+	@media (max-width: 480px) {
+		.stats-card {
+			grid-template-columns: 1fr;
+		}
+		.stat {
+			padding: 28px 16px;
 		}
 	}
 </style>

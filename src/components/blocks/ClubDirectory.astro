@@ -39,14 +39,14 @@ const zoneGroups = zones.map((zone) => ({
 		{disclaimer && <p class="disclaimer">{disclaimer}</p>}
 
 		{zoneGroups.map((zone) => (
-			<div class="zone-block">
+			<div class="zone-block" style={zone.color ? `--tint:${zone.color};` : undefined}>
 				<h2 class="zone-heading" style={zone.color ? `color: ${zone.color}; border-color: ${zone.color};` : undefined} data-tina-field={zone.nameFieldAttr}>
 					{zone.name}
 				</h2>
 				{zone.description && <p class="zone-description" data-tina-field={zone.descriptionFieldAttr}>{zone.description}</p>}
 				<div class="club-grid">
 					{zone.clubs.map((club) => (
-						<div class="club-card" data-tina-field={tinaField(club)} style={zone.color ? `--tint:${zone.color};` : undefined}>
+						<div class="club-card" data-tina-field={tinaField(club)}>
 							<div class="club-body">
 								<a
 									href={getRelativeLocaleUrl(lang, `club/${club._sys.filename}`)}
@@ -123,7 +123,10 @@ const zoneGroups = zones.map((zone) => ({
 	}
 
 	.zone-block {
-		margin-bottom: 44px;
+		background: #f6f8fa;
+		border-radius: var(--shape-extra-large);
+		padding: 40px 32px;
+		margin-bottom: 40px;
 	}
 
 	.zone-heading {
@@ -185,10 +188,10 @@ const zoneGroups = zones.map((zone) => ({
 
 	.club-name {
 		font-family: var(--font-heading);
-		font-weight: 600;
-		font-size: 16px;
+		font-weight: 700;
+		font-size: 17px;
 		color: var(--color-navy);
-		margin-bottom: 4px;
+		margin-bottom: 6px;
 	}
 
 	.club-zone {
@@ -211,8 +214,9 @@ const zoneGroups = zones.map((zone) => ({
 		width: 32px;
 		height: 32px;
 		border-radius: 50%;
-		background: var(--color-navy);
-		color: #fff;
+		background: color-mix(in srgb, var(--tint, var(--color-navy)) 10%, transparent);
+		color: var(--tint, var(--color-navy));
+		transition: background var(--motion-duration-short) var(--motion-easing-standard), color var(--motion-duration-short) var(--motion-easing-standard);
 	}
 
 	.social-btn svg {
@@ -221,7 +225,8 @@ const zoneGroups = zones.map((zone) => ({
 	}
 
 	.social-btn:hover {
-		background: var(--color-pink);
+		background: var(--tint, var(--color-pink));
+		color: #ffffff;
 	}
 
 	@media (max-width: 900px) {

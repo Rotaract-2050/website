@@ -56,12 +56,15 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-US',
 
 <style>
 	.archive {
-		padding: 70px 40px 90px;
+		padding: 40px 40px 96px;
 	}
 
 	.archive-inner {
 		max-width: var(--content-max);
 		margin: 0 auto;
+		background: #f6f8fa;
+		border-radius: var(--shape-extra-large);
+		padding: 60px 40px;
 	}
 
 	.news-empty {
@@ -84,7 +87,10 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-US',
 
 	@media (max-width: 720px) {
 		.archive {
-			padding: 50px 20px 70px;
+			padding: 40px 20px 80px;
+		}
+		.archive-inner {
+			padding: 40px 20px;
 		}
 	}
 </style>

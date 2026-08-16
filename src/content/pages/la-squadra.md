@@ -1,38 +1,45 @@
 ---
 title: LA SQUADRA
+titleEn: THE TEAM
 eyebrow: DISTRETTO ROTARACT 2050
+eyebrowEn: ROTARACT DISTRICT 2050
 breadcrumbCurrent: LA SQUADRA
+breadcrumbCurrentEn: THE TEAM
 seo:
   description: 'L''organigramma del Distretto Rotaract 2050 per l''anno rotariano 2026/2027: Esecutivo Distrettuale, Delegati di Zona e Commissioni.'
   descriptionEn: 'The Rotaract District 2050 organizational chart for the 2026/2027 Rotary year: District Executive, Zone Delegates and Committees.'
 blocks:
   - title: Esecutivo Distrettuale
+    titleEn: District Executive
     highlightFirst: true
     items:
       - initials: RD
         photo: /uploads/Squadra/2026-2027/Profili/Fortugno-Sebastiano.jpeg
+        photoFocalX: 53
+        photoFocalY: 26
+        photoZoom: 160
         name: Sebastiano Fortugno
         role: Rappresentante Distrettuale
+        roleEn: District Representative
         email: rd@rotaract2050.org
         club: src/content/clubs/rotaract-club-casalmaggiore-viadana-sabbioneta.md
         themeMotto: Prendi il largo con entusiasmo
-        themeLogo: /uploads/Squadra/2026-2027/Logo-Distrettuale.svg
-        roleEn: District Representative
         themeMottoEn: Set sail with enthusiasm
+        themeLogo: /uploads/Squadra/2026-2027/Logo-Distrettuale.svg
       - initials: RDE
         photo: /uploads/Squadra/2026-2027/Profili/Zacchetti-Marco.jpg
         name: Marco Zacchetti
         role: Rappresentante Distrettuale Eletto
+        roleEn: District Representative-Elect
         email: rd.incoming@rotaract2050.org
         club: src/content/clubs/rotaract-club-pavia-nord.md
-        roleEn: District Representative-Elect
       - initials: SD
         photo: /uploads/Squadra/2026-2027/Profili/Drovanti-Alessandro.jpg
         name: Alessandro Drovanti
         role: Segretario
+        roleEn: Secretary
         email: segreteria@rotaract2050.org
         club: src/content/clubs/rotaract-club-vigevano-lomellina.md
-        roleEn: Secretary
       - initials: TD
         photo: /uploads/Squadra/2026-2027/Profili/Goffredi-Virginia.jpg
         photoFocalX: 34
@@ -40,85 +47,89 @@ blocks:
         photoZoom: 235
         name: Virginia Goffredi
         role: Tesoriere
+        roleEn: Treasurer
         email: tesoreria@rotaract2050.org
         club: src/content/clubs/rotaract-club-brescia.md
         clubCustom: RC Zerotrenta
-        roleEn: Treasurer
       - initials: PR
         photo: /uploads/Squadra/2026-2027/Profili/Pizzi-Andrea.jpg
         name: Andrea Pizzi
         role: Prefetto
+        roleEn: Sergeant-at-Arms
         email: prefettura@rotaract2050.org
         club: src/content/clubs/rotaract-club-vigevano-lomellina.md
-        roleEn: Sergeant-at-Arms
       - initials: PR
         photo: /uploads/Squadra/2026-2027/Profili/Toselli-Leonardo.jpg
         name: Leonardo Toselli
         role: Prefetto
+        roleEn: Sergeant-at-Arms
         email: prefettura@rotaract2050.org
         club: src/content/clubs/rotaract-club-castiglione-delle-stiviere-e-alto-mantovano.md
-        roleEn: Sergeant-at-Arms
       - initials: CO
         photo: /uploads/Squadra/2026-2027/Profili/Cattadori-Martina.jpg
         name: Martina Cattadori
         role: Consigliere
+        roleEn: Board Member
         email: consiglieri@rotaract2050.org
         club: src/content/clubs/rotaract-club-piacenza.md
-        roleEn: Board Member
       - initials: CO
         photo: /uploads/Squadra/2026-2027/Profili/Rebecchi-Angela.jpg
         name: Angela Rebecchi
         role: Consigliere
+        roleEn: Board Member
         email: consiglieri@rotaract2050.org
         clubCustom: Interact Club Piacenza
-        roleEn: Board Member
       - initials: PRD
         photo: /uploads/Squadra/2026-2027/Profili/Pancini-Lorenzo.jpg
         name: Lorenzo Pancini
         role: Rappresentante Distrettuale A.R. 2025/2026 (Past RD)
+        roleEn: District Representative 2025/2026 (Past RD)
         club: src/content/clubs/rotaract-club-piacenza.md
         themeMotto: ''
-        roleEn: District Representative 2025/2026 (Past RD)
     _template: RoleGrid
-    titleEn: District Executive
   - title: Delegati di Zona
+    titleEn: Zone Delegates
     items:
       - initials: DZ
         photo: /uploads/Squadra/2026-2027/Profili/Bosio-Davide.jpeg
         name: Davide Bosio
         role: Delegato di Zona — Francigena
+        roleEn: Zone Delegate — Francigena
         email: dz.francigena@rotaract2050.org
         club: src/content/clubs/rotaract-club-terre-cremasche.md
-        roleEn: Zone Delegate — Francigena
       - initials: DZ
         photo: /uploads/Squadra/2026-2027/Profili/Vetturi-Elena.jpeg
         name: Elena Vetturi
         role: Delegato di Zona — Leonessa
+        roleEn: Zone Delegate — Leonessa
         email: dz.leonessa@rotaract2050.org
         club: src/content/clubs/rotaract-club-garda-valle-sabbia.md
-        roleEn: Zone Delegate — Leonessa
       - initials: DZ
         photo: /uploads/Squadra/2026-2027/Profili/Pisano-Andrea.jpg
         name: Andrea Pisano
         role: Delegato di Zona — Navigli
+        roleEn: Zone Delegate — Navigli
         email: dz.navigli@rotaract2050.org
         club: src/content/clubs/rotaract-club-vigevano-castello.md
-        roleEn: Zone Delegate — Navigli
       - initials: DZ
         photo: /uploads/Squadra/2026-2027/Profili/Bombeccari-Hildegard.jpg
         name: Hildegard Bombeccari
         role: Delegato di Zona — Padana
+        roleEn: Zone Delegate — Padana
         email: dz.padana@rotaract2050.org
         club: src/content/clubs/rotaract-club-castiglione-delle-stiviere-e-alto-mantovano.md
-        roleEn: Zone Delegate — Padana
     _template: RoleGrid
-    titleEn: Zone Delegates
   - title: Commissioni Distrettuali
+    titleEn: District Committees
     items:
       - name: Azione Interna
-        description: Sostiene la crescita e la coesione dei Club attraverso il supporto strategico, la formazione e la fellowship, trasformando la partecipazione di ciascun Socio nel vero motore della vita distrettuale.
+        nameEn: Internal Action
+        description: 'Sostiene la crescita e la coesione dei Club attraverso il supporto strategico, la formazione e la fellowship, trasformando la partecipazione di ciascun Socio nel vero motore della vita distrettuale.'
+        descriptionEn: 'This Committee supports the healthy functioning of Clubs, putting the growth and value of every member at the centre. It provides strategic support, training and problem-solving. By promoting Rotarian culture and fellowship, it strengthens internal cohesion, a sense of belonging and interclub collaboration. It encourages the recruitment of new members and the development of leadership skills, establishing Internal Action as a cornerstone of the Rotaract experience.'
         leadLabel: Presidente
+        leadLabelEn: Chair
         membersLabel: Membro
+        membersLabelEn: Member
         lead:
           photo: /uploads/Squadra/2026-2027/Profili/Rispo-Alexander.jpeg
           name: Alexander Rispo
@@ -137,14 +148,14 @@ blocks:
           - photo: /uploads/Squadra/2026-2027/Profili/Bontempi-Jessica.jpeg
             name: Jessica Bontempi
             club: src/content/clubs/rotaract-club-garda-valle-sabbia.md
-        nameEn: Internal Action
-        descriptionEn: This Committee supports the healthy functioning of Clubs, putting the growth and value of every member at the centre. It provides strategic support, training and problem-solving. By promoting Rotarian culture and fellowship, it strengthens internal cohesion, a sense of belonging and interclub collaboration. It encourages the recruitment of new members and the development of leadership skills, establishing Internal Action as a cornerstone of the Rotaract experience.
-        leadLabelEn: Chair
-        membersLabelEn: Member
       - name: Azione Professionale
-        description: Promuove l’etica e valorizza il lavoro come concreto strumento di servizio, guidando la crescita professionale dei giovani attraverso formazione, mentorship e networking con il Rotary per mettere il talento di ciascuno a disposizione della comunità.
+        nameEn: Professional Action
+        description: 'Promuove l’etica e valorizza il lavoro come concreto strumento di servizio, guidando la crescita professionale dei giovani attraverso formazione, mentorship e networking con il Rotary per mettere il talento di ciascuno a disposizione della comunità.'
+        descriptionEn: 'This Committee promotes high ethical standards in the practice of every profession, valuing work as a tool of service to the community. It gives members the tools for career guidance and the development of transferable skills. Through meetings with businesses, training paths and a solid network of mentorship and networking with Rotary, the Committee supports the aspirations of young people, encouraging them to put their professional skills at the service of District 2050''s projects.'
         leadLabel: Presidente
+        leadLabelEn: Chair
         membersLabel: Membro
+        membersLabelEn: Member
         lead:
           photo: /uploads/Squadra/2026-2027/Profili/Tosi-GiovanniMaria.jpeg
           name: Giovanni Maria Tosi
@@ -164,14 +175,14 @@ blocks:
           - photo: /uploads/Squadra/2026-2027/Profili/Costa-Simone.jpeg
             name: Simone Costa
             club: src/content/clubs/rotaract-club-fiorenzuola-d-arda.md
-        nameEn: Professional Action
-        descriptionEn: This Committee promotes high ethical standards in the practice of every profession, valuing work as a tool of service to the community. It gives members the tools for career guidance and the development of transferable skills. Through meetings with businesses, training paths and a solid network of mentorship and networking with Rotary, the Committee supports the aspirations of young people, encouraging them to put their professional skills at the service of District 2050's projects.
-        leadLabelEn: Chair
-        membersLabelEn: Member
       - name: Azione di Pubblico Interesse
-        description: Promuove progetti, gemellaggi e scambi culturali per favorire la comprensione, la buona volontà e la pace nel mondo, guidando i soci nella cooperazione internazionale.
+        nameEn: Public Interest Action
+        description: 'Promuove progetti, gemellaggi e scambi culturali per favorire la comprensione, la buona volontà e la pace nel mondo, guidando i soci nella cooperazione internazionale.'
+        descriptionEn: 'This Committee coordinates and promotes initiatives aimed at improving the local and global community. It concretely supports Clubs at every stage of their projects, facilitating access to grants and ensuring the effectiveness of district, national and international service. Through a thorough survey of the territory''s needs and the provision of strategic guidelines, it directs members'' commitment toward a tangible social impact, responding promptly and responsibly to the community''s challenges.'
         leadLabel: Presidente
+        leadLabelEn: Chair
         membersLabel: Membro
+        membersLabelEn: Member
         lead:
           photo: /uploads/Squadra/2026-2027/Profili/Vetturi-Silvia.jpeg
           name: Silvia Vetturi
@@ -190,14 +201,14 @@ blocks:
           - photo: /uploads/Squadra/2026-2027/Profili/Brugali-Clara.jpeg
             name: Clara Brugali
             club: src/content/clubs/rotaract-club-brescia-franciacorta.md
-        nameEn: Public Interest Action
-        descriptionEn: This Committee coordinates and promotes initiatives aimed at improving the local and global community. It concretely supports Clubs at every stage of their projects, facilitating access to grants and ensuring the effectiveness of district, national and international service. Through a thorough survey of the territory's needs and the provision of strategic guidelines, it directs members' commitment toward a tangible social impact, responding promptly and responsibly to the community's challenges.
-        leadLabelEn: Chair
-        membersLabelEn: Member
       - name: Azione Internazionale
-        description: Promuove progetti, gemellaggi e scambi culturali per favorire la comprensione, la buona volontà e la pace nel mondo, guidando i soci nella cooperazione internazionale.
+        nameEn: International Action
+        description: 'Promuove progetti, gemellaggi e scambi culturali per favorire la comprensione, la buona volontà e la pace nel mondo, guidando i soci nella cooperazione internazionale.'
+        descriptionEn: 'This Committee promotes understanding, tolerance and peace among peoples, expanding the vision of service beyond national borders. It guides members in exploring Rotaract''s international opportunities, facilitating interclub twinnings, cooperative projects and access to Rotary Foundation programmes. It acts as a point of reference for welcoming international members and for participation in European events. Through cultural exchanges, on-the-ground initiatives and collaboration with E.R.I.C., it shapes citizens of the world guided by the values of friendship and global solidarity.'
         leadLabel: Presidente
+        leadLabelEn: Chair
         membersLabel: Membro
+        membersLabelEn: Member
         lead:
           name: Alessio Alberti
           email: azione.internazionale@rotaract2050.org
@@ -215,26 +226,26 @@ blocks:
           - photo: /uploads/Squadra/2026-2027/Profili/Romani-Benedetta.jpeg
             name: Benedetta Romani
             club: src/content/clubs/rotaract-club-brescia.md
-        nameEn: International Action
-        descriptionEn: This Committee promotes understanding, tolerance and peace among peoples, expanding the vision of service beyond national borders. It guides members in exploring Rotaract's international opportunities, facilitating interclub twinnings, cooperative projects and access to Rotary Foundation programmes. It acts as a point of reference for welcoming international members and for participation in European events. Through cultural exchanges, on-the-ground initiatives and collaboration with E.R.I.C., it shapes citizens of the world guided by the values of friendship and global solidarity.
-        leadLabelEn: Chair
-        membersLabelEn: Member
       - name: Delegato E.R.I.C.
-        description: L'E.R.I.C. (European Rotaract Information Center) è l'organizzazione multidistrettuale europea che unisce i Club Rotaract per facilitare lo scambio di informazioni, promuovere la cooperazione internazionale e coordinare progetti e relazioni tra i vari Paesi.
+        nameEn: E.R.I.C. Delegate
+        description: 'L''E.R.I.C. (European Rotaract Information Center) è l''organizzazione multidistrettuale europea che unisce i Club Rotaract per facilitare lo scambio di informazioni, promuovere la cooperazione internazionale e coordinare progetti e relazioni tra i vari Paesi.'
+        descriptionEn: '[todo]'
         leadLabel: Delegato
+        leadLabelEn: Delegate
         lead:
           photo: /uploads/Squadra/2026-2027/Profili/Calori-Leonardo.jpeg
           name: Leonardo Calori
           email: eric@rotaract2050.org
           club: src/content/clubs/rotaract-club-piacenza.md
           clubCustom: RC Piacenza Primogenita
-        nameEn: E.R.I.C. Delegate
-        descriptionEn: '[todo]'
-        leadLabelEn: Delegate
       - name: Azione Giovani
-        description: Promuove lo sviluppo personale e la leadership dei giovani, unendo Rotary, Rotaract e Interact in percorsi di formazione, cittadinanza attiva e condivisione dei valori della famiglia rotariana.
+        nameEn: Youth Action
+        description: 'Promuove lo sviluppo personale e la leadership dei giovani, unendo Rotary, Rotaract e Interact in percorsi di formazione, cittadinanza attiva e condivisione dei valori della famiglia rotariana.'
+        descriptionEn: 'This Committee recognises the fundamental role of service in young people''s lives, fostering their ethical and social growth. It acts as a link between Rotary, Rotaract and Interact, supporting Clubs in developing projects and promoting leadership. It manages key training moments to deepen understanding of the organisation. Through active-citizenship paths and cultural exchanges, the Committee accompanies new generations, preserving and passing on the values of the Rotary family.'
         leadLabel: Presidente
+        leadLabelEn: Chair
         membersLabel: Membro
+        membersLabelEn: Member
         lead:
           name: Maria Gloria Garavani
           email: azione.giovani@rotaract2050.org
@@ -252,25 +263,25 @@ blocks:
           - photo: /uploads/Squadra/2026-2027/Profili/Lauricella-Alma.jpeg
             name: Alma Lauricella
             club: src/content/clubs/rotaract-club-brescia.md
-        nameEn: Youth Action
-        descriptionEn: This Committee recognises the fundamental role of service in young people's lives, fostering their ethical and social growth. It acts as a link between Rotary, Rotaract and Interact, supporting Clubs in developing projects and promoting leadership. It manages key training moments to deepen understanding of the organisation. Through active-citizenship paths and cultural exchanges, the Committee accompanies new generations, preserving and passing on the values of the Rotary family.
-        leadLabelEn: Chair
-        membersLabelEn: Member
       - name: Delegato per lo Scambio Giovani
+        nameEn: Youth Exchange Delegate
         description: Il programma "Scambio Giovani" promuove la pace e la comprensione tra i popoli offrendo ai giovani esperienze di studio e immersione culturale all'estero.
+        descriptionEn: '[todo]'
         leadLabel: Delegato
+        leadLabelEn: Delegate
         lead:
           photo: /uploads/Squadra/2026-2027/Profili/Somenzi-Sofia.jpeg
           name: Sofia Somenzi
           email: scambio.giovani@rotaract2050.org
           clubCustom: Interact Club Casalmaggiore Oglio Po
-        nameEn: Youth Exchange Delegate
-        descriptionEn: '[todo]'
-        leadLabelEn: Delegate
       - name: Immagine Pubblica
-        description: Custodisce l'immagine del Distretto e supporta i Club nella comunicazione, raccontando l'impatto dei service per diffondere i valori e la cultura del Rotaract.
+        nameEn: Public Image
+        description: 'Custodisce l''immagine del Distretto e supporta i Club nella comunicazione, raccontando l''impatto dei service per diffondere i valori e la cultura del Rotaract.'
+        descriptionEn: 'This Committee safeguards and promotes the District''s public image, highlighting members'' commitment and the impact of service projects on the territory. It offers strategic and graphic support to Clubs and Zones, curating the digital presence on social channels and web platforms. Through impactful content, dynamic editorial plans and coordinated storytelling, the Committee strengthens public relations and spreads Rotaract culture. It turns communication into a tool for engagement and outreach, ensuring authority, transparency and visibility for the organisation''s values.'
         leadLabel: Presidente
+        leadLabelEn: Chair
         membersLabel: Membro
+        membersLabelEn: Member
         lead:
           photo: /uploads/Squadra/2026-2027/Profili/Grassi-Federica.jpeg
           name: Federica Grassi
@@ -289,14 +300,14 @@ blocks:
           - photo: /uploads/Squadra/2026-2027/Profili/Cantini-Filippo.jpeg
             name: Filippo Cantini
             club: src/content/clubs/rotaract-club-casalmaggiore-viadana-sabbioneta.md
-        nameEn: Public Image
-        descriptionEn: This Committee safeguards and promotes the District's public image, highlighting members' commitment and the impact of service projects on the territory. It offers strategic and graphic support to Clubs and Zones, curating the digital presence on social channels and web platforms. Through impactful content, dynamic editorial plans and coordinated storytelling, the Committee strengthens public relations and spreads Rotaract culture. It turns communication into a tool for engagement and outreach, ensuring authority, transparency and visibility for the organisation's values.
-        leadLabelEn: Chair
-        membersLabelEn: Member
       - name: Cultura
-        description: Valorizza il patrimonio artistico e culturale locale, guidando i Club in iniziative di service volte a promuovere le eccellenze del territorio e la crescita della comunità.
+        nameEn: Culture
+        description: 'Valorizza il patrimonio artistico e culturale locale, guidando i Club in iniziative di service volte a promuovere le eccellenze del territorio e la crescita della comunità.'
+        descriptionEn: 'This Committee supports the enhancement of artistic and intellectual heritage, recognising culture as a primary factor of personal and social growth. It encourages and coordinates projects that promote local excellence among members and in the communities they serve. It supports Club initiatives, creating synergies and spaces for outreach. Through paths dedicated to art and knowledge, it nurtures young people''s sensitivity, strengthening the close bond between Rotaract''s action and the richness of local identities.'
         leadLabel: Presidente
+        leadLabelEn: Chair
         membersLabel: Membro
+        membersLabelEn: Member
         lead:
           photo: /uploads/Squadra/2026-2027/Profili/Magni-Federico.jpeg
           name: Federico Magni
@@ -314,14 +325,14 @@ blocks:
           - photo: /uploads/Squadra/2026-2027/Profili/Zandon-Lucrezia-Giuseppina.jpeg
             name: Lucrezia Giuseppina Zandon
             club: src/content/clubs/rotaract-club-vigevano-castello.md
-        nameEn: Culture
-        descriptionEn: This Committee supports the enhancement of artistic and intellectual heritage, recognising culture as a primary factor of personal and social growth. It encourages and coordinates projects that promote local excellence among members and in the communities they serve. It supports Club initiatives, creating synergies and spaces for outreach. Through paths dedicated to art and knowledge, it nurtures young people's sensitivity, strengthening the close bond between Rotaract's action and the richness of local identities.
-        leadLabelEn: Chair
-        membersLabelEn: Member
-      - name: Risoluzione delle Controversie, controversie Bilancio e Regolamento
-        description: Vigila sul rispetto delle norme e sulla correttezza contabile del Distretto, fornendo interpretazione regolamentare e supporto arbitrale a tutela della trasparenza e dell'armonia associativa.
+      - name: 'Risoluzione delle Controversie, controversie Bilancio e Regolamento'
+        nameEn: 'Dispute Resolution, Bylaws and Budget'
+        description: 'Vigila sul rispetto delle norme e sulla correttezza contabile del Distretto, fornendo interpretazione regolamentare e supporto arbitrale a tutela della trasparenza e dell''armonia associativa.'
+        descriptionEn: 'This Committee acts as a body of guarantee, transparency and fairness safeguarding the District, overseeing compliance with the bylaws and the accuracy of accounts. It is responsible for interpreting the Bylaws and settling disputes of district-wide interest or internal to individual Clubs, upon request of the parties involved, Club Presidents or the District Representative. Through budget oversight and impartial arbitration, it ensures administrative rigour and statutory compliance, preserving harmony, legality and stability within the association''s life.'
         leadLabel: Presidente
+        leadLabelEn: Chair
         membersLabel: Membro
+        membersLabelEn: Member
         lead:
           name: Giovanni Scielzo
           email: risoluzione.controversie@rotaract2050.org
@@ -334,13 +345,12 @@ blocks:
           - photo: /uploads/Squadra/2026-2027/Profili/Goi-Valeria.jpeg
             name: Valeria Goi
             club: src/content/clubs/rotaract-club-casalmaggiore-viadana-sabbioneta.md
-        nameEn: Dispute Resolution, Bylaws and Budget
-        descriptionEn: This Committee acts as a body of guarantee, transparency and fairness safeguarding the District, overseeing compliance with the bylaws and the accuracy of accounts. It is responsible for interpreting the Bylaws and settling disputes of district-wide interest or internal to individual Clubs, upon request of the parties involved, Club Presidents or the District Representative. Through budget oversight and impartial arbitration, it ensures administrative rigour and statutory compliance, preserving harmony, legality and stability within the association's life.
-        leadLabelEn: Chair
-        membersLabelEn: Member
       - name: Delegato Rotary per il Rotaract
-        description: Agisce da organo di raccordo e supporto strategico tra Rotary e Rotaract, guidando le nuove generazioni nello sviluppo della leadership e promuovendo l'azione comune nell'ambito del service.
+        nameEn: Rotary Delegate for Rotaract
+        description: 'Agisce da organo di raccordo e supporto strategico tra Rotary e Rotaract, guidando le nuove generazioni nello sviluppo della leadership e promuovendo l''azione comune nell''ambito del service.'
+        descriptionEn: '[todo]'
         leadLabel: Delegato
+        leadLabelEn: Delegate
         lead:
           photo: /uploads/Squadra/2026-2027/Profili/Pesce-Alberto.jpeg
           photoFocalX: 39
@@ -349,43 +359,36 @@ blocks:
           email: alberto@studiogpesce.it
           club: src/content/clubs/rotaract-club-brescia-franciacorta.md
           clubCustom: RC Zerotrenta
-        nameEn: Rotary Delegate for Rotaract
-        descriptionEn: '[todo]'
-        leadLabelEn: Delegate
       - name: Delegato Rotaract per l'Interact
-        description: Rappresenta l'organo di supporto e indirizzo per l'Interact, facilitando la cooperazione con il Rotaract e custodendo la continuità associativa all'interno della famiglia rotariana.
+        nameEn: Interact Delegate
+        description: 'Rappresenta l''organo di supporto e indirizzo per l''Interact, facilitando la cooperazione con il Rotaract e custodendo la continuità associativa all''interno della famiglia rotariana.'
+        descriptionEn: '[todo]'
         leadLabel: Delegato
+        leadLabelEn: Delegate
         lead:
           photo: /uploads/Squadra/2026-2027/Profili/Gilardi-Benedetta.jpeg
           name: Benedetta Gilardi
           club: src/content/clubs/rotaract-club-morimondo-abbazia.md
-        nameEn: Interact Delegate
-        descriptionEn: '[todo]'
-        leadLabelEn: Delegate
       - name: Delegato per la Rotary Foundation
-        description: Promuove i valori e le risorse della Fondazione Rotary, orientando i Club nell'accesso alle sovvenzioni e coordinando lo sviluppo di progetti umanitari ad alto impatto locale e globale.
+        nameEn: Rotary Foundation Delegate
+        description: 'Promuove i valori e le risorse della Fondazione Rotary, orientando i Club nell''accesso alle sovvenzioni e coordinando lo sviluppo di progetti umanitari ad alto impatto locale e globale.'
+        descriptionEn: '[todo]'
         leadLabel: Delegato
+        leadLabelEn: Delegate
         lead:
           name: Davide Cappello
           email: rotary.foundation@rotaract2050.org
           club: src/content/clubs/rotaract-club-brescia-ovest-castello.md
-        nameEn: Rotary Foundation Delegate
-        descriptionEn: '[todo]'
-        leadLabelEn: Delegate
       - name: Delegato IT
-        description: Cura e innova le piattaforme digitali distrettuali, garantendo l'efficienza dei sistemi e offrendo strumenti informatici avanzati a supporto della comunicazione, della formazione e delle attività di service.
+        nameEn: IT Delegate
+        description: 'Cura e innova le piattaforme digitali distrettuali, garantendo l''efficienza dei sistemi e offrendo strumenti informatici avanzati a supporto della comunicazione, della formazione e delle attività di service.'
+        descriptionEn: '[todo]'
         leadLabel: Delegato
+        leadLabelEn: Delegate
         lead:
           name: Alessandro Gorla
           email: it@rotaract2050.org
           club: src/content/clubs/rotaract-club-abbiategrasso.md
-        nameEn: IT Delegate
-        descriptionEn: '[todo]'
-        leadLabelEn: Delegate
     _template: CommitteeGrid
-    titleEn: District Committees
-titleEn: THE TEAM
-eyebrowEn: ROTARACT DISTRICT 2050
-breadcrumbCurrentEn: THE TEAM
 ---
 

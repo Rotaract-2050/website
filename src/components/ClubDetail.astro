@@ -21,7 +21,7 @@ const focalStyle = `--focal-x:${club.photoFocalX ?? 50}%;--focal-y:${club.photoF
 ---
 
 <section class="club-detail">
-	<div class="section-inner" data-tina-field={tinaField(club)}>
+	<div class="section-inner" data-tina-field={tinaField(club)} style={club.zone?.color ? `--tint:${club.zone.color};` : undefined}>
 		<a href={backHref} class="back-link">{t.backToList}</a>
 
 		<div class="club-layout">
@@ -121,39 +121,44 @@ const focalStyle = `--focal-x:${club.photoFocalX ?? 50}%;--focal-y:${club.photoF
 
 	.club-layout :global(.club-photo) {
 		width: 100%;
-		height: 360px;
-		object-fit: cover;
-		object-position: var(--focal-x, 50%) var(--focal-y, 50%);
-		border-radius: var(--shape-large);
+		height: auto;
+		max-height: 400px;
+		object-fit: contain;
+		object-position: top center;
 		order: 2;
 	}
 
 	.club-info {
+		background: #f6f8fa;
+		border-radius: var(--shape-extra-large);
+		padding: 36px 32px;
 		display: flex;
 		flex-direction: column;
-		gap: 18px;
+		gap: 20px;
 		order: 1;
 	}
 
 	.info-row {
 		display: flex;
 		flex-direction: column;
-		gap: 4px;
-		padding-bottom: 14px;
-		border-bottom: 1px solid rgba(11, 37, 69, 0.08);
+		gap: 6px;
+		padding-bottom: 16px;
+		border-bottom: 1px solid rgba(11, 37, 69, 0.06);
 	}
 
 	.info-label {
-		font-size: 12px;
+		font-size: 11px;
 		font-weight: 700;
-		letter-spacing: 0.5px;
+		letter-spacing: 0.6px;
 		text-transform: uppercase;
-		color: var(--color-muted);
+		color: var(--tint, var(--color-pink));
 	}
 
 	.info-value {
-		font-size: 15px;
-		color: var(--color-text);
+		font-family: var(--font-heading);
+		font-size: 16px;
+		font-weight: 500;
+		color: var(--color-navy);
 	}
 
 	.info-value.link {
@@ -183,7 +188,7 @@ const focalStyle = `--focal-x:${club.photoFocalX ?? 50}%;--focal-y:${club.photoF
 	.club-social {
 		display: flex;
 		gap: 12px;
-		padding-top: 4px;
+		padding-top: 10px;
 	}
 
 	.social-btn {
@@ -193,8 +198,9 @@ const focalStyle = `--focal-x:${club.photoFocalX ?? 50}%;--focal-y:${club.photoF
 		width: 40px;
 		height: 40px;
 		border-radius: 50%;
-		background: var(--color-navy);
-		color: #fff;
+		background: color-mix(in srgb, var(--tint, var(--color-navy)) 10%, transparent);
+		color: var(--tint, var(--color-navy));
+		transition: background var(--motion-duration-short) var(--motion-easing-standard), color var(--motion-duration-short) var(--motion-easing-standard);
 	}
 
 	.social-btn svg {
@@ -203,7 +209,8 @@ const focalStyle = `--focal-x:${club.photoFocalX ?? 50}%;--focal-y:${club.photoF
 	}
 
 	.social-btn:hover {
-		background: var(--color-pink);
+		background: var(--tint, var(--color-pink));
+		color: #ffffff;
 	}
 
 	@media (max-width: 720px) {

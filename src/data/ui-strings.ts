@@ -289,6 +289,7 @@ const IT: UiStrings = {
 	},
 	chat: {
 		fabLabel: 'Apri l\'assistente Formazione',
+		fabCallout: 'Ehi, sono la tua AI! 👋 Se hai bisogno di qualcosa di teoria, chiedimi pure!',
 		title: 'Assistente Formazione',
 		closeLabel: 'Chiudi l\'assistente',
 		placeholder: 'Scrivi una domanda…',
@@ -296,7 +297,7 @@ const IT: UiStrings = {
 		disclaimer: 'Risposte generate da un\'intelligenza artificiale sulla base delle schede pubblicate: possono contenere imprecisioni.',
 		greeting: 'Ciao! Chiedimi qualcosa sulle schede di Formazione: cerimoniale, ruoli del club, cultura rotariana.',
 		errorGeneric: 'Qualcosa non ha funzionato. Riprova tra poco.',
-		errorQuota: 'L\'assistente è molto richiesto in questo momento. Riprova tra qualche minuto.',
+		errorQuota: 'Abbiamo esaurito i token del piano gratuito. L\'assistente tornerà disponibile dopo il prossimo reset!',
 		errorNotConfigured: 'Assistente non ancora configurato.',
 		errorEmptyCorpus: 'Nessuna scheda pubblicata al momento: l\'assistente non ha ancora contenuti su cui rispondere.',
 		errorTurnstile: 'Verifica anti-bot non riuscita. Ricarica la pagina e riprova.',
@@ -438,6 +439,7 @@ const EN: UiStrings = {
 	},
 	chat: {
 		fabLabel: 'Open the Formazione assistant',
+		fabCallout: 'Hey, I\'m your AI! 👋 If you need any theory help, just ask me!',
 		title: 'Formazione assistant',
 		closeLabel: 'Close the assistant',
 		placeholder: 'Ask a question…',
@@ -445,7 +447,7 @@ const EN: UiStrings = {
 		disclaimer: 'AI-generated answers based on the published guides — they may contain inaccuracies.',
 		greeting: 'Hi! Ask me anything about the Formazione guides: protocol, club roles, Rotary culture.',
 		errorGeneric: 'Something went wrong. Please try again shortly.',
-		errorQuota: 'The assistant is in high demand right now. Please try again in a few minutes.',
+		errorQuota: 'We have run out of free plan tokens. The assistant will be available again after the next reset!',
 		errorNotConfigured: 'Assistant not configured yet.',
 		errorEmptyCorpus: 'No guides published yet: the assistant has no content to answer from.',
 		errorTurnstile: 'Bot check failed. Reload the page and try again.',

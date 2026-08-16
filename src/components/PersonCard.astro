@@ -22,16 +22,18 @@ interface Props {
 	tinaFieldAttr?: string;
 	/** 'lg' renders a bigger, standalone card (e.g. the RD featured above the rest). */
 	size?: 'md' | 'lg';
+	/** The Material You avatar shape. 'auto' cycles through them sequentially. */
+	shape?: 'auto' | 'petal' | 'cross' | 'arch' | 'blob' | 'squircle' | string;
 }
 
-const { lang, name, role, photo, photoFocalX, photoFocalY, photoZoom, initials, email, club, clubCustom, tinaFieldAttr, size = 'md' } = Astro.props;
+const { lang, name, role, photo, photoFocalX, photoFocalY, photoZoom, initials, email, club, clubCustom, tinaFieldAttr, size = 'md', shape = 'auto' } = Astro.props;
 const focalStyle = `--focal-x:${photoFocalX ?? 50}%;--focal-y:${photoFocalY ?? 50}%;--zoom:${(photoZoom ?? 100) / 100};`;
 const clubLabel = club?.name || clubCustom || undefined;
 const clubColor = club ? club.zoneColor : customClubColor(clubCustom);
 const clubHref = club?.slug ? getRelativeLocaleUrl(lang, `club/${club.slug}`) : undefined;
 ---
 
-<div class="person-card" data-size={size} data-tina-field={tinaFieldAttr}>
+<div class="person-card" data-size={size} data-shape={shape} data-tina-field={tinaFieldAttr} data-initials={initials}>
 	<div class="person-avatar">
 		{photo ? (
 			<Image src={photo} alt={name} width={size === 'lg' ? 240 : 160} height={size === 'lg' ? 240 : 160} quality="high" class="person-photo" style={focalStyle} />
@@ -57,7 +59,7 @@ const clubHref = club?.slug ? getRelativeLocaleUrl(lang, `club/${club.slug}`) : 
 
 <style>
 	.person-card {
-		background: var(--color-navy-container);
+		background: #ffffff;
 		border-radius: var(--shape-large);
 		padding: 28px 20px;
 		text-align: center;
@@ -71,6 +73,35 @@ const clubHref = club?.slug ? getRelativeLocaleUrl(lang, `club/${club.slug}`) : 
 		border-radius: var(--shape-large);
 		/* Deliberate pink-tinted glow for the featured role, not a neutral elevation level. */
 		box-shadow: 0 14px 34px rgba(212, 19, 103, 0.28);
+		position: relative;
+		overflow: hidden;
+		z-index: 1;
+	}
+
+	/* Giant watermark for featured person */
+	.person-card[data-size='lg']::before {
+		content: attr(data-initials);
+		position: absolute;
+		bottom: -20px;
+		right: -10px;
+		font-family: var(--font-heading);
+		font-size: 200px;
+		font-weight: 900;
+		color: #ffffff;
+		opacity: 0.15; /* Increased opacity */
+		line-height: 1;
+		z-index: 0; /* Placed just above the background */
+		pointer-events: none;
+		transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+	}
+
+	.person-card[data-size='lg'] > * {
+		position: relative;
+		z-index: 1;
+	}
+
+	.person-card[data-size='lg']:hover::before {
+		transform: scale(1.1) rotate(-5deg);
 	}
 
 	.person-card:hover {
@@ -85,15 +116,50 @@ const clubHref = club?.slug ? getRelativeLocaleUrl(lang, `club/${club.slug}`) : 
 		width: 88px;
 		height: 88px;
 		margin: 0 auto 14px;
-		border-radius: 50%;
 		overflow: hidden;
+		transition: border-radius var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
+
+	/* 1. Il Petalo (Petal) */
+	.person-card[data-shape='petal'] .person-avatar,
+	.person-card[data-shape='auto']:nth-child(5n + 1) .person-avatar { border-radius: 50% 50% 12px 50%; }
+	.person-card[data-shape='petal']:hover .person-avatar,
+	.person-card[data-shape='auto']:nth-child(5n + 1):hover .person-avatar { border-radius: 12px 50% 50% 50%; }
+
+	/* 2. Asimmetria Incrociata (Cross Asymmetry) */
+	.person-card[data-shape='cross'] .person-avatar,
+	.person-card[data-shape='auto']:nth-child(5n + 2) .person-avatar { border-radius: 50% 12px 50% 12px; }
+	.person-card[data-shape='cross']:hover .person-avatar,
+	.person-card[data-shape='auto']:nth-child(5n + 2):hover .person-avatar { border-radius: 12px 50% 12px 50%; }
+
+	/* 3. L'Arco (Tombstone/Arch) */
+	.person-card[data-shape='arch'] .person-avatar,
+	.person-card[data-shape='auto']:nth-child(5n + 3) .person-avatar { border-radius: 50% 50% 16px 16px; }
+	.person-card[data-shape='arch']:hover .person-avatar,
+	.person-card[data-shape='auto']:nth-child(5n + 3):hover .person-avatar { border-radius: 16px 16px 50% 50%; }
+
+	/* 4. Il Blob Organico (Organic Blob) */
+	.person-card[data-shape='blob'] .person-avatar,
+	.person-card[data-shape='auto']:nth-child(5n + 4) .person-avatar { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+	.person-card[data-shape='blob']:hover .person-avatar,
+	.person-card[data-shape='auto']:nth-child(5n + 4):hover .person-avatar { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+
+	/* 5. Lo Squircle Classico (Classic Squircle) */
+	.person-card[data-shape='squircle'] .person-avatar,
+	.person-card[data-shape='auto']:nth-child(5n + 5) .person-avatar { border-radius: 20px; }
+	.person-card[data-shape='squircle']:hover .person-avatar,
+	.person-card[data-shape='auto']:nth-child(5n + 5):hover .person-avatar { border-radius: 50%; }
 
 	.person-card[data-size='lg'] .person-avatar {
 		width: 140px;
 		height: 140px;
 		margin-bottom: 20px;
 		border: 4px solid var(--color-gold);
+		border-radius: 50% 50% 16px 50%; /* RD keeps the Petal as default signature shape */
+	}
+
+	.person-card[data-size='lg']:hover .person-avatar {
+		border-radius: 16px 50% 50% 50%;
 	}
 
 	.person-avatar :global(.person-photo) {
@@ -108,7 +174,6 @@ const clubHref = club?.slug ? getRelativeLocaleUrl(lang, `club/${club.slug}`) : 
 	.person-initials {
 		width: 88px;
 		height: 88px;
-		border-radius: 50%;
 		background: var(--color-navy);
 		color: #fff;
 		font-family: var(--font-heading);
@@ -118,7 +183,33 @@ const clubHref = club?.slug ? getRelativeLocaleUrl(lang, `club/${club.slug}`) : 
 		align-items: center;
 		justify-content: center;
 		margin: 0 auto;
+		transition: border-radius var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
+
+	.person-card[data-shape='petal'] .person-initials,
+	.person-card[data-shape='auto']:nth-child(5n + 1) .person-initials { border-radius: 50% 50% 12px 50%; }
+	.person-card[data-shape='petal']:hover .person-initials,
+	.person-card[data-shape='auto']:nth-child(5n + 1):hover .person-initials { border-radius: 12px 50% 50% 50%; }
+
+	.person-card[data-shape='cross'] .person-initials,
+	.person-card[data-shape='auto']:nth-child(5n + 2) .person-initials { border-radius: 50% 12px 50% 12px; }
+	.person-card[data-shape='cross']:hover .person-initials,
+	.person-card[data-shape='auto']:nth-child(5n + 2):hover .person-initials { border-radius: 12px 50% 12px 50%; }
+
+	.person-card[data-shape='arch'] .person-initials,
+	.person-card[data-shape='auto']:nth-child(5n + 3) .person-initials { border-radius: 50% 50% 16px 16px; }
+	.person-card[data-shape='arch']:hover .person-initials,
+	.person-card[data-shape='auto']:nth-child(5n + 3):hover .person-initials { border-radius: 16px 16px 50% 50%; }
+
+	.person-card[data-shape='blob'] .person-initials,
+	.person-card[data-shape='auto']:nth-child(5n + 4) .person-initials { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+	.person-card[data-shape='blob']:hover .person-initials,
+	.person-card[data-shape='auto']:nth-child(5n + 4):hover .person-initials { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+
+	.person-card[data-shape='squircle'] .person-initials,
+	.person-card[data-shape='auto']:nth-child(5n + 5) .person-initials { border-radius: 20px; }
+	.person-card[data-shape='squircle']:hover .person-initials,
+	.person-card[data-shape='auto']:nth-child(5n + 5):hover .person-initials { border-radius: 50%; }
 
 	.person-card[data-size='lg'] .person-initials {
 		width: 140px;
@@ -126,14 +217,15 @@ const clubHref = club?.slug ? getRelativeLocaleUrl(lang, `club/${club.slug}`) : 
 		font-size: 36px;
 		background: rgba(255, 255, 255, 0.12);
 		border: 4px solid var(--color-gold);
+		border-radius: 50% 50% 16px 50%;
 	}
 
 	.person-name {
 		font-family: var(--font-heading);
-		font-weight: 600;
-		font-size: 15px;
+		font-weight: 700;
+		font-size: 17px;
 		color: var(--color-navy);
-		margin-bottom: 4px;
+		margin-bottom: 6px;
 	}
 
 	.person-card[data-size='lg'] .person-name {
@@ -184,16 +276,31 @@ const clubHref = club?.slug ? getRelativeLocaleUrl(lang, `club/${club.slug}`) : 
 
 	.person-email {
 		display: inline-block;
-		margin-top: 6px;
+		margin-top: 14px;
+		padding: 6px 14px;
+		border-radius: var(--shape-full);
+		background: color-mix(in srgb, var(--color-pink) 8%, transparent);
+		font-family: var(--font-heading);
 		font-size: 11px;
-		color: var(--color-pink);
+		font-weight: 700;
+		color: var(--color-pink-dark);
+		text-decoration: none;
 		word-break: break-word;
+		transition: background var(--motion-duration-short) var(--motion-easing-standard);
+	}
+
+	.person-email:hover {
+		background: var(--color-pink-container);
 	}
 
 	.person-card[data-size='lg'] .person-email {
-		margin-top: 10px;
+		margin-top: 18px;
 		font-size: 13px;
-		color: #fff;
-		opacity: 0.85;
+		color: var(--color-pink-dark);
+		background: #ffffff;
+	}
+
+	.person-card[data-size='lg'] .person-email:hover {
+		background: var(--color-pink-container);
 	}
 </style>
