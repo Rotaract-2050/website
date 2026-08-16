@@ -28,6 +28,48 @@ export function localizeTag(tag: string, lang: Lang): string {
 }
 
 /**
+ * Color for each `tags` option, from the secondary Rotary palette reserved for tag/categorization
+ * badges (see references/rotary-brand.md) — the same set `zones.color` draws from for club/news
+ * tags, so resource tags read as the same "kind" of UI element sitewide. Add a color here whenever
+ * a new tag option is added to the schema; DEFAULT_TAG_COLOR covers any tag not yet assigned one.
+ */
+const TAG_COLORS: Record<string, string> = {
+	Prefetto: '#FF7600', // Orange
+	Cerimoniale: '#00ADBB', // Turquoise
+};
+const DEFAULT_TAG_COLOR = '#D41367'; // Cranberry — brand default, also used when a resource has no tags at all
+
+export function tagColor(tag: string): string {
+	return TAG_COLORS[tag] ?? DEFAULT_TAG_COLOR;
+}
+
+function hexToRgb(hex: string): { r: number; g: number; b: number } {
+	const clean = hex.replace('#', '');
+	return { r: parseInt(clean.slice(0, 2), 16), g: parseInt(clean.slice(2, 4), 16), b: parseInt(clean.slice(4, 6), 16) };
+}
+
+/** Inline CSS custom properties for a tag pill's color (light tint background, solid text) — same recipe as `tagPillStyle` in lib/news.ts, kept separate here since resource tags key off the local `TAG_COLORS` map instead of a zone reference. */
+export function tagPillStyle(tag: string): string {
+	const { r, g, b } = hexToRgb(tagColor(tag));
+	return `--tag-bg: rgba(${r}, ${g}, ${b}, 0.14); --tag-color: ${tagColor(tag)};`;
+}
+
+/**
+ * A resource card's background: a soft gradient blended from its tags' colors (one tag = a single
+ * tint fading to white, two = a blend between both, extra tags beyond the first two don't add more
+ * stops so the gradient stays readable), falling back to the brand Cranberry for untagged resources.
+ */
+export function resourceCardGradient(tags: string[]): string {
+	const colors = tags.length > 0 ? tags.slice(0, 2).map(tagColor) : [DEFAULT_TAG_COLOR];
+	const tints = colors.map((hex) => {
+		const { r, g, b } = hexToRgb(hex);
+		return `rgba(${r}, ${g}, ${b}, 0.1)`;
+	});
+	const stops = tints.length === 1 ? `${tints[0]} 0%, #fff 60%` : `${tints[0]} 0%, ${tints[1]} 55%, #fff 90%`;
+	return `background: linear-gradient(155deg, ${stops});`;
+}
+
+/**
  * A resource's title/excerpt/body/imageLabel/tags in the given language — one file holds both
  * (`title`/`titleEn`, like `news.title`/`titleEn`), falling back to the IT value when the EN
  * twin is empty, same fallback rule as `localizeNews`.

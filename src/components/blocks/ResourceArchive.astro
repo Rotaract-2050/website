@@ -2,7 +2,7 @@
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { tinaField } from '@tinacms/astro';
 import ResourceCard from '../ResourceCard.astro';
-import { getKnowledgeResources, localizeResource, resourceSlug, tagSlug, resourceTags, localizeTag } from '../../lib/resources';
+import { getKnowledgeResources, localizeResource, resourceSlug, tagSlug, tagColor, resourceTags, localizeTag } from '../../lib/resources';
 import { uiStrings, type Lang } from '../../data/ui-strings';
 
 interface Props {
@@ -33,7 +33,7 @@ const tags = resourceTags(resources);
 					<div class="archive-filters" role="group" aria-label={t.resources.filterAll}>
 						<button type="button" class="filter-pill active" data-filter="all" aria-pressed="true">{t.resources.filterAll}</button>
 						{tags.map((tag) => (
-							<button type="button" class="filter-pill" data-filter={tagSlug(tag)} aria-pressed="false">{localizeTag(tag, lang)}</button>
+							<button type="button" class="filter-pill" data-filter={tagSlug(tag)} style={`--pill-color: ${tagColor(tag)};`} aria-pressed="false">{localizeTag(tag, lang)}</button>
 						))}
 					</div>
 				</div>
@@ -44,7 +44,7 @@ const tags = resourceTags(resources);
 							<ResourceCard
 								href={getRelativeLocaleUrl(lang, `formazione/${resourceSlug(resource)}`)}
 								tags={localized.tags}
-								tagSlugs={(resource.tags ?? []).filter((tag): tag is string => Boolean(tag)).map(tagSlug)}
+								tagKeys={(resource.tags ?? []).filter((tag): tag is string => Boolean(tag))}
 								title={localized.title}
 								excerpt={localized.excerpt}
 								readMoreLabel={t.resources.readMore}
@@ -141,12 +141,12 @@ const tags = resourceTags(resources);
 	}
 
 	.filter-pill:hover {
-		border-color: var(--color-pink);
+		border-color: var(--pill-color, var(--color-pink));
 	}
 
 	.filter-pill.active {
-		background: var(--color-pink);
-		border-color: var(--color-pink);
+		background: var(--pill-color, var(--color-pink));
+		border-color: var(--pill-color, var(--color-pink));
 		color: #fff;
 	}
 

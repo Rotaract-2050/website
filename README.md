@@ -35,6 +35,7 @@ For full detail (Rotary brand palette, Tina conventions, architectural pattern) 
 
 - Node.js ≥ 22.12.0
 - A local `.env` with `TINA_CLIENT_ID` and `TINA_TOKEN` (the district's Tina Cloud project — never commit this file)
+- Optional: `TINA_SEARCH_TOKEN` in the same `.env` (Tina Cloud dashboard → project → Search) to enable Tina's hosted search index for the CMS admin. Safe to leave unset — everything else works without it.
 
 ### Setup
 
