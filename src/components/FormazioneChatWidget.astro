@@ -40,6 +40,12 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 	</button>
 
 	<section class="chat-panel" data-chat-panel hidden aria-label={title}>
+		<div class="chat-resize-handle" data-chat-resize aria-hidden="true">
+			<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true">
+				<path d="M4 20 20 4"></path>
+				<path d="M11 20 20 11"></path>
+			</svg>
+		</div>
 		<header class="chat-header">
 			<span class="chat-title">{title}</span>
 			<button type="button" class="chat-close" data-chat-close aria-label={t.chat.closeLabel}>
@@ -117,8 +123,6 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 		border-radius: var(--shape-large);
 		box-shadow: var(--elevation-4);
 		flex-direction: column;
-		/* `overflow` must be anything but `visible` for the native `resize` handle below to appear —
-		   `hidden` still works for that purpose and keeps the rounded corners clipping child content. */
 		overflow: hidden;
 	}
 
@@ -128,9 +132,29 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 	   never actually hide it. Scoping it to `:not([hidden])` keeps `hidden` in control. */
 	.chat-panel:not([hidden]) {
 		display: flex;
-		/* Anchored by `right`/`bottom` above, so dragging the native resize handle grows the panel
-		   up and to the left — away from the corner it's pinned to, which is the expected direction. */
-		resize: both;
+	}
+
+	/* Native CSS `resize` only ever draws its handle at the bottom-right corner, not configurable —
+	   but this panel is anchored bottom-right (`right`/`bottom` above), so growing it should read as
+	   "drag the top-left corner outward", the opposite corner from where native resize would put its
+	   handle. Custom handle + pointer-drag JS below instead of `resize: both`. */
+	.chat-resize-handle {
+		position: absolute;
+		top: 4px;
+		left: 4px;
+		width: 20px;
+		height: 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: rgba(255, 255, 255, 0.6);
+		cursor: nwse-resize;
+		touch-action: none;
+		z-index: 1;
+	}
+
+	.chat-resize-handle:hover {
+		color: #fff;
 	}
 
 	.chat-header {
@@ -286,9 +310,12 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 		.chat-panel {
 			width: calc(100vw - 24px);
 			right: -8px;
-			/* Native resize handles are impractical on touch and a resized width could exceed the
-			   viewport here, so mobile stays fixed full-width instead. */
-			resize: none;
+		}
+
+		/* A drag handle is impractical on touch and a resized width could exceed the viewport here,
+		   so mobile stays fixed full-width instead. */
+		.chat-resize-handle {
+			display: none;
 		}
 	}
 </style>
@@ -339,6 +366,57 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 		const sendBtn = widget.querySelector<HTMLButtonElement>('[data-chat-send]');
 		const turnstileContainer = widget.querySelector<HTMLElement>('[data-chat-turnstile]');
 		if (!toggle || !panel || !log || !form || !input || !sendBtn || !turnstileContainer) return;
+
+		// Custom top-left resize handle (see the CSS comment on .chat-resize-handle for why native
+		// `resize` doesn't work here): the panel is anchored bottom-right, so dragging the handle
+		// left/up should grow it, not shrink it — the opposite sign from a normal top-left-anchored
+		// resize. Optional element, absent/failed lookup just means no resize, not a broken widget.
+		const resizeHandle = widget.querySelector<HTMLElement>('[data-chat-resize]');
+		if (resizeHandle) {
+			let resizing = false;
+			let startX = 0;
+			let startY = 0;
+			let startWidth = 0;
+			let startHeight = 0;
+
+			const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+
+			resizeHandle.addEventListener('pointerdown', (event) => {
+				resizing = true;
+				startX = event.clientX;
+				startY = event.clientY;
+				const rect = panel.getBoundingClientRect();
+				startWidth = rect.width;
+				startHeight = rect.height;
+				resizeHandle.setPointerCapture(event.pointerId);
+				event.preventDefault();
+			});
+
+			resizeHandle.addEventListener('pointermove', (event) => {
+				if (!resizing) return;
+				const style = getComputedStyle(panel);
+				const minWidth = parseFloat(style.minWidth) || 0;
+				const maxWidth = parseFloat(style.maxWidth) || Infinity;
+				const minHeight = parseFloat(style.minHeight) || 0;
+				const maxHeight = parseFloat(style.maxHeight) || Infinity;
+				const nextWidth = clamp(startWidth + (startX - event.clientX), minWidth, maxWidth);
+				const nextHeight = clamp(startHeight + (startY - event.clientY), minHeight, maxHeight);
+				panel.style.width = `${nextWidth}px`;
+				panel.style.height = `${nextHeight}px`;
+			});
+
+			const endResize = (event: PointerEvent) => {
+				if (!resizing) return;
+				resizing = false;
+				try {
+					resizeHandle.releasePointerCapture(event.pointerId);
+				} catch {
+					/* no-op: capture may already be released */
+				}
+			};
+			resizeHandle.addEventListener('pointerup', endResize);
+			resizeHandle.addEventListener('pointercancel', endResize);
+		}
 
 		// This is a multi-page site (full navigation between /formazione and each resource, no
 		// client-side router), so without this the widget would reset to empty on every page —
