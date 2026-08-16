@@ -215,12 +215,31 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 		line-height: 1.5;
 	}
 
-	.chat-message p {
+	.chat-message p,
+	.chat-message ul,
+	.chat-message ol {
 		margin: 0;
 	}
 
-	.chat-message p + p {
+	.chat-message p + p,
+	.chat-message p + ul,
+	.chat-message p + ol,
+	.chat-message ul + p,
+	.chat-message ol + p {
 		margin-top: 8px;
+	}
+
+	.chat-message ul,
+	.chat-message ol {
+		padding-left: 20px;
+	}
+
+	.chat-message li + li {
+		margin-top: 4px;
+	}
+
+	.chat-message strong {
+		font-weight: 700;
 	}
 
 	.chat-message.assistant {
@@ -485,14 +504,73 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 			if (event.key === 'Escape') closePanel();
 		});
 
+		// Deliberately restricted Markdown-to-DOM renderer for the assistant's replies only — the
+		// system prompt asks the model for this exact subset (bold/italic/lists/paragraphs, no
+		// headings/tables/code/links). Every node here is built via createElement/textContent, never
+		// innerHTML or set:html, so there is no HTML-injection surface no matter what text the model
+		// actually returns: unsupported syntax (or a literal `<script>`, or anything else) just shows
+		// up as its own escaped text instead of being parsed as markup.
+		function renderInlineMarkdown(parent: HTMLElement, text: string) {
+			const pattern = /\*\*(.+?)\*\*|\*(.+?)\*|_(.+?)_/g;
+			let lastIndex = 0;
+			let match: RegExpExecArray | null;
+			while ((match = pattern.exec(text)) !== null) {
+				if (match.index > lastIndex) parent.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+				const el = document.createElement(match[1] !== undefined ? 'strong' : 'em');
+				el.textContent = match[1] ?? match[2] ?? match[3] ?? '';
+				parent.appendChild(el);
+				lastIndex = pattern.lastIndex;
+			}
+			if (lastIndex < text.length) parent.appendChild(document.createTextNode(text.slice(lastIndex)));
+		}
+
+		function renderMarkdown(container: HTMLElement, text: string) {
+			const blocks = text
+				.split(/\n{2,}/)
+				.map((block) => block.trim())
+				.filter(Boolean);
+
+			for (const block of blocks.length > 0 ? blocks : [text]) {
+				const lines = block
+					.split('\n')
+					.map((line) => line.trim())
+					.filter(Boolean);
+				const isBulletList = lines.length > 0 && lines.every((line) => /^[-*]\s+/.test(line));
+				const isNumberedList = lines.length > 0 && lines.every((line) => /^\d+[.)]\s+/.test(line));
+
+				if (isBulletList || isNumberedList) {
+					const list = document.createElement(isBulletList ? 'ul' : 'ol');
+					for (const line of lines) {
+						const li = document.createElement('li');
+						renderInlineMarkdown(li, line.replace(/^([-*]|\d+[.)])\s+/, ''));
+						list.appendChild(li);
+					}
+					container.appendChild(list);
+				} else {
+					const p = document.createElement('p');
+					lines.forEach((line, i) => {
+						if (i > 0) p.appendChild(document.createElement('br'));
+						renderInlineMarkdown(p, line);
+					});
+					container.appendChild(p);
+				}
+			}
+		}
+
 		function appendMessage(role: 'user' | 'assistant' | 'error' | 'pending', text: string): HTMLElement {
 			const bubble = document.createElement('div');
 			bubble.className = `chat-message ${role}`;
-			const paragraphs = text.split(/\n{2,}/).filter((part) => part.trim().length > 0);
-			for (const part of paragraphs.length > 0 ? paragraphs : [text]) {
-				const p = document.createElement('p');
-				p.textContent = part;
-				bubble.appendChild(p);
+			if (role === 'assistant') {
+				renderMarkdown(bubble, text);
+			} else {
+				// User/error/pending text is never model-instructed to use markdown (and user input
+				// specifically shouldn't be re-interpreted as formatting), so it stays plain paragraphs.
+				const paragraphs = text.split(/\n{2,}/).filter((part) => part.trim().length > 0);
+				for (const part of paragraphs.length > 0 ? paragraphs : [text]) {
+					const p = document.createElement('p');
+					p.textContent = part;
+					bubble.appendChild(p);
+				}
 			}
 			log!.appendChild(bubble);
 			log!.scrollTop = log!.scrollHeight;
