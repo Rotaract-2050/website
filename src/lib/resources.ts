@@ -57,7 +57,7 @@ const TAG_COLORS: Record<string, string> = {
 	Presidente: '#17458F', // Rotary Royal Blue
 	Segretario: '#00A2E0', // Sky Blue
 	Tesoriere: '#F7A81B', // Rotary Gold
-	Prefetto: '#FF7600', // Orange
+	Prefetto: '#D41367', // Cranberry — was Orange, same as 'Protocollo & Cerimoniale' (flat gradient when a card has both, which is common)
 	Cerimoniale: '#00ADBB', // Turquoise
 	'Cultura Rotariana': '#901F93', // Violet
 };

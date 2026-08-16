@@ -46,7 +46,7 @@ const hiddenTags = tags.slice(MAX_VISIBLE_TAGS);
 		{tags.length > 0 && (
 			<div class="resource-tags">
 				{visibleTags.map((tag, i) => (
-					<span class="resource-tag" style={tagPillStyle(tagKeys[i])}>{tag}</span>
+					<span class="resource-tag" style={tagPillStyle(tagKeys[i])} title={tag}>{tag}</span>
 				))}
 				{hiddenTags.length > 0 && (
 					<span class="resource-tag resource-tag-more" title={hiddenTags.join(', ')}>+{hiddenTags.length}</span>
@@ -295,7 +295,7 @@ const hiddenTags = tags.slice(MAX_VISIBLE_TAGS);
 
 	.resource-tags {
 		display: flex;
-		flex-wrap: wrap;
+		flex-wrap: nowrap;
 		gap: 6px;
 		margin-bottom: 16px;
 	}
@@ -304,6 +304,7 @@ const hiddenTags = tags.slice(MAX_VISIBLE_TAGS);
 		background: var(--color-bg);
 		color: var(--color-muted);
 		cursor: default;
+		flex-shrink: 0;
 	}
 
 	.resource-tag {
