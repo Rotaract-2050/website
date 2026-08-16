@@ -34,7 +34,19 @@ const href = (page: PageKey) => getRelativeLocaleUrl(lang, pageSlugs[page]);
 		</div>
 		<div>
 			<div class="footer-heading">{t.footer.contactTitle}</div>
-			<p class="footer-contact" data-tina-field={tinaField(settings, 'address')}>{settings.address}<br />{settings.email}</p>
+			<p class="footer-contact">
+				<span data-tina-field={tinaField(settings, 'address')}>{settings.address}</span>
+				{settings.fiscalCode && (
+					<>
+						<br />
+						<span data-tina-field={tinaField(settings, 'fiscalCode')}>
+							{t.footer.fiscalCodeLabel}: {settings.fiscalCode}
+						</span>
+					</>
+				)}
+				<br />
+				<span data-tina-field={tinaField(settings, 'email')}>{settings.email}</span>
+			</p>
 		</div>
 		<div>
 			<div class="footer-heading">{t.footer.socialTitle}</div>

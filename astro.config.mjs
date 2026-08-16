@@ -114,6 +114,9 @@ export default defineConfig({
 		ssr: {
 			noExternal: ['node-ical', 'rrule-temporal', 'temporal-polyfill', 'temporal-spec', 'temporal-utils'],
 		},
+		optimizeDeps: {
+			exclude: ['@tinacms/astro'],
+		},
 		plugins: [tinaReloadOnContentChangePlugin()],
 	},
 	integrations: [

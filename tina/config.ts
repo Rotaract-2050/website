@@ -910,6 +910,7 @@ export default defineConfig({
 				fields: [
 					{ type: 'string', name: 'about', label: 'Testo "chi siamo" (footer)', ui: { component: 'textarea' } },
 					{ type: 'string', name: 'address', label: 'Indirizzo' },
+					{ type: 'string', name: 'fiscalCode', label: 'Codice Fiscale' },
 					{ type: 'string', name: 'email', label: 'Email' },
 					{ type: 'image', name: 'logo', label: 'Logo distretto (dati strutturati / social)' },
 					{

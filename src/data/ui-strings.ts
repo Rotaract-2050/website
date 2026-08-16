@@ -24,6 +24,7 @@ export interface UiStrings {
 		socialTitle: string;
 		copyright: string;
 		underRotary: string;
+		fiscalCodeLabel: string;
 	};
 	calendar: {
 		agendaTab: string;
@@ -153,6 +154,7 @@ const IT: UiStrings = {
 		socialTitle: 'SEGUICI',
 		copyright: '© Rotaract Distretto 2050',
 		underRotary: 'Sostenuto dal Rotary Distretto 2050',
+		fiscalCodeLabel: 'CF',
 	},
 	calendar: {
 		agendaTab: 'Agenda',
@@ -277,6 +279,7 @@ const EN: UiStrings = {
 		socialTitle: 'FOLLOW US',
 		copyright: '© Rotaract District 2050',
 		underRotary: 'Sponsored by Rotary District 2050',
+		fiscalCodeLabel: 'CF',
 	},
 	calendar: {
 		agendaTab: 'Agenda',

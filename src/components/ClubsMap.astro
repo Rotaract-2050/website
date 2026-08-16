@@ -154,7 +154,9 @@ const zoneAreas = zones
 				const link = document.createElement('a');
 				link.href = club.href;
 				link.textContent = viewClubLabel;
-				wrapper.append(title, document.createElement('br'), link);
+				wrapper.appendChild(title);
+				wrapper.appendChild(document.createElement('br'));
+				wrapper.appendChild(link);
 				return wrapper;
 			});
 

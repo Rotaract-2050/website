@@ -4,6 +4,7 @@ import { SITE_NAME, SOCIAL_LINKS } from '../data/ui-strings';
 interface SettingsForJsonLd {
 	about?: string | null;
 	logo?: string | null; // già risolto a URL assoluto dal chiamante
+	fiscalCode?: string | null;
 }
 
 /** Grafo sitewide Organization + WebSite, renderizzato una volta da BaseLayout. */
@@ -18,6 +19,7 @@ export function buildOrganizationGraph(settings: SettingsForJsonLd, siteUrl: str
 				url: siteUrl,
 				logo: settings.logo,
 				description: settings.about || undefined,
+				taxID: settings.fiscalCode || undefined,
 				sameAs: SOCIAL_LINKS.map((s) => s.href),
 			},
 			{
