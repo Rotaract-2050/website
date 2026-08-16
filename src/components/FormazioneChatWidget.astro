@@ -311,6 +311,49 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 		const turnstileContainer = widget.querySelector<HTMLElement>('[data-chat-turnstile]');
 		if (!toggle || !panel || !log || !form || !input || !sendBtn || !turnstileContainer) return;
 
+		// This is a multi-page site (full navigation between /formazione and each resource, no
+		// client-side router), so without this the widget would reset to empty on every page —
+		// sessionStorage survives navigation within the tab but clears on tab close, a reasonable
+		// middle ground between "gone on every click" and "stale forever" (localStorage). Scoped by
+		// lang so switching IT/EN doesn't mix conversations in different languages.
+		const STORAGE_HISTORY_KEY = `formazione-chat-history-${lang}`;
+		const STORAGE_OPEN_KEY = `formazione-chat-open-${lang}`;
+
+		function loadHistory(): { role: 'user' | 'model'; text: string }[] {
+			try {
+				const raw = sessionStorage.getItem(STORAGE_HISTORY_KEY);
+				if (!raw) return [];
+				const parsed = JSON.parse(raw);
+				if (!Array.isArray(parsed)) return [];
+				return parsed
+					.filter(
+						(m): m is { role: 'user' | 'model'; text: string } =>
+							!!m && (m.role === 'user' || m.role === 'model') && typeof m.text === 'string',
+					)
+					.slice(-MAX_MESSAGES);
+			} catch {
+				return [];
+			}
+		}
+
+		function saveHistory() {
+			try {
+				sessionStorage.setItem(STORAGE_HISTORY_KEY, JSON.stringify(history));
+			} catch {
+				/* no-op: sessionStorage can throw (private browsing, storage disabled) — history
+				   just won't survive navigation in that context, same degrade-gracefully pattern
+				   as CookieConsent.astro's localStorage use. */
+			}
+		}
+
+		function saveOpenState(isOpen: boolean) {
+			try {
+				sessionStorage.setItem(STORAGE_OPEN_KEY, isOpen ? '1' : '0');
+			} catch {
+				/* no-op */
+			}
+		}
+
 		const history: { role: 'user' | 'model'; text: string }[] = [];
 		let widgetId: string | null = null;
 		let pendingResolve: ((token: string | null) => void) | null = null;
@@ -320,11 +363,13 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 			panel!.hidden = false;
 			toggle!.setAttribute('aria-expanded', 'true');
 			input!.focus();
+			saveOpenState(true);
 		}
 
 		function closePanel() {
 			panel!.hidden = true;
 			toggle!.setAttribute('aria-expanded', 'false');
+			saveOpenState(false);
 		}
 
 		toggle.addEventListener('click', () => (panel.hidden ? openPanel() : closePanel()));
@@ -345,6 +390,22 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 			log!.appendChild(bubble);
 			log!.scrollTop = log!.scrollHeight;
 			return bubble;
+		}
+
+		// Restore conversation + open/closed state from the previous page, appended after the
+		// static greeting already in the markup rather than replacing it.
+		for (const message of loadHistory()) {
+			history.push(message);
+			appendMessage(message.role === 'user' ? 'user' : 'assistant', message.text);
+		}
+		try {
+			if (sessionStorage.getItem(STORAGE_OPEN_KEY) === '1') {
+				// Restore visibility without stealing focus on every page load the way openPanel() does.
+				panel.hidden = false;
+				toggle.setAttribute('aria-expanded', 'true');
+			}
+		} catch {
+			/* no-op */
 		}
 
 		function ensureTurnstile(): Promise<string> {
@@ -411,6 +472,7 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 			appendMessage('user', question);
 			history.push({ role: 'user', text: question });
 			while (history.length > MAX_MESSAGES) history.shift();
+			saveHistory();
 
 			const pendingBubble = appendMessage('pending', '…');
 
@@ -439,6 +501,7 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 					appendMessage('assistant', data.answer);
 					history.push({ role: 'model', text: data.answer });
 					while (history.length > MAX_MESSAGES) history.shift();
+					saveHistory();
 				} else {
 					appendMessage('error', data.error || strings.errorGeneric);
 				}
