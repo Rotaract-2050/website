@@ -49,6 +49,7 @@ const itemListJsonLd = buildItemListJsonLd(
 					<div class="archive-filter-rows">
 						<div class="archive-filters" role="group" aria-label={t.resources.filterAll}>
 							<button type="button" class="filter-pill active" data-filter="all" aria-pressed="true">{t.resources.filterAll}</button>
+							{roleTags.length > 0 && <span class="filter-divider" aria-hidden="true"></span>}
 							{roleTags.map((tag) => (
 								<button type="button" class="filter-pill" data-filter={tagSlug(tag)} style={`--pill-color: ${tagColor(tag)};`} aria-pressed="false">{localizeTag(tag, lang)}</button>
 							))}
@@ -127,8 +128,8 @@ const itemListJsonLd = buildItemListJsonLd(
 		border-radius: var(--shape-full);
 		padding: 10px 18px;
 		color: var(--color-muted);
-		min-width: 260px;
-		flex: 0 1 320px;
+		width: 100%;
+		max-width: 320px;
 	}
 
 	.archive-search input {
@@ -155,6 +156,7 @@ const itemListJsonLd = buildItemListJsonLd(
 
 	.archive-filters {
 		display: flex;
+		align-items: center;
 		flex-wrap: wrap;
 		gap: 8px;
 	}
@@ -182,6 +184,13 @@ const itemListJsonLd = buildItemListJsonLd(
 		color: #fff;
 	}
 
+	.filter-divider {
+		width: 1px;
+		align-self: stretch;
+		background: var(--color-border);
+		margin: 4px 2px;
+	}
+
 	.resource-grid {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
@@ -200,7 +209,7 @@ const itemListJsonLd = buildItemListJsonLd(
 		}
 
 		.archive-search {
-			flex: 1 1 100%;
+			max-width: 100%;
 		}
 	}
 </style>
