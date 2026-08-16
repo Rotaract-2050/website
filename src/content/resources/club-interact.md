@@ -81,3 +81,4 @@ Il distretto ha la responsabilità di dar voce ai singoli club, facendoli cresce
 
 * [[storia-del-rotaract]]
 * [[struttura-rotaract]]
+
