@@ -24,7 +24,8 @@ blocks:
     _template: SplitSection
   - kicker: IL NOSTRO IMPEGNO
     title: Missione
-    body: 'Forniamo service al prossimo, promuoviamo l''integrità e avanziamo la comprensione internazionale, la buona volontà e la pace attraverso la nostra community di imprenditori, professionisti e leader della comunità.'
+    body: |
+      La nostra missione è servire gli altri, promuovere l'integrità e favorire la comprensione, la buona volontà e la pace nel mondo attraverso una rete di professionisti, imprenditori e persone di spicco della comunità.
     image: /uploads/Paesaggi/WhatsApp-Image-2026-08-14-at-23.30.43.jpeg
     imageFocalX: 49
     imageFocalY: 68
