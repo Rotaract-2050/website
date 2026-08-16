@@ -53,3 +53,4 @@ Durante la Seconda Guerra Mondiale l'attività rotariana venne sospesa. Negli an
 
 * [[storia-del-rotaract]]
 * [[il-distretto-rotaract]]
+
