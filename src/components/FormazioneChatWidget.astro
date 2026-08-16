@@ -1,12 +1,23 @@
 ---
 import { uiStrings, type Lang } from '../data/ui-strings';
 
-interface Props {
-	lang: Lang;
+interface ChatSettings {
+	title?: string | null;
+	greeting?: string | null;
+	autoOpen?: boolean | null;
 }
 
-const { lang } = Astro.props;
+interface Props {
+	lang: Lang;
+	/** Editor overrides from Tina (`settings.chatAssistant`) — falls back to the hardcoded defaults in `uiStrings` when empty. */
+	chatSettings?: ChatSettings | null;
+}
+
+const { lang, chatSettings } = Astro.props;
 const t = uiStrings[lang];
+const title = chatSettings?.title?.trim() || t.chat.title;
+const greeting = chatSettings?.greeting?.trim() || t.chat.greeting;
+const autoOpen = chatSettings?.autoOpen ?? false;
 
 // Public Turnstile sitekey — safe to expose client-side, mirrors the widget "formazione-chat"
 // created for this endpoint (see src/lib/formazione-chat.ts TURNSTILE_ACTION for the matching
@@ -14,16 +25,29 @@ const t = uiStrings[lang];
 const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 ---
 
-<div class="chat-widget" data-chat-widget data-lang={lang} data-sitekey={TURNSTILE_SITEKEY} data-chat-strings={JSON.stringify(t.chat)}>
+<div
+	class="chat-widget"
+	data-chat-widget
+	data-lang={lang}
+	data-sitekey={TURNSTILE_SITEKEY}
+	data-chat-strings={JSON.stringify(t.chat)}
+	data-auto-open={autoOpen ? '1' : '0'}
+>
 	<button type="button" class="chat-fab" data-chat-toggle aria-label={t.chat.fabLabel} aria-expanded="false">
 		<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 			<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
 		</svg>
 	</button>
 
-	<section class="chat-panel" data-chat-panel hidden aria-label={t.chat.title}>
+	<section class="chat-panel" data-chat-panel hidden aria-label={title}>
+		<div class="chat-resize-handle" data-chat-resize aria-hidden="true">
+			<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true">
+				<path d="M4 20 20 4"></path>
+				<path d="M11 20 20 11"></path>
+			</svg>
+		</div>
 		<header class="chat-header">
-			<span class="chat-title">{t.chat.title}</span>
+			<span class="chat-title">{title}</span>
 			<button type="button" class="chat-close" data-chat-close aria-label={t.chat.closeLabel}>
 				<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 					<path d="M18 6 6 18"></path>
@@ -36,7 +60,7 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 
 		<div class="chat-log" role="log" aria-live="polite" data-chat-log>
 			<div class="chat-message assistant">
-				<p>{t.chat.greeting}</p>
+				<p>{greeting}</p>
 			</div>
 		</div>
 
@@ -89,8 +113,11 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 		right: 0;
 		bottom: 72px;
 		width: 360px;
+		height: 480px;
+		min-width: 300px;
+		min-height: 340px;
 		max-width: calc(100vw - 40px);
-		max-height: min(560px, 70vh);
+		max-height: min(80vh, 800px);
 		background: #fff;
 		border: 1px solid var(--color-border);
 		border-radius: var(--shape-large);
@@ -105,6 +132,29 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 	   never actually hide it. Scoping it to `:not([hidden])` keeps `hidden` in control. */
 	.chat-panel:not([hidden]) {
 		display: flex;
+	}
+
+	/* Native CSS `resize` only ever draws its handle at the bottom-right corner, not configurable —
+	   but this panel is anchored bottom-right (`right`/`bottom` above), so growing it should read as
+	   "drag the top-left corner outward", the opposite corner from where native resize would put its
+	   handle. Custom handle + pointer-drag JS below instead of `resize: both`. */
+	.chat-resize-handle {
+		position: absolute;
+		top: 4px;
+		left: 4px;
+		width: 20px;
+		height: 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: rgba(255, 255, 255, 0.6);
+		cursor: nwse-resize;
+		touch-action: none;
+		z-index: 1;
+	}
+
+	.chat-resize-handle:hover {
+		color: #fff;
 	}
 
 	.chat-header {
@@ -165,12 +215,31 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 		line-height: 1.5;
 	}
 
-	.chat-message p {
+	.chat-message p,
+	.chat-message ul,
+	.chat-message ol {
 		margin: 0;
 	}
 
-	.chat-message p + p {
+	.chat-message p + p,
+	.chat-message p + ul,
+	.chat-message p + ol,
+	.chat-message ul + p,
+	.chat-message ol + p {
 		margin-top: 8px;
+	}
+
+	.chat-message ul,
+	.chat-message ol {
+		padding-left: 20px;
+	}
+
+	.chat-message li + li {
+		margin-top: 4px;
+	}
+
+	.chat-message strong {
+		font-weight: 700;
 	}
 
 	.chat-message.assistant {
@@ -261,6 +330,12 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 			width: calc(100vw - 24px);
 			right: -8px;
 		}
+
+		/* A drag handle is impractical on touch and a resized width could exceed the viewport here,
+		   so mobile stays fixed full-width instead. */
+		.chat-resize-handle {
+			display: none;
+		}
 	}
 </style>
 
@@ -310,6 +385,57 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 		const sendBtn = widget.querySelector<HTMLButtonElement>('[data-chat-send]');
 		const turnstileContainer = widget.querySelector<HTMLElement>('[data-chat-turnstile]');
 		if (!toggle || !panel || !log || !form || !input || !sendBtn || !turnstileContainer) return;
+
+		// Custom top-left resize handle (see the CSS comment on .chat-resize-handle for why native
+		// `resize` doesn't work here): the panel is anchored bottom-right, so dragging the handle
+		// left/up should grow it, not shrink it — the opposite sign from a normal top-left-anchored
+		// resize. Optional element, absent/failed lookup just means no resize, not a broken widget.
+		const resizeHandle = widget.querySelector<HTMLElement>('[data-chat-resize]');
+		if (resizeHandle) {
+			let resizing = false;
+			let startX = 0;
+			let startY = 0;
+			let startWidth = 0;
+			let startHeight = 0;
+
+			const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+
+			resizeHandle.addEventListener('pointerdown', (event) => {
+				resizing = true;
+				startX = event.clientX;
+				startY = event.clientY;
+				const rect = panel.getBoundingClientRect();
+				startWidth = rect.width;
+				startHeight = rect.height;
+				resizeHandle.setPointerCapture(event.pointerId);
+				event.preventDefault();
+			});
+
+			resizeHandle.addEventListener('pointermove', (event) => {
+				if (!resizing) return;
+				const style = getComputedStyle(panel);
+				const minWidth = parseFloat(style.minWidth) || 0;
+				const maxWidth = parseFloat(style.maxWidth) || Infinity;
+				const minHeight = parseFloat(style.minHeight) || 0;
+				const maxHeight = parseFloat(style.maxHeight) || Infinity;
+				const nextWidth = clamp(startWidth + (startX - event.clientX), minWidth, maxWidth);
+				const nextHeight = clamp(startHeight + (startY - event.clientY), minHeight, maxHeight);
+				panel.style.width = `${nextWidth}px`;
+				panel.style.height = `${nextHeight}px`;
+			});
+
+			const endResize = (event: PointerEvent) => {
+				if (!resizing) return;
+				resizing = false;
+				try {
+					resizeHandle.releasePointerCapture(event.pointerId);
+				} catch {
+					/* no-op: capture may already be released */
+				}
+			};
+			resizeHandle.addEventListener('pointerup', endResize);
+			resizeHandle.addEventListener('pointercancel', endResize);
+		}
 
 		// This is a multi-page site (full navigation between /formazione and each resource, no
 		// client-side router), so without this the widget would reset to empty on every page —
@@ -378,14 +504,73 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 			if (event.key === 'Escape') closePanel();
 		});
 
+		// Deliberately restricted Markdown-to-DOM renderer for the assistant's replies only — the
+		// system prompt asks the model for this exact subset (bold/italic/lists/paragraphs, no
+		// headings/tables/code/links). Every node here is built via createElement/textContent, never
+		// innerHTML or set:html, so there is no HTML-injection surface no matter what text the model
+		// actually returns: unsupported syntax (or a literal `<script>`, or anything else) just shows
+		// up as its own escaped text instead of being parsed as markup.
+		function renderInlineMarkdown(parent: HTMLElement, text: string) {
+			const pattern = /\*\*(.+?)\*\*|\*(.+?)\*|_(.+?)_/g;
+			let lastIndex = 0;
+			let match: RegExpExecArray | null;
+			while ((match = pattern.exec(text)) !== null) {
+				if (match.index > lastIndex) parent.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+				const el = document.createElement(match[1] !== undefined ? 'strong' : 'em');
+				el.textContent = match[1] ?? match[2] ?? match[3] ?? '';
+				parent.appendChild(el);
+				lastIndex = pattern.lastIndex;
+			}
+			if (lastIndex < text.length) parent.appendChild(document.createTextNode(text.slice(lastIndex)));
+		}
+
+		function renderMarkdown(container: HTMLElement, text: string) {
+			const blocks = text
+				.split(/\n{2,}/)
+				.map((block) => block.trim())
+				.filter(Boolean);
+
+			for (const block of blocks.length > 0 ? blocks : [text]) {
+				const lines = block
+					.split('\n')
+					.map((line) => line.trim())
+					.filter(Boolean);
+				const isBulletList = lines.length > 0 && lines.every((line) => /^[-*]\s+/.test(line));
+				const isNumberedList = lines.length > 0 && lines.every((line) => /^\d+[.)]\s+/.test(line));
+
+				if (isBulletList || isNumberedList) {
+					const list = document.createElement(isBulletList ? 'ul' : 'ol');
+					for (const line of lines) {
+						const li = document.createElement('li');
+						renderInlineMarkdown(li, line.replace(/^([-*]|\d+[.)])\s+/, ''));
+						list.appendChild(li);
+					}
+					container.appendChild(list);
+				} else {
+					const p = document.createElement('p');
+					lines.forEach((line, i) => {
+						if (i > 0) p.appendChild(document.createElement('br'));
+						renderInlineMarkdown(p, line);
+					});
+					container.appendChild(p);
+				}
+			}
+		}
+
 		function appendMessage(role: 'user' | 'assistant' | 'error' | 'pending', text: string): HTMLElement {
 			const bubble = document.createElement('div');
 			bubble.className = `chat-message ${role}`;
-			const paragraphs = text.split(/\n{2,}/).filter((part) => part.trim().length > 0);
-			for (const part of paragraphs.length > 0 ? paragraphs : [text]) {
-				const p = document.createElement('p');
-				p.textContent = part;
-				bubble.appendChild(p);
+			if (role === 'assistant') {
+				renderMarkdown(bubble, text);
+			} else {
+				// User/error/pending text is never model-instructed to use markdown (and user input
+				// specifically shouldn't be re-interpreted as formatting), so it stays plain paragraphs.
+				const paragraphs = text.split(/\n{2,}/).filter((part) => part.trim().length > 0);
+				for (const part of paragraphs.length > 0 ? paragraphs : [text]) {
+					const p = document.createElement('p');
+					p.textContent = part;
+					bubble.appendChild(p);
+				}
 			}
 			log!.appendChild(bubble);
 			log!.scrollTop = log!.scrollHeight;
@@ -399,7 +584,12 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 			appendMessage(message.role === 'user' ? 'user' : 'assistant', message.text);
 		}
 		try {
-			if (sessionStorage.getItem(STORAGE_OPEN_KEY) === '1') {
+			const storedOpen = sessionStorage.getItem(STORAGE_OPEN_KEY);
+			// Auto-open (Tina `settings.chatAssistant.autoOpen`) only applies the first time this
+			// session sees the widget (no stored state yet) — once the visitor has explicitly opened
+			// or closed it, that choice wins on every later page for the rest of the session.
+			const shouldOpen = storedOpen !== null ? storedOpen === '1' : widget.dataset.autoOpen === '1';
+			if (shouldOpen) {
 				// Restore visibility without stealing focus on every page load the way openPanel() does.
 				panel.hidden = false;
 				toggle.setAttribute('aria-expanded', 'true');

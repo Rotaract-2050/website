@@ -6,5 +6,10 @@ email: segreteria@rotaract2050.org
 defaultOgImage: /uploads/General/social-image.png
 driveApiKey: 'AIzaSyDWTHt77-Hg714tcvpJagsJ0SilKYBILPQ'
 gaMeasurementId: G-3VJ2ZNEE5H
+chatAssistant:
+  title: 'Formazione assistant'
+  greeting: 'Hi! Ask me anything about the Formazione guides: protocol, club roles, Rotary culture.'
+  extraInstructions: 'Answer informally, use a casual tone, and add a few emoji'
+  autoOpen: true
 ---
 

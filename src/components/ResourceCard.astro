@@ -19,6 +19,14 @@ interface Props {
 const { href, tags, tagKeys, title, excerpt, bodyText, readMoreLabel, tinaFieldAttr } = Astro.props;
 const primaryTag = tagKeys[0];
 const iconColor = tagColor(primaryTag);
+
+// Tags grew from 1-2 short words (Prefetto, Cerimoniale) to up to 3 long "Category & Subject"
+// labels — all visible would reliably wrap to 2-3 lines and fight the icon for space. Cap what's
+// shown and fold the rest into a "+N" pill (full list still in its `title` tooltip, and still
+// complete in `data-tags`/the detail page/the filter pills — nothing is actually dropped).
+const MAX_VISIBLE_TAGS = 2;
+const visibleTags = tags.slice(0, MAX_VISIBLE_TAGS);
+const hiddenTags = tags.slice(MAX_VISIBLE_TAGS);
 ---
 
 <article class="resource-card" data-tags={tagKeys.map(tagSlug).join(' ')} data-search={bodyText} style={resourceCardGradient(tagKeys)} data-tina-field={tinaFieldAttr}>
@@ -34,14 +42,17 @@ const iconColor = tagColor(primaryTag);
 			<span class="resource-icon" style={`--icon-color: ${iconColor};`} aria-hidden="true">
 				<ResourceIcon tag={primaryTag} />
 			</span>
-			{tags.length > 0 && (
-				<div class="resource-tags">
-					{tags.map((tag, i) => (
-						<span class="resource-tag" style={tagPillStyle(tagKeys[i])}>{tag}</span>
-					))}
-				</div>
-			)}
 		</div>
+		{tags.length > 0 && (
+			<div class="resource-tags">
+				{visibleTags.map((tag, i) => (
+					<span class="resource-tag" style={tagPillStyle(tagKeys[i])} title={tag}>{tag}</span>
+				))}
+				{hiddenTags.length > 0 && (
+					<span class="resource-tag resource-tag-more" title={hiddenTags.join(', ')}>+{hiddenTags.length}</span>
+				)}
+			</div>
+		)}
 		<h3 class="resource-title">{title}</h3>
 		<p class="resource-excerpt">{excerpt}</p>
 		<span class="resource-read-more">{readMoreLabel}</span>
@@ -259,10 +270,7 @@ const iconColor = tagColor(primaryTag);
 	.resource-top {
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
-		flex-wrap: wrap;
-		gap: 10px;
-		margin-bottom: 20px;
+		margin-bottom: 14px;
 	}
 
 	.resource-icon {
@@ -287,13 +295,25 @@ const iconColor = tagColor(primaryTag);
 
 	.resource-tags {
 		display: flex;
-		flex-wrap: wrap;
-		justify-content: flex-end;
+		flex-wrap: nowrap;
 		gap: 6px;
+		margin-bottom: 16px;
+	}
+
+	.resource-tag-more {
+		background: var(--color-bg);
+		color: var(--color-muted);
+		cursor: default;
+		flex-shrink: 0;
 	}
 
 	.resource-tag {
 		display: inline-block;
+		min-width: 0;
+		flex-shrink: 1;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 		background: var(--tag-bg, #fff);
 		color: var(--tag-color, var(--color-pink));
 		font-size: 11px;

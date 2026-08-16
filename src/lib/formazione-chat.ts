@@ -50,7 +50,7 @@ const SYSTEM_PREAMBLE: Record<Lang, string> = {
 		'Sei l\'assistente della sezione "Formazione" del sito del Distretto Rotaract 2050.',
 		'Rispondi SOLO usando le informazioni contenute nelle schede riportate sotto, che rappresentano l\'intera knowledge base disponibile.',
 		'Se la domanda non trova risposta in queste schede, dillo chiaramente e suggerisci di rivolgersi al Prefetto o al Segretario del proprio club, senza inventare contenuti.',
-		'Rispondi sempre in italiano, con frasi brevi e dirette. Non usare formattazione Markdown (niente asterischi, cancelletti o elenchi puntati): solo testo semplice, eventualmente su più paragrafi separati da una riga vuota.',
+		'Rispondi sempre in italiano, con frasi brevi e dirette. Puoi usare un markdown leggero per rendere la risposta più chiara: **grassetto**, *corsivo*, elenchi puntati (righe che iniziano con "- ") ed elenchi numerati (righe che iniziano con "1. ", "2. "...), paragrafi separati da una riga vuota. Non usare titoli (#), tabelle, blocchi di codice o link.',
 		'',
 		'Ecco le schede della knowledge base:',
 	].join('\n'),
@@ -58,7 +58,7 @@ const SYSTEM_PREAMBLE: Record<Lang, string> = {
 		'You are the assistant for the "Formazione" (training/knowledge base) section of the Rotaract District 2050 website.',
 		'Answer ONLY using the information in the cards below, which represent the entire knowledge base available.',
 		'If the question is not covered by these cards, say so clearly and suggest contacting the club\'s Prefect or Secretary, without inventing content.',
-		'Always answer in English, in short, direct sentences. Do not use Markdown formatting (no asterisks, hashes, or bullet lists): plain text only, optionally split into paragraphs separated by a blank line.',
+		'Always answer in English, in short, direct sentences. You may use light markdown to make the answer clearer: **bold**, *italic*, bullet lists (lines starting with "- ") and numbered lists (lines starting with "1. ", "2. "...), paragraphs separated by a blank line. Do not use headings (#), tables, code blocks, or links.',
 		'',
 		'Here are the knowledge base cards:',
 	].join('\n'),
@@ -71,8 +71,13 @@ const SYSTEM_PREAMBLE: Record<Lang, string> = {
  * ever grows past `MAX_PROMPT_CHARS`, lowest-priority resources (the tail of that order) are
  * dropped first and a warning is logged, so growth becomes visible in Workers logs before it's
  * a real problem — at today's corpus size this path never triggers.
+ *
+ * `extraInstructions` is editor-supplied free text from Tina (`settings.chatAssistant.extraInstructions`,
+ * per-language). It's appended *after* the fixed grounding/safety rules in `SYSTEM_PREAMBLE`, never
+ * replacing them — a non-technical editor can add tone/persona guidance but can't turn off the
+ * "only answer from the published cards" or "admit when you don't know" rules.
  */
-export function buildSystemPrompt(resources: Resource[], lang: Lang): string {
+export function buildSystemPrompt(resources: Resource[], lang: Lang, extraInstructions?: string | null): string {
 	const entries: string[] = [];
 	let corpusChars = 0;
 
@@ -92,7 +97,9 @@ export function buildSystemPrompt(resources: Resource[], lang: Lang): string {
 		corpusChars += entry.length;
 	}
 
-	return `${SYSTEM_PREAMBLE[lang]}\n\n${entries.join('\n\n')}`;
+	const extra = extraInstructions?.trim();
+	const preamble = extra ? `${SYSTEM_PREAMBLE[lang]}\n\n${extra}` : SYSTEM_PREAMBLE[lang];
+	return `${preamble}\n\n${entries.join('\n\n')}`;
 }
 
 interface GeminiGenerateContentResponse {

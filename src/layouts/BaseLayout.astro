@@ -97,7 +97,7 @@ const organizationGraph = buildOrganizationGraph(
 				<slot />
 			</main>
 			<Footer lang={lang} settings={settings} />
-			{current === 'formazione' && <FormazioneChatWidget lang={lang} />}
+			{current === 'formazione' && <FormazioneChatWidget lang={lang} chatSettings={settings.chatAssistant} />}
 		</div>
 		<CookieConsent lang={lang} gaMeasurementId={onProdHost ? settings.gaMeasurementId : null} />
 	</body>
