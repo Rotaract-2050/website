@@ -70,6 +70,7 @@ bodyEn: |
   ### See also
 
   * [[ruolo-del-prefetto]]
+  * [[struttura-rotaract]]
 ---
 
 Nella famiglia rotariana le cariche direttive cambiano ogni anno per onorare il principio della rotazione. Il Segretario è il custode della continuità: garantisce la conservazione dell'archivio, dei verbali e dei regolamenti, assicurando che il passaggio di consegne da un'amministrazione all'altra avvenga senza perdita di informazioni e memoria. Incarna lo spirito di "Servire al di sopra di ogni interesse personale" attraverso l'ascolto, l'organizzazione e la comunicazione quotidiana:
@@ -135,3 +136,4 @@ Per consultare i testi integrali e accedere agli strumenti di gestione, puoi far
 ### Vedi anche
 
 * [[ruolo-del-prefetto]]
+* [[struttura-rotaract]]
