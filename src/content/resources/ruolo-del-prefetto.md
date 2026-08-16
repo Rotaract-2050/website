@@ -34,7 +34,8 @@ bodyEn: |
   ### See also
 
   * [[campana-e-martelletto]]
-  * [[saluti-ordine-delle-precedenze]]
+  * [[tavolo-presidenziale]]
+  * [[saluti]]
 ---
 
 > "Nella vita di ogni Club le conviviali e i momenti di incontro rappresentano un momento di fondamentale importanza. Al fine di garantire una corretta organizzazione degli eventi all'insegna della formazione, dell'amicizia e della convivialità, il presente Cerimoniale vuole fornire le linee guida e le indicazioni necessarie per facilitare il Prefetto nello svolgimento delle sue funzioni."
@@ -63,4 +64,5 @@ La figura del Prefetto svolge un ruolo fondamentale all'interno del club: deve g
 ### Vedi anche
 
 * [[campana-e-martelletto]]
-* [[saluti-ordine-delle-precedenze]]
+* [[tavolo-presidenziale]]
+* [[saluti]]

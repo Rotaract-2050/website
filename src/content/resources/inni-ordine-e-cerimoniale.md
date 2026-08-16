@@ -24,6 +24,11 @@ bodyEn: |
   * **"Salute to the flags"** *(the national anthem MAY be sung)*
 
   In addition to the order above, the Rotaract anthem may also be played last.
+
+  ### See also
+
+  * [[campana-e-martelletto]]
+  * [[bandiere-ordine-e-disposizione]]
 ---
 
 In occasione degli eventi ufficiali, subito dopo il suono della campana, è consuetudine rivolgere un "saluto" alle bandiere con l'esecuzione degli inni, nel seguente ordine:
@@ -42,3 +47,8 @@ Il Presidente dà il tocco di campana e dice:
 * **"Saluto alle bandiere"** *(l'Inno Nazionale PUÒ essere cantato)*
 
 In aggiunta all'ordine sopra indicato, è possibile suonare per ultimo anche l'Inno del Rotaract.
+
+### Vedi anche
+
+* [[campana-e-martelletto]]
+* [[bandiere-ordine-e-disposizione]]
