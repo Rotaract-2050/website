@@ -2,7 +2,7 @@
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { tinaField } from '@tinacms/astro';
 import ResourceCard from '../ResourceCard.astro';
-import { getKnowledgeResources, localizeResource, resourceSlug, tagSlug, tagColor, resourceTags, localizeTag, buildWikilinkResolver } from '../../lib/resources';
+import { getKnowledgeResources, localizeResource, resourceSlug, tagSlug, tagColor, resourceTags, localizeTag, buildWikilinkResolver, isRoleTag } from '../../lib/resources';
 import { extractResourcePlainText } from '../../lib/resource-markdown';
 import { buildItemListJsonLd } from '../../lib/jsonld';
 import JsonLd from '../JsonLd.astro';
@@ -18,6 +18,8 @@ const t = uiStrings[lang];
 
 const resources = await getKnowledgeResources();
 const tags = resourceTags(resources);
+const roleTags = tags.filter(isRoleTag);
+const categoryTags = tags.filter((tag) => !isRoleTag(tag));
 const resolveWikilink = buildWikilinkResolver(resources, lang);
 // Tells search engines this page is a hub linking to N articles, not just prose — see
 // buildItemListJsonLd in lib/jsonld.ts. Absolute URLs (schema.org's own examples use them
@@ -44,11 +46,20 @@ const itemListJsonLd = buildItemListJsonLd(
 						<span class="sr-only">{t.resources.searchPlaceholder}</span>
 						<input type="search" placeholder={t.resources.searchPlaceholder} data-resource-search />
 					</label>
-					<div class="archive-filters" role="group" aria-label={t.resources.filterAll}>
-						<button type="button" class="filter-pill active" data-filter="all" aria-pressed="true">{t.resources.filterAll}</button>
-						{tags.map((tag) => (
-							<button type="button" class="filter-pill" data-filter={tagSlug(tag)} style={`--pill-color: ${tagColor(tag)};`} aria-pressed="false">{localizeTag(tag, lang)}</button>
-						))}
+					<div class="archive-filter-rows">
+						<div class="archive-filters" role="group" aria-label={t.resources.filterAll}>
+							<button type="button" class="filter-pill active" data-filter="all" aria-pressed="true">{t.resources.filterAll}</button>
+							{roleTags.map((tag) => (
+								<button type="button" class="filter-pill" data-filter={tagSlug(tag)} style={`--pill-color: ${tagColor(tag)};`} aria-pressed="false">{localizeTag(tag, lang)}</button>
+							))}
+						</div>
+						{categoryTags.length > 0 && (
+							<div class="archive-filters" role="group" aria-label={t.resources.filterAll}>
+								{categoryTags.map((tag) => (
+									<button type="button" class="filter-pill" data-filter={tagSlug(tag)} style={`--pill-color: ${tagColor(tag)};`} aria-pressed="false">{localizeTag(tag, lang)}</button>
+								))}
+							</div>
+						)}
 					</div>
 				</div>
 				<div class="resource-grid" data-resource-grid>
@@ -94,11 +105,17 @@ const itemListJsonLd = buildItemListJsonLd(
 
 	.archive-toolbar {
 		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		flex-wrap: wrap;
+		flex-direction: column;
+		align-items: flex-start;
 		gap: 16px;
 		margin-bottom: 36px;
+	}
+
+	.archive-filter-rows {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		width: 100%;
 	}
 
 	.archive-search {

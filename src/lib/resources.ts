@@ -41,6 +41,20 @@ export function localizeTag(tag: string, lang: Lang): string {
 }
 
 /**
+ * Tags that name a club officer role (Prefetto, Segretario...) rather than a topic/category
+ * ("Storia & Valori", "Gestione & Strumenti"...) — the archive splits its filter pills into two
+ * rows along this line (see ResourceArchive.astro) since mixing short role names with long
+ * "Category & Subject" labels in one wrapped row read badly. Add a tag here (and to `options` in
+ * tina/config.ts) when a new role-type tag is introduced; anything not listed here is treated as
+ * a category tag.
+ */
+const ROLE_TAGS = new Set(['Presidente', 'Segretario', 'Tesoriere', 'Prefetto']);
+
+export function isRoleTag(tag: string): boolean {
+	return ROLE_TAGS.has(tag);
+}
+
+/**
  * Color for each `tags` option, from the secondary Rotary palette reserved for tag/categorization
  * badges (see references/rotary-brand.md) — the same set `zones.color` draws from for club/news
  * tags, so resource tags read as the same "kind" of UI element sitewide. Add a color here whenever
