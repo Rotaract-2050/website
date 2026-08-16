@@ -107,6 +107,7 @@ bodyEn: |
   * [[bandiere-ordine-e-disposizione]]
   * [[stendardo-e-guidoncino]]
   * [[campana-e-martelletto]]
+  * [[il-distretto-rotaract]]
 ---
 
 L'ordine di disposizione del tavolo presidenziale cambia in base al tipo di evento. Di seguito le quattro situazioni previste dal Cerimoniale.
@@ -208,3 +209,4 @@ Il Passaggio delle Consegne è l'ultima conviviale dell'anno sociale, durante la
 * [[bandiere-ordine-e-disposizione]]
 * [[stendardo-e-guidoncino]]
 * [[campana-e-martelletto]]
+* [[il-distretto-rotaract]]
