@@ -3,7 +3,7 @@ interface Props {
 	title: string;
 	showDisclaimer?: boolean;
 	disclaimerText?: string;
-	items: { yearRange: string; name: string; surname: string; motto: string; mottoDistretto?: string; eraLabel?: string; tinaFieldAttr?: string }[];
+	items: { yearRange: string; name: string; surname: string; clubName?: string; motto: string; mottoDistretto?: string; eraLabel?: string; tinaFieldAttr?: string }[];
 }
 
 const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
@@ -30,6 +30,7 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 						<div class="timeline-card">
 							<span class="timeline-year">A.R. {item.yearRange}</span>
 							<span class="timeline-name">{item.name} {item.surname}</span>
+							{item.clubName && <span class="timeline-club">{item.clubName}</span>}
 							{item.motto && <span class="timeline-motto">{item.motto}</span>}
 							{item.mottoDistretto && <span class="timeline-motto-distretto">{item.mottoDistretto}</span>}
 						</div>
@@ -185,6 +186,13 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		font-weight: 700;
 		font-size: 24px;
 		color: var(--color-navy);
+	}
+
+	.timeline-club {
+		font-size: 12px;
+		font-weight: 600;
+		letter-spacing: 0.3px;
+		color: var(--color-muted);
 	}
 
 	.timeline-motto {

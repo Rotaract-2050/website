@@ -22,6 +22,13 @@ const eventsRouter = ({ document }: { document: { _sys: { breadcrumbs: string[] 
 	return `/eventi/${slug}`;
 };
 
+// Resources (knowledge base articles, e.g. il Cerimoniale) are single files (IT + EN fields
+// together, same reasoning as news/events) with a real detail page under /formazione/<slug>.
+const resourcesRouter = ({ document }: { document: { _sys: { breadcrumbs: string[] } } }) => {
+	const slug = document._sys.breadcrumbs.join('/');
+	return `/formazione/${slug}`;
+};
+
 const heroTemplate = {
 	name: 'Hero',
 	label: 'Hero (Carosello)',
@@ -397,6 +404,23 @@ const materialsGridTemplate = {
 	],
 };
 
+// Resources themselves are not authored inline: they live in the dedicated `resources`
+// collection (like NewsArchive/`news`), so adding a knowledge-base article anywhere shows up
+// on the /formazione archive automatically. The page's own title/eyebrow already serve as the
+// archive's banner — the only editorial field here is an optional empty-state message override.
+const resourceArchiveTemplate = {
+	name: 'ResourceArchive',
+	label: 'Archivio formazione/risorse (elenco)',
+	fields: [
+		{
+			type: 'string' as const,
+			name: 'emptyMessage',
+			label: 'Messaggio se non ci sono risorse (opzionale)',
+			ui: { component: 'textarea' },
+		},
+	],
+};
+
 const pagePlaceholderTemplate = {
 	name: 'PagePlaceholder',
 	label: 'Pagina in preparazione',
@@ -422,6 +446,7 @@ const rrdTimelineTemplate = {
 				{ type: 'string' as const, name: 'yearRange', label: 'Anno rotariano (es. 2026/2027)' },
 				{ type: 'string' as const, name: 'name', label: 'Nome' },
 				{ type: 'string' as const, name: 'surname', label: 'Cognome' },
+				{ type: 'string' as const, name: 'clubName', label: 'Club di provenienza' },
 				{ type: 'string' as const, name: 'motto', label: 'Motto Rotary International (tema dell’anno rotariano)' },
 				{ type: 'string' as const, name: 'mottoDistretto', label: 'Motto del distretto (opzionale)' },
 				{
@@ -484,6 +509,21 @@ export default defineConfig({
 	branch: process.env.WORKERS_CI_BRANCH || process.env.HEAD || process.env.VERCEL_GIT_COMMIT_REF || 'main',
 	clientId: process.env.TINA_CLIENT_ID || null,
 	token: process.env.TINA_TOKEN || null,
+	// Tina Cloud's hosted search index (tina.io/docs/reference/search/overview) — powers the
+	// admin's own content search/reference pickers as collections like `resources` grow past a
+	// glance-able size. `indexerToken` is only used by the CLI to *push* the index on dev/build;
+	// it's optional in Tina's own types, so this is a safe no-op locally until TINA_SEARCH_TOKEN
+	// is set in .env (get it from the Tina Cloud dashboard → project → Search). Not the same thing
+	// as the public /formazione search box, which is a small client-side filter (see
+	// ResourceArchive.astro) — Tina's hosted search is scoped to the CMS admin, not the public site.
+	search: {
+		tina: {
+			indexerToken: process.env.TINA_SEARCH_TOKEN || undefined,
+			stopwordLanguages: ['eng', 'ita'],
+		},
+		indexBatchSize: 100,
+		maxSearchIndexFieldLength: 400,
+	},
 	build: {
 		outputFolder: 'admin',
 		publicFolder: 'public',
@@ -546,6 +586,7 @@ export default defineConfig({
 							eventsArchiveTemplate,
 							newsArchiveTemplate,
 							materialsGridTemplate,
+							resourceArchiveTemplate,
 						],
 					},
 				],
@@ -645,6 +686,52 @@ export default defineConfig({
 					{ type: 'string', name: 'imageLabelEn', label: 'Didascalia segnaposto immagine (EN)' },
 					{ type: 'rich-text', name: 'body', label: 'Corpo articolo (IT)', isBody: true },
 					{ type: 'rich-text', name: 'bodyEn', label: 'Corpo articolo (EN)' },
+				],
+			},
+			{
+				name: 'resources',
+				label: 'Formazione e risorse',
+				path: 'src/content/resources',
+				format: 'md',
+				ui: { router: resourcesRouter },
+				fields: [
+					{ type: 'string', name: 'title', label: 'Titolo (IT)', isTitle: true, required: true },
+					{ type: 'string', name: 'titleEn', label: 'Titolo (EN)' },
+					{
+						type: 'string',
+						name: 'tags',
+						label: 'Tag',
+						list: true,
+						required: true,
+						options: ['Prefetto', 'Cerimoniale'],
+						description:
+							'Diventano filtri cliccabili nell\'elenco — una scheda può avere più tag. Per un nuovo filtro aggiungere una nuova opzione qui (e la relativa traduzione in TAG_LABELS_EN, src/lib/resources.ts); il resto della granularità (es. "tavolo", "saluti") si copre con la ricerca testuale, non con altri tag.',
+					},
+					{
+						type: 'number',
+						name: 'order',
+						label: 'Ordine (opzionale)',
+						description: 'Le schede sono ordinate dal numero più basso al più alto; a parità di numero (o se vuoto) in ordine alfabetico per titolo.',
+					},
+					{ type: 'string', name: 'excerpt', label: 'Estratto (IT)', ui: { component: 'textarea' }, required: true },
+					{ type: 'string', name: 'excerptEn', label: 'Estratto (EN)', ui: { component: 'textarea' } },
+					{
+						type: 'string',
+						name: 'body',
+						label: 'Contenuto scheda (IT)',
+						isBody: true,
+						ui: { component: 'textarea' },
+						description:
+							'Markdown puro — non l\'editor visuale usato altrove sul sito: # Titolo, ## Sottotitolo, - elenco puntato, 1. elenco numerato, **grassetto**, > citazione. Per collegare un\'altra scheda di questa sezione, scrivi [[slug-scheda]] (usa il titolo della scheda collegata come testo del link) oppure [[slug-scheda|Testo del link]] per un testo personalizzato — lo slug è il nome del file della scheda collegata (es. "ruolo-del-prefetto"). Per inserire un\'immagine nel testo: caricala prima dal pannello "Media" dell\'admin Tina (menu a sinistra), poi scrivi ![descrizione immagine](percorso copiato dal pannello Media) nel punto del testo dove deve comparire.',
+					},
+					{
+						type: 'string',
+						name: 'bodyEn',
+						label: 'Contenuto scheda (EN)',
+						ui: { component: 'textarea' },
+						description:
+							'Same convention as the Italian body — plain Markdown, [[slug]] / [[slug|Custom label]] wikilinks, and ![description](path) for an inline image (upload it first from the Tina admin\'s "Media" panel to get its path).',
+					},
 				],
 			},
 			{

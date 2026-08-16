@@ -1,0 +1,48 @@
+---
+import { requestWithMetadata, tinaField } from '@tinacms/astro';
+import client from '../../tina/__generated__/client';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageBanner from './PageBanner.astro';
+import BlockRenderer from './BlockRenderer.astro';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { Lang } from '../data/ui-strings';
+import type { PageKey } from '../data/routes';
+
+interface Props {
+	lang: Lang;
+	/** Page slug, e.g. `distretto` or `home` — never a reserved section prefix like `news/...`. */
+	slug: string;
+}
+
+const { lang, slug } = Astro.props;
+const relativePath = `${lang}/${slug}.md`;
+
+const result = await requestWithMetadata(client.queries.pages({ relativePath }), { priority: 'primary' });
+const page = result.data.pages;
+
+if (!page) {
+	return Astro.redirect(getRelativeLocaleUrl(lang, ''));
+}
+
+const current = slug as PageKey;
+---
+
+<BaseLayout
+	lang={lang}
+	current={current}
+	title={page.seo?.title || page.title}
+	description={page.seo?.description ?? ''}
+	image={page.seo?.ogImage}
+	noindex={page.seo?.noindex ?? false}
+>
+	{slug !== 'home' && page.eyebrow && page.breadcrumbCurrent && (
+		<PageBanner
+			lang={lang}
+			eyebrow={page.eyebrow}
+			title={page.title}
+			breadcrumbCurrent={page.breadcrumbCurrent}
+			titleField={tinaField(page, 'title')}
+		/>
+	)}
+	<BlockRenderer lang={lang} blocks={page.blocks ?? []} />
+</BaseLayout>

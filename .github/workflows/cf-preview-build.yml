@@ -1,0 +1,12 @@
+name: Cloudflare preview build
+
+on:
+  push:
+
+jobs:
+  trigger-preview:
+    if: contains(github.event.head_commit.message, '[preview]')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Cloudflare deploy hook
+        run: curl -fsS -X POST "${{ secrets.CF_DEV_DEPLOY_HOOK }}"

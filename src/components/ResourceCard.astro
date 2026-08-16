@@ -1,0 +1,139 @@
+---
+import { tagSlug, tagPillStyle, resourceCardGradient } from '../lib/resources';
+
+interface Props {
+	href: string;
+	/** Localized display labels, same order as `tagKeys`. */
+	tags: string[];
+	/** Canonical (Italian) tag values — drive color, filter slug and pill styling regardless of display language. */
+	tagKeys: string[];
+	title: string;
+	excerpt: string;
+	/** Plain-text article body, not rendered — carried only as `data-search` so the archive's search box can match inside the full article, not just the card's visible excerpt. */
+	bodyText: string;
+	readMoreLabel: string;
+	tinaFieldAttr?: string;
+}
+
+const { href, tags, tagKeys, title, excerpt, bodyText, readMoreLabel, tinaFieldAttr } = Astro.props;
+---
+
+<article class="resource-card" data-tags={tagKeys.map(tagSlug).join(' ')} data-search={bodyText} style={resourceCardGradient(tagKeys)} data-tina-field={tinaFieldAttr}>
+	<a href={href} class="resource-link">
+		<div class="resource-top">
+			<!-- Placeholder glyph: a per-topic icon set is still to be designed, see PR discussion. -->
+			<span class="resource-icon" aria-hidden="true">
+				<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M12 3 4 6.5V12c0 4.5 3.2 7.9 8 9 4.8-1.1 8-4.5 8-9V6.5L12 3Z"></path>
+					<path d="m9 12 2 2 4-4"></path>
+				</svg>
+			</span>
+			{tags.length > 0 && (
+				<div class="resource-tags">
+					{tags.map((tag, i) => (
+						<span class="resource-tag" style={tagPillStyle(tagKeys[i])}>{tag}</span>
+					))}
+				</div>
+			)}
+		</div>
+		<h3 class="resource-title">{title}</h3>
+		<p class="resource-excerpt">{excerpt}</p>
+		<span class="resource-read-more">{readMoreLabel} <span aria-hidden="true">→</span></span>
+	</a>
+</article>
+
+<style>
+	.resource-card {
+		border-radius: var(--shape-extra-large);
+		box-shadow: var(--elevation-1);
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
+	}
+
+	.resource-card:hover {
+		transform: translateY(-6px);
+		box-shadow: var(--elevation-4);
+	}
+
+	.resource-link {
+		display: block;
+		color: inherit;
+		padding: 24px;
+	}
+
+	.resource-top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 10px;
+		margin-bottom: 20px;
+	}
+
+	.resource-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 44px;
+		height: 44px;
+		flex-shrink: 0;
+		border-radius: var(--shape-medium);
+		background: rgba(212, 19, 103, 0.12);
+		color: var(--color-pink);
+	}
+
+	.resource-tags {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		gap: 6px;
+	}
+
+	.resource-tag {
+		display: inline-block;
+		background: var(--tag-bg, #fff);
+		color: var(--tag-color, var(--color-pink));
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.5px;
+		text-transform: uppercase;
+		padding: 6px 12px;
+		border-radius: var(--shape-full);
+		box-shadow: var(--elevation-1);
+	}
+
+	.resource-title {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 19px;
+		color: var(--color-navy);
+		line-height: 1.3;
+		margin: 0 0 10px;
+		transition: color var(--motion-duration-short) var(--motion-easing-standard);
+	}
+
+	.resource-card:hover .resource-title {
+		color: var(--color-pink);
+	}
+
+	.resource-excerpt {
+		font-size: 14px;
+		color: var(--color-text);
+		line-height: 1.55;
+		margin: 0 0 20px;
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.resource-read-more {
+		display: inline-block;
+		color: var(--color-pink);
+		font-weight: 700;
+		font-size: 13px;
+	}
+
+	.resource-card:hover .resource-read-more {
+		text-decoration: underline;
+	}
+</style>

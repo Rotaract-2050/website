@@ -13,6 +13,7 @@ export interface UiStrings {
 		eventi: string;
 		join: string;
 		materials: string;
+		formazione: string;
 		menuOpen: string;
 		menuClose: string;
 	};
@@ -53,6 +54,15 @@ export interface UiStrings {
 		empty: string;
 		articleEyebrow: string;
 		backToArchive: string;
+	};
+	resources: {
+		readMore: string;
+		empty: string;
+		detailEyebrow: string;
+		backToArchive: string;
+		searchPlaceholder: string;
+		filterAll: string;
+		noResults: string;
 	};
 	clubDetail: {
 		eyebrow: string;
@@ -132,6 +142,7 @@ const IT: UiStrings = {
 		eventi: 'EVENTI',
 		join: 'ENTRA NEL ROTARACT',
 		materials: 'MATERIALI DISTRETTUALI',
+		formazione: 'FORMAZIONE',
 		menuOpen: 'Apri il menu di navigazione',
 		menuClose: 'Chiudi il menu di navigazione',
 	},
@@ -185,6 +196,15 @@ const IT: UiStrings = {
 		empty: 'Nessuna news pubblicata al momento.',
 		articleEyebrow: 'DAL DISTRETTO',
 		backToArchive: '← Tutte le news',
+	},
+	resources: {
+		readMore: 'Leggi la scheda →',
+		empty: 'Nessuna scheda pubblicata al momento.',
+		detailEyebrow: 'FORMAZIONE E RISORSE',
+		backToArchive: '← Tutte le schede',
+		searchPlaceholder: 'Cerca tra le schede…',
+		filterAll: 'Tutte',
+		noResults: 'Nessuna scheda corrisponde alla ricerca o al filtro scelto.',
 	},
 	clubDetail: {
 		eyebrow: 'I CLUB',
@@ -246,6 +266,7 @@ const EN: UiStrings = {
 		eventi: 'EVENTS',
 		join: 'JOIN ROTARACT',
 		materials: 'DISTRICT MATERIALS',
+		formazione: 'TRAINING',
 		menuOpen: 'Open navigation menu',
 		menuClose: 'Close navigation menu',
 	},
@@ -299,6 +320,15 @@ const EN: UiStrings = {
 		empty: 'No news published at the moment.',
 		articleEyebrow: 'FROM THE DISTRICT',
 		backToArchive: '← All news',
+	},
+	resources: {
+		readMore: 'Read the guide →',
+		empty: 'No guide published yet.',
+		detailEyebrow: 'TRAINING & RESOURCES',
+		backToArchive: '← All guides',
+		searchPlaceholder: 'Search the guides…',
+		filterAll: 'All',
+		noResults: 'No guide matches this search or filter.',
 	},
 	clubDetail: {
 		eyebrow: 'CLUBS',

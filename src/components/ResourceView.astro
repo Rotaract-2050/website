@@ -1,0 +1,183 @@
+---
+import { requestWithMetadata, tinaField } from '@tinacms/astro';
+import client from '../../tina/__generated__/client';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageBanner from './PageBanner.astro';
+import { uiStrings, type Lang } from '../data/ui-strings';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { getKnowledgeResources, localizeResource, tagPillStyle, buildWikilinkResolver } from '../lib/resources';
+import JsonLd from './JsonLd.astro';
+import { buildArticleJsonLd } from '../lib/jsonld';
+import { renderResourceMarkdown } from '../lib/resource-markdown';
+
+interface Props {
+	lang: Lang;
+	/** Resource slug, e.g. `tavolo-presidenziale-visita-rd` — never a multi-segment path. */
+	slug: string;
+}
+
+const { lang, slug } = Astro.props;
+const t = uiStrings[lang];
+const relativePath = `${slug}.md`;
+
+const result = await requestWithMetadata(client.queries.resources({ relativePath }), { priority: 'primary' });
+const resource = result.data.resources;
+
+if (!resource) {
+	return Astro.redirect(getRelativeLocaleUrl(lang, 'formazione'));
+}
+
+const localized = localizeResource(resource, lang);
+const titleField = lang === 'en' && resource.titleEn ? 'titleEn' : 'title';
+const bodyField = lang === 'en' && resource.bodyEn ? 'bodyEn' : 'body';
+const jsonLd = buildArticleJsonLd({
+	headline: localized.title,
+	description: localized.excerpt,
+	imageUrl: new URL('/uploads/Loghi/Logo-distretto.png', Astro.site).toString(),
+	url: new URL(Astro.url.pathname, Astro.site).toString(),
+	lang,
+	publisherLogoUrl: new URL('/uploads/Loghi/Logo-distretto.png', Astro.site).toString(),
+});
+// Fetched once for wikilink resolution ([[slug]] -> another card's URL/title, see
+// lib/resource-markdown.ts) — this is the whole collection, not just this one resource.
+const allResources = await getKnowledgeResources();
+const resolveWikilink = buildWikilinkResolver(allResources, lang);
+const bodyHtml = renderResourceMarkdown(localized.body, resolveWikilink);
+const tagKeys = (resource.tags ?? []).filter((tag): tag is string => Boolean(tag));
+---
+
+<BaseLayout
+	lang={lang}
+	current="formazione"
+	title={localized.title}
+	description={localized.excerpt}
+	alternateHref={getRelativeLocaleUrl(lang === 'it' ? 'en' : 'it', `formazione/${slug}`)}
+	type="article"
+>
+	<PageBanner
+		lang={lang}
+		eyebrow={t.resources.detailEyebrow}
+		title={localized.title}
+		breadcrumbCurrent={t.nav.formazione}
+		titleField={tinaField(resource, titleField)}
+	/>
+	<article class="resource-article">
+		<div class="article-inner">
+			<a href={getRelativeLocaleUrl(lang, 'formazione')} class="back-link">{t.resources.backToArchive}</a>
+			{localized.tags.length > 0 && (
+				<div class="article-tags" data-tina-field={tinaField(resource, 'tags')}>
+					{localized.tags.map((tag, i) => (
+						<span class="article-tag" style={tagPillStyle(tagKeys[i])}>{tag}</span>
+					))}
+				</div>
+			)}
+			<div class="article-body" data-tina-field={tinaField(resource, bodyField)} set:html={bodyHtml} />
+		</div>
+	</article>
+	<JsonLd data={jsonLd} />
+</BaseLayout>
+
+<style>
+	.resource-article {
+		background: #fff;
+		padding: 50px 40px 90px;
+	}
+
+	.article-inner {
+		max-width: 760px;
+		margin: 0 auto;
+	}
+
+	.back-link {
+		display: inline-block;
+		margin-bottom: 24px;
+		color: var(--color-pink);
+		font-weight: 700;
+		font-size: 14px;
+	}
+
+	.back-link:hover {
+		text-decoration: underline;
+	}
+
+	.article-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin-bottom: 20px;
+	}
+
+	.article-tag {
+		display: inline-block;
+		background: var(--tag-bg, rgba(212, 19, 103, 0.1));
+		color: var(--tag-color, var(--color-pink));
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.5px;
+		text-transform: uppercase;
+		padding: 4px 10px;
+		border-radius: 999px;
+	}
+
+	.article-body {
+		font-size: 16px;
+		color: var(--color-text);
+		line-height: 1.75;
+	}
+
+	.article-body :global(p) {
+		margin: 0 0 20px;
+	}
+
+	.article-body :global(h2),
+	.article-body :global(h3) {
+		font-family: var(--font-heading);
+		color: var(--color-navy);
+		margin: 32px 0 14px;
+	}
+
+	.article-body :global(ul),
+	.article-body :global(ol) {
+		margin: 0 0 20px;
+		padding-left: 22px;
+	}
+
+	.article-body :global(li) {
+		margin-bottom: 8px;
+	}
+
+	.article-body :global(blockquote) {
+		margin: 0 0 20px;
+		padding: 14px 20px;
+		background: var(--color-bg);
+		border-left: 4px solid var(--color-pink);
+		border-radius: var(--shape-small);
+		color: var(--color-navy);
+	}
+
+	.article-body :global(blockquote p:last-child) {
+		margin-bottom: 0;
+	}
+
+	.article-body :global(a) {
+		color: var(--color-pink);
+	}
+
+	/* Inline images from Markdown (`![alt](url)` in the body) — no wrapper/caption element
+	   available since these come straight from `marked`'s default img rendering, just the
+	   bare tag, so styling has to key off `img` directly rather than a component class. */
+	.article-body :global(img) {
+		display: block;
+		width: 100%;
+		height: auto;
+		border-radius: var(--shape-large);
+		margin: 8px 0 28px;
+		box-shadow: var(--elevation-1);
+	}
+
+	@media (max-width: 720px) {
+		.resource-article {
+			padding: 40px 20px 60px;
+		}
+	}
+</style>

@@ -64,6 +64,30 @@ export function buildNewsArticleJsonLd(p: {
 	};
 }
 
+/** Generic Article schema for evergreen knowledge-base content (no publish date semantics like NewsArticle). */
+export function buildArticleJsonLd(p: { headline: string; description: string; imageUrl: string; url: string; lang: Lang; publisherLogoUrl: string }) {
+	return {
+		'@context': 'https://schema.org',
+		'@type': 'Article',
+		headline: p.headline,
+		description: p.description,
+		image: [p.imageUrl],
+		inLanguage: p.lang,
+		mainEntityOfPage: { '@type': 'WebPage', '@id': p.url },
+		author: { '@type': 'Organization', name: SITE_NAME },
+		publisher: { '@type': 'Organization', name: SITE_NAME, logo: { '@type': 'ImageObject', url: p.publisherLogoUrl } },
+	};
+}
+
+/** ItemList — tells search engines a page is a hub linking to N other pages (e.g. the /formazione archive), not just prose. Each entry is a full ListItem with its own `url` (schema.org allows a bare string too, but explicit ListItems are what's shown in examples for indexable collection pages). */
+export function buildItemListJsonLd(items: { name: string; url: string }[]) {
+	return {
+		'@context': 'https://schema.org',
+		'@type': 'ItemList',
+		itemListElement: items.map((item, i) => ({ '@type': 'ListItem', position: i + 1, name: item.name, url: item.url })),
+	};
+}
+
 export function buildEventJsonLd(p: {
 	name: string;
 	description?: string | null;

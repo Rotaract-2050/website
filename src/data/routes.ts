@@ -1,4 +1,4 @@
-export type PageKey = 'home' | 'distretto' | 'story' | 'rrd' | 'club' | 'squadra' | 'news' | 'eventi' | 'materiali';
+export type PageKey = 'home' | 'distretto' | 'story' | 'rrd' | 'club' | 'squadra' | 'news' | 'eventi' | 'materiali' | 'formazione';
 
 /** Path segment (relative to the locale root) for each page. */
 export const pageSlugs: Record<PageKey, string> = {
@@ -11,4 +11,5 @@ export const pageSlugs: Record<PageKey, string> = {
 	news: 'news',
 	eventi: 'eventi',
 	materiali: 'materiali',
+	formazione: 'formazione',
 };
