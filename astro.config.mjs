@@ -15,7 +15,13 @@ const SITE = 'https://rotaract2050.org';
 // are no prerendered routes for @astrojs/sitemap to auto-discover — list them explicitly.
 // Derived from the canonical slug registry (src/data/routes.ts) instead of a second
 // hand-maintained array, so a new `pages` document can't silently go missing from the sitemap.
-const PAGE_SLUGS = Object.values(pageSlugs);
+// Pages flagged `seo.noindex` (e.g. the /privacy placeholder) are dropped: a noindex URL
+// listed in the sitemap is a signal Google explicitly says to avoid.
+const pagesDir = fileURLToPath(new URL('./src/content/pages', import.meta.url));
+const PAGE_SLUGS = Object.values(pageSlugs).filter((slug) => {
+	const filename = slug === '' ? 'home.md' : `${slug}.md`;
+	return matter(readFileSync(join(pagesDir, filename), 'utf-8')).data.seo?.noindex !== true;
+});
 
 const newsSlugs = readdirSync(fileURLToPath(new URL('./src/content/news', import.meta.url)))
 	.filter((file) => file.endsWith('.md'))

@@ -26,6 +26,14 @@ export interface UiStrings {
 		underRotary: string;
 		fiscalCodeLabel: string;
 		sourceCode: string;
+		privacyLink: string;
+		cookieSettingsLink: string;
+	};
+	cookieConsent: {
+		body: string;
+		accept: string;
+		reject: string;
+		policyLink: string;
 	};
 	calendar: {
 		agendaTab: string;
@@ -172,6 +180,14 @@ const IT: UiStrings = {
 		underRotary: 'Sostenuto dal Rotary Distretto 2050',
 		fiscalCodeLabel: 'CF',
 		sourceCode: 'Questo sito è open source',
+		privacyLink: 'Privacy e Cookie',
+		cookieSettingsLink: 'Preferenze cookie',
+	},
+	cookieConsent: {
+		body: 'Usiamo cookie tecnici necessari al funzionamento del sito. Con il tuo consenso, usiamo anche Google Analytics per capire come viene usato il sito.',
+		accept: 'Accetta',
+		reject: 'Rifiuta',
+		policyLink: 'Maggiori informazioni',
 	},
 	calendar: {
 		agendaTab: 'Agenda',
@@ -313,6 +329,14 @@ const EN: UiStrings = {
 		underRotary: 'Sponsored by Rotary District 2050',
 		fiscalCodeLabel: 'CF',
 		sourceCode: 'This site is open source',
+		privacyLink: 'Privacy & Cookies',
+		cookieSettingsLink: 'Cookie preferences',
+	},
+	cookieConsent: {
+		body: 'We use technical cookies required for the site to work. With your consent, we also use Google Analytics to understand how the site is used.',
+		accept: 'Accept',
+		reject: 'Reject',
+		policyLink: 'Learn more',
 	},
 	calendar: {
 		agendaTab: 'Agenda',
