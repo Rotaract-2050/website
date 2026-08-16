@@ -41,6 +41,15 @@ interface Props {
 }
 
 const { lang, block } = Astro.props;
+
+// Pages are a single file (IT + EN fields together, like clubs.story/storyEn) — every text field
+// below picks the EN value when present, falling back to IT, same as ClubDetail.astro's
+// story/storyEn ternary and news.ts's localizeNews().
+const isEn = lang === 'en';
+/** EN value if present, else IT — the standard per-field fallback used throughout this file. */
+function loc(itValue: string | null | undefined, enValue: string | null | undefined): string {
+	return ((isEn && enValue) || itValue || '') as string;
+}
 ---
 
 <div
@@ -61,10 +70,10 @@ const { lang, block } = Astro.props;
 			ctaHref={block.ctaHref ?? ''}
 			autoplay={block.autoplay ?? true}
 			slides={(block.slides ?? []).filter(nonNull).map((s) => ({
-				eyebrow: s.eyebrow ?? '',
-				title: s.title ?? '',
-				subtitle: s.subtitle ?? '',
-				ctaLabel: s.ctaLabel ?? '',
+				eyebrow: loc(s.eyebrow, s.eyebrowEn),
+				title: loc(s.title, s.titleEn),
+				subtitle: loc(s.subtitle, s.subtitleEn),
+				ctaLabel: loc(s.ctaLabel, s.ctaLabelEn),
 				image: s.image ?? undefined,
 				imageFocalX: s.imageFocalX ?? undefined,
 				imageFocalY: s.imageFocalY ?? undefined,
@@ -79,7 +88,7 @@ const { lang, block } = Astro.props;
 				image: s.image ?? undefined,
 				imageFocalX: s.imageFocalX ?? undefined,
 				imageFocalY: s.imageFocalY ?? undefined,
-				label: s.label ?? '',
+				label: loc(s.label, s.labelEn),
 				tinaFieldAttr: tinaField(s),
 			}))}
 		/>
@@ -88,7 +97,7 @@ const { lang, block } = Astro.props;
 		<StatsBar
 			items={(block.items ?? []).filter(nonNull).map((i) => ({
 				value: i.value ?? '',
-				label: i.label ?? '',
+				label: loc(i.label, i.labelEn),
 				tinaFieldAttr: tinaField(i),
 			}))}
 		/>
@@ -96,28 +105,28 @@ const { lang, block } = Astro.props;
 	{block.__typename === 'PagesBlocksSplitSection' && (
 		<SplitSection
 			lang={lang}
-			kicker={block.kicker ?? undefined}
-			title={block.title}
-			quote={block.quote ?? undefined}
-			body={block.body ?? ''}
-			subhead={block.subhead ?? undefined}
-			body2={block.body2 ?? undefined}
-			ctaLabel={block.ctaLabel ?? undefined}
+			kicker={loc(block.kicker, block.kickerEn) || undefined}
+			title={loc(block.title, block.titleEn)}
+			quote={loc(block.quote, block.quoteEn) || undefined}
+			body={loc(block.body, block.bodyEn)}
+			subhead={loc(block.subhead, block.subheadEn) || undefined}
+			body2={loc(block.body2, block.body2En) || undefined}
+			ctaLabel={loc(block.ctaLabel, block.ctaLabelEn) || undefined}
 			ctaHref={block.ctaHref ?? undefined}
 			image={block.image ?? undefined}
 			imageFocalX={block.imageFocalX ?? undefined}
 			imageFocalY={block.imageFocalY ?? undefined}
-			imageLabel={block.imageLabel}
+			imageLabel={loc(block.imageLabel, block.imageLabelEn)}
 			imageSide={block.imageSide === 'left' ? 'left' : 'right'}
 		/>
 	)}
 	{block.__typename === 'PagesBlocksCardGrid' && (
 		<CardGrid
 			lang={lang}
-			title={block.title}
+			title={loc(block.title, block.titleEn)}
 			items={(block.items ?? []).filter(nonNull).map((i) => ({
-				title: i.title ?? '',
-				meta: i.meta ?? '',
+				title: loc(i.title, i.titleEn),
+				meta: loc(i.meta, i.metaEn),
 				href: i.href ?? '',
 				color: i.color ?? undefined,
 				tinaFieldAttr: tinaField(i),
@@ -126,14 +135,14 @@ const { lang, block } = Astro.props;
 	)}
 	{block.__typename === 'PagesBlocksValuesGrid' && (
 		<ValuesGrid
-			title={block.title}
+			title={loc(block.title, block.titleEn)}
 			accent={block.accent ?? undefined}
 			layout={(block.layout as 'badge' | 'path' | 'icon' | null) ?? undefined}
 			items={(block.items ?? []).filter(nonNull).map((i) => ({
 				letter: i.letter ?? '',
 				icon: i.icon ?? undefined,
-				title: i.title ?? '',
-				description: i.description ?? '',
+				title: loc(i.title, i.titleEn),
+				description: loc(i.description, i.descriptionEn),
 				tinaFieldAttr: tinaField(i),
 			}))}
 		/>
@@ -141,9 +150,9 @@ const { lang, block } = Astro.props;
 	{block.__typename === 'PagesBlocksRoleGrid' && (
 		<RoleGrid
 			lang={lang}
-			title={block.title}
+			title={loc(block.title, block.titleEn)}
 			showDisclaimer={block.showDisclaimer ?? false}
-			disclaimerText={block.disclaimerText ?? undefined}
+			disclaimerText={loc(block.disclaimerText, block.disclaimerTextEn) || undefined}
 			highlightFirst={block.highlightFirst ?? false}
 			items={(block.items ?? []).filter(nonNull).map((i) => ({
 				initials: i.initials ?? undefined,
@@ -152,11 +161,11 @@ const { lang, block } = Astro.props;
 				photoFocalY: i.photoFocalY ?? undefined,
 				photoZoom: i.photoZoom ?? undefined,
 				name: i.name ?? '',
-				role: i.role ?? '',
+				role: loc(i.role, i.roleEn),
 				email: i.email ?? undefined,
 				club: personClub(i.club),
 				clubCustom: i.clubCustom ?? undefined,
-				themeMotto: i.themeMotto ?? undefined,
+				themeMotto: loc(i.themeMotto, i.themeMottoEn) || undefined,
 				themeLogo: i.themeLogo ?? undefined,
 				tinaFieldAttr: tinaField(i),
 			}))}
@@ -165,16 +174,16 @@ const { lang, block } = Astro.props;
 	{block.__typename === 'PagesBlocksCommitteeGrid' && (
 		<CommitteeGrid
 			lang={lang}
-			title={block.title}
+			title={loc(block.title, block.titleEn)}
 			showDisclaimer={block.showDisclaimer ?? false}
-			disclaimerText={block.disclaimerText ?? undefined}
+			disclaimerText={loc(block.disclaimerText, block.disclaimerTextEn) || undefined}
 			items={(block.items ?? []).filter(nonNull).map((i) => ({
-				name: i.name ?? '',
-				nameFieldAttr: tinaField(i, 'name'),
-				description: i.description ?? undefined,
-				descriptionFieldAttr: tinaField(i, 'description'),
-				leadLabel: i.leadLabel || (lang === 'en' ? 'President' : 'Presidente'),
-				membersLabel: i.membersLabel || (lang === 'en' ? 'Member' : 'Membro'),
+				name: loc(i.name, i.nameEn),
+				nameFieldAttr: tinaField(i, isEn && i.nameEn ? 'nameEn' : 'name'),
+				description: loc(i.description, i.descriptionEn) || undefined,
+				descriptionFieldAttr: tinaField(i, isEn && i.descriptionEn ? 'descriptionEn' : 'description'),
+				leadLabel: (isEn && i.leadLabelEn) || i.leadLabel || (isEn ? 'President' : 'Presidente'),
+				membersLabel: (isEn && i.membersLabelEn) || i.membersLabel || (isEn ? 'Member' : 'Membro'),
 				lead: {
 					name: i.lead?.name ?? '',
 					photo: i.lead?.photo ?? undefined,
@@ -201,59 +210,59 @@ const { lang, block } = Astro.props;
 		/>
 	)}
 	{block.__typename === 'PagesBlocksEventsCalendar' && (
-		<EventsCalendar lang={lang} title={block.title} calendarId={block.calendarId ?? undefined} />
+		<EventsCalendar lang={lang} title={loc(block.title, block.titleEn)} calendarId={block.calendarId ?? undefined} />
 	)}
 	{block.__typename === 'PagesBlocksNewsTicker' && (
 		<NewsTicker
 			lang={lang}
-			label={block.label}
+			label={loc(block.label, block.labelEn)}
 			feedUrl={block.feedUrl || 'https://www.rotary.org/rss.xml'}
 			limit={block.limit ?? 12}
 		/>
 	)}
 	{block.__typename === 'PagesBlocksNewsGrid' && (
-		<NewsGrid lang={lang} title={block.title} limit={block.limit ?? undefined} showDate={block.showDate ?? undefined} showYear={block.showYear ?? undefined} />
+		<NewsGrid lang={lang} title={loc(block.title, block.titleEn)} limit={block.limit ?? undefined} showDate={block.showDate ?? undefined} showYear={block.showYear ?? undefined} />
 	)}
 	{block.__typename === 'PagesBlocksCtaBanner' && (
 		<CtaBanner
 			lang={lang}
-			title={block.title}
-			body={block.body ?? ''}
-			buttonLabel={block.buttonLabel ?? ''}
+			title={loc(block.title, block.titleEn)}
+			body={loc(block.body, block.bodyEn)}
+			buttonLabel={loc(block.buttonLabel, block.buttonLabelEn)}
 			buttonHref={block.buttonHref ?? ''}
 		/>
 	)}
-	{block.__typename === 'PagesBlocksPagePlaceholder' && <PagePlaceholder message={block.message ?? ''} />}
+	{block.__typename === 'PagesBlocksPagePlaceholder' && <PagePlaceholder message={loc(block.message, block.messageEn)} />}
 	{block.__typename === 'PagesBlocksClubDirectory' && (
-		<ClubDirectory lang={lang} intro={block.intro ?? ''} disclaimer={block.disclaimer ?? ''} />
+		<ClubDirectory lang={lang} intro={loc(block.intro, block.introEn)} disclaimer={loc(block.disclaimer, block.disclaimerEn)} />
 	)}
 	{block.__typename === 'PagesBlocksRrdTimeline' && (
 		<RrdTimeline
-			title={block.title}
+			title={loc(block.title, block.titleEn)}
 			showDisclaimer={block.showDisclaimer ?? false}
-			disclaimerText={block.disclaimerText ?? undefined}
+			disclaimerText={loc(block.disclaimerText, block.disclaimerTextEn) || undefined}
 			items={(block.items ?? []).filter(nonNull).map((i) => ({
 				yearRange: i.yearRange ?? '',
 				name: i.name ?? '',
 				surname: i.surname ?? '',
 				clubName: i.clubName ?? undefined,
-				motto: i.motto ?? '',
-				mottoDistretto: i.mottoDistretto ?? undefined,
-				eraLabel: i.eraLabel ?? undefined,
+				motto: loc(i.motto, i.mottoEn),
+				mottoDistretto: loc(i.mottoDistretto, i.mottoDistrettoEn) || undefined,
+				eraLabel: loc(i.eraLabel, i.eraLabelEn) || undefined,
 				tinaFieldAttr: tinaField(i),
 			}))}
 		/>
 	)}
 	{block.__typename === 'PagesBlocksEventsArchive' && (
-		<EventsArchive lang={lang} emptyMessage={block.emptyMessage ?? undefined} />
+		<EventsArchive lang={lang} emptyMessage={loc(block.emptyMessage, block.emptyMessageEn) || undefined} />
 	)}
 	{block.__typename === 'PagesBlocksNewsArchive' && (
-		<NewsArchive lang={lang} emptyMessage={block.emptyMessage ?? undefined} showDate={block.showDate ?? undefined} showYear={block.showYear ?? undefined} />
+		<NewsArchive lang={lang} emptyMessage={loc(block.emptyMessage, block.emptyMessageEn) || undefined} showDate={block.showDate ?? undefined} showYear={block.showYear ?? undefined} />
 	)}
 	{block.__typename === 'PagesBlocksMaterialsGrid' && (
-		<MaterialsGrid lang={lang} title={block.title} driveFolderId={block.driveFolderId ?? undefined} emptyMessage={block.emptyMessage ?? undefined} />
+		<MaterialsGrid lang={lang} title={loc(block.title, block.titleEn)} driveFolderId={block.driveFolderId ?? undefined} emptyMessage={loc(block.emptyMessage, block.emptyMessageEn) || undefined} />
 	)}
 	{block.__typename === 'PagesBlocksResourceArchive' && (
-		<ResourceArchive lang={lang} emptyMessage={block.emptyMessage ?? undefined} />
+		<ResourceArchive lang={lang} emptyMessage={loc(block.emptyMessage, block.emptyMessageEn) || undefined} />
 	)}
 </div>
