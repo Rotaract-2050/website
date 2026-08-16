@@ -4,6 +4,7 @@ import Footer from '../components/Footer.astro';
 import SeoHead from '../components/SeoHead.astro';
 import JsonLd from '../components/JsonLd.astro';
 import FormazioneChatWidget from '../components/FormazioneChatWidget.astro';
+import CookieConsent from '../components/CookieConsent.astro';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { requestWithMetadata } from '@tinacms/astro';
 import client from '../../tina/__generated__/client';
@@ -11,6 +12,7 @@ import type { Lang } from '../data/ui-strings';
 import { SITE_NAME, DEFAULT_OG_IMAGE } from '../data/ui-strings';
 import { pageSlugs, type PageKey } from '../data/routes';
 import { buildOrganizationGraph } from '../lib/jsonld';
+import { isProdHost } from '../lib/env';
 import '../styles/global.css';
 
 interface Props {
@@ -43,6 +45,11 @@ const alternateHref = alternateHrefProp ?? getRelativeLocaleUrl(otherLang, pageS
 
 const { data } = await requestWithMetadata(client.queries.settings({ relativePath: `${lang}.md` }), { priority: 'primary' });
 const settings = data.settings;
+// Staging/preview hosts (e.g. beta.rotaract2050.org) always noindex, regardless of the page's own SEO
+// setting, so Google never has a chance to index test content under a different host than the canonical
+// URL it points to — and never load Google Analytics on test traffic either (see CookieConsent below).
+const onProdHost = isProdHost(Astro.url, Astro.site);
+const effectiveNoindex = noindex || !onProdHost;
 const resolvedImage = image || settings.defaultOgImage || DEFAULT_OG_IMAGE;
 const pageTitle = title === SITE_NAME ? title : `${title} | ${SITE_NAME}`;
 const organizationGraph = buildOrganizationGraph(
@@ -62,6 +69,7 @@ const organizationGraph = buildOrganizationGraph(
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
+		{settings.gscVerification && <meta name="google-site-verification" content={settings.gscVerification} />}
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
@@ -77,7 +85,7 @@ const organizationGraph = buildOrganizationGraph(
 			image={resolvedImage}
 			type={type}
 			publishedTime={publishedTime}
-			noindex={noindex}
+			noindex={effectiveNoindex}
 			twitterHandle={settings.twitterHandle}
 		/>
 		<JsonLd data={organizationGraph} />
@@ -91,6 +99,7 @@ const organizationGraph = buildOrganizationGraph(
 			<Footer lang={lang} settings={settings} />
 			{current === 'formazione' && <FormazioneChatWidget lang={lang} />}
 		</div>
+		<CookieConsent lang={lang} gaMeasurementId={onProdHost ? settings.gaMeasurementId : null} />
 	</body>
 </html>
 

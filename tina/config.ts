@@ -944,6 +944,20 @@ export default defineConfig({
 						description:
 							'Da Google Cloud Console: API key con Drive API abilitata, ristretta per HTTP referrer al dominio del sito. Non è un segreto da nascondere — è pensata per finire nel codice client, per questo va ristretta per referrer, non protetta come una password. Usata dal blocco "Materiali distrettuali" per elencare i file della cartella Drive del distretto.',
 					},
+					{
+						type: 'string',
+						name: 'gaMeasurementId',
+						label: 'Google Analytics 4 — Measurement ID',
+						description:
+							'Es. G-XXXXXXXXXX, da Google Analytics (Amministrazione → Flussi di dati). Se vuoto, Google Analytics resta disattivato. Quando impostato, lo script parte solo dopo consenso esplicito dal banner cookie (vedi pagina "Privacy e Cookie").',
+					},
+					{
+						type: 'string',
+						name: 'gscVerification',
+						label: 'Google Search Console — codice verifica',
+						description:
+							'Solo il valore "content" del meta tag HTML di verifica proprietà (Search Console → Impostazioni → Verifica proprietà → tag HTML), non il tag intero. Es. "abc123...". Serve solo la prima volta per confermare la proprietà del sito su Search Console.',
+					},
 				],
 			},
 		],

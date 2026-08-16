@@ -1,0 +1,167 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { uiStrings, type Lang } from '../data/ui-strings';
+import { pageSlugs } from '../data/routes';
+
+interface Props {
+	lang: Lang;
+	/** Google Analytics 4 Measurement ID from settings. When empty, no banner/script is rendered at all. */
+	gaMeasurementId?: string | null;
+}
+
+const { lang, gaMeasurementId } = Astro.props;
+const t = uiStrings[lang].cookieConsent;
+const privacyHref = getRelativeLocaleUrl(lang, pageSlugs.privacy);
+---
+
+{
+	gaMeasurementId && (
+		<div id="cookie-consent" class="cookie-consent" hidden>
+			<p class="cookie-consent__text">
+				{t.body} <a href={privacyHref}>{t.policyLink}</a>
+			</p>
+			<div class="cookie-consent__actions">
+				<button type="button" id="cookie-reject" class="cookie-consent__btn cookie-consent__btn--ghost">
+					{t.reject}
+				</button>
+				<button type="button" id="cookie-accept" class="cookie-consent__btn cookie-consent__btn--solid">
+					{t.accept}
+				</button>
+			</div>
+		</div>
+	)
+}
+
+{
+	gaMeasurementId && (
+		<script is:inline define:vars={{ gaMeasurementId }}>
+			const STORAGE_KEY = 'cookie-consent';
+			const banner = document.getElementById('cookie-consent');
+
+			// localStorage can throw (sandboxed iframe/webview, private browsing, storage disabled)
+			// — if reading it threw, writing it will too, so both read/write go through these and
+			// degrade to "banner works, choice just isn't remembered" instead of a dead script that
+			// never reaches the addEventListener calls below.
+			function readConsent() {
+				try {
+					return localStorage.getItem(STORAGE_KEY);
+				} catch {
+					return null;
+				}
+			}
+			function writeConsent(value) {
+				try {
+					localStorage.setItem(STORAGE_KEY, value);
+				} catch {
+					/* no-op: consent just won't persist across reloads in this context */
+				}
+			}
+
+			// GA is never requested from Google until the visitor explicitly accepts — no
+			// gtag.js fetch, no cookie, no request of any kind happens pre-consent.
+			function loadGa() {
+				if (window.__gaLoaded) return;
+				window.__gaLoaded = true;
+				const script = document.createElement('script');
+				script.async = true;
+				script.src = `https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`;
+				document.head.appendChild(script);
+				window.dataLayer = window.dataLayer || [];
+				window.gtag = function gtag() {
+					window.dataLayer.push(arguments);
+				};
+				window.gtag('js', new Date());
+				window.gtag('config', gaMeasurementId);
+			}
+
+			const stored = readConsent();
+			if (stored === 'granted') {
+				loadGa();
+			} else if (stored !== 'denied') {
+				banner.hidden = false;
+			}
+
+			document.getElementById('cookie-accept')?.addEventListener('click', () => {
+				writeConsent('granted');
+				banner.hidden = true;
+				loadGa();
+			});
+			document.getElementById('cookie-reject')?.addEventListener('click', () => {
+				writeConsent('denied');
+				banner.hidden = true;
+			});
+
+			// Exposed so the footer's "cookie preferences" link can reopen the banner to change a past choice.
+			window.openCookieSettings = () => {
+				banner.hidden = false;
+			};
+		</script>
+	)
+}
+
+<style>
+	.cookie-consent {
+		position: fixed;
+		z-index: 200;
+		left: 20px;
+		bottom: 20px;
+		width: min(420px, calc(100vw - 40px));
+		background: var(--color-navy);
+		color: #fff;
+		border-radius: 16px;
+		padding: 20px 24px;
+		box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+		flex-wrap: wrap;
+		gap: 16px;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	/* An author-stylesheet `display` rule always beats the browser's built-in
+	   `[hidden] { display: none }` UA rule, regardless of specificity — so `display: flex` can't
+	   live on the bare `.cookie-consent` selector above or toggling the `hidden` attribute in JS
+	   would never actually hide it (see the same fix in FormazioneChatWidget.astro). */
+	.cookie-consent:not([hidden]) {
+		display: flex;
+	}
+
+	.cookie-consent__text {
+		margin: 0;
+		font-size: 14px;
+		line-height: 1.6;
+		color: rgba(255, 255, 255, 0.85);
+		flex: 1 1 260px;
+	}
+
+	.cookie-consent__text a {
+		color: var(--color-gold);
+		text-decoration: underline;
+	}
+
+	.cookie-consent__actions {
+		display: flex;
+		gap: 10px;
+		flex-shrink: 0;
+	}
+
+	.cookie-consent__btn {
+		font-family: inherit;
+		font-size: 14px;
+		font-weight: 600;
+		border-radius: 999px;
+		padding: 10px 20px;
+		cursor: pointer;
+		border: 1px solid transparent;
+	}
+
+	.cookie-consent__btn--ghost {
+		background: transparent;
+		border-color: rgba(255, 255, 255, 0.4);
+		color: #fff;
+	}
+
+	.cookie-consent__btn--solid {
+		background: var(--color-gold);
+		color: var(--color-navy);
+	}
+</style>
