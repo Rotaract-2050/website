@@ -148,10 +148,11 @@ export const SITE_NAME = 'Rotaract Distretto 2050';
 export const DEFAULT_OG_IMAGE = '/uploads/Loghi/Logo-distretto.png';
 
 export const UTILITY_LINKS = [
-	{ label: 'ROTARY DISTRETTO 2050', href: 'https://www.rotary2050.org/site/' },
 	{ label: 'ROTARY INTERNATIONAL', href: 'https://www.rotary.org/' },
 	{ label: 'MY ROTARY', href: 'https://my.rotary.org/it' },
 	{ label: 'ROTARY BRAND CENTER', href: 'https://brandcenter.rotary.org/it-it/our-brand/brand-elements' },
+	{ label: 'ROTARY DISTRETTO 2050', href: 'https://www.rotary2050.org/site/' },
+	{ label: 'PROMETEO 2050', href: 'https://www.prometeo2050.org/' },
 ];
 
 const IT: UiStrings = {
