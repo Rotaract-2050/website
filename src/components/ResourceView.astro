@@ -163,6 +163,39 @@ const tagKeys = (resource.tags ?? []).filter((tag): tag is string => Boolean(tag
 		color: var(--color-pink);
 	}
 
+	/* GFM tables from Markdown (`| col | col |`, marked's GFM support is on by default —
+	   no config needed in lib/resource-markdown.ts). `display: block` + `overflow-x: auto`
+	   on the table itself (no wrapper div available, same reasoning as img below) keeps a
+	   wide table from breaking the page width on narrow screens instead of a horizontal
+	   page-level scrollbar. */
+	.article-body :global(table) {
+		display: block;
+		max-width: 100%;
+		overflow-x: auto;
+		margin: 0 0 20px;
+		border-collapse: collapse;
+		font-size: 15px;
+	}
+
+	.article-body :global(th),
+	.article-body :global(td) {
+		padding: 10px 16px;
+		border: 1px solid var(--color-border);
+		text-align: left;
+	}
+
+	.article-body :global(th) {
+		background: var(--color-bg);
+		color: var(--color-navy);
+		font-family: var(--font-heading);
+		font-weight: 700;
+		white-space: nowrap;
+	}
+
+	.article-body :global(tr:nth-child(even)) {
+		background: var(--color-bg);
+	}
+
 	/* Inline images from Markdown (`![alt](url)` in the body) — no wrapper/caption element
 	   available since these come straight from `marked`'s default img rendering, just the
 	   bare tag, so styling has to key off `img` directly rather than a component class. */

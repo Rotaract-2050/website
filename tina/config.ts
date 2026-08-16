@@ -703,7 +703,7 @@ export default defineConfig({
 						label: 'Tag',
 						list: true,
 						required: true,
-						options: ['Prefetto', 'Cerimoniale'],
+						options: ['Prefetto', 'Cerimoniale', 'Segretario'],
 						description:
 							'Diventano filtri cliccabili nell\'elenco — una scheda può avere più tag. Per un nuovo filtro aggiungere una nuova opzione qui (e la relativa traduzione in TAG_LABELS_EN, src/lib/resources.ts); il resto della granularità (es. "tavolo", "saluti") si copre con la ricerca testuale, non con altri tag.',
 					},
@@ -722,7 +722,7 @@ export default defineConfig({
 						isBody: true,
 						ui: { component: 'textarea' },
 						description:
-							'Markdown puro — non l\'editor visuale usato altrove sul sito: # Titolo, ## Sottotitolo, - elenco puntato, 1. elenco numerato, **grassetto**, > citazione. Per collegare un\'altra scheda di questa sezione, scrivi [[slug-scheda]] (usa il titolo della scheda collegata come testo del link) oppure [[slug-scheda|Testo del link]] per un testo personalizzato — lo slug è il nome del file della scheda collegata (es. "ruolo-del-prefetto"). Per inserire un\'immagine nel testo: caricala prima dal pannello "Media" dell\'admin Tina (menu a sinistra), poi scrivi ![descrizione immagine](percorso copiato dal pannello Media) nel punto del testo dove deve comparire.',
+							'Markdown puro — non l\'editor visuale usato altrove sul sito: # Titolo, ## Sottotitolo, - elenco puntato, 1. elenco numerato, **grassetto**, > citazione. Per collegare un\'altra scheda di questa sezione, scrivi [[slug-scheda]] (usa il titolo della scheda collegata come testo del link) oppure [[slug-scheda|Testo del link]] per un testo personalizzato — lo slug è il nome del file della scheda collegata (es. "ruolo-del-prefetto"). Per inserire un\'immagine nel testo: caricala prima dal pannello "Media" dell\'admin Tina (menu a sinistra), poi scrivi ![descrizione immagine](percorso copiato dal pannello Media) nel punto del testo dove deve comparire. Per una tabella: | Colonna 1 | Colonna 2 |, poi una riga | --- | --- |, poi una riga per dato — utile per elenchi con più colonne (es. ordine di precedenza + carica).',
 					},
 					{
 						type: 'string',
@@ -730,7 +730,7 @@ export default defineConfig({
 						label: 'Contenuto scheda (EN)',
 						ui: { component: 'textarea' },
 						description:
-							'Same convention as the Italian body — plain Markdown, [[slug]] / [[slug|Custom label]] wikilinks, and ![description](path) for an inline image (upload it first from the Tina admin\'s "Media" panel to get its path).',
+							'Same convention as the Italian body — plain Markdown, [[slug]] / [[slug|Custom label]] wikilinks, ![description](path) for an inline image (upload it first from the Tina admin\'s "Media" panel to get its path), and | Column 1 | Column 2 | tables (a | --- | --- | separator row, then one row per data line).',
 					},
 				],
 			},
