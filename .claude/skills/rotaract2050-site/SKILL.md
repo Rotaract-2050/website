@@ -11,7 +11,7 @@ description: Sviluppo e manutenzione del sito Rotaract Distretto 2050 (Astro + T
 - **TinaCMS** come CMS git-backed: ogni contenuto che un socio non tecnico deve poter modificare va esposto come collection/field Tina, mai come testo hardcoded nel componente.
 - Zero-JS di default (principio Astro): niente framework component (`.tsx`/`.vue`) a meno che serva vera interattività client. La maggior parte del sito è HTML statico a build time.
 - **Sito bilingue obbligatorio, italiano (default) + inglese**: ogni pagina, blocco e stringa editoriale esiste in entrambe le lingue, nessuna pagina solo-IT o solo-EN. Routing e convenzioni in `references/astro.md` (sezione Internazionalizzazione).
-- **Hosting: Cloudflare Pages** (migrato da Netlify), deploy automatico da git push, gestito via MCP Cloudflare. Adapter `@astrojs/cloudflare` (`wrangler.jsonc` alla root). Ambiente beta live su https://beta.rotaract2050.org/. Dettagli setup Tina+Cloudflare, il vincolo utenti Tina Cloud free (2 editor) e il gotcha della whitelist referrer della Google Drive API key in `references/tina.md`.
+- **Hosting: Cloudflare Workers** (Workers Builds, non Pages classica — migrato da Netlify), deploy automatico da git push su `main`. Adapter `@astrojs/cloudflare` (`wrangler.jsonc` alla root). Ambiente beta live su https://beta.rotaract2050.org/. Dettagli setup Tina+Cloudflare, il vincolo utenti Tina Cloud free (2 editor) e il gotcha della whitelist referrer della Google Drive API key in `references/tina.md`; branch control/preview build on-demand in `references/cloudflare-deploy.md`.
 
 ## Avviare il sito in locale
 
@@ -50,6 +50,7 @@ Il dettaglio non sta in questo file: leggere la reference pertinente **prima** d
 - **`references/tina.md`** — prima di impostare o modificare `tina/config.ts`, scegliere il setup Tina+Astro (visual editing vs static), o definire il pattern a blocchi. Fonte: tina.io/docs.
 - **`references/news-tags.md`** — prima di toccare i tag della collection `news` (club, ambito Distretto/MDIO, anno rotariano): cosa sostituisce il vecchio campo `tag`, perché il tag club è una lista di oggetti e non un `reference` con `list: true`, perché l'anno rotariano è calcolato e non un campo.
 - **`references/motion.md`** — prima di aggiungere o modificare un'animazione (entrance, stagger scroll-triggered) o di introdurre una libreria di animazione: perché motion.dev e non astroanimate.com, pattern d'uso (`src/lib/motion.ts`), il bug del `transform` inline che rompe l'hover CSS se non ripulito.
+- **`references/cloudflare-deploy.md`** — prima di toccare build/deploy Cloudflare o branch che triggerano build: il progetto è Workers Builds (non Pages classica, niente selettore UI per-branch), il setup con checkbox non-production branches OFF + Deploy Hook su `dev` + GitHub Action che scatta su commit con `[preview]` nel titolo.
 
 **Nessuna scorciatoia silenziosa**: se per fare prima si vuole saltare una best practice (in queste reference o note nel resto della skill), non farlo senza dirlo esplicitamente all'utente. "Più veloce così" non è mai un motivo sufficiente da solo per introdurre HTML iniettato non sanificato, markup non semantico, stili inline sparsi o `any` non tipizzato.
 
