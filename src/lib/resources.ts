@@ -61,18 +61,17 @@ export function tagPillStyle(tag: string): string {
 }
 
 /**
- * A resource card's background: a soft gradient blended from its tags' colors (one tag = a single
- * tint fading to white, two = a blend between both, extra tags beyond the first two don't add more
- * stops so the gradient stays readable), falling back to the brand Cranberry for untagged resources.
+ * A resource card's background: sets the smoke-animation RGB variables (--smoke-c1, --smoke-c2)
+ * derived from its tags' colors, plus a fallback static soft linear gradient.
  */
 export function resourceCardGradient(tags: string[]): string {
 	const colors = tags.length > 0 ? tags.slice(0, 2).map(tagColor) : [DEFAULT_TAG_COLOR];
-	const tints = colors.map((hex) => {
-		const { r, g, b } = hexToRgb(hex);
-		return `rgba(${r}, ${g}, ${b}, 0.1)`;
-	});
-	const stops = tints.length === 1 ? `${tints[0]} 0%, #fff 60%` : `${tints[0]} 0%, ${tints[1]} 55%, #fff 90%`;
-	return `background: linear-gradient(155deg, ${stops});`;
+	const rgb1 = hexToRgb(colors[0]);
+	const rgb2 = hexToRgb(colors[1] ?? colors[0]);
+	const stops = colors.length === 1
+		? `rgba(${rgb1.r}, ${rgb1.g}, ${rgb1.b}, 0.1) 0%, #fff 60%`
+		: `rgba(${rgb1.r}, ${rgb1.g}, ${rgb1.b}, 0.1) 0%, rgba(${rgb2.r}, ${rgb2.g}, ${rgb2.b}, 0.1) 55%, #fff 90%`;
+	return `--smoke-c1: ${rgb1.r}, ${rgb1.g}, ${rgb1.b}; --smoke-c2: ${rgb2.r}, ${rgb2.g}, ${rgb2.b}; background: linear-gradient(155deg, ${stops});`;
 }
 
 /**

@@ -6,6 +6,7 @@ import PageBanner from './PageBanner.astro';
 import BlockRenderer from './BlockRenderer.astro';
 import type { Lang } from '../data/ui-strings';
 import type { PageKey } from '../data/routes';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 interface Props {
 	lang: Lang;
