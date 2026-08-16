@@ -797,6 +797,10 @@ export default defineConfig({
 							'Protocollo & Cerimoniale',
 							'Leadership & Giovani',
 							'Gestione & Strumenti',
+							'Presidente',
+							'Segretario',
+							'Tesoriere',
+							'Prefetto',
 						],
 						description:
 							'Diventano filtri cliccabili nell\'elenco — una scheda può avere più tag. Per un nuovo filtro aggiungere una nuova opzione qui (e la relativa traduzione in TAG_LABELS_EN, src/lib/resources.ts); il resto della granularità (es. "tavolo", "saluti") si copre con la ricerca testuale, non con altri tag.',

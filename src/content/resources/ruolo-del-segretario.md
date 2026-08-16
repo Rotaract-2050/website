@@ -2,6 +2,7 @@
 title: 'Il ruolo del Segretario'
 titleEn: "The Secretary's role"
 tags:
+  - Segretario
   - Gestione & Strumenti
   - Struttura & Governance
 order: 13

@@ -2,6 +2,7 @@
 title: 'Il ruolo del Prefetto'
 titleEn: "The Prefect's role"
 tags:
+  - Prefetto
   - Protocollo & Cerimoniale
   - Gestione & Strumenti
 order: 1

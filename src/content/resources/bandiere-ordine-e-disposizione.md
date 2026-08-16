@@ -2,6 +2,7 @@
 title: 'Bandiere: ordine e disposizione'
 titleEn: 'Flags: order and placement'
 tags:
+  - Prefetto
   - Protocollo & Cerimoniale
 order: 4
 excerpt: "L'ordine ufficiale delle bandiere in ogni riunione, e come cambia con ospiti stranieri o autorità pubbliche."

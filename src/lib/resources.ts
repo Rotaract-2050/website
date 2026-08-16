@@ -27,9 +27,11 @@ const TAG_LABELS_EN: Record<string, string> = {
 	'Protocollo & Cerimoniale': 'Protocol & Ceremonial',
 	'Leadership & Giovani': 'Leadership & Youth',
 	'Gestione & Strumenti': 'Management & Tools',
+	Presidente: 'President',
+	Segretario: 'Secretary',
+	Tesoriere: 'Treasurer',
 	Prefetto: 'Prefect',
 	Cerimoniale: 'Protocol',
-	Segretario: 'Secretary',
 	'Cultura Rotariana': 'Rotary Culture',
 };
 
@@ -52,9 +54,11 @@ const TAG_COLORS: Record<string, string> = {
 	'Protocollo & Cerimoniale': '#FF7600', // Orange
 	'Leadership & Giovani': '#F7A81B', // Rotary Gold
 	'Gestione & Strumenti': '#00ADBB', // Turquoise
+	Presidente: '#17458F', // Rotary Royal Blue
+	Segretario: '#00A2E0', // Sky Blue
+	Tesoriere: '#F7A81B', // Rotary Gold
 	Prefetto: '#FF7600', // Orange
 	Cerimoniale: '#00ADBB', // Turquoise
-	Segretario: '#00A2E0', // Sky Blue
 	'Cultura Rotariana': '#901F93', // Violet
 };
 const DEFAULT_TAG_COLOR = '#D41367'; // Cranberry — brand default, also used when a resource has no tags at all
