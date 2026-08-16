@@ -715,9 +715,6 @@ export default defineConfig({
 					},
 					{ type: 'string', name: 'excerpt', label: 'Estratto (IT)', ui: { component: 'textarea' }, required: true },
 					{ type: 'string', name: 'excerptEn', label: 'Estratto (EN)', ui: { component: 'textarea' } },
-					...focalImageFields('image', 'Immagine copertina (opzionale)'),
-					{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine (IT)', required: true },
-					{ type: 'string', name: 'imageLabelEn', label: 'Didascalia segnaposto immagine (EN)' },
 					{
 						type: 'string',
 						name: 'body',
@@ -725,14 +722,15 @@ export default defineConfig({
 						isBody: true,
 						ui: { component: 'textarea' },
 						description:
-							'Markdown puro — non l\'editor visuale usato altrove sul sito: # Titolo, ## Sottotitolo, - elenco puntato, 1. elenco numerato, **grassetto**, > citazione. Per collegare un\'altra scheda di questa sezione, scrivi [[slug-scheda]] (usa il testo della scheda collegata come testo del link) oppure [[slug-scheda|Testo del link]] per un testo personalizzato — lo slug è il nome del file della scheda collegata (es. "ruolo-del-prefetto").',
+							'Markdown puro — non l\'editor visuale usato altrove sul sito: # Titolo, ## Sottotitolo, - elenco puntato, 1. elenco numerato, **grassetto**, > citazione. Per collegare un\'altra scheda di questa sezione, scrivi [[slug-scheda]] (usa il titolo della scheda collegata come testo del link) oppure [[slug-scheda|Testo del link]] per un testo personalizzato — lo slug è il nome del file della scheda collegata (es. "ruolo-del-prefetto"). Per inserire un\'immagine nel testo: caricala prima dal pannello "Media" dell\'admin Tina (menu a sinistra), poi scrivi ![descrizione immagine](percorso copiato dal pannello Media) nel punto del testo dove deve comparire.',
 					},
 					{
 						type: 'string',
 						name: 'bodyEn',
 						label: 'Contenuto scheda (EN)',
 						ui: { component: 'textarea' },
-						description: 'Same convention as the Italian body — plain Markdown, plus [[slug]] / [[slug|Custom label]] wikilinks to other cards in this section.',
+						description:
+							'Same convention as the Italian body — plain Markdown, [[slug]] / [[slug|Custom label]] wikilinks, and ![description](path) for an inline image (upload it first from the Tina admin\'s "Media" panel to get its path).',
 					},
 				],
 			},

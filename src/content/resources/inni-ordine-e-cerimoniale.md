@@ -7,8 +7,6 @@ tags:
 order: 5
 excerpt: "L'ordine degli inni, le due formule del Presidente e la differenza tra 'Onori' e 'Saluto' alle bandiere."
 excerptEn: "Anthem order, the President's two set phrases, and the difference between 'Honours' and 'Salute' to the flags."
-imageLabel: 'Inni: ordine e cerimoniale'
-imageLabelEn: 'Anthems: order and protocol'
 bodyEn: |
   At official events, right after the bell is rung, it is customary to "salute" the flags by playing the anthems, in this order:
 

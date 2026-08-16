@@ -77,7 +77,7 @@ export function resourceCardGradient(tags: string[]): string {
  * twin is empty, same fallback rule as `localizeNews`.
  */
 export function localizeResource(
-	resource: Pick<Resource, 'title' | 'titleEn' | 'excerpt' | 'excerptEn' | 'body' | 'bodyEn' | 'imageLabel' | 'imageLabelEn' | 'tags'>,
+	resource: Pick<Resource, 'title' | 'titleEn' | 'excerpt' | 'excerptEn' | 'body' | 'bodyEn' | 'tags'>,
 	lang: Lang,
 ) {
 	const isEn = lang === 'en';
@@ -85,7 +85,6 @@ export function localizeResource(
 		title: (isEn && resource.titleEn) || resource.title,
 		excerpt: (isEn && resource.excerptEn) || resource.excerpt,
 		body: (isEn && resource.bodyEn) || resource.body,
-		imageLabel: (isEn && resource.imageLabelEn) || resource.imageLabel,
 		tags: (resource.tags ?? []).filter((tag): tag is string => Boolean(tag)).map((tag) => localizeTag(tag, lang)),
 	};
 }

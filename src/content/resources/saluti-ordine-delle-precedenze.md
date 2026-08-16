@@ -7,8 +7,6 @@ tags:
 order: 11
 excerpt: 'Le regole generali per stabilire chi si saluta per primo: cariche attuali, past, elette, nominate e coniugi.'
 excerptEn: 'The general rules for deciding who is welcomed first — current, past, elected and appointed officers, and spouses.'
-imageLabel: 'Saluti: ordine delle precedenze'
-imageLabelEn: 'Welcome remarks: order of precedence'
 bodyEn: |
   General rules for the order of welcome remarks:
 

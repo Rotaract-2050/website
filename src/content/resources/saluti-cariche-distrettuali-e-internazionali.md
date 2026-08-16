@@ -7,8 +7,6 @@ tags:
 order: 12
 excerpt: "L'ordine di saluto per il Consiglio Distrettuale, l'interclub con un Rotary Club e le cariche internazionali."
 excerptEn: 'Welcome order for the District Council, an interclub event with a Rotary Club, and international/interdistrict officers.'
-imageLabel: 'Saluti: cariche distrettuali e internazionali'
-imageLabelEn: 'Welcome remarks: district and international officers'
 bodyEn: |
   ### Welcome order with District Council members present
 

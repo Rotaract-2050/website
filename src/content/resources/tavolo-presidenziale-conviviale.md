@@ -7,8 +7,6 @@ tags:
 order: 7
 excerpt: "L'ordine di disposizione del tavolo presidenziale in una conviviale ordinaria con relatore ospite, e la regola del tavolo rettangolare."
 excerptEn: 'Seating order for the head table at a regular gathering with a guest speaker, and the rule for a rectangular table.'
-imageLabel: 'Tavolo presidenziale — Conviviale'
-imageLabelEn: 'Head table — Regular gathering'
 bodyEn: |
   Head table seating order for a regular club meeting:
 

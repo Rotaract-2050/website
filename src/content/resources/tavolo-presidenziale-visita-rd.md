@@ -7,8 +7,6 @@ tags:
 order: 8
 excerpt: "Disposizione del tavolo per la visita ufficiale del RD: uno dei momenti più importanti per il club."
 excerptEn: "Head table seating for the District Representative's official visit — one of the most important moments for a club."
-imageLabel: 'Visita del Rappresentante Distrettuale'
-imageLabelEn: "District Representative's visit"
 bodyEn: |
   The District Representative's official visit is one of the most important moments for a Club.
 

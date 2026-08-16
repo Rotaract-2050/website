@@ -7,8 +7,6 @@ tags:
 order: 3
 excerpt: 'Dove posizionare stendardo, Roll-up e guidoncino durante gli incontri ufficiali di club.'
 excerptEn: 'Where to place the club banner, roll-up and pennant during official club meetings.'
-imageLabel: 'Stendardo e guidoncino di club'
-imageLabelEn: 'Club banner and pennant'
 bodyEn: |
   At every official Club meeting, the club banner or roll-up must be displayed as a symbol of the association. It should be placed behind the President or, if space is limited, to their left. On formal occasions, the roll-up does not replace the banner.
 

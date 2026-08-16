@@ -7,8 +7,6 @@ tags:
 order: 1
 excerpt: "Il ruolo del Prefetto nell'organizzazione delle conviviali: responsabilità, suggerimenti pratici e come rendere ogni evento impeccabile."
 excerptEn: "The Prefect's role in organizing club gatherings: responsibilities, practical tips, and how to make every event run smoothly."
-imageLabel: 'Il ruolo del Prefetto'
-imageLabelEn: "The Prefect's role"
 bodyEn: |
   > "In the life of every Club, social gatherings and meetings are moments of fundamental importance. To ensure events are properly organized in a spirit of training, friendship and conviviality, this Protocol Guide provides the guidelines and instructions the Prefect needs to carry out their duties."
   >

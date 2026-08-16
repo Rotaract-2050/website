@@ -7,8 +7,6 @@ tags:
 order: 4
 excerpt: "L'ordine ufficiale delle bandiere in ogni riunione, e come cambia con ospiti stranieri o autorità pubbliche."
 excerptEn: 'The official flag order for every meeting, and how it changes with foreign guests or public authorities.'
-imageLabel: 'Bandiere: ordine e disposizione'
-imageLabelEn: 'Flags: order and placement'
 bodyEn: |
   At every official meeting, the national, European and Rotary International flags must be displayed. They are placed behind the head table, to the President's right (so they are clearly visible), in the following order (looking at them from the room, left to right):
 

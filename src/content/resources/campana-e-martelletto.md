@@ -7,8 +7,6 @@ tags:
 order: 2
 excerpt: "Quando suona la campana, chi può suonarla e qual è l'unica eccezione, al Passaggio delle Consegne."
 excerptEn: 'When the bell is rung, who may ring it, and the one exception at the Handover Ceremony.'
-imageLabel: 'Campana e martelletto'
-imageLabelEn: 'The bell and the gavel'
 bodyEn: |
   The ringing of the bell, done by the President, marks the beginning and the end of every event. It should be placed at the centre of the head table together with the gavel.
 

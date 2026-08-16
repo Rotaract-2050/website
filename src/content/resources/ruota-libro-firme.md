@@ -7,8 +7,6 @@ tags:
 order: 6
 excerpt: "Chi firma per primo, l'ordine del giro firme e l'eccezione per la visita del Rappresentante Distrettuale."
 excerptEn: "Who signs first, the order of the signature round, and the exception for the District Representative's visit."
-imageLabel: 'Ruota / libro firme'
-imageLabelEn: 'Signature book / wheel'
 bodyEn: |
   Every member's and guest's attendance must be recorded with a signature in the signature book (or "wheel").
 

@@ -3,8 +3,6 @@ import { requestWithMetadata, tinaField } from '@tinacms/astro';
 import client from '../../tina/__generated__/client';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageBanner from './PageBanner.astro';
-import { Image } from 'astro:assets';
-import ImageSlot from './ImageSlot.astro';
 import { uiStrings, type Lang } from '../data/ui-strings';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { getKnowledgeResources, localizeResource, tagPillStyle, buildWikilinkResolver } from '../lib/resources';
@@ -35,7 +33,7 @@ const bodyField = lang === 'en' && resource.bodyEn ? 'bodyEn' : 'body';
 const jsonLd = buildArticleJsonLd({
 	headline: localized.title,
 	description: localized.excerpt,
-	imageUrl: new URL(resource.image || '/uploads/Loghi/Logo-distretto.png', Astro.site).toString(),
+	imageUrl: new URL('/uploads/Loghi/Logo-distretto.png', Astro.site).toString(),
 	url: new URL(Astro.url.pathname, Astro.site).toString(),
 	lang,
 	publisherLogoUrl: new URL('/uploads/Loghi/Logo-distretto.png', Astro.site).toString(),
@@ -54,7 +52,6 @@ const tagKeys = (resource.tags ?? []).filter((tag): tag is string => Boolean(tag
 	title={localized.title}
 	description={localized.excerpt}
 	alternateHref={getRelativeLocaleUrl(lang === 'it' ? 'en' : 'it', `formazione/${slug}`)}
-	image={resource.image}
 	type="article"
 >
 	<PageBanner
@@ -74,13 +71,6 @@ const tagKeys = (resource.tags ?? []).filter((tag): tag is string => Boolean(tag
 					))}
 				</div>
 			)}
-			<div data-tina-field={tinaField(resource, 'image')}>
-				{resource.image ? (
-					<Image src={resource.image} alt={localized.imageLabel} width={960} height={420} fit="contain" quality="high" class="article-image" />
-				) : (
-					<ImageSlot label={localized.imageLabel} class="article-image" />
-				)}
-			</div>
 			<div class="article-body" data-tina-field={tinaField(resource, bodyField)} set:html={bodyHtml} />
 		</div>
 	</article>
@@ -129,14 +119,6 @@ const tagKeys = (resource.tags ?? []).filter((tag): tag is string => Boolean(tag
 		border-radius: 999px;
 	}
 
-	.article-inner :global(.article-image) {
-		width: 100%;
-		height: 340px;
-		object-fit: contain;
-		border-radius: 14px;
-		margin: 0 0 30px;
-	}
-
 	.article-body {
 		font-size: 16px;
 		color: var(--color-text);
@@ -181,13 +163,21 @@ const tagKeys = (resource.tags ?? []).filter((tag): tag is string => Boolean(tag
 		color: var(--color-pink);
 	}
 
+	/* Inline images from Markdown (`![alt](url)` in the body) — no wrapper/caption element
+	   available since these come straight from `marked`'s default img rendering, just the
+	   bare tag, so styling has to key off `img` directly rather than a component class. */
+	.article-body :global(img) {
+		display: block;
+		width: 100%;
+		height: auto;
+		border-radius: var(--shape-large);
+		margin: 8px 0 28px;
+		box-shadow: var(--elevation-1);
+	}
+
 	@media (max-width: 720px) {
 		.resource-article {
 			padding: 40px 20px 60px;
-		}
-
-		.article-inner :global(.article-image) {
-			height: 220px;
 		}
 	}
 </style>

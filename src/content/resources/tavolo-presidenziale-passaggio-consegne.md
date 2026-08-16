@@ -7,8 +7,6 @@ tags:
 order: 9
 excerpt: "L'ultima conviviale dell'anno: disposizione del tavolo e come si svolge il passaggio del collare."
 excerptEn: "The Rotary year's final gathering: head table seating and how the handover of the collar unfolds."
-imageLabel: 'Passaggio delle consegne'
-imageLabelEn: 'Handover Ceremony'
 bodyEn: |
   The Handover Ceremony is the last club gathering of the Rotary year, during which the outgoing President passes the torch to the incoming President.
 
