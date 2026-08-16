@@ -501,7 +501,10 @@ const rrdTimelineTemplate = {
 			name: 'items',
 			label: 'Annate (dalla più recente alla più antica)',
 			list: true,
-			ui: { itemProps: (item: { yearRange?: string; name?: string; surname?: string }) => ({ label: item.yearRange ? `${item.yearRange} — ${item.name ?? ''} ${item.surname ?? ''}` : undefined }) },
+			ui: {
+				itemProps: (item: { yearRange?: string; name?: string; surname?: string }) => ({ label: item.yearRange ? `${item.yearRange} — ${item.name ?? ''} ${item.surname ?? ''}` : undefined }),
+				addItemBehavior: 'prepend',
+			},
 			fields: [
 				{ type: 'string' as const, name: 'yearRange', label: 'Anno rotariano (es. 2026/2027)' },
 				{ type: 'string' as const, name: 'name', label: 'Nome' },
