@@ -3,6 +3,7 @@ import { getRelativeLocaleUrl } from 'astro:i18n';
 import { tinaField } from '@tinacms/astro';
 import ResourceCard from '../ResourceCard.astro';
 import { getKnowledgeResources, localizeResource, resourceSlug, tagSlug, tagColor, resourceTags, localizeTag } from '../../lib/resources';
+import { extractPlainText } from '../../lib/tina-rich-text';
 import { uiStrings, type Lang } from '../../data/ui-strings';
 
 interface Props {
@@ -47,6 +48,7 @@ const tags = resourceTags(resources);
 								tagKeys={(resource.tags ?? []).filter((tag): tag is string => Boolean(tag))}
 								title={localized.title}
 								excerpt={localized.excerpt}
+								bodyText={extractPlainText(localized.body)}
 								readMoreLabel={t.resources.readMore}
 								tinaFieldAttr={tinaField(resource)}
 							/>
@@ -193,7 +195,8 @@ const tags = resourceTags(resources);
 			for (const card of cards) {
 				const cardTags = (card.dataset.tags ?? '').split(' ').filter(Boolean);
 				const matchesFilter = activeFilter === 'all' || cardTags.includes(activeFilter);
-				const matchesQuery = query === '' || (card.textContent ?? '').toLowerCase().includes(query);
+				const haystack = `${card.textContent ?? ''} ${card.dataset.search ?? ''}`.toLowerCase();
+				const matchesQuery = query === '' || haystack.includes(query);
 				const visible = matchesFilter && matchesQuery;
 				card.hidden = !visible;
 				if (visible) visibleCount += 1;

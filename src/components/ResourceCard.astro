@@ -9,14 +9,16 @@ interface Props {
 	tagKeys: string[];
 	title: string;
 	excerpt: string;
+	/** Plain-text article body, not rendered — carried only as `data-search` so the archive's search box can match inside the full article, not just the card's visible excerpt. */
+	bodyText: string;
 	readMoreLabel: string;
 	tinaFieldAttr?: string;
 }
 
-const { href, tags, tagKeys, title, excerpt, readMoreLabel, tinaFieldAttr } = Astro.props;
+const { href, tags, tagKeys, title, excerpt, bodyText, readMoreLabel, tinaFieldAttr } = Astro.props;
 ---
 
-<article class="resource-card" data-tags={tagKeys.map(tagSlug).join(' ')} style={resourceCardGradient(tagKeys)} data-tina-field={tinaFieldAttr}>
+<article class="resource-card" data-tags={tagKeys.map(tagSlug).join(' ')} data-search={bodyText} style={resourceCardGradient(tagKeys)} data-tina-field={tinaFieldAttr}>
 	<a href={href} class="resource-link">
 		<div class="resource-top">
 			<!-- Placeholder glyph: a per-topic icon set is still to be designed, see PR discussion. -->

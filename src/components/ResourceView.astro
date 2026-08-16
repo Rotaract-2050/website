@@ -7,14 +7,14 @@ import { Image } from 'astro:assets';
 import ImageSlot from './ImageSlot.astro';
 import { uiStrings, type Lang } from '../data/ui-strings';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { localizeNews, newsTagLabels, rotaryYearLabel, tagPillStyle } from '../lib/news';
+import { localizeResource, tagPillStyle } from '../lib/resources';
 import JsonLd from './JsonLd.astro';
-import { buildNewsArticleJsonLd } from '../lib/jsonld';
+import { buildArticleJsonLd } from '../lib/jsonld';
 import { renderTinaMarkdown } from '../lib/tina-rich-text';
 
 interface Props {
 	lang: Lang;
-	/** News article slug, e.g. `made-in` — never a multi-segment path. */
+	/** Resource slug, e.g. `tavolo-presidenziale-visita-rd` — never a multi-segment path. */
 	slug: string;
 }
 
@@ -22,77 +22,69 @@ const { lang, slug } = Astro.props;
 const t = uiStrings[lang];
 const relativePath = `${slug}.md`;
 
-const result = await requestWithMetadata(client.queries.news({ relativePath }), { priority: 'primary' });
-const article = result.data.news;
+const result = await requestWithMetadata(client.queries.resources({ relativePath }), { priority: 'primary' });
+const resource = result.data.resources;
 
-if (!article) {
-	return Astro.redirect(getRelativeLocaleUrl(lang, 'news'));
+if (!resource) {
+	return Astro.redirect(getRelativeLocaleUrl(lang, 'formazione'));
 }
 
-const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-US', { day: 'numeric', month: 'short', year: 'numeric' });
-const tags = newsTagLabels(article);
-const localized = localizeNews(article, lang);
-const titleField = lang === 'en' && article.titleEn ? 'titleEn' : 'title';
-const bodyField = lang === 'en' && article.bodyEn ? 'bodyEn' : 'body';
-const jsonLd = buildNewsArticleJsonLd({
+const localized = localizeResource(resource, lang);
+const titleField = lang === 'en' && resource.titleEn ? 'titleEn' : 'title';
+const bodyField = lang === 'en' && resource.bodyEn ? 'bodyEn' : 'body';
+const jsonLd = buildArticleJsonLd({
 	headline: localized.title,
 	description: localized.excerpt,
-	imageUrl: new URL(article.image || '/uploads/Loghi/Logo-distretto.png', Astro.site).toString(),
-	datePublished: article.date,
+	imageUrl: new URL(resource.image || '/uploads/Loghi/Logo-distretto.png', Astro.site).toString(),
 	url: new URL(Astro.url.pathname, Astro.site).toString(),
 	lang,
 	publisherLogoUrl: new URL('/uploads/Loghi/Logo-distretto.png', Astro.site).toString(),
 });
 const bodyHtml = renderTinaMarkdown(localized.body);
+const tagKeys = (resource.tags ?? []).filter((tag): tag is string => Boolean(tag));
 ---
 
 <BaseLayout
 	lang={lang}
-	current="news"
+	current="formazione"
 	title={localized.title}
 	description={localized.excerpt}
-	alternateHref={getRelativeLocaleUrl(lang === 'it' ? 'en' : 'it', `news/${slug}`)}
-	image={article.image}
+	alternateHref={getRelativeLocaleUrl(lang === 'it' ? 'en' : 'it', `formazione/${slug}`)}
+	image={resource.image}
 	type="article"
-	publishedTime={article.date}
 >
 	<PageBanner
 		lang={lang}
-		eyebrow={t.news.articleEyebrow}
+		eyebrow={t.resources.detailEyebrow}
 		title={localized.title}
-		breadcrumbCurrent={t.nav.news}
-		titleField={tinaField(article, titleField)}
+		breadcrumbCurrent={t.nav.formazione}
+		titleField={tinaField(resource, titleField)}
 	/>
-	<article class="news-article">
+	<article class="resource-article">
 		<div class="article-inner">
-			<a href={getRelativeLocaleUrl(lang, 'news')} class="back-link">{t.news.backToArchive}</a>
-			<div class="article-meta">
-				{tags.length > 0 && (
-					<div class="article-tags" data-tina-field={tinaField(article, 'scope')}>
-						{tags.map((tag) => (
-							<span class="article-tag" style={tagPillStyle(tag.color)}>{tag.label}</span>
-						))}
-					</div>
-				)}
-				<span class="article-date" data-tina-field={tinaField(article, 'date')}>
-					{dateFormatter.format(new Date(article.date)).toUpperCase()} · {rotaryYearLabel(article.date)}
-				</span>
-			</div>
-			<div data-tina-field={tinaField(article, 'image')}>
-				{article.image ? (
-					<Image src={article.image} alt={localized.imageLabel} width={960} height={420} fit="contain" quality="high" class="article-image" />
+			<a href={getRelativeLocaleUrl(lang, 'formazione')} class="back-link">{t.resources.backToArchive}</a>
+			{localized.tags.length > 0 && (
+				<div class="article-tags" data-tina-field={tinaField(resource, 'tags')}>
+					{localized.tags.map((tag, i) => (
+						<span class="article-tag" style={tagPillStyle(tagKeys[i])}>{tag}</span>
+					))}
+				</div>
+			)}
+			<div data-tina-field={tinaField(resource, 'image')}>
+				{resource.image ? (
+					<Image src={resource.image} alt={localized.imageLabel} width={960} height={420} fit="contain" quality="high" class="article-image" />
 				) : (
 					<ImageSlot label={localized.imageLabel} class="article-image" />
 				)}
 			</div>
-			<div class="article-body" data-tina-field={tinaField(article, bodyField)} set:html={bodyHtml} />
+			<div class="article-body" data-tina-field={tinaField(resource, bodyField)} set:html={bodyHtml} />
 		</div>
 	</article>
 	<JsonLd data={jsonLd} />
 </BaseLayout>
 
 <style>
-	.news-article {
+	.resource-article {
 		background: #fff;
 		padding: 50px 40px 90px;
 	}
@@ -114,18 +106,11 @@ const bodyHtml = renderTinaMarkdown(localized.body);
 		text-decoration: underline;
 	}
 
-	.article-meta {
-		display: flex;
-		align-items: center;
-		flex-wrap: wrap;
-		gap: 10px 14px;
-		margin-bottom: 20px;
-	}
-
 	.article-tags {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 6px;
+		margin-bottom: 20px;
 	}
 
 	.article-tag {
@@ -140,19 +125,12 @@ const bodyHtml = renderTinaMarkdown(localized.body);
 		border-radius: 999px;
 	}
 
-	.article-date {
-		font-size: 12px;
-		color: var(--color-muted);
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
-	}
-
 	.article-inner :global(.article-image) {
 		width: 100%;
 		height: 340px;
 		object-fit: contain;
 		border-radius: 14px;
-		margin-bottom: 30px;
+		margin: 0 0 30px;
 	}
 
 	.article-body {
@@ -172,12 +150,35 @@ const bodyHtml = renderTinaMarkdown(localized.body);
 		margin: 32px 0 14px;
 	}
 
+	.article-body :global(ul),
+	.article-body :global(ol) {
+		margin: 0 0 20px;
+		padding-left: 22px;
+	}
+
+	.article-body :global(li) {
+		margin-bottom: 8px;
+	}
+
+	.article-body :global(blockquote) {
+		margin: 0 0 20px;
+		padding: 14px 20px;
+		background: var(--color-bg);
+		border-left: 4px solid var(--color-pink);
+		border-radius: var(--shape-small);
+		color: var(--color-navy);
+	}
+
+	.article-body :global(blockquote p:last-child) {
+		margin-bottom: 0;
+	}
+
 	.article-body :global(a) {
 		color: var(--color-pink);
 	}
 
 	@media (max-width: 720px) {
-		.news-article {
+		.resource-article {
 			padding: 40px 20px 60px;
 		}
 
