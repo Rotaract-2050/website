@@ -1,21 +1,27 @@
 ---
 import { requestWithMetadata, tinaField } from '@tinacms/astro';
-import client from '../../../../tina/__generated__/client';
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import PageBanner from '../../../components/PageBanner.astro';
-import JsonLd from '../../../components/JsonLd.astro';
+import client from '../../../../../tina/__generated__/client';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import PageBanner from '../../../../components/PageBanner.astro';
+import JsonLd from '../../../../components/JsonLd.astro';
 import { Image } from 'astro:assets';
-import ImageSlot from '../../../components/ImageSlot.astro';
-import { uiStrings } from '../../../data/ui-strings';
+import ImageSlot from '../../../../components/ImageSlot.astro';
+import { uiStrings } from '../../../../data/ui-strings';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { localizeEvent, eventTypeTag, isUpcomingEvent } from '../../../lib/events';
-import { tagPillStyle, clubTagLabels } from '../../../lib/news';
-import { buildEventJsonLd } from '../../../lib/jsonld';
+import { localizeEvent, eventTypeTag, isUpcomingEvent } from '../../../../lib/events';
+import { tagPillStyle, clubTagLabels } from '../../../../lib/news';
+import { buildEventJsonLd } from '../../../../lib/jsonld';
 
 const lang = 'en' as const;
 const t = uiStrings[lang];
+// Event always one fixed nesting level deep (Rotary-year folder + file, e.g.
+// `2026-2027/i-assemblea-distrettuale`), not a generic rest param: avoids colliding with
+// `/eventi` (the archive, served by the `pages` collection) that a 0-segment `[...slug]`
+// would intercept, causing a self-redirect loop.
+const year = Astro.params.year ?? '';
 const slug = Astro.params.slug ?? '';
-const relativePath = `${slug}.md`;
+const eventSlug = `${year}/${slug}`;
+const relativePath = `${eventSlug}.md`;
 
 const result = await requestWithMetadata(client.queries.events({ relativePath }), { priority: 'primary' });
 const event = result.data.events;
@@ -52,7 +58,7 @@ const jsonLd = buildEventJsonLd({
 	current="eventi"
 	title={localized.title}
 	description={localized.excerpt || t.events.empty}
-	alternateHref={getRelativeLocaleUrl('it', `eventi/${slug}`)}
+	alternateHref={getRelativeLocaleUrl('it', `eventi/${eventSlug}`)}
 	image={event.image}
 	type="article"
 	publishedTime={event.date}
