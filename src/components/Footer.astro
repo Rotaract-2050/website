@@ -46,7 +46,7 @@ const href = (page: PageKey) => getRelativeLocaleUrl(lang, pageSlugs[page]);
 					</>
 				)}
 				<br />
-				<span data-tina-field={tinaField(settings, 'email')}>{settings.email}</span>
+				<a href={`mailto:${settings.email}`} class="footer-email" data-tina-field={tinaField(settings, 'email')}>{settings.email}</a>
 			</p>
 		</div>
 		<div>
@@ -132,6 +132,14 @@ const href = (page: PageKey) => getRelativeLocaleUrl(lang, pageSlugs[page]);
 		color: rgba(255, 255, 255, 0.75);
 		line-height: 1.7;
 		margin: 0;
+	}
+
+	.footer-email {
+		color: inherit;
+	}
+
+	.footer-email:hover {
+		color: #fff;
 	}
 
 	.footer-social {

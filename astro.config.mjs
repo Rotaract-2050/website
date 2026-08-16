@@ -1,7 +1,7 @@
 // @ts-check
 import { readdirSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { join } from 'node:path';
+import { join, sep } from 'node:path';
 import matter from 'gray-matter';
 import { defineConfig } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
@@ -37,11 +37,14 @@ const resourceSlugs = readdirSync(fileURLToPath(new URL('./src/content/resources
 
 // `visible: false` events (drafts) are excluded from the archive list (see getArchiveEvents() in
 // src/lib/events.ts) and must stay out of the sitemap for the same reason.
+// `recursive: true` (Node >=20) walks the per-Rotary-year subfolders (2025-2026, 2026-2027, ...)
+// the `events` collection is organized into, returning paths like `2026-2027/side-2026.md`
+// (POSIX `/`, matching the `_sys.breadcrumbs.join('/')` slug the router/eventSlug() build).
 const eventsDir = fileURLToPath(new URL('./src/content/events', import.meta.url));
-const eventSlugs = readdirSync(eventsDir)
+const eventSlugs = readdirSync(eventsDir, { recursive: true, encoding: 'utf8' })
 	.filter((file) => file.endsWith('.md'))
 	.filter((file) => matter(readFileSync(join(eventsDir, file), 'utf-8')).data.visible !== false)
-	.map((file) => file.replace(/\.md$/, ''));
+	.map((file) => file.replace(/\.md$/, '').split(sep).join('/'));
 
 const customPages = [
 	...PAGE_SLUGS.flatMap((slug) => [`${SITE}/${slug}`, `${SITE}/en/${slug}`]),
