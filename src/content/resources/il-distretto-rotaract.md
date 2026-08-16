@@ -71,3 +71,4 @@ Durante l'anno sociale il distretto organizza le cosiddette assemblee distrettua
 * [[struttura-rotaract]]
 * [[le-vie-dazione]]
 * [[tavolo-presidenziale]]
+
