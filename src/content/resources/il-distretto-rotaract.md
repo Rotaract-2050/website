@@ -2,7 +2,7 @@
 title: 'Il distretto Rotaract'
 titleEn: 'The Rotaract District'
 tags:
-  - Cultura Rotariana
+  - Struttura & Governance
 order: 16
 excerpt: "Cos'è un distretto Rotaract, la nascita del Distretto 2050 nel 1968, le sue 4 zone e gli eventi distrettuali dell'anno sociale."
 excerptEn: "What a Rotaract district is, the birth of District 2050 in 1968, its 4 zones, and the district's yearly events."

@@ -2,7 +2,7 @@
 title: 'Le MDIO'
 titleEn: 'MDIOs'
 tags:
-  - Cultura Rotariana
+  - Dimensione Internazionale
 order: 19
 excerpt: "Cos'è una MDIO (Multidistrict Information Organization), le condizioni per formarne una e la procedura per i service multidistrettuali."
 excerptEn: 'What an MDIO (Multidistrict Information Organization) is, the conditions to form one, and the procedure for multidistrict service projects.'

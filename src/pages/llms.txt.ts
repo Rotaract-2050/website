@@ -48,6 +48,7 @@ https://rotaract2050.org.
 ## Contatti / Contact
 ${it.settings.email}
 ${it.settings.address}
+${it.settings.fiscalCode ? `CF: ${it.settings.fiscalCode}` : ''}
 
 ## Sitemap
 ${new URL('sitemap-index.xml', site)}

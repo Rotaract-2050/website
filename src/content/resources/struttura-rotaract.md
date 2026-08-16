@@ -2,7 +2,7 @@
 title: 'Struttura Rotaract'
 titleEn: 'Rotaract Structure'
 tags:
-  - Cultura Rotariana
+  - Struttura & Governance
 order: 17
 excerpt: "L'organizzazione piramidale di Rotary International, gli organi di club e le principali cariche di un Rotaract Club."
 excerptEn: "Rotary International's pyramidal organization, a club's collegial bodies, and the main offices of a Rotaract Club."

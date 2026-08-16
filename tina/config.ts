@@ -789,7 +789,19 @@ export default defineConfig({
 						label: 'Tag',
 						list: true,
 						required: true,
-						options: ['Prefetto', 'Cerimoniale', 'Segretario', 'Cultura Rotariana'],
+						options: [
+							'Storia & Valori',
+							'Struttura & Governance',
+							'Dimensione Internazionale',
+							'Service & Fondazione',
+							'Protocollo & Cerimoniale',
+							'Leadership & Giovani',
+							'Gestione & Strumenti',
+							'Presidente',
+							'Segretario',
+							'Tesoriere',
+							'Prefetto',
+						],
 						description:
 							'Diventano filtri cliccabili nell\'elenco — una scheda può avere più tag. Per un nuovo filtro aggiungere una nuova opzione qui (e la relativa traduzione in TAG_LABELS_EN, src/lib/resources.ts); il resto della granularità (es. "tavolo", "saluti") si copre con la ricerca testuale, non con altri tag.',
 					},
@@ -910,6 +922,7 @@ export default defineConfig({
 				fields: [
 					{ type: 'string', name: 'about', label: 'Testo "chi siamo" (footer)', ui: { component: 'textarea' } },
 					{ type: 'string', name: 'address', label: 'Indirizzo' },
+					{ type: 'string', name: 'fiscalCode', label: 'Codice Fiscale' },
 					{ type: 'string', name: 'email', label: 'Email' },
 					{ type: 'image', name: 'logo', label: 'Logo distretto (dati strutturati / social)' },
 					{

@@ -20,9 +20,18 @@ export function resourceSlug(resource: Pick<Resource, '_sys'>): string {
  * here whenever a new tag option is added to the schema.
  */
 const TAG_LABELS_EN: Record<string, string> = {
+	'Storia & Valori': 'History & Values',
+	'Struttura & Governance': 'Structure & Governance',
+	'Dimensione Internazionale': 'International Network',
+	'Service & Fondazione': 'Service & Foundation',
+	'Protocollo & Cerimoniale': 'Protocol & Ceremonial',
+	'Leadership & Giovani': 'Leadership & Youth',
+	'Gestione & Strumenti': 'Management & Tools',
+	Presidente: 'President',
+	Segretario: 'Secretary',
+	Tesoriere: 'Treasurer',
 	Prefetto: 'Prefect',
 	Cerimoniale: 'Protocol',
-	Segretario: 'Secretary',
 	'Cultura Rotariana': 'Rotary Culture',
 };
 
@@ -38,9 +47,18 @@ export function localizeTag(tag: string, lang: Lang): string {
  * a new tag option is added to the schema; DEFAULT_TAG_COLOR covers any tag not yet assigned one.
  */
 const TAG_COLORS: Record<string, string> = {
+	'Storia & Valori': '#901F93', // Violet
+	'Struttura & Governance': '#0067C8', // Azure
+	'Dimensione Internazionale': '#00A2E0', // Sky Blue
+	'Service & Fondazione': '#009739', // Grass
+	'Protocollo & Cerimoniale': '#FF7600', // Orange
+	'Leadership & Giovani': '#F7A81B', // Rotary Gold
+	'Gestione & Strumenti': '#00ADBB', // Turquoise
+	Presidente: '#17458F', // Rotary Royal Blue
+	Segretario: '#00A2E0', // Sky Blue
+	Tesoriere: '#F7A81B', // Rotary Gold
 	Prefetto: '#FF7600', // Orange
 	Cerimoniale: '#00ADBB', // Turquoise
-	Segretario: '#00A2E0', // Sky Blue
 	'Cultura Rotariana': '#901F93', // Violet
 };
 const DEFAULT_TAG_COLOR = '#D41367'; // Cranberry — brand default, also used when a resource has no tags at all
@@ -61,18 +79,17 @@ export function tagPillStyle(tag: string): string {
 }
 
 /**
- * A resource card's background: a soft gradient blended from its tags' colors (one tag = a single
- * tint fading to white, two = a blend between both, extra tags beyond the first two don't add more
- * stops so the gradient stays readable), falling back to the brand Cranberry for untagged resources.
+ * A resource card's background: sets the smoke-animation RGB variables (--smoke-c1, --smoke-c2)
+ * derived from its tags' colors, plus a fallback static soft linear gradient.
  */
 export function resourceCardGradient(tags: string[]): string {
 	const colors = tags.length > 0 ? tags.slice(0, 2).map(tagColor) : [DEFAULT_TAG_COLOR];
-	const tints = colors.map((hex) => {
-		const { r, g, b } = hexToRgb(hex);
-		return `rgba(${r}, ${g}, ${b}, 0.1)`;
-	});
-	const stops = tints.length === 1 ? `${tints[0]} 0%, #fff 60%` : `${tints[0]} 0%, ${tints[1]} 55%, #fff 90%`;
-	return `background: linear-gradient(155deg, ${stops});`;
+	const rgb1 = hexToRgb(colors[0]);
+	const rgb2 = hexToRgb(colors[1] ?? colors[0]);
+	const stops = colors.length === 1
+		? `rgba(${rgb1.r}, ${rgb1.g}, ${rgb1.b}, 0.1) 0%, #fff 60%`
+		: `rgba(${rgb1.r}, ${rgb1.g}, ${rgb1.b}, 0.1) 0%, rgba(${rgb2.r}, ${rgb2.g}, ${rgb2.b}, 0.1) 55%, #fff 90%`;
+	return `--smoke-c1: ${rgb1.r}, ${rgb1.g}, ${rgb1.b}; --smoke-c2: ${rgb2.r}, ${rgb2.g}, ${rgb2.b}; background: linear-gradient(155deg, ${stops});`;
 }
 
 /**

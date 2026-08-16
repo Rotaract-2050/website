@@ -2,7 +2,7 @@
 title: 'Storia del Rotary'
 titleEn: 'History of Rotary'
 tags:
-  - Cultura Rotariana
+  - Storia & Valori
 order: 14
 excerpt: "Dalla prima riunione del 1905 a Chicago alla nascita del Distretto 2050: le tappe fondamentali della storia del Rotary."
 excerptEn: "From the first 1905 meeting in Chicago to the birth of District 2050: the key milestones in Rotary's history."

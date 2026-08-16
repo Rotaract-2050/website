@@ -3,6 +3,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SeoHead from '../components/SeoHead.astro';
 import JsonLd from '../components/JsonLd.astro';
+import FormazioneChatWidget from '../components/FormazioneChatWidget.astro';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { requestWithMetadata } from '@tinacms/astro';
 import client from '../../tina/__generated__/client';
@@ -45,7 +46,7 @@ const settings = data.settings;
 const resolvedImage = image || settings.defaultOgImage || DEFAULT_OG_IMAGE;
 const pageTitle = title === SITE_NAME ? title : `${title} | ${SITE_NAME}`;
 const organizationGraph = buildOrganizationGraph(
-	{ about: settings.about, logo: new URL(settings.logo || DEFAULT_OG_IMAGE, Astro.site).toString() },
+	{ about: settings.about, logo: new URL(settings.logo || DEFAULT_OG_IMAGE, Astro.site).toString(), fiscalCode: settings.fiscalCode },
 	Astro.site!.toString()
 );
 ---
@@ -88,6 +89,7 @@ const organizationGraph = buildOrganizationGraph(
 				<slot />
 			</main>
 			<Footer lang={lang} settings={settings} />
+			{current === 'formazione' && <FormazioneChatWidget lang={lang} />}
 		</div>
 	</body>
 </html>

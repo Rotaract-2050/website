@@ -68,6 +68,20 @@ L'ambizione dichiarata di questa sezione è diventare una fonte pubblica che i c
 - Il resto (canonical, hreflang it/en + x-default, OG/Twitter card, `Article` JSON-LD per scheda, niente `noindex`) arriva gratis da `BaseLayout`/`SeoHead.astro`/`buildArticleJsonLd` — infrastruttura sitewide già esistente, non specifica di questa sezione, ma su cui `/formazione` si appoggia interamente.
 - I wikilink `[[slug]]` (vedi sopra) costruiscono da soli un grafo di link interni tra le schede — buon segnale per i crawler oltre che comodo per chi legge.
 
+## Assistente AI (mini-chat) — in-context learning su Gemini
+
+Widget flottante presente su tutte le pagine `/formazione*` (indice + ogni scheda, IT/EN), che risponde a domande usando **solo** il contenuto delle schede pubblicate, passato per intero nel system prompt ad ogni richiesta (nessun RAG/vector DB — corpus piccolo e testuale, sta comodamente nel context window). File: `src/lib/formazione-chat.ts` (system prompt, chiamata Gemini, verifica Turnstile), `src/pages/api/formazione-chat.ts` (route `POST`), `src/components/FormazioneChatWidget.astro` (UI vanilla JS, nessun `client:*`), incluso da `BaseLayout.astro` quando `current === 'formazione'`.
+
+**Secrets**: `GEMINI_API_KEY` e `TURNSTILE_SECRET_KEY`, primi secret del progetto. Letti via `import { env } from 'cloudflare:workers'` (non `Astro.locals.runtime.env`, **rimosso in Astro v6** nella versione installata di `@astrojs/cloudflare` — throws un errore esplicito che indica il sostituto). Tipizzati da `worker-configuration.d.ts` (root, generato da `npm run cf-typegen` = `wrangler types`, va rigenerato e committato ogni volta che cambia un binding/secret in `.dev.vars`/`wrangler.jsonc`; contiene solo forme di tipo, mai valori). Locale: `.dev.vars` (gitignored). Produzione: `wrangler secret put GEMINI_API_KEY`/`TURNSTILE_SECRET_KEY` sul Worker `website`.
+
+**Bug/scoperte Gemini API, verificate live durante l'implementazione (2026-08)**:
+- `gemini-2.5-flash` **non è più disponibile per chiavi/progetti nuovi** — l'endpoint `generateContent` risponde `404` con `"This model ... is no longer available to new users"`. Modello attuale usato: `gemini-3.5-flash` (costante `GEMINI_MODEL` in `lib/formazione-chat.ts`, cambiarla è una riga). Verificare il catalogo modelli (`GET /v1beta/models` con la propria chiave) prima di assumere che un nome modello sia ancora valido: cambia rapidamente.
+- Per disattivare/minimizzare il "thinking" su questa generazione di modelli, il campo corretto è `generationConfig.thinkingConfig.thinkingLevel` (valori: `low`/`medium`/`high`), **non** `thinkingBudget` (quello è per la generazione 2.5, su 3.x viene ignorato silenziosamente, nessun errore). `'minimal'` risulta rifiutato (`400 INVALID_ARGUMENT`) su `gemini-3.5-flash`/`gemini-flash-latest`: `'low'` è il livello minimo realmente accettato, e anche a quel livello consuma in modo variabile ~90-400+ token di "thinking" prima di scrivere la risposta (contano nel budget di `maxOutputTokens`, quindi un cap troppo stretto tronca la risposta vera con `finishReason: "MAX_TOKENS"` senza testo). `MAX_OUTPUT_TOKENS` in `lib/formazione-chat.ts` è stato quindi impostato a 1500, non un valore più conservativo tipo 800.
+
+**Turnstile**: widget "formazione-chat" (azione `formazione-chat`, validata server-side su `verifyTurnstile` in `lib/formazione-chat.ts`), reso invisibile lato client via `execution: 'execute'` + `appearance: 'interaction-only'` (nessun checkbox visibile a meno che Cloudflare non richieda un challenge interattivo) — eseguito una volta per ogni messaggio inviato, poi resettato (`turnstile.reset`), dato che un token è monouso.
+
+**Memoria conversazione**: multi-turno tenuto lato client (array in memoria nel widget, max 6 messaggi, non persistito tra reload), reinviato ad ogni richiesta — nessuno storage lato server. Il server ricappa comunque `MAX_MESSAGES`/`MAX_MESSAGE_LENGTH` indipendentemente da cosa manda il client.
+
 ## Mappa file
 
 - `tina/config.ts` — collection `resources` + template blocco `ResourceArchive`.
@@ -78,3 +92,4 @@ L'ambizione dichiarata di questa sezione è diventare una fonte pubblica che i c
 - `src/components/ResourceView.astro` — pagina scheda (dettaglio), condivisa IT/EN, dispatchata da `[...slug].astro`/`en/[...slug].astro` (vedi bug di routing sopra).
 - `src/content/resources/*.md` — le schede stesse (12 oggi, tutte Cerimoniale).
 - `src/content/pages/{it,en}/formazione.md` — pagina indice (banner + blocco `ResourceArchive`).
+- `src/lib/formazione-chat.ts`, `src/pages/api/formazione-chat.ts`, `src/components/FormazioneChatWidget.astro` — assistente AI (vedi sezione dedicata sopra).

@@ -24,6 +24,8 @@ export interface UiStrings {
 		socialTitle: string;
 		copyright: string;
 		underRotary: string;
+		fiscalCodeLabel: string;
+		sourceCode: string;
 	};
 	calendar: {
 		agendaTab: string;
@@ -109,9 +111,24 @@ export interface UiStrings {
 		filesLabel: string;
 		openInDriveLabel: string;
 	};
+	chat: {
+		fabLabel: string;
+		title: string;
+		closeLabel: string;
+		placeholder: string;
+		sendLabel: string;
+		disclaimer: string;
+		greeting: string;
+		errorGeneric: string;
+		errorQuota: string;
+		errorNotConfigured: string;
+		errorEmptyCorpus: string;
+		errorTurnstile: string;
+		errorInvalidInput: string;
+	};
 }
 
-export type SocialName = 'instagram' | 'linkedin';
+export type SocialName = 'instagram' | 'linkedin' | 'github';
 
 export const SOCIAL_LINKS: { name: SocialName; label: string; href: string }[] = [
 	{ name: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/rotaract2050/' },
@@ -153,6 +170,8 @@ const IT: UiStrings = {
 		socialTitle: 'SEGUICI',
 		copyright: '© Rotaract Distretto 2050',
 		underRotary: 'Sostenuto dal Rotary Distretto 2050',
+		fiscalCodeLabel: 'CF',
+		sourceCode: 'Questo sito è open source',
 	},
 	calendar: {
 		agendaTab: 'Agenda',
@@ -251,6 +270,21 @@ const IT: UiStrings = {
 		filesLabel: 'File',
 		openInDriveLabel: 'Apri su Google Drive',
 	},
+	chat: {
+		fabLabel: 'Apri l\'assistente Formazione',
+		title: 'Assistente Formazione',
+		closeLabel: 'Chiudi l\'assistente',
+		placeholder: 'Scrivi una domanda…',
+		sendLabel: 'Invia',
+		disclaimer: 'Risposte generate da un\'intelligenza artificiale sulla base delle schede pubblicate: possono contenere imprecisioni.',
+		greeting: 'Ciao! Chiedimi qualcosa sulle schede di Formazione: cerimoniale, ruoli del club, cultura rotariana.',
+		errorGeneric: 'Qualcosa non ha funzionato. Riprova tra poco.',
+		errorQuota: 'L\'assistente è molto richiesto in questo momento. Riprova tra qualche minuto.',
+		errorNotConfigured: 'Assistente non ancora configurato.',
+		errorEmptyCorpus: 'Nessuna scheda pubblicata al momento: l\'assistente non ha ancora contenuti su cui rispondere.',
+		errorTurnstile: 'Verifica anti-bot non riuscita. Ricarica la pagina e riprova.',
+		errorInvalidInput: 'Domanda non valida: prova con un testo più breve.',
+	},
 };
 
 const EN: UiStrings = {
@@ -277,6 +311,8 @@ const EN: UiStrings = {
 		socialTitle: 'FOLLOW US',
 		copyright: '© Rotaract District 2050',
 		underRotary: 'Sponsored by Rotary District 2050',
+		fiscalCodeLabel: 'CF',
+		sourceCode: 'This site is open source',
 	},
 	calendar: {
 		agendaTab: 'Agenda',
@@ -374,6 +410,21 @@ const EN: UiStrings = {
 		foldersLabel: 'Folders',
 		filesLabel: 'Files',
 		openInDriveLabel: 'Open in Google Drive',
+	},
+	chat: {
+		fabLabel: 'Open the Formazione assistant',
+		title: 'Formazione assistant',
+		closeLabel: 'Close the assistant',
+		placeholder: 'Ask a question…',
+		sendLabel: 'Send',
+		disclaimer: 'AI-generated answers based on the published guides — they may contain inaccuracies.',
+		greeting: 'Hi! Ask me anything about the Formazione guides: protocol, club roles, Rotary culture.',
+		errorGeneric: 'Something went wrong. Please try again shortly.',
+		errorQuota: 'The assistant is in high demand right now. Please try again in a few minutes.',
+		errorNotConfigured: 'Assistant not configured yet.',
+		errorEmptyCorpus: 'No guides published yet: the assistant has no content to answer from.',
+		errorTurnstile: 'Bot check failed. Reload the page and try again.',
+		errorInvalidInput: 'Invalid question: try a shorter message.',
 	},
 };
 

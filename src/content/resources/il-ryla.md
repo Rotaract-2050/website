@@ -2,7 +2,7 @@
 title: 'Il RYLA'
 titleEn: 'RYLA'
 tags:
-  - Cultura Rotariana
+  - Leadership & Giovani
 order: 21
 excerpt: 'Il RYLA (Rotary Youth Leadership Awards): programma di leadership per i giovani finanziato dalla Rotary Foundation.'
 excerptEn: 'RYLA (Rotary Youth Leadership Awards): a youth leadership programme funded by the Rotary Foundation.'

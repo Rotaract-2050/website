@@ -34,7 +34,7 @@ TINA_PID=$!
 
 echo "Attendo che TinaCMS sia pronto..."
 for _ in $(seq 1 30); do
-  if curl -sf http://localhost:4001/graphql -o /dev/null 2>/dev/null; then
+  if curl -sf -X POST -H "Content-Type: application/json" -d '{"query":"{__typename}"}' http://localhost:4001/graphql -o /dev/null 2>/dev/null; then
     break
   fi
   sleep 1

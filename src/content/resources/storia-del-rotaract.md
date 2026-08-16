@@ -2,7 +2,7 @@
 title: 'Storia del Rotaract'
 titleEn: 'History of Rotaract'
 tags:
-  - Cultura Rotariana
+  - Storia & Valori
 order: 15
 excerpt: "Le origini del Rotaract negli anni '60, il riconoscimento ufficiale con \"Elevate Rotaract\" nel 2019, e la sua diffusione in Italia."
 excerptEn: "Rotaract's origins in the 1960s, its official recognition through \"Elevate Rotaract\" in 2019, and its spread across Italy."

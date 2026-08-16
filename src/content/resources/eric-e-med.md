@@ -2,7 +2,7 @@
 title: 'ERIC e MED'
 titleEn: 'ERIC and MED'
 tags:
-  - Cultura Rotariana
+  - Dimensione Internazionale
 order: 20
 excerpt: "Le due principali MDIO a cui il nostro contesto è collegato: ERIC (area europea) e MED (area mediterranea) — organi, assemblee ed eventi."
 excerptEn: 'The two main MDIOs relevant to our context: ERIC (European area) and MED (Mediterranean area) — governing bodies, assemblies and events.'

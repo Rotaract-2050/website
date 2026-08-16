@@ -1,5 +1,6 @@
 ---
-import { tagSlug, tagPillStyle, resourceCardGradient } from '../lib/resources';
+import { tagSlug, tagPillStyle, resourceCardGradient, tagColor } from '../lib/resources';
+import ResourceIcon from './ResourceIcon.astro';
 
 interface Props {
 	href: string;
@@ -16,17 +17,22 @@ interface Props {
 }
 
 const { href, tags, tagKeys, title, excerpt, bodyText, readMoreLabel, tinaFieldAttr } = Astro.props;
+const primaryTag = tagKeys[0];
+const iconColor = tagColor(primaryTag);
 ---
 
 <article class="resource-card" data-tags={tagKeys.map(tagSlug).join(' ')} data-search={bodyText} style={resourceCardGradient(tagKeys)} data-tina-field={tinaFieldAttr}>
+	<div class="fog-container" aria-hidden="true">
+		<div class="fog-bank fog-bank-1"></div>
+		<div class="fog-bank fog-bank-2"></div>
+		<div class="fog-bank fog-bank-3"></div>
+		<div class="fog-bank fog-bank-4"></div>
+		<div class="fog-bank fog-bank-5"></div>
+	</div>
 	<a href={href} class="resource-link">
 		<div class="resource-top">
-			<!-- Placeholder glyph: a per-topic icon set is still to be designed, see PR discussion. -->
-			<span class="resource-icon" aria-hidden="true">
-				<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-					<path d="M12 3 4 6.5V12c0 4.5 3.2 7.9 8 9 4.8-1.1 8-4.5 8-9V6.5L12 3Z"></path>
-					<path d="m9 12 2 2 4-4"></path>
-				</svg>
+			<span class="resource-icon" style={`--icon-color: ${iconColor};`} aria-hidden="true">
+				<ResourceIcon tag={primaryTag} />
 			</span>
 			{tags.length > 0 && (
 				<div class="resource-tags">
@@ -38,23 +44,213 @@ const { href, tags, tagKeys, title, excerpt, bodyText, readMoreLabel, tinaFieldA
 		</div>
 		<h3 class="resource-title">{title}</h3>
 		<p class="resource-excerpt">{excerpt}</p>
-		<span class="resource-read-more">{readMoreLabel} <span aria-hidden="true">→</span></span>
+		<span class="resource-read-more">{readMoreLabel}</span>
 	</a>
 </article>
 
 <style>
 	.resource-card {
+		position: relative;
+		isolation: isolate;
+		background: #ffffff;
 		border-radius: var(--shape-extra-large);
+		border: 1px solid rgba(228, 231, 238, 0.8);
 		box-shadow: var(--elevation-1);
-		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
+		overflow: hidden;
+		transition:
+			transform var(--motion-duration-medium) var(--motion-easing-emphasized),
+			box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized),
+			border-color var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
 	.resource-card:hover {
 		transform: translateY(-6px);
-		box-shadow: var(--elevation-4);
+		box-shadow: var(--elevation-4), 0 14px 30px -6px rgba(var(--smoke-c1), 0.25);
+		border-color: rgba(var(--smoke-c1), 0.45);
+	}
+
+	/* Fog background container */
+	.fog-container {
+		position: absolute;
+		inset: 0;
+		overflow: hidden;
+		border-radius: inherit;
+		pointer-events: none;
+		z-index: 0;
+		opacity: 0.35;
+		transition: opacity var(--motion-duration-short) var(--motion-easing-standard);
+	}
+
+	.resource-card:hover .fog-container {
+		opacity: 0.75;
+	}
+
+	.fog-bank {
+		position: absolute;
+		border-radius: 45%;
+		filter: blur(24px);
+		opacity: 0.5;
+		will-change: transform, opacity;
+		transition:
+			opacity var(--motion-duration-short) var(--motion-easing-standard),
+			filter var(--motion-duration-short) var(--motion-easing-standard);
+	}
+
+	.resource-card:hover .fog-bank {
+		opacity: 0.8;
+		filter: blur(20px);
+	}
+
+	/* Fog Bank 1: Primary tag fog rolling across the top */
+	.fog-bank-1 {
+		width: 220%;
+		height: 150%;
+		top: -35%;
+		left: -60%;
+		background: radial-gradient(ellipse 60% 45% at 40% 45%, rgba(var(--smoke-c1), 0.28) 0%, rgba(var(--smoke-c1), 0.12) 42%, transparent 72%);
+		animation: fogDrift1 10s ease-in-out infinite alternate;
+	}
+
+	/* Fog Bank 2: Secondary tag billowing fog cloud surging from bottom-right */
+	.fog-bank-2 {
+		width: 210%;
+		height: 145%;
+		bottom: -35%;
+		right: -60%;
+		background: radial-gradient(ellipse 55% 50% at 60% 55%, rgba(var(--smoke-c2), 0.25) 0%, rgba(var(--smoke-c2), 0.1) 44%, transparent 72%);
+		animation: fogDrift2 12s ease-in-out infinite alternate;
+		animation-delay: -2s;
+	}
+
+	/* Fog Bank 3: Rapidly swirling vortex plume */
+	.fog-bank-3 {
+		width: 160%;
+		height: 160%;
+		top: -30%;
+		right: -30%;
+		background: radial-gradient(circle at 50% 50%, rgba(var(--smoke-c1), 0.2) 0%, rgba(var(--smoke-c2), 0.14) 38%, transparent 68%);
+		animation: fogSwirl 14s linear infinite;
+		animation-delay: -4s;
+	}
+
+	/* Fog Bank 4: Subtle vapor highlight billow */
+	.fog-bank-4 {
+		width: 170%;
+		height: 130%;
+		top: 15%;
+		left: -35%;
+		background: radial-gradient(ellipse 65% 40% at 50% 50%, rgba(255, 255, 255, 0.45) 0%, rgba(var(--smoke-c1), 0.1) 40%, transparent 70%);
+		mix-blend-mode: overlay;
+		animation: fogBillow 8s ease-in-out infinite alternate;
+		animation-delay: -1.5s;
+	}
+
+	/* Fog Bank 5: Counter-rotating vapor plume for rich churning turbulence */
+	.fog-bank-5 {
+		width: 150%;
+		height: 150%;
+		bottom: -20%;
+		left: -20%;
+		background: radial-gradient(circle at 45% 45%, rgba(var(--smoke-c2), 0.18) 0%, rgba(var(--smoke-c1), 0.08) 42%, transparent 68%);
+		animation: fogChurn 11s ease-in-out infinite alternate;
+		animation-delay: -3.5s;
+	}
+
+	/* Fast, dynamic motion on hover */
+	.resource-card:hover .fog-bank-1 {
+		animation-duration: 3.2s;
+	}
+	.resource-card:hover .fog-bank-2 {
+		animation-duration: 3.8s;
+	}
+	.resource-card:hover .fog-bank-3 {
+		animation-duration: 4.2s;
+	}
+	.resource-card:hover .fog-bank-4 {
+		animation-duration: 2.8s;
+	}
+	.resource-card:hover .fog-bank-5 {
+		animation-duration: 3.5s;
+	}
+
+	@keyframes fogDrift1 {
+		0% {
+			transform: translate(0, 0) scale(1, 1) rotate(0deg);
+		}
+		33% {
+			transform: translate(32%, 14%) scale(1.15, 0.88) rotate(12deg);
+		}
+		66% {
+			transform: translate(14%, -18%) scale(0.9, 1.14) rotate(-8deg);
+		}
+		100% {
+			transform: translate(45%, 8%) scale(1.1, 0.94) rotate(16deg);
+		}
+	}
+
+	@keyframes fogDrift2 {
+		0% {
+			transform: translate(0, 0) scale(1, 1) rotate(0deg);
+		}
+		33% {
+			transform: translate(-35%, -16%) scale(0.88, 1.15) rotate(-14deg);
+		}
+		66% {
+			transform: translate(-16%, 18%) scale(1.14, 0.9) rotate(10deg);
+		}
+		100% {
+			transform: translate(-42%, -8%) scale(1.05, 1.1) rotate(-18deg);
+		}
+	}
+
+	@keyframes fogSwirl {
+		0% {
+			transform: rotate(0deg) scale(1) translate(0, 0);
+		}
+		50% {
+			transform: rotate(180deg) scale(1.22, 0.82) translate(22%, -14%);
+		}
+		100% {
+			transform: rotate(360deg) scale(1) translate(0, 0);
+		}
+	}
+
+	@keyframes fogBillow {
+		0% {
+			transform: translate(0, 0) scale(0.85, 1);
+			opacity: 0.35;
+		}
+		50% {
+			transform: translate(28%, -14%) scale(1.25, 0.82);
+			opacity: 0.9;
+		}
+		100% {
+			transform: translate(48%, 12%) scale(1.05, 1.12);
+			opacity: 0.5;
+		}
+	}
+
+	@keyframes fogChurn {
+		0% {
+			transform: translate(0, 0) rotate(0deg) scale(1);
+		}
+		50% {
+			transform: translate(20%, -22%) rotate(-25deg) scale(1.18, 0.88);
+		}
+		100% {
+			transform: translate(-18%, 15%) rotate(20deg) scale(0.92, 1.12);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.fog-bank {
+			animation: none !important;
+		}
 	}
 
 	.resource-link {
+		position: relative;
+		z-index: 1;
 		display: block;
 		color: inherit;
 		padding: 24px;
@@ -77,8 +273,16 @@ const { href, tags, tagKeys, title, excerpt, bodyText, readMoreLabel, tinaFieldA
 		height: 44px;
 		flex-shrink: 0;
 		border-radius: var(--shape-medium);
-		background: rgba(212, 19, 103, 0.12);
-		color: var(--color-pink);
+		background: color-mix(in srgb, var(--icon-color, var(--color-pink)) 12%, transparent);
+		color: var(--icon-color, var(--color-pink));
+		transition:
+			transform var(--motion-duration-short) var(--motion-easing-standard),
+			background var(--motion-duration-short) var(--motion-easing-standard);
+	}
+
+	.resource-card:hover .resource-icon {
+		transform: scale(1.08);
+		background: color-mix(in srgb, var(--icon-color, var(--color-pink)) 20%, transparent);
 	}
 
 	.resource-tags {
@@ -99,6 +303,11 @@ const { href, tags, tagKeys, title, excerpt, bodyText, readMoreLabel, tinaFieldA
 		padding: 6px 12px;
 		border-radius: var(--shape-full);
 		box-shadow: var(--elevation-1);
+		transition: transform var(--motion-duration-short) var(--motion-easing-standard);
+	}
+
+	.resource-card:hover .resource-tag {
+		transform: translateY(-1px);
 	}
 
 	.resource-title {
@@ -127,13 +336,17 @@ const { href, tags, tagKeys, title, excerpt, bodyText, readMoreLabel, tinaFieldA
 	}
 
 	.resource-read-more {
-		display: inline-block;
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
 		color: var(--color-pink);
 		font-weight: 700;
 		font-size: 13px;
+		transition: transform var(--motion-duration-short) var(--motion-easing-standard);
 	}
 
 	.resource-card:hover .resource-read-more {
+		transform: translateX(4px);
 		text-decoration: underline;
 	}
 </style>

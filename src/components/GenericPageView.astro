@@ -4,9 +4,9 @@ import client from '../../tina/__generated__/client';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageBanner from './PageBanner.astro';
 import BlockRenderer from './BlockRenderer.astro';
-import { getRelativeLocaleUrl } from 'astro:i18n';
 import type { Lang } from '../data/ui-strings';
 import type { PageKey } from '../data/routes';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 interface Props {
 	lang: Lang;

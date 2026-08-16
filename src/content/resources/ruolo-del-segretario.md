@@ -3,6 +3,8 @@ title: 'Il ruolo del Segretario'
 titleEn: "The Secretary's role"
 tags:
   - Segretario
+  - Gestione & Strumenti
+  - Struttura & Governance
 order: 13
 excerpt: "Il Segretario è il custode della continuità del Club: verbali, archivio, comunicazioni e scadenze istituzionali. Elenco dei compiti e delle scadenze amministrative dell'anno rotariano."
 excerptEn: "The Secretary is the Club's guardian of continuity: minutes, archive, communications and institutional deadlines. List of duties and the Rotary year's administrative deadlines."

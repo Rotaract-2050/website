@@ -11,7 +11,8 @@
     "build": "NODE_OPTIONS=--max-old-space-size=4096 tinacms build -c \"astro build\"",
     "preview": "astro preview",
     "astro": "astro",
-    "fetch:zone-boundaries": "node scripts/fetch-zone-boundaries.mjs"
+    "fetch:zone-boundaries": "node scripts/fetch-zone-boundaries.mjs",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.2.1",
