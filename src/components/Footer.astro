@@ -60,7 +60,14 @@ const href = (page: PageKey) => getRelativeLocaleUrl(lang, pageSlugs[page]);
 		</div>
 	</div>
 	<div class="footer-bottom">
-		<div>{t.footer.copyright}</div>
+		<div class="footer-copyright">
+			<span>{t.footer.copyright}</span>
+			<span class="separator">|</span>
+			<a href="https://github.com/Rotaract-2050/website" target="_blank" rel="noopener noreferrer" class="github-link">
+				<span class="icon-wrap"><SocialIcon name="github" /></span>
+				<span>{t.footer.sourceCode}</span>
+			</a>
+		</div>
 		<div>{t.footer.underRotary}</div>
 	</div>
 </footer>
@@ -160,6 +167,37 @@ const href = (page: PageKey) => getRelativeLocaleUrl(lang, pageSlugs[page]);
 		color: rgba(255, 255, 255, 0.5);
 		flex-wrap: wrap;
 		gap: 8px;
+	}
+
+	.footer-copyright {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.separator {
+		opacity: 0.5;
+	}
+
+	.github-link {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		color: inherit;
+		text-decoration: none;
+		transition: opacity 0.2s;
+	}
+
+	.github-link:hover {
+		opacity: 0.8;
+		text-decoration: underline;
+	}
+
+	.icon-wrap {
+		width: 14px;
+		height: 14px;
+		display: flex;
 	}
 
 	@media (max-width: 900px) {
