@@ -1,0 +1,47 @@
+name: Auto-translate pages IT→EN
+
+# Nightly batch, not on every push: collects whatever was edited during the day and translates
+# it all in one pass (one commit, one set of Workers AI calls with full-page context for
+# terminology/tone consistency) instead of reacting to each individual commit. Also sidesteps
+# any push-triggered self-retrigger concern entirely, since `schedule` doesn't fire from commits.
+on:
+  schedule:
+    # 01:00 UTC ≈ 02:00/03:00 Europe/Rome depending on CET/CEST — GitHub Actions cron always
+    # runs in UTC, DST is not accounted for automatically.
+    - cron: '0 1 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run auto-translation
+        id: translate
+        env:
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CF_AI_API_TOKEN: ${{ secrets.CF_AI_API_TOKEN }}
+        run: node scripts/auto-translate-pages.mjs
+
+      - name: Commit and push translated fields
+        if: steps.translate.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/content/pages
+          git diff --cached --quiet && exit 0
+          git commit -m "chore(i18n): auto-translate IT→EN via Cloudflare Workers AI (batch notturno)"
+          git fetch origin "${{ github.ref_name }}"
+          git rebase "origin/${{ github.ref_name }}"
+          git push origin "HEAD:${{ github.ref_name }}"

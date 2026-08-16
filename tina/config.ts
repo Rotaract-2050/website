@@ -1,11 +1,12 @@
 import { defineConfig } from 'tinacms';
 import { focalImageFields } from './fields/focalPointImage';
 
+// Pages are a single file (IT + EN fields together, like clubs/zones/news/events/resources) —
+// the router just jumps to the IT (default-locale) route, same as clubs/zones get no router
+// override at all. "home" is the one page-specific special case: it maps to `/`, not `/home`.
 const pageRouter = ({ document }: { document: { _sys: { breadcrumbs: string[] } } }) => {
-	const [locale, ...rest] = document._sys.breadcrumbs;
-	const slug = rest.join('/');
-	const path = slug === 'home' ? '' : slug;
-	return locale === 'it' ? `/${path}` : `/en/${path}`;
+	const slug = document._sys.breadcrumbs.join('/');
+	return slug === 'home' ? '/' : `/${slug}`;
 };
 
 // news/events are single files (IT + EN fields together, like clubs/zones) — the router just
@@ -43,10 +44,14 @@ const heroTemplate = {
 			ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 			fields: [
 				...focalImageFields('image', 'Foto di sfondo'),
-				{ type: 'string' as const, name: 'eyebrow', label: 'Etichetta' },
-				{ type: 'string' as const, name: 'title', label: 'Titolo' },
-				{ type: 'string' as const, name: 'subtitle', label: 'Sottotitolo', ui: { component: 'textarea' } },
-				{ type: 'string' as const, name: 'ctaLabel', label: 'Testo pulsante' },
+				{ type: 'string' as const, name: 'eyebrow', label: 'Etichetta (IT)' },
+				{ type: 'string' as const, name: 'eyebrowEn', label: 'Etichetta (EN)' },
+				{ type: 'string' as const, name: 'title', label: 'Titolo (IT)' },
+				{ type: 'string' as const, name: 'titleEn', label: 'Titolo (EN)' },
+				{ type: 'string' as const, name: 'subtitle', label: 'Sottotitolo (IT)', ui: { component: 'textarea' } },
+				{ type: 'string' as const, name: 'subtitleEn', label: 'Sottotitolo (EN)', ui: { component: 'textarea' } },
+				{ type: 'string' as const, name: 'ctaLabel', label: 'Testo pulsante (IT)' },
+				{ type: 'string' as const, name: 'ctaLabelEn', label: 'Testo pulsante (EN)' },
 			],
 		},
 	],
@@ -64,7 +69,8 @@ const statsBarTemplate = {
 			ui: { itemProps: (item: { label?: string }) => ({ label: item.label }) },
 			fields: [
 				{ type: 'string' as const, name: 'value', label: 'Valore' },
-				{ type: 'string' as const, name: 'label', label: 'Etichetta' },
+				{ type: 'string' as const, name: 'label', label: 'Etichetta (IT)' },
+				{ type: 'string' as const, name: 'labelEn', label: 'Etichetta (EN)' },
 			],
 		},
 	],
@@ -75,16 +81,24 @@ const splitSectionTemplate = {
 	label: 'Sezione divisa (testo + immagine)',
 	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 	fields: [
-		{ type: 'string' as const, name: 'kicker', label: 'Eyebrow' },
-		{ type: 'string' as const, name: 'title', label: 'Titolo', required: true },
-		{ type: 'string' as const, name: 'quote', label: 'Citazione', ui: { component: 'textarea' } },
-		{ type: 'string' as const, name: 'body', label: 'Testo', ui: { component: 'textarea' } },
-		{ type: 'string' as const, name: 'subhead', label: 'Sottotitolo secondario' },
-		{ type: 'string' as const, name: 'body2', label: 'Testo secondario', ui: { component: 'textarea' } },
-		{ type: 'string' as const, name: 'ctaLabel', label: 'Testo pulsante' },
+		{ type: 'string' as const, name: 'kicker', label: 'Eyebrow (IT)' },
+		{ type: 'string' as const, name: 'kickerEn', label: 'Eyebrow (EN)' },
+		{ type: 'string' as const, name: 'title', label: 'Titolo (IT)', required: true },
+		{ type: 'string' as const, name: 'titleEn', label: 'Titolo (EN)' },
+		{ type: 'string' as const, name: 'quote', label: 'Citazione (IT)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'quoteEn', label: 'Citazione (EN)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'body', label: 'Testo (IT)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'bodyEn', label: 'Testo (EN)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'subhead', label: 'Sottotitolo secondario (IT)' },
+		{ type: 'string' as const, name: 'subheadEn', label: 'Sottotitolo secondario (EN)' },
+		{ type: 'string' as const, name: 'body2', label: 'Testo secondario (IT)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'body2En', label: 'Testo secondario (EN)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'ctaLabel', label: 'Testo pulsante (IT)' },
+		{ type: 'string' as const, name: 'ctaLabelEn', label: 'Testo pulsante (EN)' },
 		{ type: 'string' as const, name: 'ctaHref', label: 'Link pulsante (slug pagina)' },
 		...focalImageFields('image', 'Immagine'),
-		{ type: 'string' as const, name: 'imageLabel', label: 'Didascalia segnaposto immagine', required: true },
+		{ type: 'string' as const, name: 'imageLabel', label: 'Didascalia segnaposto immagine (IT)', required: true },
+		{ type: 'string' as const, name: 'imageLabelEn', label: 'Didascalia segnaposto immagine (EN)' },
 		{
 			type: 'string' as const,
 			name: 'imageSide',
@@ -99,7 +113,8 @@ const cardGridTemplate = {
 	label: 'Griglia link',
 	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 	fields: [
-		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
+		{ type: 'string' as const, name: 'title', label: 'Titolo sezione (IT)', required: true },
+		{ type: 'string' as const, name: 'titleEn', label: 'Titolo sezione (EN)' },
 		{
 			type: 'object' as const,
 			name: 'items',
@@ -107,8 +122,10 @@ const cardGridTemplate = {
 			list: true,
 			ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 			fields: [
-				{ type: 'string' as const, name: 'title', label: 'Titolo' },
-				{ type: 'string' as const, name: 'meta', label: 'Sottotitolo' },
+				{ type: 'string' as const, name: 'title', label: 'Titolo (IT)' },
+				{ type: 'string' as const, name: 'titleEn', label: 'Titolo (EN)' },
+				{ type: 'string' as const, name: 'meta', label: 'Sottotitolo (IT)' },
+				{ type: 'string' as const, name: 'metaEn', label: 'Sottotitolo (EN)' },
 				{ type: 'string' as const, name: 'href', label: 'Link (slug pagina)' },
 				{
 					type: 'string' as const,
@@ -131,8 +148,10 @@ const valuesGridTemplate = {
 	label: 'Griglia valori',
 	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 	fields: [
-		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
-		{ type: 'string' as const, name: 'intro', label: 'Testo introduttivo (opzionale)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'title', label: 'Titolo sezione (IT)', required: true },
+		{ type: 'string' as const, name: 'titleEn', label: 'Titolo sezione (EN)' },
+		{ type: 'string' as const, name: 'intro', label: 'Testo introduttivo (IT, opzionale)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'introEn', label: 'Testo introduttivo (EN, opzionale)', ui: { component: 'textarea' } },
 		{
 			type: 'string' as const,
 			name: 'accent',
@@ -180,8 +199,10 @@ const valuesGridTemplate = {
 						{ value: 'leaf', label: 'Ambiente (foglia)' },
 					],
 				},
-				{ type: 'string' as const, name: 'title', label: 'Titolo' },
-				{ type: 'string' as const, name: 'description', label: 'Descrizione', ui: { component: 'textarea' } },
+				{ type: 'string' as const, name: 'title', label: 'Titolo (IT)' },
+				{ type: 'string' as const, name: 'titleEn', label: 'Titolo (EN)' },
+				{ type: 'string' as const, name: 'description', label: 'Descrizione (IT)', ui: { component: 'textarea' } },
+				{ type: 'string' as const, name: 'descriptionEn', label: 'Descrizione (EN)', ui: { component: 'textarea' } },
 			],
 		},
 	],
@@ -192,9 +213,11 @@ const roleGridTemplate = {
 	label: 'Griglia ruoli',
 	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 	fields: [
-		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
+		{ type: 'string' as const, name: 'title', label: 'Titolo sezione (IT)', required: true },
+		{ type: 'string' as const, name: 'titleEn', label: 'Titolo sezione (EN)' },
 		{ type: 'boolean' as const, name: 'showDisclaimer', label: 'Mostra disclaimer' },
-		{ type: 'string' as const, name: 'disclaimerText', label: 'Testo disclaimer' },
+		{ type: 'string' as const, name: 'disclaimerText', label: 'Testo disclaimer (IT)' },
+		{ type: 'string' as const, name: 'disclaimerTextEn', label: 'Testo disclaimer (EN)' },
 		{
 			type: 'boolean' as const,
 			name: 'highlightFirst',
@@ -210,7 +233,8 @@ const roleGridTemplate = {
 				{ type: 'string' as const, name: 'initials', label: 'Iniziali (fallback se manca la foto)' },
 				...focalImageFields('photo', 'Foto', { zoom: true }),
 				{ type: 'string' as const, name: 'name', label: 'Nome e cognome' },
-				{ type: 'string' as const, name: 'role', label: 'Ruolo' },
+				{ type: 'string' as const, name: 'role', label: 'Ruolo (IT)' },
+				{ type: 'string' as const, name: 'roleEn', label: 'Ruolo (EN)' },
 				{ type: 'string' as const, name: 'email', label: 'Email (se disponibile)' },
 				{ type: 'reference' as const, name: 'club', label: 'Club', collections: ['clubs'] },
 				{
@@ -222,7 +246,12 @@ const roleGridTemplate = {
 				{
 					type: 'string' as const,
 					name: 'themeMotto',
-					label: 'Motto dell’anno (solo per il ruolo in evidenza)',
+					label: 'Motto dell’anno (IT, solo per il ruolo in evidenza)',
+				},
+				{
+					type: 'string' as const,
+					name: 'themeMottoEn',
+					label: 'Motto dell’anno (EN, solo per il ruolo in evidenza)',
 				},
 				{
 					type: 'image' as const,
@@ -242,9 +271,11 @@ const committeeGridTemplate = {
 	label: 'Griglia commissioni',
 	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 	fields: [
-		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
+		{ type: 'string' as const, name: 'title', label: 'Titolo sezione (IT)', required: true },
+		{ type: 'string' as const, name: 'titleEn', label: 'Titolo sezione (EN)' },
 		{ type: 'boolean' as const, name: 'showDisclaimer', label: 'Mostra disclaimer' },
-		{ type: 'string' as const, name: 'disclaimerText', label: 'Testo disclaimer' },
+		{ type: 'string' as const, name: 'disclaimerText', label: 'Testo disclaimer (IT)' },
+		{ type: 'string' as const, name: 'disclaimerTextEn', label: 'Testo disclaimer (EN)' },
 		{
 			type: 'object' as const,
 			name: 'items',
@@ -252,10 +283,14 @@ const committeeGridTemplate = {
 			list: true,
 			ui: { itemProps: (item: { name?: string }) => ({ label: item.name }) },
 			fields: [
-				{ type: 'string' as const, name: 'name', label: 'Nome commissione/delega' },
-				{ type: 'string' as const, name: 'description', label: 'Descrizione (cosa fa questa commissione)', ui: { component: 'textarea' } },
-				{ type: 'string' as const, name: 'leadLabel', label: 'Etichetta responsabile (es. "Presidente" o "Delegato")' },
-				{ type: 'string' as const, name: 'membersLabel', label: 'Etichetta membri (es. "Membro")' },
+				{ type: 'string' as const, name: 'name', label: 'Nome commissione/delega (IT)' },
+				{ type: 'string' as const, name: 'nameEn', label: 'Nome commissione/delega (EN)' },
+				{ type: 'string' as const, name: 'description', label: 'Descrizione (IT, cosa fa questa commissione)', ui: { component: 'textarea' } },
+				{ type: 'string' as const, name: 'descriptionEn', label: 'Descrizione (EN, cosa fa questa commissione)', ui: { component: 'textarea' } },
+				{ type: 'string' as const, name: 'leadLabel', label: 'Etichetta responsabile (IT, es. "Presidente" o "Delegato")' },
+				{ type: 'string' as const, name: 'leadLabelEn', label: 'Etichetta responsabile (EN, es. "President" o "Delegate")' },
+				{ type: 'string' as const, name: 'membersLabel', label: 'Etichetta membri (IT, es. "Membro")' },
+				{ type: 'string' as const, name: 'membersLabelEn', label: 'Etichetta membri (EN, es. "Member")' },
 				{
 					type: 'object' as const,
 					name: 'lead',
@@ -309,7 +344,8 @@ const photoCarouselTemplate = {
 			ui: { itemProps: (item: { label?: string }) => ({ label: item.label }) },
 			fields: [
 				...focalImageFields('image', 'Foto'),
-				{ type: 'string' as const, name: 'label', label: 'Didascalia (testo alternativo per accessibilità, non visibile)', required: true },
+				{ type: 'string' as const, name: 'label', label: 'Didascalia (IT, testo alternativo per accessibilità, non visibile)', required: true },
+				{ type: 'string' as const, name: 'labelEn', label: 'Didascalia (EN, testo alternativo per accessibilità, non visibile)' },
 			],
 		},
 	],
@@ -323,7 +359,8 @@ const eventsCalendarTemplate = {
 	label: 'Calendario eventi',
 	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 	fields: [
-		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
+		{ type: 'string' as const, name: 'title', label: 'Titolo sezione (IT)', required: true },
+		{ type: 'string' as const, name: 'titleEn', label: 'Titolo sezione (EN)' },
 		{
 			type: 'string' as const,
 			name: 'calendarId',
@@ -343,7 +380,8 @@ const newsTickerTemplate = {
 	label: 'Barra notizie (RSS)',
 	ui: { itemProps: (item: { label?: string }) => ({ label: item.label }) },
 	fields: [
-		{ type: 'string' as const, name: 'label', label: 'Etichetta', required: true },
+		{ type: 'string' as const, name: 'label', label: 'Etichetta (IT)', required: true },
+		{ type: 'string' as const, name: 'labelEn', label: 'Etichetta (EN)' },
 		{ type: 'string' as const, name: 'feedUrl', label: 'URL feed RSS' },
 		{ type: 'number' as const, name: 'limit', label: 'Numero massimo di notizie' },
 	],
@@ -357,7 +395,8 @@ const newsGridTemplate = {
 	label: 'Griglia news',
 	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 	fields: [
-		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
+		{ type: 'string' as const, name: 'title', label: 'Titolo sezione (IT)', required: true },
+		{ type: 'string' as const, name: 'titleEn', label: 'Titolo sezione (EN)' },
 		{ type: 'number' as const, name: 'limit', label: 'Numero massimo di notizie mostrate' },
 		{ type: 'boolean' as const, name: 'showDate', label: 'Mostra la data sulle card' },
 		{ type: 'boolean' as const, name: 'showYear', label: 'Mostra l\'anno rotariano (AR) sulle card' },
@@ -369,9 +408,12 @@ const ctaBannerTemplate = {
 	label: 'Banner CTA',
 	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 	fields: [
-		{ type: 'string' as const, name: 'title', label: 'Titolo', required: true },
-		{ type: 'string' as const, name: 'body', label: 'Testo', ui: { component: 'textarea' } },
-		{ type: 'string' as const, name: 'buttonLabel', label: 'Testo pulsante' },
+		{ type: 'string' as const, name: 'title', label: 'Titolo (IT)', required: true },
+		{ type: 'string' as const, name: 'titleEn', label: 'Titolo (EN)' },
+		{ type: 'string' as const, name: 'body', label: 'Testo (IT)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'bodyEn', label: 'Testo (EN)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'buttonLabel', label: 'Testo pulsante (IT)' },
+		{ type: 'string' as const, name: 'buttonLabelEn', label: 'Testo pulsante (EN)' },
 		{ type: 'string' as const, name: 'buttonHref', label: 'Link pulsante (slug pagina)' },
 	],
 };
@@ -386,7 +428,8 @@ const materialsGridTemplate = {
 	label: 'Materiali distrettuali (Google Drive)',
 	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 	fields: [
-		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
+		{ type: 'string' as const, name: 'title', label: 'Titolo sezione (IT)', required: true },
+		{ type: 'string' as const, name: 'titleEn', label: 'Titolo sezione (EN)' },
 		{
 			type: 'string' as const,
 			name: 'driveFolderId',
@@ -398,7 +441,13 @@ const materialsGridTemplate = {
 		{
 			type: 'string' as const,
 			name: 'emptyMessage',
-			label: 'Messaggio se una cartella è vuota (opzionale)',
+			label: 'Messaggio se una cartella è vuota (IT, opzionale)',
+			ui: { component: 'textarea' },
+		},
+		{
+			type: 'string' as const,
+			name: 'emptyMessageEn',
+			label: 'Messaggio se una cartella è vuota (EN, opzionale)',
 			ui: { component: 'textarea' },
 		},
 	],
@@ -415,7 +464,13 @@ const resourceArchiveTemplate = {
 		{
 			type: 'string' as const,
 			name: 'emptyMessage',
-			label: 'Messaggio se non ci sono risorse (opzionale)',
+			label: 'Messaggio se non ci sono risorse (IT, opzionale)',
+			ui: { component: 'textarea' },
+		},
+		{
+			type: 'string' as const,
+			name: 'emptyMessageEn',
+			label: 'Messaggio se non ci sono risorse (EN, opzionale)',
 			ui: { component: 'textarea' },
 		},
 	],
@@ -425,7 +480,10 @@ const pagePlaceholderTemplate = {
 	name: 'PagePlaceholder',
 	label: 'Pagina in preparazione',
 	ui: { itemProps: (item: { message?: string }) => ({ label: item.message }) },
-	fields: [{ type: 'string' as const, name: 'message', label: 'Messaggio', ui: { component: 'textarea' } }],
+	fields: [
+		{ type: 'string' as const, name: 'message', label: 'Messaggio (IT)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'messageEn', label: 'Messaggio (EN)', ui: { component: 'textarea' } },
+	],
 };
 
 const rrdTimelineTemplate = {
@@ -433,9 +491,11 @@ const rrdTimelineTemplate = {
 	label: 'Timeline RRD (Rappresentanti Rotaract Distrettuali)',
 	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 	fields: [
-		{ type: 'string' as const, name: 'title', label: 'Titolo sezione', required: true },
+		{ type: 'string' as const, name: 'title', label: 'Titolo sezione (IT)', required: true },
+		{ type: 'string' as const, name: 'titleEn', label: 'Titolo sezione (EN)' },
 		{ type: 'boolean' as const, name: 'showDisclaimer', label: 'Mostra disclaimer' },
-		{ type: 'string' as const, name: 'disclaimerText', label: 'Testo disclaimer' },
+		{ type: 'string' as const, name: 'disclaimerText', label: 'Testo disclaimer (IT)' },
+		{ type: 'string' as const, name: 'disclaimerTextEn', label: 'Testo disclaimer (EN)' },
 		{
 			type: 'object' as const,
 			name: 'items',
@@ -447,13 +507,20 @@ const rrdTimelineTemplate = {
 				{ type: 'string' as const, name: 'name', label: 'Nome' },
 				{ type: 'string' as const, name: 'surname', label: 'Cognome' },
 				{ type: 'string' as const, name: 'clubName', label: 'Club di provenienza' },
-				{ type: 'string' as const, name: 'motto', label: 'Motto Rotary International (tema dell’anno rotariano)' },
-				{ type: 'string' as const, name: 'mottoDistretto', label: 'Motto del distretto (opzionale)' },
+				{ type: 'string' as const, name: 'motto', label: 'Motto Rotary International (IT, tema dell’anno rotariano)' },
+				{ type: 'string' as const, name: 'mottoEn', label: 'Motto Rotary International (EN, tema dell’anno rotariano)' },
+				{ type: 'string' as const, name: 'mottoDistretto', label: 'Motto del distretto (IT, opzionale)' },
+				{ type: 'string' as const, name: 'mottoDistrettoEn', label: 'Motto del distretto (EN, opzionale)' },
 				{
 					type: 'string' as const,
 					name: 'eraLabel',
-					label: 'Separatore era (opzionale)',
+					label: 'Separatore era (IT, opzionale)',
 					description: 'Se compilato, mostra un separatore con questa etichetta sopra questa annata — usalo sull’annata in cui inizia un nuovo nome di distretto (es. "Rotaract Distretto 204").',
+				},
+				{
+					type: 'string' as const,
+					name: 'eraLabelEn',
+					label: 'Separatore era (EN, opzionale)',
 				},
 			],
 		},
@@ -464,8 +531,10 @@ const clubDirectoryTemplate = {
 	name: 'ClubDirectory',
 	label: 'Elenco club (per zona)',
 	fields: [
-		{ type: 'string' as const, name: 'intro', label: 'Introduzione', ui: { component: 'textarea' } },
-		{ type: 'string' as const, name: 'disclaimer', label: 'Disclaimer', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'intro', label: 'Introduzione (IT)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'introEn', label: 'Introduzione (EN)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'disclaimer', label: 'Disclaimer (IT)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'disclaimerEn', label: 'Disclaimer (EN)', ui: { component: 'textarea' } },
 	],
 };
 
@@ -481,7 +550,13 @@ const eventsArchiveTemplate = {
 		{
 			type: 'string' as const,
 			name: 'emptyMessage',
-			label: 'Messaggio se non ci sono eventi (opzionale)',
+			label: 'Messaggio se non ci sono eventi (IT, opzionale)',
+			ui: { component: 'textarea' },
+		},
+		{
+			type: 'string' as const,
+			name: 'emptyMessageEn',
+			label: 'Messaggio se non ci sono eventi (EN, opzionale)',
 			ui: { component: 'textarea' },
 		},
 	],
@@ -497,7 +572,13 @@ const newsArchiveTemplate = {
 		{
 			type: 'string' as const,
 			name: 'emptyMessage',
-			label: 'Messaggio se non ci sono news (opzionale)',
+			label: 'Messaggio se non ci sono news (IT, opzionale)',
+			ui: { component: 'textarea' },
+		},
+		{
+			type: 'string' as const,
+			name: 'emptyMessageEn',
+			label: 'Messaggio se non ci sono news (EN, opzionale)',
 			ui: { component: 'textarea' },
 		},
 		{ type: 'boolean' as const, name: 'showDate', label: 'Mostra la data sulle card' },
@@ -543,16 +624,21 @@ export default defineConfig({
 				format: 'md',
 				ui: { router: pageRouter },
 				fields: [
-					{ type: 'string', name: 'title', label: 'Titolo', isTitle: true, required: true },
-					{ type: 'string', name: 'eyebrow', label: 'Eyebrow (banner pagina)' },
-					{ type: 'string', name: 'breadcrumbCurrent', label: 'Titolo nel breadcrumb' },
+					{ type: 'string', name: 'title', label: 'Titolo (IT)', isTitle: true, required: true },
+					{ type: 'string', name: 'titleEn', label: 'Titolo (EN)' },
+					{ type: 'string', name: 'eyebrow', label: 'Eyebrow (IT, banner pagina)' },
+					{ type: 'string', name: 'eyebrowEn', label: 'Eyebrow (EN, banner pagina)' },
+					{ type: 'string', name: 'breadcrumbCurrent', label: 'Titolo nel breadcrumb (IT)' },
+					{ type: 'string', name: 'breadcrumbCurrentEn', label: 'Titolo nel breadcrumb (EN)' },
 					{
 						type: 'object',
 						name: 'seo',
 						label: 'SEO',
 						fields: [
-							{ type: 'string', name: 'title', label: 'Titolo alternativo (SEO/social)', description: 'Se vuoto, usa il Titolo della pagina.' },
-							{ type: 'string', name: 'description', label: 'Descrizione (meta/OG)', ui: { component: 'textarea' } },
+							{ type: 'string', name: 'title', label: 'Titolo alternativo (IT, SEO/social)', description: 'Se vuoto, usa il Titolo della pagina.' },
+							{ type: 'string', name: 'titleEn', label: 'Titolo alternativo (EN, SEO/social)', description: 'Se vuoto, usa il Titolo della pagina.' },
+							{ type: 'string', name: 'description', label: 'Descrizione (IT, meta/OG)', ui: { component: 'textarea' } },
+							{ type: 'string', name: 'descriptionEn', label: 'Descrizione (EN, meta/OG)', ui: { component: 'textarea' } },
 							{ type: 'image', name: 'ogImage', label: 'Immagine social (Open Graph)' },
 							{
 								type: 'boolean',

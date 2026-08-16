@@ -15,7 +15,7 @@ interface Props {
 }
 
 const { lang, slug } = Astro.props;
-const relativePath = `${lang}/${slug}.md`;
+const relativePath = `${slug}.md`;
 
 const result = await requestWithMetadata(client.queries.pages({ relativePath }), { priority: 'primary' });
 const page = result.data.pages;
@@ -25,23 +25,33 @@ if (!page) {
 }
 
 const current = slug as PageKey;
+
+// Pages are a single file (IT + EN fields together, like clubs.story/storyEn) — pick the EN
+// value when present, falling back to IT, same as ClubDetail.astro's story/storyEn ternary.
+const isEn = lang === 'en';
+const title = (isEn && page.titleEn) || page.title;
+const titleFieldName = isEn && page.titleEn ? 'titleEn' : 'title';
+const eyebrow = (isEn && page.eyebrowEn) || page.eyebrow;
+const breadcrumbCurrent = (isEn && page.breadcrumbCurrentEn) || page.breadcrumbCurrent;
+const seoTitle = (isEn && page.seo?.titleEn) || page.seo?.title || title;
+const seoDescription = (isEn && page.seo?.descriptionEn) || page.seo?.description || '';
 ---
 
 <BaseLayout
 	lang={lang}
 	current={current}
-	title={page.seo?.title || page.title}
-	description={page.seo?.description ?? ''}
+	title={seoTitle}
+	description={seoDescription}
 	image={page.seo?.ogImage}
 	noindex={page.seo?.noindex ?? false}
 >
-	{slug !== 'home' && page.eyebrow && page.breadcrumbCurrent && (
+	{slug !== 'home' && eyebrow && breadcrumbCurrent && (
 		<PageBanner
 			lang={lang}
-			eyebrow={page.eyebrow}
-			title={page.title}
-			breadcrumbCurrent={page.breadcrumbCurrent}
-			titleField={tinaField(page, 'title')}
+			eyebrow={eyebrow}
+			title={title}
+			breadcrumbCurrent={breadcrumbCurrent}
+			titleField={tinaField(page, titleFieldName)}
 		/>
 	)}
 	<BlockRenderer lang={lang} blocks={page.blocks ?? []} />

@@ -22,10 +22,10 @@ const page = result.data.pages;
 
 ## Internazionalizzazione (IT default / EN)
 
-Implementato con **due file di route separati** (non un'unica route dinamica per-locale): `src/pages/[...slug].astro` (IT, `lang = 'it' as const`, legge `it/${slug}.md`) e `src/pages/en/[...slug].astro` (EN, legge `en/${slug}.md`). `[...slug]` è un rest parameter Astro reale (cattura qualunque slug, inclusa stringa vuota per la home), non un placeholder da sostituire.
+Implementato con **due file di route separati** (non un'unica route dinamica per-locale): `src/pages/[...slug].astro` (IT, `lang = 'it' as const`) e `src/pages/en/[...slug].astro` (EN) — questi restano due file perché servono due alberi URL distinti (IT senza prefisso, EN con `/en/`), non per il contenuto. `[...slug]` è un rest parameter Astro reale (cattura qualunque slug, inclusa stringa vuota per la home), non un placeholder da sostituire.
 
 - `astro.config.mjs`: `i18n.locales = ['it','en']`, `defaultLocale: 'it'`, `routing.prefixDefaultLocale: false` → IT senza prefisso (`/distretto`), EN con prefisso (`/en/distretto`).
-- Contenuti per lingua come sotto-cartelle nella collection Tina: `src/content/pages/it/*.md`, `src/content/pages/en/*.md` (stesso slug di file, cartella diversa) — non un unico oggetto `{IT: {...}, EN: {...}}` come nel vecchio mockup.
+- **Contenuto**: dal 2026-08-16 `src/content/pages/*.md` è **un file solo per pagina** (non più sotto-cartelle `it/`/`en/`), con ogni campo testuale traducibile affiancato dal suo gemello `xEn` (`title`/`titleEn`, ecc., stesso pattern di `news`/`events`/`resources`/`clubs`/`zones` — dettagli in `references/tina.md`). Entrambe le route Astro (IT ed EN) leggono lo **stesso file** (`relativePath: '${slug}.md'`, nessun prefisso di lingua) e scelgono il valore giusto dopo la query, non un file diverso per lingua come nel vecchio mockup (`{IT: {...}, EN: {...}}`) né come nella versione pre-2026-08-16 di questo stesso progetto (`it/${slug}.md` vs `en/${slug}.md`).
 - Usare `getRelativeLocaleUrl()` (da `astro:i18n`) per generare link interni invece di stringhe hardcoded — usato in `Header.astro`/`Footer.astro`/`PageBanner.astro` reali.
 - Stringhe di interfaccia fisse (nav, footer) in `src/data/ui-strings.ts`, un dizionario `Record<Lang, UiStrings>` per-locale — non servono a Tina, sono di sistema. I **contenuti editoriali** (titoli, testi, eventi, news) restano sempre su Tina, in entrambe le lingue.
 
