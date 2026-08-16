@@ -97,9 +97,16 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 		border: 1px solid var(--color-border);
 		border-radius: var(--shape-large);
 		box-shadow: var(--elevation-4);
-		display: flex;
 		flex-direction: column;
 		overflow: hidden;
+	}
+
+	/* An author-stylesheet `display` rule always beats the browser's built-in
+	   `[hidden] { display: none }` UA rule, regardless of specificity — so `display: flex` can't
+	   live on the bare `.chat-panel` selector above or toggling the `hidden` attribute in JS would
+	   never actually hide it. Scoping it to `:not([hidden])` keeps `hidden` in control. */
+	.chat-panel:not([hidden]) {
+		display: flex;
 	}
 
 	.chat-header {
