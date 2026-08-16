@@ -1,5 +1,6 @@
 ---
-import { tagSlug, tagPillStyle, resourceCardGradient } from '../lib/resources';
+import { tagSlug, tagPillStyle, resourceCardGradient, tagColor } from '../lib/resources';
+import ResourceIcon from './ResourceIcon.astro';
 
 interface Props {
 	href: string;
@@ -16,6 +17,8 @@ interface Props {
 }
 
 const { href, tags, tagKeys, title, excerpt, bodyText, readMoreLabel, tinaFieldAttr } = Astro.props;
+const primaryTag = tagKeys[0];
+const iconColor = tagColor(primaryTag);
 ---
 
 <article class="resource-card" data-tags={tagKeys.map(tagSlug).join(' ')} data-search={bodyText} style={resourceCardGradient(tagKeys)} data-tina-field={tinaFieldAttr}>
@@ -28,12 +31,8 @@ const { href, tags, tagKeys, title, excerpt, bodyText, readMoreLabel, tinaFieldA
 	</div>
 	<a href={href} class="resource-link">
 		<div class="resource-top">
-			<!-- Placeholder glyph: a per-topic icon set is still to be designed, see PR discussion. -->
-			<span class="resource-icon" aria-hidden="true">
-				<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-					<path d="M12 3 4 6.5V12c0 4.5 3.2 7.9 8 9 4.8-1.1 8-4.5 8-9V6.5L12 3Z"></path>
-					<path d="m9 12 2 2 4-4"></path>
-				</svg>
+			<span class="resource-icon" style={`--icon-color: ${iconColor};`} aria-hidden="true">
+				<ResourceIcon tag={primaryTag} />
 			</span>
 			{tags.length > 0 && (
 				<div class="resource-tags">
@@ -274,14 +273,16 @@ const { href, tags, tagKeys, title, excerpt, bodyText, readMoreLabel, tinaFieldA
 		height: 44px;
 		flex-shrink: 0;
 		border-radius: var(--shape-medium);
-		background: rgba(212, 19, 103, 0.12);
-		color: var(--color-pink);
-		transition: transform var(--motion-duration-short) var(--motion-easing-standard), background var(--motion-duration-short) var(--motion-easing-standard);
+		background: color-mix(in srgb, var(--icon-color, var(--color-pink)) 12%, transparent);
+		color: var(--icon-color, var(--color-pink));
+		transition:
+			transform var(--motion-duration-short) var(--motion-easing-standard),
+			background var(--motion-duration-short) var(--motion-easing-standard);
 	}
 
 	.resource-card:hover .resource-icon {
 		transform: scale(1.08);
-		background: rgba(212, 19, 103, 0.18);
+		background: color-mix(in srgb, var(--icon-color, var(--color-pink)) 20%, transparent);
 	}
 
 	.resource-tags {
