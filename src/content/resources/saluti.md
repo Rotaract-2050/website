@@ -2,8 +2,7 @@
 title: 'Saluti'
 titleEn: 'Welcome remarks'
 tags:
-  - Prefetto
-  - Cerimoniale
+  - Protocollo & Cerimoniale
 order: 11
 excerpt: "Le regole generali per stabilire chi si saluta per primo, e l'ordine di saluto nelle situazioni tipiche: Consiglio Distrettuale, interclub con un Rotary Club, cariche internazionali e interdistrettuali."
 excerptEn: 'The general rules for deciding who is welcomed first, and the welcome order in typical situations: the District Council, an interclub event with a Rotary Club, and international/interdistrict officers.'

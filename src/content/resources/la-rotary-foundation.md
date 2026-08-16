@@ -2,7 +2,7 @@
 title: 'La Rotary Foundation'
 titleEn: 'The Rotary Foundation'
 tags:
-  - Cultura Rotariana
+  - Service & Fondazione
 order: 24
 excerpt: 'La fondazione del Rotary, nata nel 1917 ad Atlanta: missione, programmi umanitari ed educativi, e i numeri delle sovvenzioni 2023/24.'
 excerptEn: "Rotary's foundation, born in 1917 in Atlanta: mission, humanitarian and educational programmes, and the 2023/24 grant numbers."

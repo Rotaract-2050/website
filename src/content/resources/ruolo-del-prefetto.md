@@ -2,8 +2,8 @@
 title: 'Il ruolo del Prefetto'
 titleEn: "The Prefect's role"
 tags:
-  - Prefetto
-  - Cerimoniale
+  - Protocollo & Cerimoniale
+  - Gestione & Strumenti
 order: 1
 excerpt: "Il ruolo del Prefetto nell'organizzazione delle conviviali: responsabilità, suggerimenti pratici e come rendere ogni evento impeccabile."
 excerptEn: "The Prefect's role in organizing club gatherings: responsibilities, practical tips, and how to make every event run smoothly."

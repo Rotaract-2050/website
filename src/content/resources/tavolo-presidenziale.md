@@ -2,8 +2,7 @@
 title: 'Tavolo presidenziale'
 titleEn: 'Head table'
 tags:
-  - Prefetto
-  - Cerimoniale
+  - Protocollo & Cerimoniale
 order: 7
 excerpt: 'Come disporre il tavolo presidenziale nelle quattro situazioni tipiche della vita di club: conviviale ordinaria, visita del Rappresentante Distrettuale, interclub e passaggio delle consegne.'
 excerptEn: "How to arrange the head table in a club's four typical situations: a regular gathering, the District Representative's visit, an interclub event, and the Handover Ceremony."

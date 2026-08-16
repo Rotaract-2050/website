@@ -2,7 +2,7 @@
 title: 'Club Interact'
 titleEn: 'Interact Clubs'
 tags:
-  - Cultura Rotariana
+  - Leadership & Giovani
 order: 18
 excerpt: "Cos'è un club Interact, come si costituisce con il patrocinio di un club Rotary, e i tre tipi di service che svolge."
 excerptEn: "What an Interact club is, how it's chartered under a Rotary club's sponsorship, and the three types of service it carries out."

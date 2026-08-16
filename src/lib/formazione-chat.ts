@@ -2,16 +2,22 @@ import { localizeResource, type Resource } from './resources';
 import type { Lang } from '../data/ui-strings';
 
 /** Free-tier "Flash" model — best quality/throughput balance for short grounded QA. Single named
- * constant so swapping models (e.g. a newer Flash generation) is a one-line change. */
-export const GEMINI_MODEL = 'gemini-2.5-flash';
+ * constant so swapping models is a one-line change. `gemini-2.5-flash` is no longer available to
+ * new API keys/projects (verified against the live API while building this — it 404s with "no
+ * longer available to new users"); `gemini-3.5-flash` is the current stable (non-preview)
+ * replacement for this key's project as of 2026-08. */
+export const GEMINI_MODEL = 'gemini-3.5-flash';
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
 /** Soft character budget for the concatenated resource corpus injected into the system prompt —
- * comfortably under gemini-2.5-flash's 1M-token context window with margin for history/instructions.
- * Not expected to trigger at today's corpus size; a growth safeguard, see `buildSystemPrompt`. */
+ * comfortably under gemini-3.5-flash's context window with margin for history/instructions. Not
+ * expected to trigger at today's corpus size; a growth safeguard, see `buildSystemPrompt`. */
 const MAX_PROMPT_CHARS = 200_000;
 const REQUEST_TIMEOUT_MS = 20_000;
-const MAX_OUTPUT_TOKENS = 800;
+/** Generous budget: this model generation spends a mandatory, variable chunk of it on internal
+ * "thinking" (verified live: ~90-400 tokens even at the lowest available thinkingLevel) before any
+ * answer text, so a tight cap truncates the real answer via MAX_TOKENS before it's written. */
+const MAX_OUTPUT_TOKENS = 1500;
 const TURNSTILE_VERIFY_TIMEOUT_MS = 10_000;
 
 /** Turnstile `data-action` for the chat widget, validated server-side against siteverify's response. */
@@ -111,9 +117,9 @@ export async function callGemini(apiKey: string, systemPrompt: string, messages:
 				generationConfig: {
 					temperature: 0.3,
 					maxOutputTokens: MAX_OUTPUT_TOKENS,
-					// Short grounded QA doesn't need extended reasoning — keep latency/token cost down
-					// on a metered free-tier quota.
-					thinkingConfig: { thinkingBudget: 0 },
+					// 'minimal'/thinkingBudget:0 are rejected or silently ignored on this model
+					// generation (verified live) — 'low' is the lowest level it actually accepts.
+					thinkingConfig: { thinkingLevel: 'low' },
 				},
 			}),
 			signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),

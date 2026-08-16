@@ -2,7 +2,7 @@
 title: "Le aree d'intervento"
 titleEn: 'The Areas of Focus'
 tags:
-  - Cultura Rotariana
+  - Service & Fondazione
 order: 23
 excerpt: "Le 7 aree d'intervento su cui Rotary International concentra i propri progetti, dalla costruzione della pace alla tutela dell'ambiente."
 excerptEn: "The 7 areas of focus Rotary International concentrates its projects on, from peacebuilding to environmental protection."

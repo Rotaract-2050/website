@@ -789,7 +789,15 @@ export default defineConfig({
 						label: 'Tag',
 						list: true,
 						required: true,
-						options: ['Prefetto', 'Cerimoniale', 'Segretario', 'Cultura Rotariana'],
+						options: [
+							'Storia & Valori',
+							'Struttura & Governance',
+							'Dimensione Internazionale',
+							'Service & Fondazione',
+							'Protocollo & Cerimoniale',
+							'Leadership & Giovani',
+							'Gestione & Strumenti',
+						],
 						description:
 							'Diventano filtri cliccabili nell\'elenco — una scheda può avere più tag. Per un nuovo filtro aggiungere una nuova opzione qui (e la relativa traduzione in TAG_LABELS_EN, src/lib/resources.ts); il resto della granularità (es. "tavolo", "saluti") si copre con la ricerca testuale, non con altri tag.',
 					},

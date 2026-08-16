@@ -2,7 +2,7 @@
 title: "Le vie d'azione"
 titleEn: 'The Avenues of Service'
 tags:
-  - Cultura Rotariana
+  - Storia & Valori
 order: 22
 excerpt: "Le 5 vie d'azione del Rotary: interna, professionale, di interesse pubblico, internazionale e per i giovani."
 excerptEn: "Rotary's 5 avenues of service: Club Service, Vocational Service, Community Service, International Service, and Youth Service."

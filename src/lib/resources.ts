@@ -20,6 +20,13 @@ export function resourceSlug(resource: Pick<Resource, '_sys'>): string {
  * here whenever a new tag option is added to the schema.
  */
 const TAG_LABELS_EN: Record<string, string> = {
+	'Storia & Valori': 'History & Values',
+	'Struttura & Governance': 'Structure & Governance',
+	'Dimensione Internazionale': 'International Network',
+	'Service & Fondazione': 'Service & Foundation',
+	'Protocollo & Cerimoniale': 'Protocol & Ceremonial',
+	'Leadership & Giovani': 'Leadership & Youth',
+	'Gestione & Strumenti': 'Management & Tools',
 	Prefetto: 'Prefect',
 	Cerimoniale: 'Protocol',
 	Segretario: 'Secretary',
@@ -38,6 +45,13 @@ export function localizeTag(tag: string, lang: Lang): string {
  * a new tag option is added to the schema; DEFAULT_TAG_COLOR covers any tag not yet assigned one.
  */
 const TAG_COLORS: Record<string, string> = {
+	'Storia & Valori': '#901F93', // Violet
+	'Struttura & Governance': '#0067C8', // Azure
+	'Dimensione Internazionale': '#00A2E0', // Sky Blue
+	'Service & Fondazione': '#009739', // Grass
+	'Protocollo & Cerimoniale': '#FF7600', // Orange
+	'Leadership & Giovani': '#F7A81B', // Rotary Gold
+	'Gestione & Strumenti': '#00ADBB', // Turquoise
 	Prefetto: '#FF7600', // Orange
 	Cerimoniale: '#00ADBB', // Turquoise
 	Segretario: '#00A2E0', // Sky Blue
