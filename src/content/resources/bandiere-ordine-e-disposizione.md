@@ -38,6 +38,11 @@ bodyEn: |
   2. Italy
   3. Europe
   4. Rotary International
+
+  ### See also
+
+  * [[tavolo-presidenziale]]
+  * [[inni-ordine-e-cerimoniale]]
 ---
 
 In ogni riunione ufficiale devono essere esposte le bandiere (nazionale, europea e del Rotary International). Vanno posizionate dietro al tavolo presidenziale, alla destra del Presidente (in modo che si vedano bene), nel seguente ordine (guardando dalla sala da sinistra verso destra):
@@ -70,3 +75,8 @@ In ogni riunione ufficiale devono essere esposte le bandiere (nazionale, europea
 2. Italia
 3. Europa
 4. Rotary International
+
+### Vedi anche
+
+* [[tavolo-presidenziale]]
+* [[inni-ordine-e-cerimoniale]]

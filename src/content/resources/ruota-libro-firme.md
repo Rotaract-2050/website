@@ -15,6 +15,11 @@ bodyEn: |
   The Prefect is responsible for the signature round.
 
   > **Note:** for an official visit by the District Representative, the President signs first and the District Representative signs last.
+
+  ### See also
+
+  * [[ruolo-del-prefetto]]
+  * [[tavolo-presidenziale]]
 ---
 
 La presenza di ogni socio e ospite va testimoniata con una firma sul libro delle firme o sulla ruota.
@@ -24,3 +29,8 @@ Il giro firme inizia dalla persona seduta a sinistra del Presidente e prosegue i
 Del giro firme si occupa il Prefetto.
 
 > **Attenzione:** nel caso particolare della visita del Rappresentante Distrettuale, il primo a firmare è il Presidente e l'ultimo è il Rappresentante Distrettuale.
+
+### Vedi anche
+
+* [[ruolo-del-prefetto]]
+* [[tavolo-presidenziale]]
