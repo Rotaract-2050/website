@@ -415,9 +415,9 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 			const pendingBubble = appendMessage('pending', '…');
 
 			const token = await getTurnstileToken();
-			if (widgetId !== null) window.turnstile?.reset(widgetId);
 
 			if (!token) {
+				if (widgetId !== null) window.turnstile?.reset(widgetId);
 				pendingBubble.remove();
 				appendMessage('error', strings.errorTurnstile);
 				sendBtn.disabled = false;
@@ -446,6 +446,12 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 				pendingBubble.remove();
 				appendMessage('error', strings.errorGeneric);
 			} finally {
+				// Reset only after the request has actually completed (success or failure) — per
+				// Cloudflare's own guidance, resetting a widget right after obtaining a token but
+				// before the request that consumes it finishes can corrupt the widget's internal
+				// state for the *next* execute() call (observed live as Turnstile error 600010 on
+				// a second message in the same session).
+				if (widgetId !== null) window.turnstile?.reset(widgetId);
 				sendBtn.disabled = false;
 				input.disabled = false;
 				input.focus();
