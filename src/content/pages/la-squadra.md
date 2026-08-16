@@ -1,10 +1,7 @@
 ---
 title: LA SQUADRA
-titleEn: THE TEAM
 eyebrow: DISTRETTO ROTARACT 2050
-eyebrowEn: ROTARACT DISTRICT 2050
 breadcrumbCurrent: LA SQUADRA
-breadcrumbCurrentEn: THE TEAM
 seo:
   description: 'L''organigramma del Distretto Rotaract 2050 per l''anno rotariano 2026/2027: Esecutivo Distrettuale, Delegati di Zona e Commissioni.'
   descriptionEn: 'The Rotaract District 2050 organizational chart for the 2026/2027 Rotary year: District Executive, Zone Delegates and Committees.'
@@ -29,7 +26,6 @@ blocks:
         email: rd.incoming@rotaract2050.org
         club: src/content/clubs/rotaract-club-pavia-nord.md
         roleEn: District Representative-Elect
-        themeMottoEn: ''
       - initials: SD
         photo: /uploads/Squadra/2026-2027/Profili/Drovanti-Alessandro.jpg
         name: Alessandro Drovanti
@@ -37,7 +33,6 @@ blocks:
         email: segreteria@rotaract2050.org
         club: src/content/clubs/rotaract-club-vigevano-lomellina.md
         roleEn: Secretary
-        themeMottoEn: ''
       - initials: TD
         photo: /uploads/Squadra/2026-2027/Profili/Goffredi-Virginia.jpg
         photoFocalX: 34
@@ -49,7 +44,6 @@ blocks:
         club: src/content/clubs/rotaract-club-brescia.md
         clubCustom: RC Zerotrenta
         roleEn: Treasurer
-        themeMottoEn: ''
       - initials: PR
         photo: /uploads/Squadra/2026-2027/Profili/Pizzi-Andrea.jpg
         name: Andrea Pizzi
@@ -57,7 +51,6 @@ blocks:
         email: prefettura@rotaract2050.org
         club: src/content/clubs/rotaract-club-vigevano-lomellina.md
         roleEn: Sergeant-at-Arms
-        themeMottoEn: ''
       - initials: PR
         photo: /uploads/Squadra/2026-2027/Profili/Toselli-Leonardo.jpg
         name: Leonardo Toselli
@@ -65,7 +58,6 @@ blocks:
         email: prefettura@rotaract2050.org
         club: src/content/clubs/rotaract-club-castiglione-delle-stiviere-e-alto-mantovano.md
         roleEn: Sergeant-at-Arms
-        themeMottoEn: ''
       - initials: CO
         photo: /uploads/Squadra/2026-2027/Profili/Cattadori-Martina.jpg
         name: Martina Cattadori
@@ -73,7 +65,6 @@ blocks:
         email: consiglieri@rotaract2050.org
         club: src/content/clubs/rotaract-club-piacenza.md
         roleEn: Board Member
-        themeMottoEn: ''
       - initials: CO
         photo: /uploads/Squadra/2026-2027/Profili/Rebecchi-Angela.jpg
         name: Angela Rebecchi
@@ -81,7 +72,6 @@ blocks:
         email: consiglieri@rotaract2050.org
         clubCustom: Interact Club Piacenza
         roleEn: Board Member
-        themeMottoEn: ''
       - initials: PRD
         photo: /uploads/Squadra/2026-2027/Profili/Pancini-Lorenzo.jpg
         name: Lorenzo Pancini
@@ -89,10 +79,8 @@ blocks:
         club: src/content/clubs/rotaract-club-piacenza.md
         themeMotto: ''
         roleEn: District Representative 2025/2026 (Past RD)
-        themeMottoEn: ''
     _template: RoleGrid
     titleEn: District Executive
-    disclaimerTextEn: ''
   - title: Delegati di Zona
     items:
       - initials: DZ
@@ -102,7 +90,6 @@ blocks:
         email: dz.francigena@rotaract2050.org
         club: src/content/clubs/rotaract-club-terre-cremasche.md
         roleEn: Zone Delegate — Francigena
-        themeMottoEn: ''
       - initials: DZ
         photo: /uploads/Squadra/2026-2027/Profili/Vetturi-Elena.jpeg
         name: Elena Vetturi
@@ -110,7 +97,6 @@ blocks:
         email: dz.leonessa@rotaract2050.org
         club: src/content/clubs/rotaract-club-garda-valle-sabbia.md
         roleEn: Zone Delegate — Leonessa
-        themeMottoEn: ''
       - initials: DZ
         photo: /uploads/Squadra/2026-2027/Profili/Pisano-Andrea.jpg
         name: Andrea Pisano
@@ -118,7 +104,6 @@ blocks:
         email: dz.navigli@rotaract2050.org
         club: src/content/clubs/rotaract-club-vigevano-castello.md
         roleEn: Zone Delegate — Navigli
-        themeMottoEn: ''
       - initials: DZ
         photo: /uploads/Squadra/2026-2027/Profili/Bombeccari-Hildegard.jpg
         name: Hildegard Bombeccari
@@ -126,10 +111,8 @@ blocks:
         email: dz.padana@rotaract2050.org
         club: src/content/clubs/rotaract-club-castiglione-delle-stiviere-e-alto-mantovano.md
         roleEn: Zone Delegate — Padana
-        themeMottoEn: ''
     _template: RoleGrid
     titleEn: Zone Delegates
-    disclaimerTextEn: ''
   - title: Commissioni Distrettuali
     items:
       - name: Azione Interna
@@ -248,7 +231,6 @@ blocks:
         nameEn: E.R.I.C. Delegate
         descriptionEn: '[todo]'
         leadLabelEn: Delegate
-        membersLabelEn: ''
       - name: Azione Giovani
         description: Promuove lo sviluppo personale e la leadership dei giovani, unendo Rotary, Rotaract e Interact in percorsi di formazione, cittadinanza attiva e condivisione dei valori della famiglia rotariana.
         leadLabel: Presidente
@@ -285,32 +267,6 @@ blocks:
         nameEn: Youth Exchange Delegate
         descriptionEn: '[todo]'
         leadLabelEn: Delegate
-        membersLabelEn: ''
-      - name: Cultura
-        description: Valorizza il patrimonio artistico e culturale locale, guidando i Club in iniziative di service volte a promuovere le eccellenze del territorio e la crescita della comunità.
-        leadLabel: Presidente
-        membersLabel: Membro
-        lead:
-          photo: /uploads/Squadra/2026-2027/Profili/Magni-Federico.jpeg
-          name: Federico Magni
-          email: cultura@rotaract2050.org
-          club: src/content/clubs/rotaract-club-abbiategrasso.md
-        members:
-          - name: Francesco Locatelli
-            club: src/content/clubs/rotaract-club-vigevano-castello.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Balasini-Filippo.jpeg
-            name: Filippo Balasini
-            club: src/content/clubs/rotaract-club-gonzaga-suzzara.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Brignani-Daniele.jpeg
-            name: Daniele Brignani
-            club: src/content/clubs/rotaract-club-brescia-vittoria-alata.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Zandon-Lucrezia-Giuseppina.jpeg
-            name: Lucrezia Giuseppina Zandon
-            club: src/content/clubs/rotaract-club-vigevano-castello.md
-        nameEn: Culture
-        descriptionEn: This Committee supports the enhancement of artistic and intellectual heritage, recognising culture as a primary factor of personal and social growth. It encourages and coordinates projects that promote local excellence among members and in the communities they serve. It supports Club initiatives, creating synergies and spaces for outreach. Through paths dedicated to art and knowledge, it nurtures young people's sensitivity, strengthening the close bond between Rotaract's action and the richness of local identities.
-        leadLabelEn: Chair
-        membersLabelEn: Member
       - name: Immagine Pubblica
         description: Custodisce l'immagine del Distretto e supporta i Club nella comunicazione, raccontando l'impatto dei service per diffondere i valori e la cultura del Rotaract.
         leadLabel: Presidente
@@ -335,6 +291,31 @@ blocks:
             club: src/content/clubs/rotaract-club-casalmaggiore-viadana-sabbioneta.md
         nameEn: Public Image
         descriptionEn: This Committee safeguards and promotes the District's public image, highlighting members' commitment and the impact of service projects on the territory. It offers strategic and graphic support to Clubs and Zones, curating the digital presence on social channels and web platforms. Through impactful content, dynamic editorial plans and coordinated storytelling, the Committee strengthens public relations and spreads Rotaract culture. It turns communication into a tool for engagement and outreach, ensuring authority, transparency and visibility for the organisation's values.
+        leadLabelEn: Chair
+        membersLabelEn: Member
+      - name: Cultura
+        description: Valorizza il patrimonio artistico e culturale locale, guidando i Club in iniziative di service volte a promuovere le eccellenze del territorio e la crescita della comunità.
+        leadLabel: Presidente
+        membersLabel: Membro
+        lead:
+          photo: /uploads/Squadra/2026-2027/Profili/Magni-Federico.jpeg
+          name: Federico Magni
+          email: cultura@rotaract2050.org
+          club: src/content/clubs/rotaract-club-abbiategrasso.md
+        members:
+          - name: Francesco Pietro Locatelli
+            club: src/content/clubs/rotaract-club-vigevano-castello.md
+          - photo: /uploads/Squadra/2026-2027/Profili/Balasini-Filippo.jpeg
+            name: Filippo Balasini
+            club: src/content/clubs/rotaract-club-gonzaga-suzzara.md
+          - photo: /uploads/Squadra/2026-2027/Profili/Brignani-Daniele.jpeg
+            name: Daniele Brignani
+            club: src/content/clubs/rotaract-club-brescia-vittoria-alata.md
+          - photo: /uploads/Squadra/2026-2027/Profili/Zandon-Lucrezia-Giuseppina.jpeg
+            name: Lucrezia Giuseppina Zandon
+            club: src/content/clubs/rotaract-club-vigevano-castello.md
+        nameEn: Culture
+        descriptionEn: This Committee supports the enhancement of artistic and intellectual heritage, recognising culture as a primary factor of personal and social growth. It encourages and coordinates projects that promote local excellence among members and in the communities they serve. It supports Club initiatives, creating synergies and spaces for outreach. Through paths dedicated to art and knowledge, it nurtures young people's sensitivity, strengthening the close bond between Rotaract's action and the richness of local identities.
         leadLabelEn: Chair
         membersLabelEn: Member
       - name: Risoluzione delle Controversie, controversie Bilancio e Regolamento
@@ -371,29 +352,6 @@ blocks:
         nameEn: Rotary Delegate for Rotaract
         descriptionEn: '[todo]'
         leadLabelEn: Delegate
-        membersLabelEn: ''
-      - name: Delegato IT
-        description: Cura e innova le piattaforme digitali distrettuali, garantendo l'efficienza dei sistemi e offrendo strumenti informatici avanzati a supporto della comunicazione, della formazione e delle attività di service.
-        leadLabel: Delegato
-        lead:
-          name: Alessandro Gorla
-          email: it@rotaract2050.org
-          club: src/content/clubs/rotaract-club-abbiategrasso.md
-        nameEn: IT Delegate
-        descriptionEn: '[todo]'
-        leadLabelEn: Delegate
-        membersLabelEn: ''
-      - name: Delegato per la Rotary Foundation
-        description: Promuove i valori e le risorse della Fondazione Rotary, orientando i Club nell'accesso alle sovvenzioni e coordinando lo sviluppo di progetti umanitari ad alto impatto locale e globale.
-        leadLabel: Delegato
-        lead:
-          name: Davide Cappello
-          email: rotary.foundation@rotaract2050.org
-          club: src/content/clubs/rotaract-club-brescia-ovest-castello.md
-        nameEn: Rotary Foundation Delegate
-        descriptionEn: '[todo]'
-        leadLabelEn: Delegate
-        membersLabelEn: ''
       - name: Delegato Rotaract per l'Interact
         description: Rappresenta l'organo di supporto e indirizzo per l'Interact, facilitando la cooperazione con il Rotaract e custodendo la continuità associativa all'interno della famiglia rotariana.
         leadLabel: Delegato
@@ -404,9 +362,30 @@ blocks:
         nameEn: Interact Delegate
         descriptionEn: '[todo]'
         leadLabelEn: Delegate
-        membersLabelEn: ''
+      - name: Delegato per la Rotary Foundation
+        description: Promuove i valori e le risorse della Fondazione Rotary, orientando i Club nell'accesso alle sovvenzioni e coordinando lo sviluppo di progetti umanitari ad alto impatto locale e globale.
+        leadLabel: Delegato
+        lead:
+          name: Davide Cappello
+          email: rotary.foundation@rotaract2050.org
+          club: src/content/clubs/rotaract-club-brescia-ovest-castello.md
+        nameEn: Rotary Foundation Delegate
+        descriptionEn: '[todo]'
+        leadLabelEn: Delegate
+      - name: Delegato IT
+        description: Cura e innova le piattaforme digitali distrettuali, garantendo l'efficienza dei sistemi e offrendo strumenti informatici avanzati a supporto della comunicazione, della formazione e delle attività di service.
+        leadLabel: Delegato
+        lead:
+          name: Alessandro Gorla
+          email: it@rotaract2050.org
+          club: src/content/clubs/rotaract-club-abbiategrasso.md
+        nameEn: IT Delegate
+        descriptionEn: '[todo]'
+        leadLabelEn: Delegate
     _template: CommitteeGrid
     titleEn: District Committees
-    disclaimerTextEn: ''
+titleEn: THE TEAM
+eyebrowEn: ROTARACT DISTRICT 2050
+breadcrumbCurrentEn: THE TEAM
 ---
 

@@ -1,37 +1,34 @@
 ---
 title: Rotaract Distretto 2050
-titleEn: Rotaract District 2050
-eyebrowEn: ''
-breadcrumbCurrentEn: ''
 seo:
   description: Il Distretto Rotaract 2050 riunisce i club Rotaract della Lombardia meridionale e della Provincia di Piacenza.
   descriptionEn: Rotaract District 2050 brings together Rotaract clubs across southern Lombardy and the Province of Piacenza.
 blocks:
   - ctaHref: club
     slides:
-      - eyebrow: DISTRETTO ROTARACT 2050
+      - image: /uploads/Paesaggi/Paesaggio-1.jpeg
+        eyebrow: ROTARACT DISTRETTO 2050
         title: GIOVANI CHE COSTRUISCONO IL CAMBIAMENTO
         subtitle: 'Lombardia meridionale e Provincia di Piacenza: 7 provincie, un solo distretto di giovani leader al servizio della comunità.'
         ctaLabel: SCOPRI I CLUB
-        image: /uploads/Paesaggi/Paesaggio-1.jpeg
         eyebrowEn: ROTARACT DISTRICT 2050
         titleEn: YOUNG PEOPLE BUILDING CHANGE
         subtitleEn: 'Southern Lombardy and the Province of Piacenza: 7 provinces, one district of young leaders serving their communities.'
         ctaLabelEn: DISCOVER THE DISTRICT
-      - eyebrow: SERVIZIO E LEADERSHIP
+      - image: /uploads/Paesaggi/Paesaggio-2.jpeg
+        eyebrow: SERVIZIO E LEADERSHIP
         title: PROGETTI CHE LASCIANO IL SEGNO
-        subtitle: 'Dalla lotta alla povertà alla tutela dell''ambiente: ogni club Rotaract sceglie una causa e la porta avanti.'
+        subtitle: 'Dalla promozione della pace alla tutela dell''ambiente: ogni Club Rotaract individua una causa e la trasforma in azioni concrete al servizio della comunità.'
         ctaLabel: I NOSTRI CLUB
-        image: /uploads/Paesaggi/Paesaggio-2.jpeg
         eyebrowEn: SERVICE AND LEADERSHIP
         titleEn: PROJECTS THAT LEAVE A MARK
         subtitleEn: 'From fighting poverty to protecting the environment: every Rotaract club picks a cause and drives it forward.'
         ctaLabelEn: OUR CLUBS
-      - eyebrow: UNISCITI A NOI
+      - image: /uploads/Paesaggi/Paesaggio-3.jpeg
+        eyebrow: UNISCITI A NOI
         title: LA TUA RETE PARTE DA QUI
-        subtitle: Rotaract è la community di giovani 18-30 anni che unisce crescita personale, amicizia e service.
+        subtitle: Il Rotaract è la rete di giovani dai 18 anni che unisce crescita personale, amicizia e servizio.
         ctaLabel: ENTRA NEL ROTARACT
-        image: /uploads/Paesaggi/Paesaggio-3.jpeg
         eyebrowEn: JOIN US
         titleEn: YOUR NETWORK STARTS HERE
         subtitleEn: Rotaract is the community for 18-30 year-olds combining personal growth, fellowship and service.
@@ -58,18 +55,19 @@ blocks:
     labelEn: ROTARY INTERNATIONAL NEWS
   - kicker: CHI SIAMO
     title: IL ROTARACT NEL DISTRETTO 2050
-    body: Il Rotaract è un'organizzazione partner del Rotary International che riunisce giovani dai 18 anni in su, orientati al servizio della comunità, alla crescita personale e allo sviluppo della leadership. Fondato sulla promozione integrale dell'essere umano, offre ai soci l'opportunità di passare all'azione, realizzando progetti ad impatto locale e globale in uno spirito di amicizia e collaborazione (Fellowship through Service).
-    body2: Il Rotaract Distretto 2050 riunisce i sodalizi attivi nella Lombardia meridionale e nella Provincia di Piacenza.
+    body: 'Il Rotaract è l''organizzazione partner del Rotary International che trasforma la passione giovanile per il servizio e la leadership in progetti dal profondo impatto locale e globale, ispirati dal motto "Fellowship through Service". '
+    body2: 'Espressione viva di questa missione, il Distretto 2050 unisce i Club della Lombardia meridionale e della Provincia di Piacenza: una rete coesa e dinamica che valorizza le energie del territorio per generare un cambiamento concreto, positivo e duraturo.'
     ctaLabel: SCOPRI IL DISTRETTO
     ctaHref: distretto
+    image: /uploads/Paesaggi/Aggiungi-un-titolo_page-0001.jpeg
+    imageFocalX: 50
+    imageFocalY: 42
     imageLabel: Foto socie/i in un progetto di servizio
     imageSide: right
     _template: SplitSection
     kickerEn: WHO WE ARE
     titleEn: ROTARACT IN DISTRICT 2050
-    quoteEn: ''
     bodyEn: Rotaract is a service organization partnered with Rotary International, bringing together young people aged 18 and up who are committed to community service, personal growth, and leadership development. Grounded in the holistic development of the individual, it gives members the chance to take action, carrying out projects with local and global impact in a spirit of friendship and collaboration (Fellowship through Service).
-    subheadEn: ''
     body2En: Rotaract District 2050 brings together clubs active across southern Lombardy and the Province of Piacenza.
     ctaLabelEn: DISCOVER THE DISTRICT
     imageLabelEn: Photo of members on a service project
@@ -140,5 +138,6 @@ blocks:
     titleEn: BECOME A ROTARACT MEMBER
     bodyEn: Have you already turned 18?
     buttonLabelEn: FIND YOUR CLUB
+titleEn: Rotaract District 2050
 ---
 

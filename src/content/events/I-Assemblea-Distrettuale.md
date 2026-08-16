@@ -7,6 +7,7 @@ calendarDate: 2026-09-20T21:45:47.688Z
 eventType: Distrettuale
 clubs:
   - club: src/content/clubs/rotaract-club-brescia-ovest-castello.md
+image: /uploads/events/2026-2027/alla-scoperta-di-monte-isola-39730.jpeg
 imageLabel: Sale Marasino immagine
 ticketsOpen: false
 ticketsUrl: Partecipa

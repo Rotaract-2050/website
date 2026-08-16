@@ -1,10 +1,7 @@
 ---
 title: IL DISTRETTO
-titleEn: THE DISTRICT
-eyebrow: DISTRETTO ROTARACT 2050
-eyebrowEn: ROTARACT DISTRICT 2050
+eyebrow: ROTARACT DISTRETTO 2050
 breadcrumbCurrent: IL DISTRETTO
-breadcrumbCurrentEn: THE DISTRICT
 seo:
   description: Il Distretto Rotaract 2050 riunisce i club attivi nelle province di Cremona, Brescia, Lodi, Mantova, Milano Sud, Pavia e Piacenza, sotto gli auspici del Rotary Distretto 2050.
   descriptionEn: Rotaract District 2050 brings together clubs active in the provinces of Cremona, Brescia, Lodi, Mantova, Milano Sud, Pavia and Piacenza, sponsored by Rotary District 2050.
@@ -12,21 +9,21 @@ blocks:
   - kicker: DEFINIZIONE
     title: Cos'è il Rotaract
     body: Il Rotaract è un'organizzazione partner del Rotary International, costituita da giovani adulti il cui scopo è fornire servizi alla comunità e a livello internazionale, sviluppare le capacità di leadership e partecipare a programmi di sviluppo professionale.
+    image: /uploads/Paesaggi/WhatsApp-Image-2026-08-14-at-23.50.51.jpeg
+    imageFocalX: 49
+    imageFocalY: 50
     imageLabel: Foto socie e soci in un evento Rotaract
     imageSide: right
     _template: SplitSection
     kickerEn: DEFINITION
     titleEn: What is Rotaract
-    quoteEn: ''
     bodyEn: Rotaract is an organization of young adults, partner of Rotary International, who take action through community and international service, learn leadership skills, and participate in professional development.
-    subheadEn: ''
-    body2En: ''
-    ctaLabelEn: ''
     imageLabelEn: Photo of members at a Rotaract event
   - kicker: IL NOSTRO ORIZZONTE
     title: Visione
     quote: Crediamo in un mondo dove tutti i popoli, insieme, promuovono cambiamenti positivi e duraturi nelle comunità vicine, in quelle lontane, in ognuno di noi.
     body: Il faro che guida le Rotaractiane e i Rotaractiani in ogni angolo del mondo.
+    image: /uploads/Paesaggi/Aggiungi-un-titolo-4.pdf
     imageLabel: Foto socie e soci del Distretto 2050
     imageSide: right
     _template: SplitSection
@@ -34,23 +31,20 @@ blocks:
     titleEn: Vision
     quoteEn: Together, we see a world where people unite and take action to create lasting change — across the globe, in our communities, and in ourselves.
     bodyEn: The beacon that guides Rotaractors, in every corner of the world.
-    subheadEn: ''
-    body2En: ''
-    ctaLabelEn: ''
     imageLabelEn: Photo of District 2050 members
   - kicker: IL NOSTRO IMPEGNO
     title: Missione
-    body: Forniamo service al prossimo, promuoviamo l'integrità e avanziamo la comprensione internazionale, la buona volontà e la pace attraverso la nostra community di imprenditori, professionisti e leader della comunità.
+    body: |
+      La nostra missione è servire gli altri, promuovere l'integrità e favorire la comprensione, la buona volontà e la pace nel mondo attraverso una rete di professionisti, imprenditori e persone di spicco della comunità.
+    image: /uploads/Paesaggi/WhatsApp-Image-2026-08-14-at-23.30.43.jpeg
+    imageFocalX: 49
+    imageFocalY: 68
     imageLabel: Foto socie e soci in un progetto di servizio
     imageSide: left
     _template: SplitSection
     kickerEn: OUR COMMITMENT
     titleEn: Mission
-    quoteEn: ''
     bodyEn: We provide service to others, promote integrity, and advance world understanding, goodwill, and peace through our fellowship of business, professional, and community leaders.
-    subheadEn: ''
-    body2En: ''
-    ctaLabelEn: ''
     imageLabelEn: Photo of members at a service project
   - title: I 5 VALORI DEL ROTARY INTERNATIONAL
     accent: '#F7A81B'
@@ -83,7 +77,6 @@ blocks:
         descriptionEn: We shape the people who will lead tomorrow's communities.
     _template: ValuesGrid
     titleEn: ROTARY INTERNATIONAL'S 5 CORE VALUES
-    introEn: ''
   - title: LE VIE D'AZIONE
     accent: '#0067C8'
     layout: path
@@ -116,7 +109,6 @@ blocks:
         descriptionEn: Supporting Rotaract, Interact, and leadership programs for the next generation.
     _template: ValuesGrid
     titleEn: THE AVENUES OF SERVICE
-    introEn: ''
   - title: LE 7 AREE DI INTERVENTO
     accent: '#00A2E0'
     layout: icon
@@ -165,33 +157,35 @@ blocks:
         descriptionEn: We protect natural resources and promote sustainability.
     _template: ValuesGrid
     titleEn: THE 7 AREAS OF FOCUS
-    introEn: ''
   - title: LA PROVA DELLE QUATTRO DOMANDE
     intro: 'Ciò che penso, dico o faccio:'
     accent: '#657F99'
     items:
       - letter: '1'
-        title: Verità
-        description: Risponde a verità?
+        title: 'Risponde '
+        description: a VERITÀ?
         titleEn: Truth
         descriptionEn: Is it the truth?
       - letter: '2'
-        title: Equità
-        description: È giusto per tutti gli interessati?
+        title: È GIUSTO
+        description: per tutti gli interessati?
         titleEn: Fairness
         descriptionEn: Is it fair to all concerned?
       - letter: '3'
-        title: Amicizia
-        description: Promuoverà buona volontà e migliori rapporti di amicizia?
+        title: 'Promuoverà '
+        description: BUONA VOLONTÀ e MIGLIORI RAPPORTI DI AMICIZIA?
         titleEn: Goodwill
         descriptionEn: Will it build goodwill and better friendships?
       - letter: '4'
-        title: Beneficio
-        description: Sarà vantaggioso per tutti gli interessati?
+        title: Sarà VANTAGGIOSO
+        description: per tutti gli interessati?
         titleEn: Benefit
         descriptionEn: Will it be beneficial to all concerned?
     _template: ValuesGrid
     titleEn: THE FOUR-WAY TEST
     introEn: 'Of the things we think, say or do:'
+titleEn: THE DISTRICT
+eyebrowEn: ROTARACT DISTRICT 2050
+breadcrumbCurrentEn: THE DISTRICT
 ---
 
