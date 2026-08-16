@@ -490,6 +490,8 @@ const configured = Boolean(driveFolderId && driveApiKey);
 				entry.href = file.webViewLink ?? '#';
 				entry.target = '_blank';
 				entry.rel = 'noopener';
+				entry.dataset.track = 'material_open';
+				entry.dataset.trackParams = JSON.stringify({ file_name: file.name });
 
 				const icon = document.createElement('span');
 				icon.className = 'materials-icon';

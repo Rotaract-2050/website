@@ -103,12 +103,26 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 		{(ticketsUrl || photoAlbumUrl) && (
 			<div class="event-actions">
 				{ticketsUrl && (
-					<a class="event-tickets-btn" href={ticketsUrl} target="_blank" rel="noopener">
+					<a
+						class="event-tickets-btn"
+						href={ticketsUrl}
+						target="_blank"
+						rel="noopener"
+						data-track="event_tickets_click"
+						data-track-params={JSON.stringify({ event_name: title })}
+					>
 						{ticketsButtonLabel}
 					</a>
 				)}
 				{photoAlbumUrl && (
-					<a class="event-photo-btn" href={photoAlbumUrl} target="_blank" rel="noopener">
+					<a
+						class="event-photo-btn"
+						href={photoAlbumUrl}
+						target="_blank"
+						rel="noopener"
+						data-track="event_photos_click"
+						data-track-params={JSON.stringify({ event_name: title })}
+					>
 						{photoButtonLabel}
 					</a>
 				)}

@@ -48,7 +48,12 @@ const zoneGroups = zones.map((zone) => ({
 					{zone.clubs.map((club) => (
 						<div class="club-card" data-tina-field={tinaField(club)} style={zone.color ? `--tint:${zone.color};` : undefined}>
 							<div class="club-body">
-								<a href={getRelativeLocaleUrl(lang, `club/${club._sys.filename}`)} class="club-link">
+								<a
+									href={getRelativeLocaleUrl(lang, `club/${club._sys.filename}`)}
+									class="club-link"
+									data-track="club_click"
+									data-track-params={JSON.stringify({ club_name: club.name, zone_name: zone.name })}
+								>
 									<div class="club-name">{club.name}</div>
 									<div class="club-zone">{zone.name}</div>
 								</a>
