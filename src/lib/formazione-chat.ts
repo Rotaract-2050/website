@@ -71,8 +71,13 @@ const SYSTEM_PREAMBLE: Record<Lang, string> = {
  * ever grows past `MAX_PROMPT_CHARS`, lowest-priority resources (the tail of that order) are
  * dropped first and a warning is logged, so growth becomes visible in Workers logs before it's
  * a real problem — at today's corpus size this path never triggers.
+ *
+ * `extraInstructions` is editor-supplied free text from Tina (`settings.chatAssistant.extraInstructions`,
+ * per-language). It's appended *after* the fixed grounding/safety rules in `SYSTEM_PREAMBLE`, never
+ * replacing them — a non-technical editor can add tone/persona guidance but can't turn off the
+ * "only answer from the published cards" or "admit when you don't know" rules.
  */
-export function buildSystemPrompt(resources: Resource[], lang: Lang): string {
+export function buildSystemPrompt(resources: Resource[], lang: Lang, extraInstructions?: string | null): string {
 	const entries: string[] = [];
 	let corpusChars = 0;
 
@@ -92,7 +97,9 @@ export function buildSystemPrompt(resources: Resource[], lang: Lang): string {
 		corpusChars += entry.length;
 	}
 
-	return `${SYSTEM_PREAMBLE[lang]}\n\n${entries.join('\n\n')}`;
+	const extra = extraInstructions?.trim();
+	const preamble = extra ? `${SYSTEM_PREAMBLE[lang]}\n\n${extra}` : SYSTEM_PREAMBLE[lang];
+	return `${preamble}\n\n${entries.join('\n\n')}`;
 }
 
 interface GeminiGenerateContentResponse {

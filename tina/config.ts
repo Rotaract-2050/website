@@ -958,6 +958,42 @@ export default defineConfig({
 						description:
 							'Solo il valore "content" del meta tag HTML di verifica proprietà (Search Console → Impostazioni → Verifica proprietà → tag HTML), non il tag intero. Es. "abc123...". Serve solo la prima volta per confermare la proprietà del sito su Search Console.',
 					},
+					{
+						type: 'object',
+						name: 'chatAssistant',
+						label: 'Assistente AI (Formazione)',
+						description:
+							'Personalizzazione del mini-chat AI nella sezione Formazione. Un file per lingua (it.md/en.md), quindi ogni valore qui è già nella lingua di questo documento — non serve un campo "En" separato.',
+						fields: [
+							{
+								type: 'string',
+								name: 'title',
+								label: 'Titolo finestra chat',
+								description: 'Se vuoto, resta il titolo predefinito ("Assistente Formazione" / "Formazione assistant").',
+							},
+							{
+								type: 'string',
+								name: 'greeting',
+								label: 'Messaggio iniziale',
+								ui: { component: 'textarea' },
+								description: 'Primo messaggio mostrato in chat prima di qualunque domanda. Se vuoto, resta il messaggio predefinito.',
+							},
+							{
+								type: 'string',
+								name: 'extraInstructions',
+								label: "Istruzioni aggiuntive per l'AI (tono, focus...)",
+								ui: { component: 'textarea' },
+								description:
+									'Aggiunte alle istruzioni di base dell\'assistente (che restano fisse per sicurezza: rispondere solo con le schede pubblicate, mai inventare, ammettere quando non sa). Usare questo campo solo per tono di voce o enfasi extra, es. "Rispondi in modo informale e amichevole" — non per cambiare le regole di sicurezza sopra.',
+							},
+							{
+								type: 'boolean',
+								name: 'autoOpen',
+								label: "Apri automaticamente all'arrivo sulla pagina",
+								description: 'Se attivo, la finestra chat si apre da sola alla prima visita di ogni sessione (non si riapre da sola se il visitatore la chiude).',
+							},
+						],
+					},
 				],
 			},
 		],

@@ -1,5 +1,7 @@
 import { env } from 'cloudflare:workers';
 import type { APIRoute } from 'astro';
+import { requestWithMetadata } from '@tinacms/astro';
+import client from '../../../tina/__generated__/client';
 import { getKnowledgeResources } from '../../lib/resources';
 import {
 	buildSystemPrompt,
@@ -87,7 +89,12 @@ export const POST: APIRoute = async (context) => {
 		return Response.json({ answer: t.chat.errorEmptyCorpus });
 	}
 
-	const systemPrompt = buildSystemPrompt(resources, body.lang);
+	// Editor-supplied tone/persona guidance from Tina (settings.chatAssistant.extraInstructions);
+	// buildSystemPrompt only appends it after the fixed grounding/safety rules, never replaces them.
+	const settingsResult = await requestWithMetadata(client.queries.settings({ relativePath: `${body.lang}.md` }));
+	const extraInstructions = settingsResult.data.settings.chatAssistant?.extraInstructions;
+
+	const systemPrompt = buildSystemPrompt(resources, body.lang, extraInstructions);
 
 	try {
 		const answer = await callGemini(env.GEMINI_API_KEY, systemPrompt, messages);
