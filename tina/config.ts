@@ -718,8 +718,22 @@ export default defineConfig({
 					...focalImageFields('image', 'Immagine copertina (opzionale)'),
 					{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine (IT)', required: true },
 					{ type: 'string', name: 'imageLabelEn', label: 'Didascalia segnaposto immagine (EN)' },
-					{ type: 'rich-text', name: 'body', label: 'Contenuto scheda (IT)', isBody: true },
-					{ type: 'rich-text', name: 'bodyEn', label: 'Contenuto scheda (EN)' },
+					{
+						type: 'string',
+						name: 'body',
+						label: 'Contenuto scheda (IT)',
+						isBody: true,
+						ui: { component: 'textarea' },
+						description:
+							'Markdown puro — non l\'editor visuale usato altrove sul sito: # Titolo, ## Sottotitolo, - elenco puntato, 1. elenco numerato, **grassetto**, > citazione. Per collegare un\'altra scheda di questa sezione, scrivi [[slug-scheda]] (usa il testo della scheda collegata come testo del link) oppure [[slug-scheda|Testo del link]] per un testo personalizzato — lo slug è il nome del file della scheda collegata (es. "ruolo-del-prefetto").',
+					},
+					{
+						type: 'string',
+						name: 'bodyEn',
+						label: 'Contenuto scheda (EN)',
+						ui: { component: 'textarea' },
+						description: 'Same convention as the Italian body — plain Markdown, plus [[slug]] / [[slug|Custom label]] wikilinks to other cards in this section.',
+					},
 				],
 			},
 			{

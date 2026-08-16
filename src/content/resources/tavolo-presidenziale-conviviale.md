@@ -30,6 +30,12 @@ bodyEn: |
   A rectangular head table must be arranged so that guests seated at it never have their backs to the guests in the room — the same rule applies to a "horseshoe" layout, wherever the room allows it.
 
   > **Note:** in a room with limited space, the head table must at least seat: the President, any Presidents attending in interclub, the guest speaker, and the District Representative and/or Zone Delegate (or whoever stands in for them).
+
+  ### See also
+
+  * [[tavolo-presidenziale-visita-rd]]
+  * [[tavolo-presidenziale-passaggio-consegne]]
+  * [[tavolo-presidenziale-interclub]]
 ---
 
 Ordine di disposizione del tavolo presidenziale in occasione di una conviviale:
@@ -52,3 +58,9 @@ Ordine di disposizione del tavolo presidenziale in occasione di una conviviale:
 Il tavolo presidenziale rettangolare va disposto in modo che i commensali non diano le spalle agli ospiti presenti in sala — regola valida anche per il tavolo "a ferro di cavallo", dove lo spazio della sala lo consenta.
 
 > **Attenzione:** in caso di sala con spazio limitato, il tavolo presidenziale deve accogliere almeno: Presidente, Presidenti in interclub, Relatore, Rappresentante Distrettuale e/o Delegato di Zona (o chi ne fa le veci).
+
+### Vedi anche
+
+* [[tavolo-presidenziale-visita-rd]]
+* [[tavolo-presidenziale-passaggio-consegne]]
+* [[tavolo-presidenziale-interclub]]

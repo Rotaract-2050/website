@@ -28,6 +28,12 @@ bodyEn: |
   8. District Representative-elect
   9. Outgoing Zone Delegate
   10. Incoming Zone Delegate
+
+  ### See also
+
+  * [[tavolo-presidenziale-conviviale]]
+  * [[tavolo-presidenziale-visita-rd]]
+  * [[tavolo-presidenziale-interclub]]
 ---
 
 Il Passaggio delle Consegne è l'ultima conviviale dell'anno sociale, durante la quale il Presidente uscente passa il testimone al Presidente entrante.
@@ -48,3 +54,9 @@ Il Passaggio delle Consegne è l'ultima conviviale dell'anno sociale, durante la
 8. Rappresentante Distrettuale nominato
 9. Delegato di Zona uscente
 10. Delegato di Zona entrante
+
+### Vedi anche
+
+* [[tavolo-presidenziale-conviviale]]
+* [[tavolo-presidenziale-visita-rd]]
+* [[tavolo-presidenziale-interclub]]

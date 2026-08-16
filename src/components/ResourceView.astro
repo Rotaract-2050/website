@@ -7,10 +7,10 @@ import { Image } from 'astro:assets';
 import ImageSlot from './ImageSlot.astro';
 import { uiStrings, type Lang } from '../data/ui-strings';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { localizeResource, tagPillStyle } from '../lib/resources';
+import { getKnowledgeResources, localizeResource, tagPillStyle, buildWikilinkResolver } from '../lib/resources';
 import JsonLd from './JsonLd.astro';
 import { buildArticleJsonLd } from '../lib/jsonld';
-import { renderTinaMarkdown } from '../lib/tina-rich-text';
+import { renderResourceMarkdown } from '../lib/resource-markdown';
 
 interface Props {
 	lang: Lang;
@@ -40,7 +40,11 @@ const jsonLd = buildArticleJsonLd({
 	lang,
 	publisherLogoUrl: new URL('/uploads/Loghi/Logo-distretto.png', Astro.site).toString(),
 });
-const bodyHtml = renderTinaMarkdown(localized.body);
+// Fetched once for wikilink resolution ([[slug]] -> another card's URL/title, see
+// lib/resource-markdown.ts) — this is the whole collection, not just this one resource.
+const allResources = await getKnowledgeResources();
+const resolveWikilink = buildWikilinkResolver(allResources, lang);
+const bodyHtml = renderResourceMarkdown(localized.body, resolveWikilink);
 const tagKeys = (resource.tags ?? []).filter((tag): tag is string => Boolean(tag));
 ---
 

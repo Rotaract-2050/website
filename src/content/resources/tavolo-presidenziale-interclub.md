@@ -29,6 +29,12 @@ bodyEn: |
   8. Zone Delegate
   9. Other officers
   10. Other officers
+
+  ### See also
+
+  * [[tavolo-presidenziale-conviviale]]
+  * [[tavolo-presidenziale-visita-rd]]
+  * [[tavolo-presidenziale-passaggio-consegne]]
 ---
 
 Il Prefetto del club ospitante è il principale responsabile dell'organizzazione dell'evento in interclub.
@@ -50,3 +56,9 @@ Il Prefetto del club ospitante è il principale responsabile dell'organizzazione
 8. Delegato di Zona
 9. Altre cariche
 10. Altre cariche
+
+### Vedi anche
+
+* [[tavolo-presidenziale-conviviale]]
+* [[tavolo-presidenziale-visita-rd]]
+* [[tavolo-presidenziale-passaggio-consegne]]

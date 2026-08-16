@@ -32,6 +32,11 @@ bodyEn: |
   * Make sure the venue is clean and tables are arranged correctly according to the guidelines;
   * Remember to state the required dress code on invitations, so every guest feels at ease; invitations should be sent well in advance, with directions to the venue;
   * When seats are assigned, prepare place cards to help guests find their seat.
+
+  ### See also
+
+  * [[campana-e-martelletto]]
+  * [[saluti-ordine-delle-precedenze]]
 ---
 
 > "Nella vita di ogni Club le conviviali e i momenti di incontro rappresentano un momento di fondamentale importanza. Al fine di garantire una corretta organizzazione degli eventi all'insegna della formazione, dell'amicizia e della convivialità, il presente Cerimoniale vuole fornire le linee guida e le indicazioni necessarie per facilitare il Prefetto nello svolgimento delle sue funzioni."
@@ -56,3 +61,8 @@ La figura del Prefetto svolge un ruolo fondamentale all'interno del club: deve g
 * Assicurarsi che gli spazi del locale prescelto siano puliti e che i tavoli siano disposti correttamente secondo le indicazioni fornite;
 * Indicare negli inviti il "dress code" richiesto, per far sentire ogni invitato a proprio agio; gli inviti vanno inviati per tempo, accompagnati dalle indicazioni per raggiungere il luogo dell'evento;
 * Ove siano previsti posti assegnati, preparare i segnaposti per facilitare l'ospite.
+
+### Vedi anche
+
+* [[campana-e-martelletto]]
+* [[saluti-ordine-delle-precedenze]]

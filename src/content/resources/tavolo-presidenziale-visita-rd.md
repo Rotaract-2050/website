@@ -32,6 +32,12 @@ bodyEn: |
   11. Zone Delegate
 
   > **Note:** when the authorities present outnumber the head table's seats, set up secondary "tables of honour", or seat them in the front row and call on them individually for a welcome. Each table of honour should have someone representing the Club present (e.g. a Past President or Vice President).
+
+  ### See also
+
+  * [[tavolo-presidenziale-conviviale]]
+  * [[tavolo-presidenziale-passaggio-consegne]]
+  * [[tavolo-presidenziale-interclub]]
 ---
 
 La visita ufficiale del Rappresentante Distrettuale è uno dei momenti più importanti per il Club.
@@ -56,3 +62,9 @@ La visita ufficiale del Rappresentante Distrettuale è uno dei momenti più impo
 11. Delegato di Zona
 
 > **N.B.** Quando le autorità presenti superano i posti disponibili al tavolo presidenziale, prevedere dei tavoli di rispetto, oppure farle sedere in prima fila e chiamarle singolarmente per un saluto. Ad ogni tavolo di rispetto deve essere presente una persona che rappresenti il Club (es. Past President o Vice Presidente).
+
+### Vedi anche
+
+* [[tavolo-presidenziale-conviviale]]
+* [[tavolo-presidenziale-passaggio-consegne]]
+* [[tavolo-presidenziale-interclub]]

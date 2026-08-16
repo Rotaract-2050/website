@@ -1,7 +1,9 @@
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import { requestWithMetadata } from '@tinacms/astro';
 import client from '../../tina/__generated__/client';
 import type { ResourcesConnectionQuery } from '../../tina/__generated__/types';
 import type { Lang } from '../data/ui-strings';
+import type { WikilinkResolver } from './resource-markdown';
 
 type ResourceEdge = NonNullable<ResourcesConnectionQuery['resourcesConnection']['edges']>[number];
 export type Resource = NonNullable<NonNullable<ResourceEdge>['node']>;
@@ -108,6 +110,25 @@ export function resourceTags(resources: Pick<Resource, 'tags'>[]): string[] {
 		}
 	}
 	return [...seen];
+}
+
+/**
+ * Builds a `[[slug]]` wikilink resolver (see `lib/resource-markdown.ts`) from a set of resources
+ * already fetched for the page — the archive fetches the whole collection anyway, and a resource
+ * detail page fetches it once for this purpose (see ResourceView.astro), rather than issuing a
+ * query per link found in a body.
+ */
+export function buildWikilinkResolver(resources: Pick<Resource, '_sys' | 'title' | 'titleEn'>[], lang: Lang): WikilinkResolver {
+	const bySlug = new Map(resources.map((resource) => [resourceSlug(resource), resource]));
+	return (slug) => {
+		const resource = bySlug.get(slug);
+		if (!resource) return undefined;
+		const isEn = lang === 'en';
+		return {
+			href: getRelativeLocaleUrl(lang, `formazione/${slug}`),
+			label: (isEn && resource.titleEn) || resource.title,
+		};
+	};
 }
 
 /**

@@ -2,8 +2,8 @@
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { tinaField } from '@tinacms/astro';
 import ResourceCard from '../ResourceCard.astro';
-import { getKnowledgeResources, localizeResource, resourceSlug, tagSlug, tagColor, resourceTags, localizeTag } from '../../lib/resources';
-import { extractPlainText } from '../../lib/tina-rich-text';
+import { getKnowledgeResources, localizeResource, resourceSlug, tagSlug, tagColor, resourceTags, localizeTag, buildWikilinkResolver } from '../../lib/resources';
+import { extractResourcePlainText } from '../../lib/resource-markdown';
 import { uiStrings, type Lang } from '../../data/ui-strings';
 
 interface Props {
@@ -16,6 +16,7 @@ const t = uiStrings[lang];
 
 const resources = await getKnowledgeResources();
 const tags = resourceTags(resources);
+const resolveWikilink = buildWikilinkResolver(resources, lang);
 ---
 
 <section class="archive">
@@ -48,7 +49,7 @@ const tags = resourceTags(resources);
 								tagKeys={(resource.tags ?? []).filter((tag): tag is string => Boolean(tag))}
 								title={localized.title}
 								excerpt={localized.excerpt}
-								bodyText={extractPlainText(localized.body)}
+								bodyText={extractResourcePlainText(localized.body, resolveWikilink)}
 								readMoreLabel={t.resources.readMore}
 								tinaFieldAttr={tinaField(resource)}
 							/>

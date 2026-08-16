@@ -58,6 +58,10 @@ bodyEn: |
   * District Committee members
 
   > **Note:** this list applies when Rotaract officers are present. If the corresponding Rotary and Interact officers are also present, the order of precedence is: Rotaract, Rotary, Interact.
+
+  ### See also
+
+  * [[saluti-ordine-delle-precedenze]]
 ---
 
 ### Saluti in presenza di membri del Consiglio Distrettuale
@@ -108,3 +112,7 @@ bodyEn: |
 * Componenti Commissioni Distrettuali
 
 > **N.B.** Questo elenco vale in presenza di cariche rotaractiane. Se sono presenti anche le rispettive cariche rotariane e interactiane, l'ordine di precedenza è: Rotaract, Rotary, Interact.
+
+### Vedi anche
+
+* [[saluti-ordine-delle-precedenze]]

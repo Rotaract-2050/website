@@ -21,6 +21,11 @@ bodyEn: |
   * These rules should be read together with Italy's DPCM of 14 April 2006, as updated by the DPCM of 16 April 2008 (the official Italian precedence rules for public ceremonies).
 
   > **Note!** If the welcome remarks are given by the Club Prefect, the Prefect does not welcome their own Club's President, since they are speaking on the President's behalf.
+
+  ### See also
+
+  * [[ruolo-del-prefetto]]
+  * [[saluti-cariche-distrettuali-e-internazionali]]
 ---
 
 Regole generali per l'ordine dei saluti:
@@ -34,3 +39,8 @@ Regole generali per l'ordine dei saluti:
 * Integrare queste indicazioni con quanto previsto dal DPCM 14 Aprile 2006, aggiornato con DPCM 16 Aprile 2008.
 
 > **Attenzione!** Se i saluti vengono svolti dal Prefetto di Club, quest'ultimo non deve salutare il Presidente del proprio Club, poiché i saluti li svolge in suo nome.
+
+### Vedi anche
+
+* [[ruolo-del-prefetto]]
+* [[saluti-cariche-distrettuali-e-internazionali]]
