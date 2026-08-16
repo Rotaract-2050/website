@@ -1,37 +1,38 @@
 ---
 title: Rotaract Distretto 2050
+titleEn: Rotaract District 2050
 seo:
   description: Il Distretto Rotaract 2050 riunisce i club Rotaract della Lombardia meridionale e della Provincia di Piacenza.
   descriptionEn: Rotaract District 2050 brings together Rotaract clubs across southern Lombardy and the Province of Piacenza.
 blocks:
   - ctaHref: club
     slides:
-      - image: /uploads/Paesaggi/Paesaggio-1.jpeg
+      - image: /uploads/Paesaggi/Paesaggio-4.jpeg
         eyebrow: ROTARACT DISTRETTO 2050
-        title: GIOVANI CHE COSTRUISCONO IL CAMBIAMENTO
-        subtitle: 'Lombardia meridionale e Provincia di Piacenza: 7 provincie, un solo distretto di giovani leader al servizio della comunità.'
-        ctaLabel: SCOPRI I CLUB
         eyebrowEn: ROTARACT DISTRICT 2050
+        title: GIOVANI CHE COSTRUISCONO IL CAMBIAMENTO
         titleEn: YOUNG PEOPLE BUILDING CHANGE
+        subtitle: 'Lombardia meridionale e Provincia di Piacenza: 7 provincie, un solo distretto di giovani leader al servizio della comunità.'
         subtitleEn: 'Southern Lombardy and the Province of Piacenza: 7 provinces, one district of young leaders serving their communities.'
+        ctaLabel: SCOPRI I CLUB
         ctaLabelEn: DISCOVER THE DISTRICT
       - image: /uploads/Paesaggi/Paesaggio-2.jpeg
         eyebrow: SERVIZIO E LEADERSHIP
-        title: PROGETTI CHE LASCIANO IL SEGNO
-        subtitle: 'Dalla promozione della pace alla tutela dell''ambiente: ogni Club Rotaract individua una causa e la trasforma in azioni concrete al servizio della comunità.'
-        ctaLabel: I NOSTRI CLUB
         eyebrowEn: SERVICE AND LEADERSHIP
+        title: PROGETTI CHE LASCIANO IL SEGNO
         titleEn: PROJECTS THAT LEAVE A MARK
+        subtitle: 'Dalla promozione della pace alla tutela dell''ambiente: ogni Club Rotaract individua una causa e la trasforma in azioni concrete al servizio della comunità.'
         subtitleEn: 'From fighting poverty to protecting the environment: every Rotaract club picks a cause and drives it forward.'
+        ctaLabel: I NOSTRI CLUB
         ctaLabelEn: OUR CLUBS
       - image: /uploads/Paesaggi/Paesaggio-3.jpeg
         eyebrow: UNISCITI A NOI
-        title: LA TUA RETE PARTE DA QUI
-        subtitle: Il Rotaract è la rete di giovani dai 18 anni che unisce crescita personale, amicizia e servizio.
-        ctaLabel: ENTRA NEL ROTARACT
         eyebrowEn: JOIN US
+        title: LA TUA RETE PARTE DA QUI
         titleEn: YOUR NETWORK STARTS HERE
-        subtitleEn: Rotaract is the community for 18-30 year-olds combining personal growth, fellowship and service.
+        subtitle: 'Il Rotaract è la rete di giovani dai 18 anni che unisce crescita personale, amicizia e servizio.'
+        subtitleEn: 'Rotaract is the community for 18-30 year-olds combining personal growth, fellowship and service.'
+        ctaLabel: ENTRA NEL ROTARACT
         ctaLabelEn: JOIN ROTARACT
     _template: Hero
   - items:
@@ -49,28 +50,28 @@ blocks:
         labelEn: ACTIVE PROJECTS
     _template: StatsBar
   - label: NOTIZIE ROTARY INTERNATIONAL
-    feedUrl: https://www.rotary.org/rss.xml
+    labelEn: ROTARY INTERNATIONAL NEWS
+    feedUrl: 'https://www.rotary.org/rss.xml'
     limit: 12
     _template: NewsTicker
-    labelEn: ROTARY INTERNATIONAL NEWS
   - kicker: CHI SIAMO
+    kickerEn: WHO WE ARE
     title: IL ROTARACT NEL DISTRETTO 2050
+    titleEn: ROTARACT IN DISTRICT 2050
     body: 'Il Rotaract è l''organizzazione partner del Rotary International che trasforma la passione giovanile per il servizio e la leadership in progetti dal profondo impatto locale e globale, ispirati dal motto "Fellowship through Service". '
+    bodyEn: 'Rotaract is a service organization partnered with Rotary International, bringing together young people aged 18 and up who are committed to community service, personal growth, and leadership development. Grounded in the holistic development of the individual, it gives members the chance to take action, carrying out projects with local and global impact in a spirit of friendship and collaboration (Fellowship through Service).'
     body2: 'Espressione viva di questa missione, il Distretto 2050 unisce i Club della Lombardia meridionale e della Provincia di Piacenza: una rete coesa e dinamica che valorizza le energie del territorio per generare un cambiamento concreto, positivo e duraturo.'
+    body2En: Rotaract District 2050 brings together clubs active across southern Lombardy and the Province of Piacenza.
     ctaLabel: SCOPRI IL DISTRETTO
+    ctaLabelEn: DISCOVER THE DISTRICT
     ctaHref: distretto
     image: /uploads/Paesaggi/Aggiungi-un-titolo_page-0001.jpeg
     imageFocalX: 50
     imageFocalY: 42
     imageLabel: Foto socie/i in un progetto di servizio
+    imageLabelEn: Photo of members on a service project
     imageSide: right
     _template: SplitSection
-    kickerEn: WHO WE ARE
-    titleEn: ROTARACT IN DISTRICT 2050
-    bodyEn: Rotaract is a service organization partnered with Rotary International, bringing together young people aged 18 and up who are committed to community service, personal growth, and leadership development. Grounded in the holistic development of the individual, it gives members the chance to take action, carrying out projects with local and global impact in a spirit of friendship and collaboration (Fellowship through Service).
-    body2En: Rotaract District 2050 brings together clubs active across southern Lombardy and the Province of Piacenza.
-    ctaLabelEn: DISCOVER THE DISTRICT
-    imageLabelEn: Photo of members on a service project
   - autoplay: true
     images:
       - image: /uploads/Paesaggi/Paesaggio-1.jpeg
@@ -96,48 +97,47 @@ blocks:
         labelEn: Landscape of Rotaract District 2050
     _template: PhotoCarousel
   - title: I CLUB DEL DISTRETTO
+    titleEn: CLUBS IN THE DISTRICT
     items:
       - title: Francigena
+        titleEn: Francigena
         meta: 5 club
+        metaEn: 5 club(s)
         href: club
         color: '#009739'
-        titleEn: Francigena
-        metaEn: 5 club(s)
       - title: Leonessa
+        titleEn: Leonessa
         meta: 8 club
+        metaEn: 8 club(s)
         href: club
         color: '#00ADBB'
-        titleEn: Leonessa
-        metaEn: 8 club(s)
       - title: Navigli
+        titleEn: Navigli
         meta: 8 club
+        metaEn: 8 club(s)
         href: club
         color: '#FF7600'
-        titleEn: Navigli
-        metaEn: 8 club(s)
       - title: Padana
+        titleEn: Padana
         meta: 7 club
+        metaEn: 7 club(s)
         href: club
         color: '#901F93'
-        titleEn: Padana
-        metaEn: 7 club(s)
     _template: CardGrid
-    titleEn: CLUBS IN THE DISTRICT
   - title: EVENTI DISTRETTUALI
-    _template: EventsCalendar
     titleEn: DISTRICT EVENTS
+    _template: EventsCalendar
   - title: NEWS DAL DISTRETTO
+    titleEn: DISTRICT NEWS
     limit: 3
     _template: NewsGrid
-    titleEn: DISTRICT NEWS
   - title: DIVENTA SOCIO DEL ROTARACT
+    titleEn: BECOME A ROTARACT MEMBER
     body: Hai già compiuto 18 anni?
+    bodyEn: Have you already turned 18?
     buttonLabel: TROVA IL TUO CLUB
+    buttonLabelEn: FIND YOUR CLUB
     buttonHref: club
     _template: CtaBanner
-    titleEn: BECOME A ROTARACT MEMBER
-    bodyEn: Have you already turned 18?
-    buttonLabelEn: FIND YOUR CLUB
-titleEn: Rotaract District 2050
 ---
 
