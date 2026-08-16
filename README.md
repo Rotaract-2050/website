@@ -1,3 +1,6 @@
+[![Auto-translate pages IT→EN](https://github.com/Rotaract-2050/website/actions/workflows/auto-translate.yml/badge.svg)](https://github.com/Rotaract-2050/website/actions/workflows/auto-translate.yml)
+[![Cloudflare preview build](https://github.com/Rotaract-2050/website/actions/workflows/cf-preview-build.yml/badge.svg?branch=main)](https://github.com/Rotaract-2050/website/actions/workflows/cf-preview-build.yml)
+
 # Rotaract District 2050 Website
 
 ## What this is
