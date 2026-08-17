@@ -109,7 +109,7 @@ Si occupa della stesura e dell'invio formale delle convocazioni per Assemblee e 
 
 ### 4. Custode dell'archivio, della documentazione storica e del registro dei soci
 
-Protegge e organizza la memoria storica del Club conservando l'intero patrimonio documentale. Cura la tenuta ordinata di tutti i verbali approvati, della corrispondenza istituzionale, delle pubblicazioni ufficiali e dei registri aggiornati dei soci, garantendo la continuità tra le diverse annate rotariane.
+Protegge e organizza la memoria storica del Club conservando l'intero patrimonio documentale. Cura la tenuta ordinata di tutti i verbali approvati, della corrispondenza istituzionale, delle pubblicazioni ufficiali e dei registri aggiornati dei soci, garantendo la continuità nel tempo.
 
 ### 5. Responsabile degli adempimenti burocratici, amministrativi e del rispetto delle scadenze istituzionali
 
