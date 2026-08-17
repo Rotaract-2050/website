@@ -43,7 +43,7 @@ const {
 const otherLang: Lang = lang === 'it' ? 'en' : 'it';
 const alternateHref = alternateHrefProp ?? getRelativeLocaleUrl(otherLang, pageSlugs[current]);
 
-const { data } = await requestWithMetadata(client.queries.settings({ relativePath: `${lang}.md` }), { priority: 'primary' });
+const { data } = await requestWithMetadata(client.queries.settings({ relativePath: 'settings.md' }), { priority: 'primary' });
 const settings = data.settings;
 // Staging/preview hosts (e.g. beta.rotaract2050.org) always noindex, regardless of the page's own SEO
 // setting, so Google never has a chance to index test content under a different host than the canonical
@@ -97,7 +97,7 @@ const organizationGraph = buildOrganizationGraph(
 				<slot />
 			</main>
 			<Footer lang={lang} settings={settings} />
-			{current === 'formazione' && <FormazioneChatWidget lang={lang} chatSettings={settings.chatAssistant} />}
+			<FormazioneChatWidget lang={lang} chatSettings={settings.chatAssistant} />
 		</div>
 		<CookieConsent lang={lang} gaMeasurementId={onProdHost ? settings.gaMeasurementId : null} />
 	</body>

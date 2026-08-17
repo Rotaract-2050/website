@@ -62,12 +62,16 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-US',
 <style>
 	.news {
 		background: var(--color-bg);
-		padding: 80px 40px;
+		padding: 40px 40px 96px;
 	}
 
 	.section-inner {
 		max-width: var(--content-max);
 		margin: 0 auto;
+		background: #f6f8fa;
+		border-radius: var(--shape-extra-large);
+		padding: 60px 40px;
+		text-align: center;
 	}
 
 	.section-title {
@@ -89,19 +93,32 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-US',
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: 28px;
+		text-align: left;
 	}
 
 	.news-view-all {
 		display: inline-block;
-		margin-top: 30px;
+		margin-top: 40px;
 		color: var(--color-pink);
+		background: #fff;
+		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: 14px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		padding: 14px 32px;
+		border-radius: var(--shape-full);
+		box-shadow: var(--elevation-1);
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
 	.news-view-all:hover {
-		text-decoration: underline;
+		transform: translateY(-2px);
+		box-shadow: var(--elevation-2);
+		background: var(--color-bg);
 	}
+
+
 
 	@media (max-width: 900px) {
 		.news-grid {
@@ -111,8 +128,10 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-US',
 
 	@media (max-width: 720px) {
 		.news {
-			padding-left: 20px;
-			padding-right: 20px;
+			padding: 40px 20px 80px;
+		}
+		.section-inner {
+			padding: 40px 20px;
 		}
 	}
 </style>

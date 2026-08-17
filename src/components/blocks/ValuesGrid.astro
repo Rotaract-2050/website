@@ -1,68 +1,108 @@
 ---
-import { Image } from 'astro:assets';
+import { Image } from "astro:assets";
 
 interface Props {
 	title: string;
 	intro?: string;
 	accent?: string;
-	layout?: 'badge' | 'path' | 'icon';
-	items: { letter: string; icon?: string; title: string; description: string; tinaFieldAttr?: string }[];
+	layout?: "badge" | "path" | "icon";
+	items: {
+		letter: string;
+		icon?: string;
+		title: string;
+		description: string;
+		tinaFieldAttr?: string;
+	}[];
 }
 
-const { title, intro, accent = '#d41367', layout, items } = Astro.props;
+const { title, intro, accent = "#d41367", layout, items } = Astro.props;
 
 // Official Rotary Areas of Focus icons (brandcenter.rotary.org), full color, one per
 // area — each already carries its own official AOF color baked into the PNG, so this
 // replaces the earlier hand-drawn single-color SVG set. Maps our existing Tina `icon`
 // option keys to the asset's filename segment.
 const AOF_ICON_FILE: Record<string, string> = {
-	peace: 'peace',
-	health: 'disease',
-	water: 'water',
-	family: 'maternal',
-	education: 'education',
-	growth: 'economic',
-	leaf: 'environment',
+	peace: "peace",
+	health: "disease",
+	water: "water",
+	family: "maternal",
+	education: "education",
+	growth: "economic",
+	leaf: "environment",
 };
-const aofIconSrc = (icon: string) => `/uploads/Aree-Azione/color/no_title/AOF_${AOF_ICON_FILE[icon]}_color_no_title.png`;
+const aofIconSrc = (icon: string) =>
+	`/uploads/Aree-Azione/color/no_title/AOF_${AOF_ICON_FILE[icon]}_color_no_title.png`;
 
 // The official artwork's own baked-in color per area, read off the source PNGs —
 // each matches a color already in the Rotary secondary palette (references/rotary-brand.md):
 // Azure, Cardinal, Sky Blue, Violet, Orange, Turquoise, Grass respectively. Used to tint
 // each card's own tonal surface, same pattern as the zone cards on Home.
 const AOF_ICON_COLOR: Record<string, string> = {
-	peace: '#0067c8',
-	health: '#e02927',
-	water: '#00a2e0',
-	family: '#901f93',
-	education: '#ff7600',
-	growth: '#00adbb',
-	leaf: '#009739',
+	peace: "#0067c8",
+	health: "#e02927",
+	water: "#00a2e0",
+	family: "#901f93",
+	education: "#ff7600",
+	growth: "#00adbb",
+	leaf: "#009739",
+};
+
+// Regex per trovare parole completamente in maiuscolo (di almeno 2 lettere, inclusi gli accenti italiani)
+const highlightCaps = (text: string) => {
+	if (!text) return "";
+	return text.replace(
+		/([A-ZÀÈÌÒÙÉÁÍÓÚ]{2,})/g,
+		'<strong class="highlight-caps">$1</strong>',
+	);
 };
 ---
 
 <section class="values" data-layout={layout} style={`--accent: ${accent}`}>
 	<div class="section-inner">
-		<h2 class="section-title center"><span class="section-title-bar" aria-hidden="true"></span>{title}</h2>
+		<h2 class="section-title center">
+			<span class="section-title-bar" aria-hidden="true"></span>{title}
+		</h2>
 		{intro && <p class="values-intro">{intro}</p>}
 		<div class="values-grid" style={`--grid-cols: ${items.length}`}>
-			{items.map((val) => (
-				<div
-					class="value-card"
-					data-tina-field={val.tinaFieldAttr}
-					style={layout === 'icon' && val.icon ? `--tint:${AOF_ICON_COLOR[val.icon]};` : undefined}
-				>
-					<div class="value-marker">
-						{layout === 'icon' && val.icon ? (
-							<Image src={aofIconSrc(val.icon)} alt="" width={200} height={200} quality="high" />
+			{
+				items.map((val) => (
+					<div
+						class="value-card"
+						data-tina-field={val.tinaFieldAttr}
+						style={
+							layout === "icon" && val.icon
+								? `--tint:${AOF_ICON_COLOR[val.icon]};`
+								: undefined
+						}
+						data-letter={val.letter}
+					>
+						<div class="value-marker">
+							{layout === "icon" && val.icon ? (
+								<Image
+									src={aofIconSrc(val.icon)}
+									alt=""
+									width={200}
+									height={200}
+									quality="high"
+								/>
+							) : (
+								<span class="value-letter">{val.letter}</span>
+							)}
+						</div>
+						{layout !== "statement" && (
+							<div class="value-title">{val.title}</div>
+						)}
+						{layout === "statement" ? (
+							<div
+								class="value-desc"
+								set:html={highlightCaps(val.description)}
+							/>
 						) : (
-							<span class="value-letter">{val.letter}</span>
+							<div class="value-desc">{val.description}</div>
 						)}
 					</div>
-					<div class="value-title">{val.title}</div>
-					<div class="value-desc">{val.description}</div>
-				</div>
-			))}
+				))
+			}
 		</div>
 	</div>
 </section>
@@ -131,7 +171,11 @@ const AOF_ICON_COLOR: Record<string, string> = {
 		padding: 28px 22px 24px;
 		text-align: center;
 		box-shadow: var(--elevation-1);
-		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
+		transition:
+			transform var(--motion-duration-medium)
+				var(--motion-easing-emphasized),
+			box-shadow var(--motion-duration-medium)
+				var(--motion-easing-emphasized);
 	}
 
 	.value-card:hover {
@@ -176,35 +220,222 @@ const AOF_ICON_COLOR: Record<string, string> = {
 		line-height: 1.5;
 	}
 
-	/* --- Badge: a held mark, not a filled icon — a seal band, not a product card.
-	   No box, no shadow: values are principles you hold, not features you ship. --- */
-	.values[data-layout='badge'] .value-card {
-		background: none;
-		box-shadow: var(--elevation-0);
-		border-radius: var(--shape-none);
-		padding: 8px 20px;
-	}
-
-	.values[data-layout='badge'] .value-card:hover {
-		transform: none;
+	/* --- Badge (Dynamic Watermark Cards): premium, flat, pop layout for values --- */
+	.values[data-layout="badge"] .value-card {
+		background: color-mix(in srgb, var(--accent) 8%, transparent);
+		border-radius: 24px;
 		box-shadow: none;
+		border: none;
+		padding: 32px 24px;
+		position: relative;
+		overflow: hidden;
+		text-align: left;
+		display: flex;
+		flex-direction: column;
+		z-index: 1;
+		transition:
+			transform var(--motion-duration-medium)
+				var(--motion-easing-emphasized),
+			background var(--motion-duration-medium)
+				var(--motion-easing-emphasized);
 	}
 
-	.values[data-layout='badge'] .value-marker {
-		width: 64px;
-		height: 64px;
-		background: none;
-		border: 2px solid var(--accent);
+	.values[data-layout="badge"] .value-card:hover {
+		transform: translateY(-6px) scale(1.02);
+		background: color-mix(in srgb, var(--accent) 15%, transparent);
+		box-shadow: none; /* Override base hover shadow */
+	}
+
+	.values[data-layout="badge"] .value-marker {
+		display: none;
+	}
+
+	/* The giant flat watermark (styled as a barely visible solid yellow shape) */
+	.values[data-layout="badge"] .value-card::before {
+		content: attr(data-letter);
+		position: absolute;
+		bottom: -40px;
+		right: -20px;
+		font-family: var(--font-heading);
+		font-size: 240px;
+		font-weight: 900;
+		font-style: normal;
 		color: var(--accent);
-		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized);
+		opacity: 0.06;
+		-webkit-text-stroke: none;
+		line-height: 1;
+		z-index: -1;
+		transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+		pointer-events: none;
 	}
 
-	.values[data-layout='badge'] .value-card:hover .value-marker {
-		transform: scale(1.08);
+	.values[data-layout="badge"] .value-card:hover::before {
+		transform: scale(1.1) rotate(-5deg);
 	}
 
-	.values[data-layout='badge'] .value-title {
-		font-size: 17px;
+	.values[data-layout="badge"] .value-title {
+		font-size: 18px;
+		color: var(--accent);
+		margin-bottom: 12px;
+	}
+
+	.values[data-layout="badge"] .value-desc {
+		font-size: 14px;
+		color: var(--color-text);
+	}
+
+	/* --- Statement (The Four-Way Test): elegant, historical, Rotaract Cranberry theme --- */
+	.values[data-layout="statement"] {
+		background: var(--color-pink-container);
+		border-bottom: none;
+		position: relative;
+	}
+
+	/* Greca di raccordo morbida (onda rilassata) verso la sezione bianca soprastante */
+	.values[data-layout="statement"]::before {
+		content: "";
+		position: absolute;
+		top: -48px;
+		left: 0;
+		right: 0;
+		height: 48px;
+		background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 100' preserveAspectRatio='none'><path fill='%23fae3ed' d='M0,50 C480,100 960,0 1440,50 L1440,100 L0,100 Z'></path></svg>");
+		background-size: 100% 100%;
+		background-repeat: no-repeat;
+		pointer-events: none;
+	}
+
+	.values[data-layout="statement"] .section-title,
+	.values[data-layout="statement"] .values-intro {
+		color: var(--color-pink-dark);
+	}
+
+	.values[data-layout="statement"] .values-intro {
+		font-size: 32px;
+		font-weight: 700;
+		margin-top: 16px;
+		margin-bottom: 48px;
+		line-height: 1.3;
+		max-width: 800px;
+	}
+
+	.values[data-layout="statement"] .value-card {
+		background: var(--color-pink);
+		border-radius: 12px;
+		padding: 40px 32px;
+		border: 1px solid color-mix(in srgb, #ffffff 20%, transparent);
+		box-shadow: var(--elevation-2);
+		text-align: center;
+		overflow: hidden;
+		position: relative;
+		z-index: 1;
+		transition:
+			transform var(--motion-duration-medium)
+				var(--motion-easing-emphasized),
+			box-shadow var(--motion-duration-medium)
+				var(--motion-easing-emphasized),
+			border-color var(--motion-duration-medium)
+				var(--motion-easing-emphasized);
+	}
+
+	.values[data-layout="statement"] .value-card::before {
+		content: attr(data-letter);
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		font-family: var(--font-body);
+		font-size: 280px;
+		font-weight: 700;
+		color: #ffffff;
+		opacity: 0.12;
+		z-index: -1;
+		line-height: 1;
+		transition:
+			transform var(--motion-duration-medium)
+				var(--motion-easing-emphasized),
+			opacity var(--motion-duration-medium)
+				var(--motion-easing-emphasized);
+		pointer-events: none;
+	}
+
+	.values[data-layout="statement"] .value-card:hover {
+		transform: translateY(-8px);
+		border-color: #ffffff;
+		box-shadow: 0 12px 32px
+			color-mix(in srgb, var(--color-pink-dark) 40%, transparent);
+	}
+
+	/* Limit grid to a single column for the vertical list */
+	.values[data-layout="statement"] .values-grid {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		max-width: 1000px;
+		margin: 0 auto;
+		gap: 24px;
+	}
+
+	.values[data-layout="statement"] .value-card {
+		width: 100%;
+		max-width: 760px;
+		background: #ffffff;
+		box-shadow: var(--elevation-2);
+		border-radius: var(--shape-extra-large);
+		border: none;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		padding: 32px 48px;
+		text-align: left;
+		transition:
+			transform var(--motion-duration-medium)
+				var(--motion-easing-emphasized),
+			box-shadow var(--motion-duration-medium)
+				var(--motion-easing-emphasized);
+	}
+
+	.values[data-layout="statement"] .value-card:hover {
+		transform: translateY(-4px) scale(1.02);
+		box-shadow: var(--elevation-4);
+	}
+
+	.values[data-layout="statement"] .value-marker {
+		background: transparent;
+		color: var(--color-pink-dark);
+		width: auto;
+		height: auto;
+		margin: 0 40px 0 0;
+		position: static;
+		transform: none;
+		transition: transform var(--motion-duration-medium)
+			var(--motion-easing-emphasized);
+	}
+
+	.values[data-layout="statement"] .value-letter {
+		font-size: 80px;
+		font-weight: 900;
+		line-height: 1;
+	}
+
+	.values[data-layout="statement"] .value-card:hover .value-marker {
+		transform: scale(1.15) rotate(-5deg);
+	}
+
+	.values[data-layout="statement"] .value-desc {
+		position: static;
+		font-family: var(--font-body);
+		font-size: 24px;
+		font-style: normal; /* "Pop" look prefers clean sans-serif non-italic */
+		color: var(--color-navy);
+		line-height: 1.4;
+		flex: 1;
+		margin: 0;
+	}
+
+	.values[data-layout="statement"] :global(.highlight-caps) {
+		color: var(--color-pink-dark);
+		font-weight: 800;
 	}
 
 	/* --- Icon: the official AOF artwork already carries its own area color baked in
@@ -213,83 +444,219 @@ const AOF_ICON_COLOR: Record<string, string> = {
 	   (same color-mix pattern as the Home zone cards) instead of a plain white card, and
 	   the marker turns into a plain white disc so the artwork's own color stays the only
 	   color doing work — no --accent circle fighting it. --- */
-	.values[data-layout='icon'] .value-card {
-		background: color-mix(in srgb, var(--tint, var(--color-navy)) 12%, white);
+	.values[data-layout="icon"] .value-card {
+		background: color-mix(
+			in srgb,
+			var(--tint, var(--color-navy)) 12%,
+			white
+		);
+		border-radius: var(--shape-extra-large);
+		border: 1px solid transparent;
 	}
 
-	.values[data-layout='icon'] .value-marker {
+	.values[data-layout="icon"] .value-card:hover {
+		transform: translateY(-8px);
+		box-shadow: var(--elevation-3);
+		border-color: color-mix(
+			in srgb,
+			var(--tint, var(--color-navy)) 40%,
+			transparent
+		);
+	}
+
+	.values[data-layout="icon"] .value-marker {
 		width: 88px;
 		height: 88px;
 		background: #fff;
 		box-shadow: var(--elevation-1);
+		transition: transform var(--motion-duration-medium)
+			var(--motion-easing-emphasized);
 	}
 
-	.values[data-layout='icon'] .value-marker :global(img) {
+	.values[data-layout="icon"] .value-card:hover .value-marker {
+		transform: scale(1.08);
+	}
+
+	.values[data-layout="icon"] .value-marker :global(img) {
 		width: 56px;
 		height: 56px;
 	}
 
-	/* --- Badge & Path: five items read best as one row (a seal band / a route) --- */
-	.values[data-layout='badge'] .values-grid,
-	.values[data-layout='path'] .values-grid {
+	/* --- Badge: five items read best as one row (a seal band) --- */
+	.values[data-layout="badge"] .values-grid {
 		grid-template-columns: repeat(2, 1fr);
+	}
+
+	@media (min-width: 901px) {
+		.values[data-layout="badge"] .values-grid {
+			grid-template-columns: repeat(var(--grid-cols, 5), 1fr);
+		}
 	}
 
 	/* --- Icon: seven distinct causes read better centered than left-anchored,
 	   so a ragged last row (4+3) doesn't dangle on the left. --- */
-	.values[data-layout='icon'] .values-grid {
+	.values[data-layout="icon"] .values-grid {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
 	}
 
-	.values[data-layout='icon'] .value-card {
+	.values[data-layout="icon"] .value-card {
 		flex: 1 1 240px;
 		max-width: 280px;
 	}
 
+	/* --- Path (Avenues of Service): Roadmap / Stepper design --- */
+	.values[data-layout="path"] .values-grid {
+		position: relative;
+		grid-template-columns: 1fr;
+		gap: 32px;
+	}
+
+	.values[data-layout="path"] .value-card {
+		background: transparent;
+		box-shadow: none;
+		padding: 0;
+		display: grid;
+		grid-template-columns: 56px 1fr;
+		grid-template-rows: auto auto;
+		column-gap: 24px;
+		row-gap: 8px;
+		text-align: left;
+		position: relative;
+		z-index: 1;
+	}
+
+	.values[data-layout="path"] .value-marker {
+		grid-column: 1;
+		grid-row: 1 / 3;
+		width: 56px;
+		height: 56px;
+		margin: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		background: var(--color-bg);
+		border: 4px solid var(--color-royal-blue);
+		color: var(--color-royal-blue);
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 20px;
+		transition: all var(--motion-duration-medium)
+			var(--motion-easing-emphasized);
+	}
+
+	.values[data-layout="path"] .value-title {
+		grid-column: 2;
+		grid-row: 1;
+		margin: 0;
+		align-self: center;
+		font-size: 18px;
+		color: var(--color-royal-blue);
+		transition: color var(--motion-duration-medium)
+			var(--motion-easing-emphasized);
+	}
+
+	.values[data-layout="path"] .value-desc {
+		grid-column: 2;
+		grid-row: 2;
+		margin: 0;
+	}
+
+	/* Mobile vertical connecting line */
+	@media (max-width: 900px) {
+		.values[data-layout="path"] .value-card:not(:last-child)::after {
+			content: "";
+			position: absolute;
+			top: 56px;
+			left: 26px;
+			width: 4px;
+			height: calc(100% + 32px - 56px);
+			background: var(--color-gold);
+			opacity: 0.6;
+			z-index: -1;
+		}
+	}
+
 	@media (min-width: 901px) {
-		.values[data-layout='badge'] .values-grid,
-		.values[data-layout='path'] .values-grid {
+		.values[data-layout="path"] .values-grid {
 			grid-template-columns: repeat(var(--grid-cols, 5), 1fr);
+			gap: 24px;
 		}
 
-		.values[data-layout='badge'] .value-card:not(:last-child)::after {
-			content: '';
+		/* Horizontal connecting line on desktop */
+		.values[data-layout="path"] .values-grid::before {
+			content: "";
 			position: absolute;
-			top: 15%;
-			bottom: 15%;
+			top: 26px;
+			left: 0;
 			right: 0;
-			width: 1px;
-			background: var(--color-border);
+			height: 4px;
+			background: var(--color-gold);
+			opacity: 0.6;
+			z-index: 0;
 		}
 
-		/* --- Path only: a waypoint chevron bridging each gap in the route --- */
-		.values[data-layout='path'] .value-card:not(:last-child)::after {
-			content: '›';
-			position: absolute;
-			top: 45px;
-			right: -23px;
-			z-index: 2;
-			width: 22px;
-			height: 22px;
-			border-radius: 50%;
-			background: #fff;
-			border: 1.5px solid var(--color-border);
-			color: var(--accent);
-			font-family: var(--font-heading);
-			font-weight: 700;
-			font-size: 13px;
-			line-height: 1;
+		.values[data-layout="path"] .value-card {
 			display: flex;
+			flex-direction: column;
 			align-items: center;
-			justify-content: center;
+			justify-content: flex-start;
+			text-align: center;
+			gap: 0;
 		}
+
+		.values[data-layout="path"] .value-marker {
+			margin-bottom: 24px;
+		}
+
+		.values[data-layout="path"] .value-title {
+			align-self: center;
+			margin-bottom: 12px;
+		}
+
+		.values[data-layout="path"] .value-desc {
+			margin-bottom: 12px;
+		}
+	}
+
+	/* Hover effects */
+	.values[data-layout="path"] .value-card:hover .value-marker {
+		background: var(--color-royal-blue);
+		color: #ffffff;
+		border-color: var(--color-royal-blue);
+		transform: scale(1.15);
+		box-shadow: 0 8px 16px
+			color-mix(in srgb, var(--color-royal-blue) 30%, transparent);
+	}
+
+	.values[data-layout="path"] .value-card:hover .value-title {
+		color: var(--color-gold);
 	}
 
 	@media (max-width: 900px) {
 		.values-grid {
 			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (min-width: 901px) {
+		/* Symmetrical stair-step layout for statement cards (optically balanced) */
+		.values[data-layout="statement"] .values-grid {
+			padding-left: 80px; /* Shifts the whole group right to balance the heavy numbers on the left */
+		}
+		.values[data-layout="statement"] .value-card:nth-child(1) {
+			margin-right: 240px;
+		}
+		.values[data-layout="statement"] .value-card:nth-child(2) {
+			margin-right: 80px;
+		}
+		.values[data-layout="statement"] .value-card:nth-child(3) {
+			margin-left: 80px;
+		}
+		.values[data-layout="statement"] .value-card:nth-child(4) {
+			margin-left: 240px;
 		}
 	}
 
@@ -302,6 +669,20 @@ const AOF_ICON_COLOR: Record<string, string> = {
 		.section-title {
 			flex-direction: column;
 			gap: 10px;
+		}
+
+		/* Mobile statement card adjustments */
+		.values[data-layout="statement"] .value-card {
+			flex-direction: column;
+			text-align: center;
+			padding: 40px 24px;
+		}
+		.values[data-layout="statement"] .value-marker {
+			margin: 0 0 24px 0;
+			transform: rotate(-10deg);
+		}
+		.values[data-layout="statement"] .value-letter {
+			font-size: 64px;
 		}
 	}
 </style>

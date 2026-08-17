@@ -96,6 +96,9 @@ const itemListJsonLd = buildItemListJsonLd(
 	.archive-inner {
 		max-width: var(--content-max);
 		margin: 0 auto;
+		background: #f6f8fa;
+		border-radius: var(--shape-extra-large);
+		padding: 60px 40px;
 	}
 
 	.resource-empty {
@@ -124,12 +127,13 @@ const itemListJsonLd = buildItemListJsonLd(
 		align-items: center;
 		gap: 10px;
 		background: #fff;
-		border: 1px solid var(--color-border);
+		border: none;
 		border-radius: var(--shape-full);
-		padding: 10px 18px;
+		padding: 12px 20px;
 		color: var(--color-muted);
 		width: 100%;
 		max-width: 320px;
+		box-shadow: var(--elevation-1);
 	}
 
 	.archive-search input {
@@ -167,21 +171,25 @@ const itemListJsonLd = buildItemListJsonLd(
 		font-weight: 600;
 		color: var(--color-navy);
 		background: #fff;
-		border: 1px solid var(--color-border);
+		border: none;
 		border-radius: var(--shape-full);
-		padding: 8px 18px;
+		padding: 10px 20px;
 		cursor: pointer;
-		transition: background var(--motion-duration-short) var(--motion-easing-standard), color var(--motion-duration-short) var(--motion-easing-standard), border-color var(--motion-duration-short) var(--motion-easing-standard);
+		box-shadow: var(--elevation-1);
+		transition: transform var(--motion-duration-short) var(--motion-easing-standard), box-shadow var(--motion-duration-short) var(--motion-easing-standard), background var(--motion-duration-short) var(--motion-easing-standard), color var(--motion-duration-short) var(--motion-easing-standard);
 	}
 
 	.filter-pill:hover {
-		border-color: var(--pill-color, var(--color-pink));
+		transform: translateY(-2px);
+		box-shadow: var(--elevation-2);
+		color: var(--pill-color, var(--color-pink));
 	}
 
 	.filter-pill.active {
 		background: var(--pill-color, var(--color-pink));
-		border-color: var(--pill-color, var(--color-pink));
 		color: #fff;
+		box-shadow: var(--elevation-2);
+		transform: translateY(-2px);
 	}
 
 	.filter-divider {
@@ -205,7 +213,11 @@ const itemListJsonLd = buildItemListJsonLd(
 
 	@media (max-width: 720px) {
 		.archive {
-			padding: 50px 20px 70px;
+			padding: 40px 20px 80px;
+		}
+
+		.archive-inner {
+			padding: 40px 20px;
 		}
 
 		.archive-search {

@@ -35,12 +35,32 @@ const { lang, title, body, buttonLabel, buttonHref } = Astro.props;
 		overflow: hidden;
 		max-width: var(--content-max);
 		margin: 0 auto;
-		background: var(--color-pink);
 		border-radius: var(--shape-extra-large);
-		box-shadow: var(--elevation-3);
 		padding: 80px 40px;
 		text-align: center;
+		
+		/* Piastrina (Metallic Pink Plate) */
+		background: linear-gradient(105deg, var(--color-pink) 0%, color-mix(in srgb, var(--color-pink) 85%, white) 25%, var(--color-pink) 50%, color-mix(in srgb, var(--color-pink) 85%, white) 75%, var(--color-pink) 100%);
+		background-size: 200% auto;
 		color: #fff;
+		box-shadow: 
+			inset 0 2px 4px rgba(255, 255, 255, 0.4),
+			inset 0 -2px 6px rgba(0, 0, 0, 0.2),
+			0 12px 32px rgba(0,0,0,0.15);
+		border: 1px solid color-mix(in srgb, var(--color-pink) 50%, white);
+		
+		/* Riflesso e movimento leggero */
+		animation: shine 6s linear infinite, float 6s ease-in-out infinite;
+	}
+
+	@keyframes shine {
+		0% { background-position: 200% center; }
+		100% { background-position: 0% center; }
+	}
+
+	@keyframes float {
+		0%, 100% { transform: translateY(0); }
+		50% { transform: translateY(-8px); }
 	}
 
 	/* Signature mark: same recurring "2050" identity cue as Hero/PageBanner, centered
@@ -89,11 +109,14 @@ const { lang, title, body, buttonLabel, buttonHref } = Astro.props;
 		letter-spacing: 0.5px;
 		padding: 14px 30px;
 		border-radius: var(--shape-full);
+		box-shadow: var(--elevation-1);
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized), background var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
 	.cta-button:hover {
+		transform: translateY(-2px);
+		box-shadow: var(--elevation-2);
 		background: var(--color-bg);
-		color: var(--color-pink);
 	}
 
 	@media (max-width: 720px) {

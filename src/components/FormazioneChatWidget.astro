@@ -3,8 +3,14 @@ import { uiStrings, type Lang } from '../data/ui-strings';
 
 interface ChatSettings {
 	title?: string | null;
+	titleEn?: string | null;
 	greeting?: string | null;
+	greetingEn?: string | null;
+	callout?: string | null;
+	calloutEn?: string | null;
 	autoOpen?: boolean | null;
+	suggestions?: (string | null)[] | null;
+	suggestionsEn?: (string | null)[] | null;
 }
 
 interface Props {
@@ -15,9 +21,12 @@ interface Props {
 
 const { lang, chatSettings } = Astro.props;
 const t = uiStrings[lang];
-const title = chatSettings?.title?.trim() || t.chat.title;
-const greeting = chatSettings?.greeting?.trim() || t.chat.greeting;
+const title = (lang === 'en' ? chatSettings?.titleEn : chatSettings?.title)?.trim() || t.chat.title;
+const greeting = (lang === 'en' ? chatSettings?.greetingEn : chatSettings?.greeting)?.trim() || t.chat.greeting;
+const calloutText = (lang === 'en' ? chatSettings?.calloutEn : chatSettings?.callout)?.trim() || t.chat.fabCallout;
 const autoOpen = chatSettings?.autoOpen ?? false;
+const rawSuggestions = lang === 'en' ? chatSettings?.suggestionsEn : chatSettings?.suggestions;
+const suggestions = Array.isArray(rawSuggestions) ? rawSuggestions.filter(Boolean) as string[] : [];
 
 // Public Turnstile sitekey — safe to expose client-side, mirrors the widget "formazione-chat"
 // created for this endpoint (see src/lib/formazione-chat.ts TURNSTILE_ACTION for the matching
@@ -25,15 +34,24 @@ const autoOpen = chatSettings?.autoOpen ?? false;
 const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 ---
 
-<div
-	class="chat-widget"
-	data-chat-widget
-	data-lang={lang}
-	data-sitekey={TURNSTILE_SITEKEY}
-	data-chat-strings={JSON.stringify(t.chat)}
-	data-auto-open={autoOpen ? '1' : '0'}
->
+<div class="chat-toggle-wrapper" data-chat-widget data-lang={lang} data-sitekey={TURNSTILE_SITEKEY} data-chat-strings={JSON.stringify(t.chat)} data-auto-open={autoOpen ? '1' : '0'}>
+	<div class="chat-fab-callout" data-chat-callout>
+		<p>{calloutText}</p>
+		<button type="button" class="chat-callout-close" data-chat-callout-close aria-label={t.chat.closeLabel}>
+			<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+				<line x1="18" y1="6" x2="6" y2="18"></line>
+				<line x1="6" y1="6" x2="18" y2="18"></line>
+			</svg>
+		</button>
+	</div>
+
 	<button type="button" class="chat-fab" data-chat-toggle aria-label={t.chat.fabLabel} aria-expanded="false">
+		<div class="fog-container" aria-hidden="true">
+			<div class="fog-bank fog-bank-1"></div>
+			<div class="fog-bank fog-bank-2"></div>
+			<div class="fog-bank fog-bank-3"></div>
+			<div class="fog-bank fog-bank-4"></div>
+		</div>
 		<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 			<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
 		</svg>
@@ -47,6 +65,12 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 			</svg>
 		</div>
 		<header class="chat-header">
+			<div class="fog-container" aria-hidden="true">
+				<div class="fog-bank fog-bank-1"></div>
+				<div class="fog-bank fog-bank-2"></div>
+				<div class="fog-bank fog-bank-3"></div>
+				<div class="fog-bank fog-bank-4"></div>
+			</div>
 			<span class="chat-title">{title}</span>
 			<button type="button" class="chat-close" data-chat-close aria-label={t.chat.closeLabel}>
 				<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -63,6 +87,14 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 				<p>{greeting}</p>
 			</div>
 		</div>
+
+		{suggestions.length > 0 && (
+			<div class="chat-suggestions" data-chat-suggestions>
+				{suggestions.map((suggestion) => (
+					<button type="button" class="chat-suggestion">{suggestion}</button>
+				))}
+			</div>
+		)}
 
 		<div class="chat-turnstile" data-chat-turnstile></div>
 
@@ -81,7 +113,7 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer is:inline></script>
 
 <style>
-	.chat-widget {
+	.chat-toggle-wrapper {
 		position: fixed;
 		right: 20px;
 		bottom: 20px;
@@ -89,23 +121,102 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 	}
 
 	.chat-fab {
+		position: relative;
+		overflow: hidden;
 		width: 56px;
 		height: 56px;
 		border-radius: var(--shape-full);
-		background: var(--color-pink);
-		color: #fff;
-		border: none;
+		background: #fff;
+		color: var(--color-navy);
+		border: 1px solid rgba(0, 0, 0, 0.1);
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
-		box-shadow: var(--elevation-3);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 		transition: box-shadow var(--motion-duration-short) var(--motion-easing-standard), transform var(--motion-duration-short) var(--motion-easing-standard);
+		animation: fabBreathe 4s ease-in-out infinite;
+		--smoke-c1: 255, 184, 0;
+		--smoke-c2: 212, 19, 103;
+		--smoke-c3: 0, 200, 255;
+		--smoke-c4: 13, 110, 253;
+	}
+
+	.chat-fab svg {
+		position: relative;
+		z-index: 1;
+	}
+
+	@keyframes fabBreathe {
+		0%, 100% { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+		50% { box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2); }
 	}
 
 	.chat-fab:hover {
 		box-shadow: var(--elevation-4);
 		transform: translateY(-2px);
+	}
+
+	.chat-fab-callout {
+		position: absolute;
+		right: calc(100% + 16px);
+		bottom: 0;
+		background: #fff;
+		color: var(--color-navy);
+		padding: 12px 32px 12px 16px;
+		border-radius: 12px;
+		font-size: 14px;
+		font-weight: 500;
+		line-height: 1.3;
+		box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+		width: 250px;
+		pointer-events: auto;
+		animation: floatCallout 3s ease-in-out infinite;
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity var(--motion-duration-short), visibility var(--motion-duration-short);
+		z-index: 10;
+	}
+
+	.chat-fab-callout.show {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	.chat-fab-callout::after {
+		content: '';
+		position: absolute;
+		right: -6px;
+		bottom: 22px;
+		border-width: 6px 0 6px 6px;
+		border-style: solid;
+		border-color: transparent transparent transparent #fff;
+	}
+
+	.chat-callout-close {
+		position: absolute;
+		top: 8px;
+		right: 8px;
+		color: var(--color-muted);
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 4px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		transition: color var(--motion-duration-short), background var(--motion-duration-short);
+	}
+
+	.chat-callout-close:hover {
+		color: var(--color-navy);
+		background: rgba(0,0,0,0.05);
+	}
+
+	@keyframes floatCallout {
+		0%, 100% { transform: translateY(0); }
+		50% { transform: translateY(-6px); }
 	}
 
 	.chat-panel {
@@ -119,25 +230,17 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 		max-width: calc(100vw - 40px);
 		max-height: min(80vh, 800px);
 		background: #fff;
-		border: 1px solid var(--color-border);
-		border-radius: var(--shape-large);
-		box-shadow: var(--elevation-4);
+		border: none;
+		border-radius: var(--shape-extra-large);
+		box-shadow: 0 20px 40px rgba(0,0,0,0.15);
 		flex-direction: column;
 		overflow: hidden;
 	}
 
-	/* An author-stylesheet `display` rule always beats the browser's built-in
-	   `[hidden] { display: none }` UA rule, regardless of specificity — so `display: flex` can't
-	   live on the bare `.chat-panel` selector above or toggling the `hidden` attribute in JS would
-	   never actually hide it. Scoping it to `:not([hidden])` keeps `hidden` in control. */
 	.chat-panel:not([hidden]) {
 		display: flex;
 	}
 
-	/* Native CSS `resize` only ever draws its handle at the bottom-right corner, not configurable —
-	   but this panel is anchored bottom-right (`right`/`bottom` above), so growing it should read as
-	   "drag the top-left corner outward", the opposite corner from where native resize would put its
-	   handle. Custom handle + pointer-drag JS below instead of `resize: both`. */
 	.chat-resize-handle {
 		position: absolute;
 		top: 4px;
@@ -158,35 +261,110 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 	}
 
 	.chat-header {
+		position: relative;
+		overflow: hidden;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 14px 16px;
-		background: var(--color-navy);
-		color: #fff;
+		padding: 16px 20px;
+		background: #fff;
+		color: var(--color-navy);
 		flex-shrink: 0;
+		--smoke-c1: 255, 184, 0;
+		--smoke-c2: 212, 19, 103;
+		--smoke-c3: 0, 200, 255;
+		--smoke-c4: 13, 110, 253;
 	}
 
 	.chat-title {
+		position: relative;
+		z-index: 1;
 		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: 15px;
 	}
 
 	.chat-close {
+		position: relative;
+		z-index: 1;
 		background: transparent;
 		border: none;
-		color: #fff;
+		color: var(--color-navy);
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
 		padding: 2px;
-		opacity: 0.85;
+		opacity: 0.5;
 	}
 
 	.chat-close:hover {
 		opacity: 1;
+	}
+
+	.fog-container {
+		position: absolute;
+		inset: 0;
+		overflow: hidden;
+		pointer-events: none;
+		z-index: 0;
+		opacity: 0.75;
+	}
+
+	.chat-header .fog-container {
+		-webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+		mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+	}
+
+	.fog-bank {
+		position: absolute;
+		border-radius: 45%;
+		filter: blur(12px);
+		opacity: 0.8;
+		will-change: transform, opacity;
+	}
+
+	.fog-bank-1 {
+		width: 150%; height: 150%; top: -25%; left: -25%;
+		background: radial-gradient(ellipse at center, rgba(var(--smoke-c1), 0.5) 0%, transparent 70%);
+		animation: fogDrift1 8s ease-in-out infinite alternate;
+	}
+
+	.fog-bank-2 {
+		width: 150%; height: 150%; bottom: -25%; right: -25%;
+		background: radial-gradient(ellipse at center, rgba(var(--smoke-c2), 0.5) 0%, transparent 70%);
+		animation: fogDrift2 10s ease-in-out infinite alternate;
+		animation-delay: -2s;
+	}
+
+	.fog-bank-3 {
+		width: 120%; height: 120%; top: 0%; right: 10%;
+		background: radial-gradient(circle at center, rgba(var(--smoke-c3), 0.45) 0%, transparent 60%);
+		animation: fogSwirl 12s linear infinite;
+		animation-delay: -4s;
+	}
+
+	.fog-bank-4 {
+		width: 130%; height: 130%; bottom: 0%; left: 10%;
+		background: radial-gradient(circle at center, rgba(var(--smoke-c4), 0.45) 0%, transparent 60%);
+		animation: fogSwirl 14s linear infinite reverse;
+		animation-delay: -1s;
+	}
+
+	@keyframes fogDrift1 {
+		0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+		100% { transform: translate(20%, 10%) scale(1.1) rotate(10deg); }
+	}
+
+	@keyframes fogDrift2 {
+		0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+		100% { transform: translate(-20%, -10%) scale(1.15) rotate(-10deg); }
+	}
+
+	@keyframes fogSwirl {
+		0% { transform: rotate(0deg) scale(1) translate(0, 0); }
+		50% { transform: rotate(180deg) scale(1.2) translate(10%, -5%); }
+		100% { transform: rotate(360deg) scale(1) translate(0, 0); }
 	}
 
 	.chat-disclaimer {
@@ -209,8 +387,8 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 
 	.chat-message {
 		max-width: 85%;
-		padding: 10px 14px;
-		border-radius: var(--shape-medium);
+		padding: 12px 16px;
+		border-radius: var(--shape-large);
 		font-size: 14px;
 		line-height: 1.5;
 	}
@@ -244,15 +422,18 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 
 	.chat-message.assistant {
 		align-self: flex-start;
-		background: var(--color-bg);
-		color: var(--color-text);
-		border: 1px solid var(--color-border);
+		background: #f6f8fa;
+		color: var(--color-navy);
+		border: none;
+		border-bottom-left-radius: 4px;
 	}
 
 	.chat-message.user {
 		align-self: flex-end;
 		background: var(--color-pink);
 		color: #fff;
+		border-bottom-right-radius: 4px;
+		box-shadow: 0 4px 12px rgba(212, 19, 103, 0.2);
 	}
 
 	.chat-message.error {
@@ -260,14 +441,50 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 		background: var(--color-pink-container, #fae3ed);
 		color: var(--color-pink-dark);
 		border: 1px solid var(--color-pink);
+		border-bottom-left-radius: 4px;
 	}
 
 	.chat-message.pending {
 		align-self: flex-start;
-		background: var(--color-bg);
+		background: #f6f8fa;
 		color: var(--color-muted);
-		border: 1px solid var(--color-border);
+		border: none;
 		font-style: italic;
+		border-bottom-left-radius: 4px;
+	}
+
+	.chat-suggestions {
+		display: flex;
+		gap: 8px;
+		padding: 4px 20px 12px;
+		overflow-x: auto;
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+		flex-shrink: 0;
+	}
+	.chat-suggestions::-webkit-scrollbar {
+		display: none;
+	}
+
+	.chat-suggestion {
+		font-family: inherit;
+		font-size: 13px;
+		color: var(--color-navy);
+		background: #fff;
+		border: 1px solid rgba(0, 0, 0, 0.08);
+		border-radius: var(--shape-full);
+		padding: 8px 14px;
+		cursor: pointer;
+		white-space: nowrap;
+		box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+		transition: transform var(--motion-duration-short), box-shadow var(--motion-duration-short), border-color var(--motion-duration-short), color var(--motion-duration-short);
+	}
+
+	.chat-suggestion:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(212, 19, 103, 0.15);
+		border-color: color-mix(in srgb, var(--color-pink) 40%, transparent);
+		color: var(--color-pink);
 	}
 
 	.chat-turnstile {
@@ -277,27 +494,30 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 	.chat-form {
 		display: flex;
 		align-items: flex-end;
-		gap: 8px;
-		padding: 12px 16px;
-		border-top: 1px solid var(--color-border);
+		gap: 12px;
+		padding: 16px 20px;
+		border-top: none;
+		background: #fff;
 		flex-shrink: 0;
 	}
 
 	.chat-input {
 		flex: 1;
 		resize: none;
-		border: 1px solid var(--color-border);
-		border-radius: var(--shape-medium);
-		padding: 10px 12px;
+		border: none;
+		background: #f6f8fa;
+		border-radius: var(--shape-large);
+		padding: 12px 16px;
 		font-family: inherit;
 		font-size: 14px;
 		color: var(--color-text);
 		max-height: 90px;
+		box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
 	}
 
 	.chat-input:focus {
-		outline: 2px solid var(--color-royal-blue);
-		outline-offset: 1px;
+		outline: 2px solid color-mix(in srgb, var(--color-pink) 50%, transparent);
+		outline-offset: 2px;
 	}
 
 	.chat-send {
@@ -321,7 +541,7 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 	}
 
 	@media (max-width: 480px) {
-		.chat-widget {
+		.chat-toggle-wrapper {
 			right: 12px;
 			bottom: 12px;
 		}
@@ -331,8 +551,6 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 			right: -8px;
 		}
 
-		/* A drag handle is impractical on touch and a resized width could exceed the viewport here,
-		   so mobile stays fixed full-width instead. */
 		.chat-resize-handle {
 			display: none;
 		}
@@ -360,8 +578,6 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 		errorInvalidInput: string;
 	}
 
-	// Mirrors src/lib/formazione-chat.ts MAX_MESSAGES/MAX_MESSAGE_LENGTH — duplicated here so this
-	// client bundle stays free of server-only code, the server re-enforces both caps regardless.
 	const MAX_MESSAGES = 6;
 	const MAX_MESSAGE_LENGTH = 500;
 	const TURNSTILE_ACTION = 'formazione-chat';
@@ -370,10 +586,6 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 	document.querySelectorAll<HTMLElement>('[data-chat-widget]').forEach((widget) => {
 		const lang = widget.dataset.lang === 'en' ? 'en' : 'it';
 		const sitekey = widget.dataset.sitekey ?? '';
-		// A `<script type="application/json">` child was tried first, but `<script>` is an HTML5
-		// "raw text" element — entities like `&quot;` never get decoded inside it, so an
-		// HTML-escaped JSON payload there parses as garbage. Attribute values don't have that
-		// problem (they go through normal HTML attribute decoding), so the strings live here instead.
 		const strings: ChatStrings = JSON.parse(widget.dataset.chatStrings ?? '{}');
 
 		const toggle = widget.querySelector<HTMLButtonElement>('[data-chat-toggle]');
@@ -386,10 +598,6 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 		const turnstileContainer = widget.querySelector<HTMLElement>('[data-chat-turnstile]');
 		if (!toggle || !panel || !log || !form || !input || !sendBtn || !turnstileContainer) return;
 
-		// Custom top-left resize handle (see the CSS comment on .chat-resize-handle for why native
-		// `resize` doesn't work here): the panel is anchored bottom-right, so dragging the handle
-		// left/up should grow it, not shrink it — the opposite sign from a normal top-left-anchored
-		// resize. Optional element, absent/failed lookup just means no resize, not a broken widget.
 		const resizeHandle = widget.querySelector<HTMLElement>('[data-chat-resize]');
 		if (resizeHandle) {
 			let resizing = false;
@@ -430,20 +638,51 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 				try {
 					resizeHandle.releasePointerCapture(event.pointerId);
 				} catch {
-					/* no-op: capture may already be released */
+					/* no-op */
 				}
 			};
 			resizeHandle.addEventListener('pointerup', endResize);
 			resizeHandle.addEventListener('pointercancel', endResize);
 		}
 
-		// This is a multi-page site (full navigation between /formazione and each resource, no
-		// client-side router), so without this the widget would reset to empty on every page —
-		// sessionStorage survives navigation within the tab but clears on tab close, a reasonable
-		// middle ground between "gone on every click" and "stale forever" (localStorage). Scoped by
-		// lang so switching IT/EN doesn't mix conversations in different languages.
+		const suggestionsContainer = widget.querySelector<HTMLElement>('[data-chat-suggestions]');
+		const suggestions = widget.querySelectorAll<HTMLButtonElement>('.chat-suggestion');
+		suggestions.forEach(btn => {
+			btn.addEventListener('click', () => {
+				input.value = btn.textContent || '';
+				if (suggestionsContainer) suggestionsContainer.style.display = 'none';
+				form.requestSubmit();
+			});
+		});
+
 		const STORAGE_HISTORY_KEY = `formazione-chat-history-${lang}`;
 		const STORAGE_OPEN_KEY = `formazione-chat-open-${lang}`;
+		const STORAGE_CALLOUT_KEY = `formazione-chat-callout-v2-${lang}`;
+
+		const callout = widget.querySelector<HTMLElement>('[data-chat-callout]');
+		const calloutClose = widget.querySelector<HTMLButtonElement>('[data-chat-callout-close]');
+
+		const autoOpenAttr = widget.dataset.autoOpen === '1';
+
+		if (callout && autoOpenAttr && !sessionStorage.getItem(STORAGE_CALLOUT_KEY)) {
+			setTimeout(() => {
+				callout.classList.add('show');
+			}, 2000);
+		}
+
+		function hideCallout() {
+			if (callout) {
+				callout.classList.remove('show');
+				sessionStorage.setItem(STORAGE_CALLOUT_KEY, 'dismissed');
+			}
+		}
+
+		if (calloutClose) {
+			calloutClose.addEventListener('click', (e) => {
+				e.stopPropagation();
+				hideCallout();
+			});
+		}
 
 		function loadHistory(): { role: 'user' | 'model'; text: string }[] {
 			try {
@@ -466,9 +705,7 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 			try {
 				sessionStorage.setItem(STORAGE_HISTORY_KEY, JSON.stringify(history));
 			} catch {
-				/* no-op: sessionStorage can throw (private browsing, storage disabled) — history
-				   just won't survive navigation in that context, same degrade-gracefully pattern
-				   as CookieConsent.astro's localStorage use. */
+				/* no-op */
 			}
 		}
 
@@ -486,6 +723,7 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 		let lastSendAt = 0;
 
 		function openPanel() {
+			hideCallout();
 			panel!.hidden = false;
 			toggle!.setAttribute('aria-expanded', 'true');
 			input!.focus();
@@ -504,12 +742,6 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 			if (event.key === 'Escape') closePanel();
 		});
 
-		// Deliberately restricted Markdown-to-DOM renderer for the assistant's replies only — the
-		// system prompt asks the model for this exact subset (bold/italic/lists/paragraphs, no
-		// headings/tables/code/links). Every node here is built via createElement/textContent, never
-		// innerHTML or set:html, so there is no HTML-injection surface no matter what text the model
-		// actually returns: unsupported syntax (or a literal `<script>`, or anything else) just shows
-		// up as its own escaped text instead of being parsed as markup.
 		function renderInlineMarkdown(parent: HTMLElement, text: string) {
 			const pattern = /\*\*(.+?)\*\*|\*(.+?)\*|_(.+?)_/g;
 			let lastIndex = 0;
@@ -563,8 +795,6 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 			if (role === 'assistant') {
 				renderMarkdown(bubble, text);
 			} else {
-				// User/error/pending text is never model-instructed to use markdown (and user input
-				// specifically shouldn't be re-interpreted as formatting), so it stays plain paragraphs.
 				const paragraphs = text.split(/\n{2,}/).filter((part) => part.trim().length > 0);
 				for (const part of paragraphs.length > 0 ? paragraphs : [text]) {
 					const p = document.createElement('p');
@@ -577,20 +807,13 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 			return bubble;
 		}
 
-		// Restore conversation + open/closed state from the previous page, appended after the
-		// static greeting already in the markup rather than replacing it.
 		for (const message of loadHistory()) {
 			history.push(message);
 			appendMessage(message.role === 'user' ? 'user' : 'assistant', message.text);
 		}
 		try {
 			const storedOpen = sessionStorage.getItem(STORAGE_OPEN_KEY);
-			// Auto-open (Tina `settings.chatAssistant.autoOpen`) only applies the first time this
-			// session sees the widget (no stored state yet) — once the visitor has explicitly opened
-			// or closed it, that choice wins on every later page for the rest of the session.
-			const shouldOpen = storedOpen !== null ? storedOpen === '1' : widget.dataset.autoOpen === '1';
-			if (shouldOpen) {
-				// Restore visibility without stealing focus on every page load the way openPanel() does.
+			if (storedOpen === '1') {
 				panel.hidden = false;
 				toggle.setAttribute('aria-expanded', 'true');
 			}

@@ -12,6 +12,7 @@ interface Person {
 	club?: { name: string; zoneColor?: string | null; slug?: string | null } | null;
 	clubCustom?: string;
 	tinaFieldAttr?: string;
+	shape?: string;
 }
 
 interface CommitteeItem {
@@ -57,6 +58,7 @@ const { lang, title, showDisclaimer = false, disclaimerText, items } = Astro.pro
 							email={item.lead.email}
 							club={item.lead.club}
 							clubCustom={item.lead.clubCustom}
+							shape={item.lead.shape}
 							tinaFieldAttr={item.lead.tinaFieldAttr}
 						/>
 					</div>
@@ -74,6 +76,7 @@ const { lang, title, showDisclaimer = false, disclaimerText, items } = Astro.pro
 									email={member.email}
 									club={member.club}
 									clubCustom={member.clubCustom}
+									shape={member.shape}
 									tinaFieldAttr={member.tinaFieldAttr}
 								/>
 							))}
@@ -131,9 +134,15 @@ const { lang, title, showDisclaimer = false, disclaimerText, items } = Astro.pro
 	   rows floating on the page background — the "everything is a card" pattern used
 	   everywhere else on the site now. */
 	.committee {
-		background: var(--color-bg);
+		background: #f6f8fa; /* Very subtle light grey */
 		border-radius: var(--shape-extra-large);
 		padding: 40px 32px;
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
+	}
+
+	.committee:hover {
+		transform: translateY(-4px);
+		box-shadow: var(--elevation-2);
 	}
 
 	.committee-name {

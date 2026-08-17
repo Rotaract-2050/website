@@ -47,26 +47,26 @@ blocks:
     accent: '#F7A81B'
     layout: badge
     items:
-      - letter: A
-        title: Amicizia
-        titleEn: Fellowship
-        description: Costruiamo legami duraturi tra socie e soci di tutto il mondo.
-        descriptionEn: We build lasting bonds among members around the world.
-      - letter: I
-        title: Integrità
-        titleEn: Integrity
-        description: Agiamo con onestà e coerenza in ogni progetto e relazione.
-        descriptionEn: We act with honesty and consistency in every project and relationship.
-      - letter: D
-        title: Diversità
-        titleEn: Diversity
-        description: Accogliamo prospettive diverse per generare un impatto più ampio e inclusivo.
-        descriptionEn: 'We welcome different perspectives to create a broader, more inclusive impact.'
       - letter: S
         title: Servizio
         titleEn: Service
         description: Mettiamo tempo e competenze al servizio delle comunità in cui viviamo.
         descriptionEn: We give our time and skills to serve the communities where we live.
+      - letter: A
+        title: Amicizia
+        titleEn: Fellowship
+        description: Costruiamo legami duraturi tra socie e soci di tutto il mondo.
+        descriptionEn: We build lasting bonds among members around the world.
+      - letter: D
+        title: Diversità
+        titleEn: Diversity
+        description: Accogliamo prospettive diverse per generare un impatto più ampio e inclusivo.
+        descriptionEn: 'We welcome different perspectives to create a broader, more inclusive impact.'
+      - letter: I
+        title: Integrità
+        titleEn: Integrity
+        description: Agiamo con onestà e coerenza in ogni progetto e relazione.
+        descriptionEn: We act with honesty and consistency in every project and relationship.
       - letter: L
         title: Leadership
         titleEn: Leadership
@@ -157,28 +157,29 @@ blocks:
     titleEn: THE FOUR-WAY TEST
     intro: 'Ciò che penso, dico o faccio:'
     introEn: 'Of the things we think, say or do:'
-    accent: '#657F99'
+    accent: '#F7A81B'
+    layout: statement
     items:
       - letter: '1'
-        title: 'Risponde '
+        title: Verità
         titleEn: Truth
-        description: a VERITÀ?
-        descriptionEn: Is it the truth?
+        description: Risponde a VERITÀ?
+        descriptionEn: Is it the TRUTH?
       - letter: '2'
-        title: È GIUSTO
+        title: Giustizia
         titleEn: Fairness
-        description: per tutti gli interessati?
-        descriptionEn: Is it fair to all concerned?
+        description: È GIUSTO per tutti gli interessati?
+        descriptionEn: Is it FAIR to all concerned?
       - letter: '3'
-        title: 'Promuoverà '
+        title: Buona Volontà
         titleEn: Goodwill
-        description: BUONA VOLONTÀ e MIGLIORI RAPPORTI DI AMICIZIA?
-        descriptionEn: Will it build goodwill and better friendships?
+        description: Promuoverà BUONA VOLONTÀ e MIGLIORI RAPPORTI D'AMICIZIA?
+        descriptionEn: Will it build GOODWILL and BETTER FRIENDSHIPS?
       - letter: '4'
-        title: Sarà VANTAGGIOSO
+        title: Vantaggio
         titleEn: Benefit
-        description: per tutti gli interessati?
-        descriptionEn: Will it be beneficial to all concerned?
+        description: Sarà VANTAGGIOSO per tutti gli interessati?
+        descriptionEn: Will it be BENEFICIAL to all concerned?
     _template: ValuesGrid
 ---
 

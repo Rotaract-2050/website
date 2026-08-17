@@ -85,7 +85,15 @@ const distrettoActive = (['distretto', 'story', 'rrd', 'squadra'] as PageKey[]).
 		<a href={href('club')} class:list={['nav-link', { active: current === 'club' }]}>{t.nav.club}</a>
 		<a href={href('news')} class:list={['nav-link', { active: current === 'news' }]}>{t.nav.news}</a>
 		<a href={href('eventi')} class:list={['nav-link', { active: current === 'eventi' }]}>{t.nav.eventi}</a>
-		<a href={href('formazione')} class:list={['nav-link', { active: current === 'formazione' }]}>{t.nav.formazione}</a>
+		<a href={href('formazione')} class:list={['formazione-btn', { active: current === 'formazione' }]}>
+			<div class="fog-container" aria-hidden="true">
+				<div class="fog-bank fog-bank-1"></div>
+				<div class="fog-bank fog-bank-2"></div>
+				<div class="fog-bank fog-bank-3"></div>
+				<div class="fog-bank fog-bank-4"></div>
+			</div>
+			<span class="btn-text">{t.nav.formazione}</span>
+		</a>
 		<a href={href('materiali')} class:list={['materials-link', { active: current === 'materiali' }]}>⬇ {t.nav.materials}</a>
 		<a href={href('club')} class="join-btn" data-track="cta_join_click">{t.nav.join}</a>
 	</nav>
@@ -313,8 +321,116 @@ const distrettoActive = (['distretto', 'story', 'rrd', 'squadra'] as PageKey[]).
 		color: #fff;
 	}
 
+	.formazione-btn {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 15px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		color: var(--color-navy);
+		padding: 10px 20px;
+		position: relative;
+		border-radius: var(--shape-small);
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		--smoke-c1: 255, 184, 0;
+		--smoke-c2: 212, 19, 103;
+		--smoke-c3: 0, 200, 255;
+		--smoke-c4: 13, 110, 253;
+	}
+
+	.formazione-btn .btn-text {
+		position: relative;
+		z-index: 1;
+	}
+
+	.formazione-btn:hover,
+	.formazione-btn.active {
+		/* Keeps the default color */
+	}
+
+	.fog-container {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		z-index: 0;
+		opacity: 0.5;
+		-webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+		mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+		-webkit-mask-size: 100% 100%;
+		mask-size: 100% 100%;
+		-webkit-mask-position: center;
+		mask-position: center;
+		-webkit-mask-repeat: no-repeat;
+		mask-repeat: no-repeat;
+		transition: -webkit-mask-size 0.4s ease, mask-size 0.4s ease, opacity 0.4s ease;
+	}
+
+	.formazione-btn:hover .fog-container,
+	.formazione-btn.active .fog-container {
+		-webkit-mask-size: 300% 300%;
+		mask-size: 300% 300%;
+		opacity: 0.85;
+	}
+
+	.fog-bank {
+		position: absolute;
+		border-radius: 45%;
+		filter: blur(8px);
+		opacity: 0.85;
+		will-change: transform, opacity;
+	}
+
+	.fog-bank-1 {
+		width: 150%; height: 150%; top: -25%; left: -25%;
+		background: radial-gradient(ellipse at center, rgba(var(--smoke-c1), 0.5) 0%, transparent 70%);
+		animation: navFogDrift1 8s ease-in-out infinite alternate;
+	}
+
+	.fog-bank-2 {
+		width: 150%; height: 150%; bottom: -25%; right: -25%;
+		background: radial-gradient(ellipse at center, rgba(var(--smoke-c2), 0.5) 0%, transparent 70%);
+		animation: navFogDrift2 10s ease-in-out infinite alternate;
+		animation-delay: -2s;
+	}
+
+	.fog-bank-3 {
+		width: 120%; height: 120%; top: 0%; right: 10%;
+		background: radial-gradient(circle at center, rgba(var(--smoke-c3), 0.45) 0%, transparent 60%);
+		animation: navFogSwirl 12s linear infinite;
+		animation-delay: -4s;
+	}
+
+	.fog-bank-4 {
+		width: 130%; height: 130%; bottom: 0%; left: 10%;
+		background: radial-gradient(circle at center, rgba(var(--smoke-c4), 0.45) 0%, transparent 60%);
+		animation: navFogSwirl 14s linear infinite reverse;
+		animation-delay: -1s;
+	}
+
+	@keyframes navFogDrift1 {
+		0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+		100% { transform: translate(15%, 5%) scale(1.1) rotate(5deg); }
+	}
+
+	@keyframes navFogDrift2 {
+		0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+		100% { transform: translate(-15%, -5%) scale(1.15) rotate(-5deg); }
+	}
+
+	@keyframes navFogSwirl {
+		0% { transform: rotate(0deg) scale(1) translate(0, 0); }
+		50% { transform: rotate(180deg) scale(1.2) translate(5%, -2%); }
+		100% { transform: rotate(360deg) scale(1) translate(0, 0); }
+	}
+
 	.join-btn {
-		background: var(--color-pink);
+		position: relative;
+		overflow: hidden;
+		background: linear-gradient(105deg, var(--color-pink) 0%, color-mix(in srgb, var(--color-pink) 85%, white) 25%, var(--color-pink) 50%, color-mix(in srgb, var(--color-pink) 85%, white) 75%, var(--color-pink) 100%);
+		background-size: 200% auto;
 		color: #fff;
 		font-family: var(--font-heading);
 		font-weight: 600;
@@ -323,11 +439,27 @@ const distrettoActive = (['distretto', 'story', 'rrd', 'squadra'] as PageKey[]).
 		letter-spacing: 0.5px;
 		padding: 11px 22px;
 		border-radius: var(--shape-full);
+		box-shadow: 
+			inset 0 1px 2px rgba(255, 255, 255, 0.4),
+			inset 0 -1px 3px rgba(0, 0, 0, 0.2),
+			0 4px 12px rgba(212, 19, 103, 0.2);
+		border: 1px solid color-mix(in srgb, var(--color-pink) 50%, white);
+		animation: shine 6s linear infinite;
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
 	.join-btn:hover {
-		background: var(--color-pink-dark);
-		color: #fff;
+		transform: translateY(-2px);
+		box-shadow: 
+			inset 0 1px 2px rgba(255, 255, 255, 0.5),
+			inset 0 -1px 3px rgba(0, 0, 0, 0.15),
+			0 8px 16px rgba(212, 19, 103, 0.3);
+		animation: shine 2s linear infinite;
+	}
+
+	@keyframes shine {
+		0% { background-position: 200% center; }
+		100% { background-position: 0% center; }
 	}
 
 	@media (max-width: 860px) {
@@ -392,6 +524,7 @@ const distrettoActive = (['distretto', 'story', 'rrd', 'squadra'] as PageKey[]).
 			font-size: 13px;
 		}
 
+		.formazione-btn,
 		.materials-link,
 		.join-btn {
 			text-align: center;

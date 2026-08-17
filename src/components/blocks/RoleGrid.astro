@@ -53,28 +53,32 @@ const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 					club={featured.club}
 					clubCustom={featured.clubCustom}
 					tinaFieldAttr={featured.tinaFieldAttr}
+					shape={featured.shape}
 					size="lg"
 				/>
 				{hasTheme && featured.themeMotto && <p class="theme-motto">{featured.themeMotto}</p>}
 			</div>
 		)}
-		<div class="roles-grid">
-			{(highlightFirst ? rest : items).map((role) => (
-				<PersonCard
-					lang={lang}
-					name={role.name}
-					role={role.role}
-					photo={role.photo}
-					photoFocalX={role.photoFocalX}
-					photoFocalY={role.photoFocalY}
-					photoZoom={role.photoZoom}
-					initials={role.initials}
-					email={role.email}
-					club={role.club}
-					clubCustom={role.clubCustom}
-					tinaFieldAttr={role.tinaFieldAttr}
-				/>
-			))}
+		<div class="roles-container">
+			<div class="roles-grid">
+				{(highlightFirst ? rest : items).map((role) => (
+					<PersonCard
+						lang={lang}
+						name={role.name}
+						role={role.role}
+						photo={role.photo}
+						photoFocalX={role.photoFocalX}
+						photoFocalY={role.photoFocalY}
+						photoZoom={role.photoZoom}
+						initials={role.initials}
+						email={role.email}
+						club={role.club}
+						clubCustom={role.clubCustom}
+						tinaFieldAttr={role.tinaFieldAttr}
+						shape={role.shape}
+					/>
+				))}
+			</div>
 		</div>
 	</div>
 </section>
@@ -178,6 +182,13 @@ const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 			text-align: center;
 			max-width: 320px;
 		}
+	}
+
+	.roles-container {
+		background: #f6f8fa; /* Very subtle light grey */
+		border-radius: var(--shape-extra-large);
+		padding: 40px 32px;
+		margin-top: 40px;
 	}
 
 	.roles-grid {

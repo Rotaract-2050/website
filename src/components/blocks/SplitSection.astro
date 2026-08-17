@@ -68,21 +68,35 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 		order: 2;
 	}
 
+	.split-media {
+		overflow: hidden;
+		border-radius: var(--shape-extra-large);
+	}
+
 	.split-media :global(.split-image) {
 		width: 100%;
 		height: 420px;
-		border-radius: var(--shape-extra-large);
+		display: block;
 		object-fit: cover;
 		object-position: var(--focal-x, 50%) var(--focal-y, 50%);
+		transition: transform 0.8s var(--motion-easing-emphasized);
+	}
+
+	.split-media:hover :global(.split-image) {
+		transform: scale(1.05);
 	}
 
 	.eyebrow {
-		color: var(--color-pink);
-		font-weight: 700;
-		font-size: 13px;
-		letter-spacing: 1.5px;
+		display: inline-block;
+		background: var(--color-pink-container);
+		color: var(--color-pink-dark);
+		font-weight: 800;
+		font-size: 14px;
+		letter-spacing: 2px;
 		text-transform: uppercase;
-		margin-bottom: 10px;
+		padding: 6px 16px;
+		border-radius: var(--shape-full);
+		margin-bottom: 24px;
 	}
 
 	.split-title {
@@ -95,13 +109,30 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 	}
 
 	.split-quote {
-		font-size: 17px;
+		position: relative;
+		font-size: 22px;
 		color: var(--color-navy);
 		font-style: italic;
-		border-left: 3px solid var(--color-pink);
-		padding-left: 16px;
-		margin: 0 0 22px;
-		line-height: 1.6;
+		font-weight: 600;
+		background: color-mix(in srgb, var(--color-pink-container) 40%, transparent);
+		border-radius: 16px;
+		padding: 24px 32px;
+		margin: 0 0 32px;
+		line-height: 1.5;
+	}
+
+	/* Giant pop quote mark */
+	.split-quote::before {
+		content: '“';
+		position: absolute;
+		top: -10px;
+		left: 16px;
+		font-family: var(--font-heading);
+		font-size: 120px;
+		color: var(--color-pink-dark);
+		opacity: 0.12;
+		line-height: 1;
+		pointer-events: none;
 	}
 
 	.body-text {

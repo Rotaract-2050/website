@@ -22,8 +22,41 @@ const { lang, title, items } = Astro.props;
 					data-tina-field={item.tinaFieldAttr}
 					style={item.color ? `--tint:${item.color};` : undefined}
 				>
-					<div class="card-title">{item.title}</div>
-					<div class="card-meta">{item.meta}</div>
+					<div class="card-content">
+						<div class="card-title">{item.title}</div>
+						<div class="card-meta">{item.meta}</div>
+					</div>
+					{item.title === 'Francigena' && (
+						<svg class="zone-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+							<circle cx="12" cy="12" r="10"></circle>
+							<polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+						</svg>
+					)}
+					{item.title === 'Leonessa' && (
+						<svg class="zone-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+						</svg>
+					)}
+					{item.title === 'Navigli' && (
+						<svg class="zone-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M2 6c.6.5 1.2 1 2.5 1 1.5 0 2.4-1 3.5-1s2 1 3.5 1c1.5 0 2.4-1 3.5-1s2 1 3.5 1c1.3 0 1.9-.5 2.5-1"></path>
+							<path d="M2 12c.6.5 1.2 1 2.5 1 1.5 0 2.4-1 3.5-1s2 1 3.5 1c1.5 0 2.4-1 3.5-1s2 1 3.5 1c1.3 0 1.9-.5 2.5-1"></path>
+							<path d="M2 18c.6.5 1.2 1 2.5 1 1.5 0 2.4-1 3.5-1s2 1 3.5 1c1.5 0 2.4-1 3.5-1s2 1 3.5 1c1.3 0 1.9-.5 2.5-1"></path>
+						</svg>
+					)}
+					{item.title === 'Padana' && (
+						<svg class="zone-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+							<circle cx="12" cy="12" r="4"></circle>
+							<path d="M12 2v2"></path>
+							<path d="M12 20v2"></path>
+							<path d="m4.93 4.93 1.41 1.41"></path>
+							<path d="m17.66 17.66 1.41 1.41"></path>
+							<path d="M2 12h2"></path>
+							<path d="M20 12h2"></path>
+							<path d="m6.34 17.66-1.41 1.41"></path>
+							<path d="m19.07 4.93-1.41 1.41"></path>
+						</svg>
+					)}
 				</a>
 			))}
 		</div>
@@ -39,6 +72,9 @@ const { lang, title, items } = Astro.props;
 	.section-inner {
 		max-width: var(--content-max);
 		margin: 0 auto;
+		background: #f6f8fa;
+		border-radius: var(--shape-extra-large);
+		padding: 60px 40px;
 	}
 
 	.section-title {
@@ -67,26 +103,33 @@ const { lang, title, items } = Astro.props;
 	   a small colored label pill on a white card — the color IS the surface now. */
 	.card {
 		--tint: var(--color-navy);
+		position: relative;
 		flex: 0 0 auto;
-		width: 240px;
+		width: 300px;
 		background: color-mix(in srgb, var(--tint) 14%, white);
 		border-radius: var(--shape-extra-large);
-		box-shadow: var(--elevation-1);
+		box-shadow: 0 8px 24px color-mix(in srgb, var(--tint) 35%, transparent);
 		padding: 40px 28px;
 		text-align: center;
 		color: inherit;
+		overflow: hidden;
 		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
 	.card:hover {
-		transform: translateY(-6px) scale(1.02);
-		box-shadow: var(--elevation-3);
+		transform: translateY(-8px) scale(1.02);
+		box-shadow: 0 16px 32px color-mix(in srgb, var(--tint) 50%, transparent);
+	}
+
+	.card-content {
+		position: relative;
+		z-index: 2;
 	}
 
 	.card-title {
 		font-family: var(--font-heading);
-		font-weight: 700;
-		font-size: 26px;
+		font-weight: 800;
+		font-size: 28px;
 		color: color-mix(in srgb, var(--tint) 80%, black 25%);
 		text-transform: uppercase;
 		margin: 0 0 8px;
@@ -96,19 +139,41 @@ const { lang, title, items } = Astro.props;
 		font-size: 14px;
 		font-weight: 600;
 		letter-spacing: 0.3px;
-		color: color-mix(in srgb, var(--tint) 80%, black 25%);
+		color: var(--color-navy);
 		opacity: 0.75;
+	}
+
+	.zone-watermark {
+		position: absolute;
+		right: -20%;
+		bottom: -25%;
+		width: 260px;
+		height: 260px;
+		color: var(--tint);
+		opacity: 0.12;
+		z-index: 1;
+		transform: rotate(-10deg);
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), opacity var(--motion-duration-medium) var(--motion-easing-emphasized);
+	}
+
+	.card:hover .zone-watermark {
+		transform: rotate(0deg) scale(1.1);
+		opacity: 0.2;
 	}
 
 	@media (max-width: 720px) {
 		.card-grid {
-			padding-left: 20px;
-			padding-right: 20px;
+			padding: 60px 20px;
+		}
+
+		.section-inner {
+			padding: 40px 20px;
 		}
 
 		.card {
 			width: 100%;
-			max-width: 280px;
+			max-width: 320px;
+			padding: 32px 24px;
 		}
 	}
 </style>
