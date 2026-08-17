@@ -4,7 +4,7 @@ zone: src/content/zones/padana.md
 foundationYear: 1969
 lat: 44.9863857
 lng: 10.4153504
-photo: /uploads/Paesaggi/unnamed-2.png
+photo: /uploads/Paesaggi/WhatsApp-Image-2026-08-16-at-23.28.43.jpeg
 photoFocalX: 56
 photoFocalY: 51
 instagram: 'https://www.instagram.com/rotaract_cvs_phf/'
