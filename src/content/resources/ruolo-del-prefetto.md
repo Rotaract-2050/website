@@ -1,13 +1,13 @@
 ---
-title: 'Il ruolo del Prefetto'
-titleEn: "The Prefect's role"
+title: Il ruolo del Prefetto
+titleEn: The Prefect's role
 tags:
   - Prefetto
   - Protocollo & Cerimoniale
   - Gestione & Strumenti
 order: 1
-excerpt: "Il ruolo del Prefetto nell'organizzazione delle conviviali: responsabilità, suggerimenti pratici e come rendere ogni evento impeccabile."
-excerptEn: "The Prefect's role in organizing club gatherings: responsibilities, practical tips, and how to make every event run smoothly."
+excerpt: 'Il ruolo del Prefetto nell''organizzazione delle conviviali: responsabilità, suggerimenti pratici e come rendere ogni evento impeccabile.'
+excerptEn: 'The Prefect''s role in organizing club gatherings: responsibilities, practical tips, and how to make every event run smoothly.'
 bodyEn: |
   > "In the life of every Club, social gatherings and meetings are moments of fundamental importance. To ensure events are properly organized in a spirit of training, friendship and conviviality, this Protocol Guide provides the guidelines and instructions the Prefect needs to carry out their duties."
   >
@@ -41,9 +41,10 @@ bodyEn: |
   * [[struttura-rotaract]]
 ---
 
+
 > "Nella vita di ogni Club le conviviali e i momenti di incontro rappresentano un momento di fondamentale importanza. Al fine di garantire una corretta organizzazione degli eventi all'insegna della formazione, dell'amicizia e della convivialità, il presente Cerimoniale vuole fornire le linee guida e le indicazioni necessarie per facilitare il Prefetto nello svolgimento delle sue funzioni."
 >
-> — Guido Bosi, Rappresentante Distrettuale, Distretto Rotaract 2050
+> — Guido Bosi, RRD A.R. 2024-2025
 
 ## Il ruolo del Prefetto
 
