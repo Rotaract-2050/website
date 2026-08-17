@@ -105,7 +105,7 @@ Rappresenta il fulcro informativo del Club nei confronti di soci, ospiti e istit
 
 ### 3. Redattore delle convocazioni e dei verbali delle Assemblee dei soci e dei Consigli Direttivi
 
-Il Segretario si occupa della stesura e dell'invio formale delle convocazioni per Assemblee e Consigli Direttivi nei tempi previsti (almeno 7 giorni di preavviso). Durante le sedute verifica il raggiungimento del numero legale, verbalizza gli interventi e le votazioni, e redige l'atto ufficiale da sottoscrivere unitamente al Presidente.
+Si occupa della stesura e dell'invio formale delle convocazioni per Assemblee e Consigli Direttivi nei tempi previsti (almeno 7 giorni di preavviso). Durante le sedute verifica il raggiungimento del numero legale, verbalizza gli interventi e le votazioni, e redige l'atto ufficiale da sottoscrivere unitamente al Presidente.
 
 ### 4. Custode dell'archivio, della documentazione storica e del registro dei soci
 
