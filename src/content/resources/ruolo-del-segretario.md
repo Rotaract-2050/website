@@ -113,7 +113,7 @@ Protegge e organizza la memoria storica del Club conservando l'intero patrimonio
 
 ### 5. Responsabile degli adempimenti burocratici, amministrativi e del rispetto delle scadenze istituzionali
 
-Il Segretario monitora e rispetta le seguenti scadenze amministrative annuali:
+Monitora e rispetta con massima precisione le scadenze amministrative e procedurali dell'annata rotariana. In particolare, cura la scansione dei principali adempimenti istituzionali:
 
 | Scadenza | Adempimento |
 | --- | --- |
