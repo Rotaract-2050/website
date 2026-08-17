@@ -15,6 +15,8 @@ import NewsTicker from './blocks/NewsTicker.astro';
 import NewsGrid from './blocks/NewsGrid.astro';
 import CtaBanner from './blocks/CtaBanner.astro';
 import PagePlaceholder from './blocks/PagePlaceholder.astro';
+import LegalText from './blocks/LegalText.astro';
+import { renderTinaMarkdown } from '../lib/tina-rich-text';
 import ClubDirectory from './blocks/ClubDirectory.astro';
 import RrdTimeline from './blocks/RrdTimeline.astro';
 import EventsArchive from './blocks/EventsArchive.astro';
@@ -234,6 +236,9 @@ function loc(itValue: string | null | undefined, enValue: string | null | undefi
 		/>
 	)}
 	{block.__typename === 'PagesBlocksPagePlaceholder' && <PagePlaceholder message={loc(block.message, block.messageEn)} />}
+	{block.__typename === 'PagesBlocksLegalText' && (
+		<LegalText bodyHtml={renderTinaMarkdown(isEn && block.contentEn ? block.contentEn : block.content)} />
+	)}
 	{block.__typename === 'PagesBlocksClubDirectory' && (
 		<ClubDirectory lang={lang} intro={loc(block.intro, block.introEn)} disclaimer={loc(block.disclaimer, block.disclaimerEn)} />
 	)}

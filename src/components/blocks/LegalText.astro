@@ -1,0 +1,74 @@
+---
+interface Props {
+	title?: string | null;
+	bodyHtml: string;
+}
+
+const { title, bodyHtml } = Astro.props;
+---
+
+<section class="legal-text">
+	<div class="legal-text-inner">
+		{title && <h2>{title}</h2>}
+		<div class="legal-body" set:html={bodyHtml} />
+	</div>
+</section>
+
+<style>
+	.legal-text {
+		background: #fff;
+		padding: 50px 40px 90px;
+	}
+
+	.legal-text-inner {
+		max-width: 760px;
+		margin: 0 auto;
+	}
+
+	.legal-text-inner > h2 {
+		font-family: var(--font-heading);
+		color: var(--color-navy);
+		margin: 0 0 20px;
+	}
+
+	.legal-body {
+		font-size: 16px;
+		color: var(--color-text);
+		line-height: 1.75;
+	}
+
+	.legal-body :global(p) {
+		margin: 0 0 20px;
+	}
+
+	.legal-body :global(h2),
+	.legal-body :global(h3) {
+		font-family: var(--font-heading);
+		color: var(--color-navy);
+		margin: 32px 0 14px;
+	}
+
+	.legal-body :global(ul),
+	.legal-body :global(ol) {
+		margin: 0 0 20px;
+		padding-left: 22px;
+	}
+
+	.legal-body :global(li) {
+		margin-bottom: 8px;
+	}
+
+	.legal-body :global(a) {
+		color: var(--color-pink);
+	}
+
+	.legal-body :global(strong) {
+		color: var(--color-navy);
+	}
+
+	@media (max-width: 720px) {
+		.legal-text {
+			padding: 40px 20px 60px;
+		}
+	}
+</style>
