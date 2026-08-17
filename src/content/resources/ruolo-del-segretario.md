@@ -86,11 +86,11 @@ Il Segretario è il garante della continuità e dell'organizzazione del Club: cu
 
 ## Elenco dei compiti
 
-1. Garante delle norme e dei regolamenti di Club e Distretto;
-2. Gestore delle comunicazioni e dei rapporti interni ed esterni;
-3. Redattore delle convocazioni e dei verbali ufficiali;
-4. Custode dell'archivio e della documentazione storica;
-5. Responsabile degli adempimenti burocratici e delle scadenze.
+1. Garante del rispetto delle norme e dei regolamenti di Club e Distretto;
+2. Gestore delle comunicazioni e dei rapporti interni ed esterni con il Distretto e il Rotary International;
+3. Redattore delle convocazioni e dei verbali delle Assemblee dei soci e dei Consigli Direttivi;
+4. Custode dell'archivio, della documentazione storica e del registro dei soci;
+5. Responsabile degli adempimenti burocratici, amministrativi e del rispetto delle scadenze istituzionali.
 
 ## Approfondimento dei compiti
 
