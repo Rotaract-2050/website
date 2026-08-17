@@ -7,6 +7,7 @@ lng: 10.4153504
 photo: /uploads/Paesaggi/WhatsApp-Image-2026-08-16-at-23.28.43.jpeg
 photoFocalX: 56
 photoFocalY: 51
+email: segreteriartccasalma@gmail.com
 instagram: 'https://www.instagram.com/rotaract_cvs_phf/'
 facebook: 'https://www.facebook.com/RotaractCasalmaggioreViadanaSabbionetaPHF'
 story: 'Con il service #TreesForFuture, avviato nell''anno sociale 2019/2020, il Rotaract Club Casalmaggiore Viadana Sabbioneta dona e pianta alberi nei comuni di Casalmaggiore, Viadana e Sabbioneta, per ridurre l''inquinamento ambientale, favorire la produzione di ossigeno e migliorare il benessere della comunità.'
