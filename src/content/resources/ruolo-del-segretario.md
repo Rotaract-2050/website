@@ -1,13 +1,13 @@
 ---
-title: 'Il ruolo del Segretario'
-titleEn: "The Secretary's role"
+title: Il ruolo del Segretario
+titleEn: The Secretary's role
 tags:
   - Segretario
   - Gestione & Strumenti
   - Struttura & Governance
 order: 13
-excerpt: "Il Segretario è il custode della continuità del Club: verbali, archivio, comunicazioni e scadenze istituzionali. Elenco dei compiti e delle scadenze amministrative dell'anno rotariano."
-excerptEn: "The Secretary is the Club's guardian of continuity: minutes, archive, communications and institutional deadlines. List of duties and the Rotary year's administrative deadlines."
+excerpt: 'Il Segretario è il custode della continuità del Club: verbali, archivio, comunicazioni e scadenze istituzionali. Elenco dei compiti e delle scadenze amministrative dell''anno rotariano.'
+excerptEn: 'The Secretary is the Club''s guardian of continuity: minutes, archive, communications and institutional deadlines. List of duties and the Rotary year''s administrative deadlines.'
 bodyEn: |
   In the Rotary family, leadership positions change every year to honour the principle of rotation. The Secretary is the guardian of continuity: they ensure the archive, the minutes and the regulations are preserved, so that the handover from one administration to the next happens without any loss of information or memory. They embody the spirit of "Service Above Self" through listening, organization and daily communication:
 
@@ -75,6 +75,11 @@ bodyEn: |
   * [[struttura-rotaract]]
 ---
 
+
+> "Se il Presidente è la mente e la guida temporanea del Club, il Segretario ne è la spina dorsale e il cuore operativo: garantisce l'efficienza, preserva le tradizioni, mantiene vivo il senso di appartenenza e traduce la visione in operatività quotidiana."
+>
+> — Sebastiano Fortugno, RRD Distretto 2050 A.R. 2026-2027
+
 Nella famiglia rotariana le cariche direttive cambiano ogni anno per onorare il principio della rotazione. Il Segretario è il custode della continuità: garantisce la conservazione dell'archivio, dei verbali e dei regolamenti, assicurando che il passaggio di consegne da un'amministrazione all'altra avvenga senza perdita di informazioni e memoria. Incarna lo spirito di "Servire al di sopra di ogni interesse personale" attraverso l'ascolto, l'organizzazione e la comunicazione quotidiana:
 
 * **Connessione interna:** è il punto di riferimento costante per soci e aspiranti per qualsiasi dubbio di natura procedurale o organizzativa.
@@ -86,8 +91,6 @@ Il Segretario affianca e supporta il Presidente in ogni fase dell'azione di Club
 
 * Mantiene la struttura organizzativa efficiente, sollevando il Presidente dai dettagli tecnici e consentendogli di focalizzarsi sulla visione strategica e sui progetti di servizio.
 * Custodisce la disciplina delle scadenze istituzionali e amministrative (aggiornamento dei portali ufficiali, pagamenti delle quote distrettuali e internazionali, passaggi di consegne).
-
-Se il Presidente è la mente e la guida temporanea del Club, il Segretario ne è la spina dorsale e il cuore operativo: garantisce l'efficienza, preserva le tradizioni, mantiene vivo il senso di appartenenza e traduce la visione in operatività quotidiana.
 
 ## Elenco dei compiti
 
