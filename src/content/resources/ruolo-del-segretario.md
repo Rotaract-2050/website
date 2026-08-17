@@ -1,13 +1,13 @@
 ---
-title: 'Il ruolo del Segretario'
-titleEn: "The Secretary's role"
+title: Il ruolo del Segretario
+titleEn: The Secretary's role
 tags:
   - Segretario
   - Gestione & Strumenti
   - Struttura & Governance
 order: 13
-excerpt: "Il Segretario è il custode della continuità del Club: verbali, archivio, comunicazioni e rapporti istituzionali. Elenco e approfondimento dei compiti."
-excerptEn: "The Secretary is the Club's guardian of continuity: minutes, archive, communications and institutional relations. List and detail of their duties."
+excerpt: 'Il Segretario è il custode della continuità del Club: verbali, archivio, comunicazioni e scadenze istituzionali. Elenco dei compiti e delle scadenze amministrative dell''anno rotariano.'
+excerptEn: 'The Secretary is the Club''s guardian of continuity: minutes, archive, communications and institutional deadlines. List of duties and the Rotary year''s administrative deadlines.'
 bodyEn: |
   In the Rotary family, leadership positions change every year to honour the principle of rotation. The Secretary is the guardian of continuity: they ensure the archive, the minutes and the regulations are preserved, so that the handover from one administration to the next happens without any loss of information or memory. They embody the spirit of "Service Above Self" through listening, organization and daily communication:
 
@@ -60,49 +60,61 @@ bodyEn: |
   * [[scadenze-amministrative]]
 ---
 
-Nella famiglia rotariana le cariche direttive cambiano ogni anno per onorare il principio della rotazione. Il Segretario è il custode della continuità: garantisce la conservazione dell'archivio, dei verbali e dei regolamenti, assicurando che il passaggio di consegne da un'amministrazione all'altra avvenga senza perdita di informazioni e memoria. Incarna lo spirito di "Servire al di sopra di ogni interesse personale" attraverso l'ascolto, l'organizzazione e la comunicazione quotidiana:
 
-* **Connessione interna:** è il punto di riferimento costante per soci e aspiranti per qualsiasi dubbio di natura procedurale o organizzativa.
-* **Ponte di collegamento verso l'esterno:** è il raccordo ufficiale tra il Club, la Zona, il Distretto e il Rotary International.
 
-Il rispetto delle regole e delle procedure non è semplice formalismo, ma garanzia di correttezza ed equità tra i soci. Il Segretario si assicura che le decisioni prese nelle Assemblee e nei Consigli Direttivi siano trasparenti, formalizzate nei verbali ufficiali e conformi allo Statuto e al Regolamento Distrettuale e Internazionale.
+> "Se il Presidente è la mente e la guida del Club, il Segretario ne è la spina dorsale e il cuore operativo: garantisce l'efficienza, preserva le tradizioni, mantiene vivo il senso di appartenenza e traduce la visione in operatività quotidiana."
+>
+> — Sebastiano Fortugno, RRD A.R. 2026-2027
 
-Il Segretario affianca e supporta il Presidente in ogni fase dell'azione di Club:
+## Il ruolo del Segretario
 
-* Mantiene la struttura organizzativa efficiente, sollevando il Presidente dai dettagli tecnici e consentendogli di focalizzarsi sulla visione strategica e sui progetti di servizio.
-* Custodisce la disciplina delle scadenze istituzionali e amministrative (aggiornamento dei portali ufficiali, pagamenti delle quote distrettuali e internazionali, passaggi di consegne).
+Il Segretario è il garante della continuità e dell'organizzazione del Club: custode della memoria storica, assicura la corretta gestione dei documenti e delle procedure, affianca il Presidente nelle attività quotidiane e cura i rapporti ufficiali con il Distretto e il Rotary International.
 
-Se il Presidente è la mente e la guida temporanea del Club, il Segretario ne è la spina dorsale e il cuore operativo: garantisce l'efficienza, preserva le tradizioni, mantiene vivo il senso di appartenenza e traduce la visione in operatività quotidiana.
+## I compiti 
 
-## Elenco dei compiti
-
-1. Garante delle norme e dei regolamenti di Club e Distretto;
-2. Gestore delle comunicazioni e dei rapporti interni ed esterni;
-3. Redattore delle convocazioni e dei verbali ufficiali;
-4. Custode dell'archivio e della documentazione storica;
-5. Responsabile degli adempimenti burocratici e delle scadenze.
+1. Garante del rispetto delle norme e dei regolamenti di Club e Distretto;
+2. Gestore delle comunicazioni e dei rapporti interni ed esterni con il Distretto e il Rotary International;
+3. Redattore delle convocazioni e dei verbali delle Assemblee dei soci e dei Consigli Direttivi;
+4. Custode dell'archivio, della documentazione storica e del registro dei soci;
+5. Responsabile degli adempimenti burocratici, amministrativi e del rispetto delle scadenze istituzionali.
 
 ## Approfondimento dei compiti
 
-### 1. Garante delle norme e dei regolamenti di Club e Distretto
+### 1. Garante del rispetto delle norme e dei regolamenti di Club e Distretto
 
-Il Segretario deve conoscere a fondo lo Statuto e il Regolamento del Club, oltre alle normative distrettuali e del Rotary International. Ha il compito di chiarire eventuali dubbi normativi a soci e aspiranti e di suggerire al Presidente gli aggiornamenti regolamentari necessari per adeguare i testi alle direttive vigenti.
+Deve conoscere a fondo lo Statuto e il Regolamento del Club, oltre alle normative distrettuali e del Rotary International. Ha il compito di chiarire eventuali dubbi normativi a soci e aspiranti e di suggerire al Presidente gli aggiornamenti regolamentari necessari per adeguare i testi alle direttive vigenti.
 
-### 2. Gestore delle comunicazioni e dei rapporti interni ed esterni
+### 2. Gestore delle comunicazioni e dei rapporti interni ed esterni con il Distretto e il Rotary International
 
-Rappresenta il fulcro informativo del Club. Cura l'invio degli inviti agli eventi (in collaborazione con Presidente e Prefetto), veicola le circolari e i bollettini, e inoltra ai soci le comunicazioni che arrivano dal Distretto e dai Rotary Club partner.
+Rappresenta il fulcro informativo del Club nei confronti di soci, ospiti e istituzioni. Cura l'invio tempestivo degli inviti agli eventi, veicola i bollettini e le circolari ufficiali e gestisce il flusso costante di corrispondenza con il Rotary Club partner, il Distretto e il Rotary International.
 
-### 3. Redattore delle convocazioni e dei verbali ufficiali
+### 3. Redattore delle convocazioni e dei verbali delle Assemblee dei soci e dei Consigli Direttivi
 
-Si occupa della stesura e dell'invio in forma scritta di convocazioni per Consigli Direttivi, Assemblee e Conviviali (con almeno 7 giorni di preavviso). Durante le riunioni verifica il numero legale e le deleghe, verbalizza gli interventi e le votazioni, e redige il verbale ufficiale (firmato insieme al Presidente).
+Si occupa della stesura e dell'invio formale delle convocazioni per Assemblee e Consigli Direttivi nei tempi previsti (almeno 7 giorni di preavviso). Durante le sedute verifica il raggiungimento del numero legale, verbalizza gli interventi e le votazioni, e redige l'atto ufficiale da sottoscrivere unitamente al Presidente.
 
-### 4. Custode dell'archivio e della documentazione storica
+### 4. Custode dell'archivio, della documentazione storica e del registro dei soci
 
-Custodisce la memoria storica del Club, conservando in modo ordinato tutti i verbali dei Consigli Direttivi e delle Assemblee, la corrispondenza ufficiale, le circolari, i bollettini e i registri dei soci.
+Protegge e organizza la memoria storica del Club conservando l'intero patrimonio documentale. Cura la tenuta ordinata di tutti i verbali approvati, della corrispondenza istituzionale, delle pubblicazioni ufficiali e dei registri aggiornati dei soci, garantendo la continuità nel tempo.
 
-### 5. Responsabile degli adempimenti burocratici e delle scadenze
+### 5. Responsabile degli adempimenti burocratici, amministrativi e del rispetto delle scadenze istituzionali
 
-Il Segretario monitora e rispetta le scadenze amministrative annuali del Club — vedi la scheda dedicata [[scadenze-amministrative|Scadenze amministrative annuali]] per l'elenco completo e i link utili.
+Cura la regolare gestione di tutte le scadenze amministrative e burocratiche dell'anno rotariano, assicurando la continuità operativa del Club. Aggiorna costantemente i dati sui portali ufficiali, supervisiona i versamenti delle quote e coordina i principali adempimenti previsti dal calendario:
+
+| Scadenza | Adempimento |
+| --- | --- |
+| 30 giugno | Aggiornamento anagrafica su MyRotary |
+| 30 luglio | Comunicazione variazioni legale rappresentante e conto corrente ad Agenzia delle Entrate e banca |
+| 30 ottobre | Versamento quote distrettuali |
+| 31 gennaio | Versamento quote al Rotary International |
+| 1 marzo | Elezione del Presidente per l'anno rotariano successivo |
+
+## Risorse di approfondimento e link utili
+
+Per consultare i testi integrali e accedere agli strumenti di gestione, puoi fare riferimento alle seguenti risorse ufficiali:
+
+* **https://my.rotary.org/ — Portale ufficiale Rotary International.** Piattaforma per l'aggiornamento dell'anagrafica soci, il versamento delle quote internazionali e il download della modulistica ufficiale.
+* **https://www.rotaract2050.org** Sezione "Download" per consultare il Regolamento Distrettuale vigente, i Bandi di Concorso e la modulistica distrettuale.
+* **https://www.agenziaentrate.gov.it/portale/** Modulistica per la comunicazione di variazione del legale rappresentante (Codice Fiscale / Partita IVA del Club).
 
 ### Vedi anche
 
