@@ -210,6 +210,7 @@ blocks:
         membersLabel: Membro
         membersLabelEn: Member
         lead:
+          photo: /uploads/Squadra/2026-2027/Profili/Alberti-Alessio.jpeg
           name: Alessio Alberti
           email: azione.internazionale@rotaract2050.org
           club: src/content/clubs/rotaract-club-pavia.md
@@ -247,6 +248,7 @@ blocks:
         membersLabel: Membro
         membersLabelEn: Member
         lead:
+          photo: /uploads/Squadra/2026-2027/Profili/Garavani-Maria-Gloria.jpeg
           name: Maria Gloria Garavani
           email: azione.giovani@rotaract2050.org
           club: src/content/clubs/rotaract-club-voghera.md
@@ -314,7 +316,8 @@ blocks:
           email: cultura@rotaract2050.org
           club: src/content/clubs/rotaract-club-abbiategrasso.md
         members:
-          - name: Francesco Pietro Locatelli
+          - photo: /uploads/Squadra/2026-2027/Profili/Locatelli-Francesco-Pietro.jpeg
+            name: Francesco Pietro Locatelli
             club: src/content/clubs/rotaract-club-vigevano-castello.md
           - photo: /uploads/Squadra/2026-2027/Profili/Balasini-Filippo.jpeg
             name: Filippo Balasini
@@ -334,6 +337,7 @@ blocks:
         membersLabel: Membro
         membersLabelEn: Member
         lead:
+          photo: /uploads/Squadra/2026-2027/Profili/Scielzo-Giovanni.jpeg
           name: Giovanni Scielzo
           email: risoluzione.controversie@rotaract2050.org
           club: src/content/clubs/rotaract-club-pavia.md
