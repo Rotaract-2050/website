@@ -289,7 +289,7 @@ const IT: UiStrings = {
 	},
 	chat: {
 		fabLabel: 'Apri l\'assistente Formazione',
-		fabCallout: 'Ehi, sono la tua AI! 👋 Se hai bisogno di qualcosa di teoria, chiedimi pure!',
+		fabCallout: '👋 Ciao! Sono l\'AI del Distretto. Dubbi su storia, cerimoniale o ruoli? Chiedimi tutto quello che un Rotaractiano doc deve sapere! ✨',
 		title: 'Assistente Formazione',
 		closeLabel: 'Chiudi l\'assistente',
 		placeholder: 'Scrivi una domanda…',
@@ -439,7 +439,7 @@ const EN: UiStrings = {
 	},
 	chat: {
 		fabLabel: 'Open the Formazione assistant',
-		fabCallout: 'Hey, I\'m your AI! 👋 If you need any theory help, just ask me!',
+		fabCallout: '👋 Hi! I\'m the District AI. Doubts about history, protocol, or roles? Ask me anything a true Rotaractor should know! ✨',
 		title: 'Formazione assistant',
 		closeLabel: 'Close the assistant',
 		placeholder: 'Ask a question…',

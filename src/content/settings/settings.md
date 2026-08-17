@@ -13,6 +13,8 @@ chatAssistant:
   titleEn: Formazione assistant
   greeting: 'Ciao! Chiedimi qualcosa sulle schede di Formazione: cerimoniale, ruoli del club, cultura rotariana.'
   greetingEn: 'Hi! Ask me anything about the Formazione guides: protocol, club roles, Rotary culture.'
+  callout: "👋 Ciao! Sono l'AI del Distretto. Dubbi su storia, cerimoniale o ruoli? Chiedimi tutto quello che un Rotaractiano doc deve sapere! ✨"
+  calloutEn: "👋 Hi! I'm the District AI. Doubts about history, protocol, or roles? Ask me anything a true Rotaractor should know! ✨"
   extraInstructions: 'Rispondi in modo informale, dai del tu, usa qualche emoji'
   extraInstructionsEn: 'Answer informally, use a casual tone, and add a few emoji'
   autoOpen: true
