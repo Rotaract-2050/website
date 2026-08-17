@@ -4,18 +4,16 @@ import client from '../../tina/__generated__/client';
 import { pageSlugs } from '../data/routes';
 
 export const GET: APIRoute = async ({ site }) => {
-	const [{ data: it }, { data: en }] = await Promise.all([
-		requestWithMetadata(client.queries.settings({ relativePath: 'it.md' })),
-		requestWithMetadata(client.queries.settings({ relativePath: 'en.md' })),
-	]);
+	const { data } = await requestWithMetadata(client.queries.settings({ relativePath: 'settings.md' }));
+	const { settings } = data;
 
 	const abs = (slug: string, lang: 'it' | 'en') => new URL(lang === 'it' ? `/${slug}` : `/en/${slug}`, site).toString();
 
 	const body = `# Rotaract Distretto 2050
 
-> ${it.settings.about}
+> ${settings.about}
 >
-> ${en.settings.about}
+> ${settings.aboutEn || settings.about}
 
 Sito bilingue italiano (default) / inglese del Distretto Rotaract 2050. / Bilingual Italian (default) / English site of Rotaract District 2050.
 
@@ -46,9 +44,9 @@ citing or summarizing it, please attribute "Rotaract District 2050" as the sourc
 https://rotaract2050.org.
 
 ## Contatti / Contact
-${it.settings.email}
-${it.settings.address}
-${it.settings.fiscalCode ? `CF: ${it.settings.fiscalCode}` : ''}
+${settings.email}
+${settings.address}
+${settings.fiscalCode ? `CF: ${settings.fiscalCode}` : ''}
 
 ## Sitemap
 ${new URL('sitemap-index.xml', site)}

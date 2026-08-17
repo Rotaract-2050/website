@@ -15,13 +15,21 @@ interface Props {
 const { lang, settings } = Astro.props;
 const t = uiStrings[lang];
 const href = (page: PageKey) => getRelativeLocaleUrl(lang, pageSlugs[page]);
+
+// settings is a single file for both languages (like clubs.story/storyEn) — pick the EN value
+// when present, falling back to IT, same as ClubDetail.astro's story/storyEn ternary.
+const isEn = lang === 'en';
+const about = (isEn && settings.aboutEn) || settings.about;
+const aboutFieldName = isEn && settings.aboutEn ? 'aboutEn' : 'about';
+const address = (isEn && settings.addressEn) || settings.address;
+const addressFieldName = isEn && settings.addressEn ? 'addressEn' : 'address';
 ---
 
 <footer class="site-footer">
 	<div class="footer-grid">
 		<div>
 			<div class="footer-title">ROTARACT DISTRETTO 2050</div>
-			<p class="footer-about" data-tina-field={tinaField(settings, 'about')}>{settings.about}</p>
+			<p class="footer-about" data-tina-field={tinaField(settings, aboutFieldName)}>{about}</p>
 		</div>
 		<div>
 			<div class="footer-heading">{t.footer.linksTitle}</div>
@@ -36,7 +44,7 @@ const href = (page: PageKey) => getRelativeLocaleUrl(lang, pageSlugs[page]);
 		<div>
 			<div class="footer-heading">{t.footer.contactTitle}</div>
 			<p class="footer-contact">
-				<span data-tina-field={tinaField(settings, 'address')}>{settings.address}</span>
+				<span data-tina-field={tinaField(settings, addressFieldName)}>{address}</span>
 				{settings.fiscalCode && (
 					<>
 						<br />
