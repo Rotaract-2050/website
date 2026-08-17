@@ -76,6 +76,7 @@ bodyEn: |
 ---
 
 
+
 > "Se il Presidente è la mente e la guida temporanea del Club, il Segretario ne è la spina dorsale e il cuore operativo: garantisce l'efficienza, preserva le tradizioni, mantiene vivo il senso di appartenenza e traduce la visione in operatività quotidiana."
 >
 > — Sebastiano Fortugno, RRD A.R. 2026-2027
@@ -84,7 +85,7 @@ bodyEn: |
 
 Il Segretario è il garante della continuità e dell'organizzazione del Club: custode della memoria storica, assicura la corretta gestione dei documenti e delle procedure, affianca il Presidente nelle attività quotidiane e cura i rapporti ufficiali con il Distretto e il Rotary International.
 
-## Elenco dei compiti
+## I compiti 
 
 1. Garante del rispetto delle norme e dei regolamenti di Club e Distretto;
 2. Gestore delle comunicazioni e dei rapporti interni ed esterni con il Distretto e il Rotary International;
@@ -98,19 +99,19 @@ Il Segretario è il garante della continuità e dell'organizzazione del Club: cu
 
 Deve conoscere a fondo lo Statuto e il Regolamento del Club, oltre alle normative distrettuali e del Rotary International. Ha il compito di chiarire eventuali dubbi normativi a soci e aspiranti e di suggerire al Presidente gli aggiornamenti regolamentari necessari per adeguare i testi alle direttive vigenti.
 
-### 2. Gestore delle comunicazioni e dei rapporti interni ed esterni con il Distretto e il Rotary Internationa
+### 2. Gestore delle comunicazioni e dei rapporti interni ed esterni con il Distretto e il Rotary International
 
 Rappresenta il fulcro informativo del Club nei confronti di soci, ospiti e istituzioni. Cura l'invio tempestivo degli inviti agli eventi (in collaborazione con il Presidente e il Prefetto), veicola i bollettini e le circolari ufficiali e gestisce il flusso costante di corrispondenza con il Rotary Club partner, il Distretto e il Rotary International.
 
-### 3. Redattore delle convocazioni e dei verbali ufficiali
+### 3. Redattore delle convocazioni e dei verbali delle Assemblee dei soci e dei Consigli Direttivi
 
 Il Segretario si occupa della stesura e dell'invio formale delle convocazioni per Assemblee e Consigli Direttivi nei tempi previsti (almeno 7 giorni di preavviso). Durante le sedute verifica il raggiungimento del numero legale, verbalizza gli interventi e le votazioni, e redige l'atto ufficiale da sottoscrivere unitamente al Presidente.
 
-### 4. Custode dell'archivio e della documentazione storica
+### 4. Custode dell'archivio, della documentazione storica e del registro dei soci
 
 Protegge e organizza la memoria storica del Club conservando l'intero patrimonio documentale. Cura la tenuta ordinata di tutti i verbali approvati, della corrispondenza istituzionale, delle pubblicazioni ufficiali e dei registri aggiornati dei soci, garantendo la continuità tra le diverse annate rotariane.
 
-### 5. Responsabile degli adempimenti burocratici e delle scadenze
+### 5. Responsabile degli adempimenti burocratici, amministrativi e del rispetto delle scadenze istituzionali
 
 Il Segretario monitora e rispetta le seguenti scadenze amministrative annuali:
 
