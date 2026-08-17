@@ -4,7 +4,7 @@ zone: src/content/zones/navigli.md
 foundationYear: 1968
 lat: 45.1860043
 lng: 9.1546375
-photo: /uploads/Paesaggi/unnamed-6.jpeg
+photo: /uploads/Loghi-Club/pavia.jpeg
 instagram: 'https://www.instagram.com/rotaractpavia/'
 facebook: 'https://www.facebook.com/rotaractpavia'
 story: 'Grazie alla raccolta fondi dalla vendita di marmellate, il club ha acquistato un tablet donato a una casa di riposo locale (RSA F. Pertusati), utilizzato anche dai soci per contattare settimanalmente gli ospiti della struttura. Durante la prima ondata della pandemia ha donato 1.600 mascherine chirurgiche, metà alla Croce Rossa e metà all''ATS per la distribuzione alle RSA locali. Da alcuni anni porta avanti un service presso la Mensa del Fratello, una mensa solidale che offre pasti gratuiti alle persone bisognose, aiutando nella gestione della sala. Durante la seconda ondata, grazie al ricavato di una gara di golf organizzata con uno dei Rotary Club padrini, ha finanziato ulteriori iniziative di sostegno.'
