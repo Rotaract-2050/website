@@ -101,7 +101,7 @@ Deve conoscere a fondo lo Statuto e il Regolamento del Club, oltre alle normativ
 
 ### 2. Gestore delle comunicazioni e dei rapporti interni ed esterni con il Distretto e il Rotary International
 
-Rappresenta il fulcro informativo del Club nei confronti di soci, ospiti e istituzioni. Cura l'invio tempestivo degli inviti agli eventi (in collaborazione con il Presidente e il Prefetto), veicola i bollettini e le circolari ufficiali e gestisce il flusso costante di corrispondenza con il Rotary Club partner, il Distretto e il Rotary International.
+Rappresenta il fulcro informativo del Club nei confronti di soci, ospiti e istituzioni. Cura l'invio tempestivo degli inviti agli eventi, veicola i bollettini e le circolari ufficiali e gestisce il flusso costante di corrispondenza con il Rotary Club partner, il Distretto e il Rotary International.
 
 ### 3. Redattore delle convocazioni e dei verbali delle Assemblee dei soci e dei Consigli Direttivi
 
