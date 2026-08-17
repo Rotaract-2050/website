@@ -6,8 +6,8 @@ tags:
   - Gestione & Strumenti
   - Struttura & Governance
 order: 13
-excerpt: "Il Segretario è il custode della continuità del Club: verbali, archivio, comunicazioni e scadenze istituzionali. Elenco dei compiti e delle scadenze amministrative dell'anno rotariano."
-excerptEn: "The Secretary is the Club's guardian of continuity: minutes, archive, communications and institutional deadlines. List of duties and the Rotary year's administrative deadlines."
+excerpt: "Il Segretario è il custode della continuità del Club: verbali, archivio, comunicazioni e rapporti istituzionali. Elenco e approfondimento dei compiti."
+excerptEn: "The Secretary is the Club's guardian of continuity: minutes, archive, communications and institutional relations. List and detail of their duties."
 bodyEn: |
   In the Rotary family, leadership positions change every year to honour the principle of rotation. The Secretary is the guardian of continuity: they ensure the archive, the minutes and the regulations are preserved, so that the handover from one administration to the next happens without any loss of information or memory. They embody the spirit of "Service Above Self" through listening, organization and daily communication:
 
@@ -51,28 +51,13 @@ bodyEn: |
 
   ### 5. Responsible for bureaucratic obligations and deadlines
 
-  The Secretary monitors and meets the following annual administrative deadlines:
-
-  | Deadline | Obligation |
-  | --- | --- |
-  | 30 June | Update membership records on MyRotary |
-  | 30 July | Report changes of legal representative and bank account to the Revenue Agency (Agenzia delle Entrate) and the bank |
-  | 30 October | Payment of district dues |
-  | 31 January | Payment of dues to Rotary International |
-  | 1 March | Election of the President for the following Rotary year |
-
-  ## Further resources and useful links
-
-  To consult the full texts and access the management tools, you can refer to the following official resources:
-
-  * **My Rotary — Rotary International's official portal.** Platform for updating membership records, paying international dues, and downloading official forms.
-  * **Rotaract District 2050's official website.** "Download" section for the current District Regulation, calls for entries, and district forms.
-  * **Agenzia delle Entrate — forms and data changes.** Forms for reporting a change of legal representative (Club's Codice Fiscale / Partita IVA).
+  The Secretary monitors and meets the Club's annual administrative deadlines — see the dedicated [[scadenze-amministrative|Annual administrative deadlines]] card for the full list and useful links.
 
   ### See also
 
   * [[ruolo-del-prefetto]]
   * [[struttura-rotaract]]
+  * [[scadenze-amministrative]]
 ---
 
 Nella famiglia rotariana le cariche direttive cambiano ogni anno per onorare il principio della rotazione. Il Segretario è il custode della continuità: garantisce la conservazione dell'archivio, dei verbali e dei regolamenti, assicurando che il passaggio di consegne da un'amministrazione all'altra avvenga senza perdita di informazioni e memoria. Incarna lo spirito di "Servire al di sopra di ogni interesse personale" attraverso l'ascolto, l'organizzazione e la comunicazione quotidiana:
@@ -117,25 +102,10 @@ Custodisce la memoria storica del Club, conservando in modo ordinato tutti i ver
 
 ### 5. Responsabile degli adempimenti burocratici e delle scadenze
 
-Il Segretario monitora e rispetta le seguenti scadenze amministrative annuali:
-
-| Scadenza | Adempimento |
-| --- | --- |
-| 30 giugno | Aggiornamento anagrafica su MyRotary |
-| 30 luglio | Comunicazione variazioni legale rappresentante e conto corrente ad Agenzia delle Entrate e banca |
-| 30 ottobre | Versamento quote distrettuali |
-| 31 gennaio | Versamento quote al Rotary International |
-| 1 marzo | Elezione del Presidente per l'anno rotariano successivo |
-
-## Risorse di approfondimento e link utili
-
-Per consultare i testi integrali e accedere agli strumenti di gestione, puoi fare riferimento alle seguenti risorse ufficiali:
-
-* **My Rotary — Portale ufficiale Rotary International.** Piattaforma per l'aggiornamento dell'anagrafica soci, il versamento delle quote internazionali e il download della modulistica ufficiale.
-* **Sito ufficiale Rotaract Distretto 2050.** Sezione "Download" per consultare il Regolamento Distrettuale vigente, i Bandi di Concorso e la modulistica distrettuale.
-* **Agenzia delle Entrate — Modelli e variazioni dati.** Modulistica per la comunicazione di variazione del legale rappresentante (Codice Fiscale / Partita IVA del Club).
+Il Segretario monitora e rispetta le scadenze amministrative annuali del Club — vedi la scheda dedicata [[scadenze-amministrative|Scadenze amministrative annuali]] per l'elenco completo e i link utili.
 
 ### Vedi anche
 
 * [[ruolo-del-prefetto]]
 * [[struttura-rotaract]]
+* [[scadenze-amministrative]]
