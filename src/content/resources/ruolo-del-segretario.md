@@ -94,21 +94,21 @@ Il Segretario è il garante della continuità e dell'organizzazione del Club: cu
 
 ## Approfondimento dei compiti
 
-### 1. Garante delle norme e dei regolamenti di Club e Distretto
+### 1. Garante del rispetto delle norme e dei regolamenti di Club e Distretto
 
-Il Segretario deve conoscere a fondo lo Statuto e il Regolamento del Club, oltre alle normative distrettuali e del Rotary International. Ha il compito di chiarire eventuali dubbi normativi a soci e aspiranti e di suggerire al Presidente gli aggiornamenti regolamentari necessari per adeguare i testi alle direttive vigenti.
+Deve conoscere a fondo lo Statuto e il Regolamento del Club, oltre alle normative distrettuali e del Rotary International. Ha il compito di chiarire eventuali dubbi normativi a soci e aspiranti e di suggerire al Presidente gli aggiornamenti regolamentari necessari per adeguare i testi alle direttive vigenti.
 
-### 2. Gestore delle comunicazioni e dei rapporti interni ed esterni
+### 2. Gestore delle comunicazioni e dei rapporti interni ed esterni con il Distretto e il Rotary Internationa
 
-Rappresenta il fulcro informativo del Club. Cura l'invio degli inviti agli eventi (in collaborazione con Presidente e Prefetto), veicola le circolari e i bollettini, e inoltra ai soci le comunicazioni che arrivano dal Distretto e dai Rotary Club partner.
+Rappresenta il fulcro informativo del Club nei confronti di soci, ospiti e istituzioni. Cura l'invio tempestivo degli inviti agli eventi (in collaborazione con il Presidente e il Prefetto), veicola i bollettini e le circolari ufficiali e gestisce il flusso costante di corrispondenza con il Rotary Club partner, il Distretto e il Rotary International.
 
 ### 3. Redattore delle convocazioni e dei verbali ufficiali
 
-Si occupa della stesura e dell'invio in forma scritta di convocazioni per Consigli Direttivi, Assemblee e Conviviali (con almeno 7 giorni di preavviso). Durante le riunioni verifica il numero legale e le deleghe, verbalizza gli interventi e le votazioni, e redige il verbale ufficiale (firmato insieme al Presidente).
+Il Segretario si occupa della stesura e dell'invio formale delle convocazioni per Assemblee e Consigli Direttivi nei tempi previsti (almeno 7 giorni di preavviso). Durante le sedute verifica il raggiungimento del numero legale, verbalizza gli interventi e le votazioni, e redige l'atto ufficiale da sottoscrivere unitamente al Presidente.
 
 ### 4. Custode dell'archivio e della documentazione storica
 
-Custodisce la memoria storica del Club, conservando in modo ordinato tutti i verbali dei Consigli Direttivi e delle Assemblee, la corrispondenza ufficiale, le circolari, i bollettini e i registri dei soci.
+Protegge e organizza la memoria storica del Club conservando l'intero patrimonio documentale. Cura la tenuta ordinata di tutti i verbali approvati, della corrispondenza istituzionale, delle pubblicazioni ufficiali e dei registri aggiornati dei soci, garantendo la continuità tra le diverse annate rotariane.
 
 ### 5. Responsabile degli adempimenti burocratici e delle scadenze
 
@@ -126,9 +126,9 @@ Il Segretario monitora e rispetta le seguenti scadenze amministrative annuali:
 
 Per consultare i testi integrali e accedere agli strumenti di gestione, puoi fare riferimento alle seguenti risorse ufficiali:
 
-* **My Rotary — Portale ufficiale Rotary International.** Piattaforma per l'aggiornamento dell'anagrafica soci, il versamento delle quote internazionali e il download della modulistica ufficiale.
-* **Sito ufficiale Rotaract Distretto 2050.** Sezione "Download" per consultare il Regolamento Distrettuale vigente, i Bandi di Concorso e la modulistica distrettuale.
-* **Agenzia delle Entrate — Modelli e variazioni dati.** Modulistica per la comunicazione di variazione del legale rappresentante (Codice Fiscale / Partita IVA del Club).
+* **https://my.rotary.org/ — Portale ufficiale Rotary International.** Piattaforma per l'aggiornamento dell'anagrafica soci, il versamento delle quote internazionali e il download della modulistica ufficiale.
+* **https://www.rotaract2050.org** Sezione "Download" per consultare il Regolamento Distrettuale vigente, i Bandi di Concorso e la modulistica distrettuale.
+* **https://www.agenziaentrate.gov.it/portale/** Modulistica per la comunicazione di variazione del legale rappresentante (Codice Fiscale / Partita IVA del Club).
 
 ### Vedi anche
 
