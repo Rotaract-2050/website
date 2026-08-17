@@ -78,7 +78,7 @@ bodyEn: |
 
 > "Se il Presidente è la mente e la guida temporanea del Club, il Segretario ne è la spina dorsale e il cuore operativo: garantisce l'efficienza, preserva le tradizioni, mantiene vivo il senso di appartenenza e traduce la visione in operatività quotidiana."
 >
-> — Sebastiano Fortugno, RRD Distretto 2050 A.R. 2026-2027
+> — Sebastiano Fortugno, RRD A.R. 2026-2027
 
 Nella famiglia rotariana le cariche direttive cambiano ogni anno per onorare il principio della rotazione. Il Segretario è il custode della continuità: garantisce la conservazione dell'archivio, dei verbali e dei regolamenti, assicurando che il passaggio di consegne da un'amministrazione all'altra avvenga senza perdita di informazioni e memoria. Incarna lo spirito di "Servire al di sopra di ogni interesse personale" attraverso l'ascolto, l'organizzazione e la comunicazione quotidiana:
 
