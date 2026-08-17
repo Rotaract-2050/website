@@ -77,7 +77,7 @@ bodyEn: |
 
 
 
-> "Se il Presidente è la mente e la guida temporanea del Club, il Segretario ne è la spina dorsale e il cuore operativo: garantisce l'efficienza, preserva le tradizioni, mantiene vivo il senso di appartenenza e traduce la visione in operatività quotidiana."
+> "Se il Presidente è la mente e la guida del Club, il Segretario ne è la spina dorsale e il cuore operativo: garantisce l'efficienza, preserva le tradizioni, mantiene vivo il senso di appartenenza e traduce la visione in operatività quotidiana."
 >
 > — Sebastiano Fortugno, RRD A.R. 2026-2027
 
