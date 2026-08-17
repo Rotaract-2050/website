@@ -80,17 +80,9 @@ bodyEn: |
 >
 > — Sebastiano Fortugno, RRD A.R. 2026-2027
 
-Nella famiglia rotariana le cariche direttive cambiano ogni anno per onorare il principio della rotazione. Il Segretario è il custode della continuità: garantisce la conservazione dell'archivio, dei verbali e dei regolamenti, assicurando che il passaggio di consegne da un'amministrazione all'altra avvenga senza perdita di informazioni e memoria. Incarna lo spirito di "Servire al di sopra di ogni interesse personale" attraverso l'ascolto, l'organizzazione e la comunicazione quotidiana:
+## Il ruolo del Segretario
 
-* **Connessione interna:** è il punto di riferimento costante per soci e aspiranti per qualsiasi dubbio di natura procedurale o organizzativa.
-* **Ponte di collegamento verso l'esterno:** è il raccordo ufficiale tra il Club, la Zona, il Distretto e il Rotary International.
-
-Il rispetto delle regole e delle procedure non è semplice formalismo, ma garanzia di correttezza ed equità tra i soci. Il Segretario si assicura che le decisioni prese nelle Assemblee e nei Consigli Direttivi siano trasparenti, formalizzate nei verbali ufficiali e conformi allo Statuto e al Regolamento Distrettuale e Internazionale.
-
-Il Segretario affianca e supporta il Presidente in ogni fase dell'azione di Club:
-
-* Mantiene la struttura organizzativa efficiente, sollevando il Presidente dai dettagli tecnici e consentendogli di focalizzarsi sulla visione strategica e sui progetti di servizio.
-* Custodisce la disciplina delle scadenze istituzionali e amministrative (aggiornamento dei portali ufficiali, pagamenti delle quote distrettuali e internazionali, passaggi di consegne).
+Il Segretario è il garante della continuità e dell'organizzazione del Club: custode della memoria storica, assicura la corretta gestione dei documenti e delle procedure, affianca il Presidente nelle attività quotidiane e cura i rapporti ufficiali con il Distretto e il Rotary International.
 
 ## Elenco dei compiti
 
