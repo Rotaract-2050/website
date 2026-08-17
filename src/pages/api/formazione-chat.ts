@@ -91,8 +91,9 @@ export const POST: APIRoute = async (context) => {
 
 	// Editor-supplied tone/persona guidance from Tina (settings.chatAssistant.extraInstructions);
 	// buildSystemPrompt only appends it after the fixed grounding/safety rules, never replaces them.
-	const settingsResult = await requestWithMetadata(client.queries.settings({ relativePath: `${body.lang}.md` }));
-	const extraInstructions = settingsResult.data?.settings?.chatAssistant?.extraInstructions;
+	const settingsResult = await requestWithMetadata(client.queries.settings({ relativePath: 'settings.md' }));
+	const chatAssistant = settingsResult.data?.settings?.chatAssistant;
+	const extraInstructions = (body.lang === 'en' && chatAssistant?.extraInstructionsEn) || chatAssistant?.extraInstructions;
 
 	const systemPrompt = buildSystemPrompt(resources, body.lang, extraInstructions);
 

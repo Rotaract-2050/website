@@ -13,10 +13,10 @@ interface Props {
 const { lang, title, driveFolderId, emptyMessage } = Astro.props;
 const t = uiStrings[lang].materials;
 
-// driveApiKey is not language-specific (one Google Cloud key for the whole site), so it's
-// always read from the IT settings file regardless of `lang` — avoids two independently
-// editable copies of the same credential drifting apart across languages.
-const { data } = await requestWithMetadata(client.queries.settings({ relativePath: 'it.md' }));
+// driveApiKey is not language-specific (one Google Cloud key for the whole site) — `settings`
+// is a single file for both languages (like clubs/zones/news/events/resources/pages), so there's
+// only ever one value to read regardless of `lang`.
+const { data } = await requestWithMetadata(client.queries.settings({ relativePath: 'settings.md' }));
 const driveApiKey = data.settings.driveApiKey;
 
 const configured = Boolean(driveFolderId && driveApiKey);

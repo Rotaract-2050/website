@@ -52,8 +52,9 @@ const onProdHost = isProdHost(Astro.url, Astro.site);
 const effectiveNoindex = noindex || !onProdHost;
 const resolvedImage = image || settings.defaultOgImage || DEFAULT_OG_IMAGE;
 const pageTitle = title === SITE_NAME ? title : `${title} | ${SITE_NAME}`;
+const localizedAbout = (lang === 'en' && settings.aboutEn) || settings.about;
 const organizationGraph = buildOrganizationGraph(
-	{ about: settings.about, logo: new URL(settings.logo || DEFAULT_OG_IMAGE, Astro.site).toString(), fiscalCode: settings.fiscalCode },
+	{ about: localizedAbout, logo: new URL(settings.logo || DEFAULT_OG_IMAGE, Astro.site).toString(), fiscalCode: settings.fiscalCode },
 	Astro.site!.toString()
 );
 ---
