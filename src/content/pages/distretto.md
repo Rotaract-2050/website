@@ -32,9 +32,9 @@ blocks:
     bodyEn: 'The beacon that guides Rotaractors, in every corner of the world.'
     subhead: Missione
     subheadEn: Mission
-    body2: |
+    quote2: |
       La nostra missione è servire gli altri, promuovere l'integrità e favorire la comprensione, la buona volontà e la pace nel mondo attraverso una rete di professionisti, imprenditori e persone di spicco della comunità.
-    body2En: 'We provide service to others, promote integrity, and advance world understanding, goodwill, and peace through our fellowship of business, professional, and community leaders.'
+    quote2En: 'We provide service to others, promote integrity, and advance world understanding, goodwill, and peace through our fellowship of business, professional, and community leaders.'
     image: /uploads/Paesaggi/WhatsApp-Image-2026-08-14-at-23.30.43.jpeg
     imageFocalX: 49
     imageFocalY: 68

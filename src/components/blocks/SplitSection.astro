@@ -11,6 +11,7 @@ interface Props {
 	quote?: string;
 	body: string;
 	subhead?: string;
+	quote2?: string;
 	body2?: string;
 	ctaLabel?: string;
 	ctaHref?: string;
@@ -21,7 +22,7 @@ interface Props {
 	imageSide?: 'left' | 'right';
 }
 
-const { lang, kicker, title, quote, body, subhead, body2, ctaLabel, ctaHref, image, imageFocalX, imageFocalY, imageLabel, imageSide = 'right' } = Astro.props;
+const { lang, kicker, title, quote, body, subhead, quote2, body2, ctaLabel, ctaHref, image, imageFocalX, imageFocalY, imageLabel, imageSide = 'right' } = Astro.props;
 const resolvedCtaHref = ctaHref ? getRelativeLocaleUrl(lang, ctaHref) : undefined;
 const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 50}%;`;
 ---
@@ -37,6 +38,7 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 			{quote && <blockquote class="split-quote">{quote}</blockquote>}
 			<p class="body-text">{body}</p>
 			{subhead && <h3 class="subhead">{subhead}</h3>}
+			{quote2 && <blockquote class="split-quote">{quote2}</blockquote>}
 			{body2 && <p class="body-text no-margin">{body2}</p>}
 			{ctaLabel && resolvedCtaHref && (
 				<a href={resolvedCtaHref} class="split-cta">{ctaLabel}</a>
