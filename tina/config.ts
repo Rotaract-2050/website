@@ -91,6 +91,8 @@ const splitSectionTemplate = {
 		{ type: 'string' as const, name: 'bodyEn', label: 'Testo (EN)', ui: { component: 'textarea' } },
 		{ type: 'string' as const, name: 'subhead', label: 'Sottotitolo secondario (IT)' },
 		{ type: 'string' as const, name: 'subheadEn', label: 'Sottotitolo secondario (EN)' },
+		{ type: 'string' as const, name: 'quote2', label: 'Citazione secondaria (IT)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'quote2En', label: 'Citazione secondaria (EN)', ui: { component: 'textarea' } },
 		{ type: 'string' as const, name: 'body2', label: 'Testo secondario (IT)', ui: { component: 'textarea' } },
 		{ type: 'string' as const, name: 'body2En', label: 'Testo secondario (EN)', ui: { component: 'textarea' } },
 		{ type: 'string' as const, name: 'ctaLabel', label: 'Testo pulsante (IT)' },

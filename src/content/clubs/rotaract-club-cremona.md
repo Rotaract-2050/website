@@ -4,7 +4,7 @@ zone: src/content/zones/padana.md
 foundationYear: 1978
 lat: 45.1334796
 lng: 10.0248716
-photo: /uploads/Paesaggi/unnamed-12.jpeg
+photo: /uploads/Loghi-Club/cremona.jpeg
 instagram: 'https://www.instagram.com/rotaract.cremona/'
 facebook: 'https://www.facebook.com/rotaract.cremona'
 story: 'Tra i service degli ultimi anni: nell''aprile 2019, sotto la presidenza di Lorenzo Basola, la partnership con Rise Against Hunger ha permesso di realizzare 30.000 razioni di cibo a lunga conservazione, garantendo a oltre 100 bambini un anno di scuola al sicuro da sfruttamento. Nell''anno sociale 2019/2020, sotto la presidenza di Paolo Pavesi, un contributo alla Scuola Media Statale Campi ha permesso l''inaugurazione di una nuova cucina didattica dedicata all''inclusione. In collaborazione con il Rotary Club Cremona Po, il club ha inoltre sostenuto con nuovi arredi una realtà a Tidolo dedicata a persone adulte con disabilità intellettiva e autismo, e dal 2014 contribuisce ogni anno, insieme al Rotary Club Cremona, alla realizzazione del Torneo di Tennis in carrozzina ‘Città di Cremona’.'

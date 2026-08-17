@@ -4,7 +4,7 @@ zone: src/content/zones/navigli.md
 foundationYear: 1990
 lat: 45.398733
 lng: 8.9162299
-photo: /uploads/Paesaggi/unnamed-5.jpeg
+photo: /uploads/Loghi-Club/abbiategrasso.jpeg
 email: segreteria@rtcabbiategrasso.org
 instagram: 'https://www.instagram.com/rotaractclubabbiategrasso/'
 facebook: 'https://www.facebook.com/rotaractabbiategrasso'

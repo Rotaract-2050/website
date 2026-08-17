@@ -15,7 +15,7 @@ blocks:
     titleEn: What is Rotaract
     body: 'Il Rotaract è un''organizzazione partner del Rotary International, costituita da giovani adulti il cui scopo è fornire servizi alla comunità e a livello internazionale, sviluppare le capacità di leadership e partecipare a programmi di sviluppo professionale.'
     bodyEn: 'Rotaract is an organization of young adults, partner of Rotary International, who take action through community and international service, learn leadership skills, and participate in professional development.'
-    image: /uploads/Paesaggi/WhatsApp-Image-2026-08-14-at-23.50.51.jpeg
+    image: /uploads/Paesaggi/bandiera-rotaract-ai.jpeg
     imageFocalX: 49
     imageFocalY: 50
     imageLabel: Foto socie e soci in un evento Rotaract
@@ -32,10 +32,10 @@ blocks:
     bodyEn: 'The beacon that guides Rotaractors, in every corner of the world.'
     subhead: Missione
     subheadEn: Mission
-    body2: |
+    quote2: |
       La nostra missione è servire gli altri, promuovere l'integrità e favorire la comprensione, la buona volontà e la pace nel mondo attraverso una rete di professionisti, imprenditori e persone di spicco della comunità.
-    body2En: 'We provide service to others, promote integrity, and advance world understanding, goodwill, and peace through our fellowship of business, professional, and community leaders.'
-    image: /uploads/Paesaggi/WhatsApp-Image-2026-08-14-at-23.30.43.jpeg
+    quote2En: 'We provide service to others, promote integrity, and advance world understanding, goodwill, and peace through our fellowship of business, professional, and community leaders.'
+    image: /uploads/Paesaggi/operazione-makeni.jpeg
     imageFocalX: 49
     imageFocalY: 68
     imageLabel: Foto socie e soci in un progetto di servizio
