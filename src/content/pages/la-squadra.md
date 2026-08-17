@@ -380,6 +380,7 @@ blocks:
         leadLabel: Delegato
         leadLabelEn: Delegate
         lead:
+          photo: /uploads/Squadra/2026-2027/Profili/Cappello-Davide.jpeg
           name: Davide Cappello
           email: rotary.foundation@rotaract2050.org
           club: src/content/clubs/rotaract-club-brescia-ovest-castello.md
@@ -390,6 +391,7 @@ blocks:
         leadLabel: Delegato
         leadLabelEn: Delegate
         lead:
+          photo: /uploads/Squadra/2026-2027/Profili/Gorla-Alessandro.jpg
           name: Alessandro Gorla
           email: it@rotaract2050.org
           club: src/content/clubs/rotaract-club-abbiategrasso.md
