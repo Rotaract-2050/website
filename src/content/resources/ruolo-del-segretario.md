@@ -113,7 +113,7 @@ Protegge e organizza la memoria storica del Club conservando l'intero patrimonio
 
 ### 5. Responsabile degli adempimenti burocratici, amministrativi e del rispetto delle scadenze istituzionali
 
-Cura la regolare gestione di tutte le scadenze amministrative e burocratiche dell'anno rotariano, assicurando la continuità operativa del Club. Aggiorna costantemente i dati sui portali ufficiali, supervisiona i versamenti delle quote e coordina con precisione i principali adempimenti previsti dal calendario:
+Cura la regolare gestione di tutte le scadenze amministrative e burocratiche dell'anno rotariano, assicurando la continuità operativa del Club. Aggiorna costantemente i dati sui portali ufficiali, supervisiona i versamenti delle quote e coordina i principali adempimenti previsti dal calendario:
 
 | Scadenza | Adempimento |
 | --- | --- |
