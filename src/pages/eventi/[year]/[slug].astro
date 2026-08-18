@@ -122,22 +122,6 @@ const jsonLd = buildEventJsonLd({
 				)
 			)}
 			{localized.excerpt && <p class="event-detail-excerpt">{localized.excerpt}</p>}
-			{event.schedule && event.schedule.length > 0 && (
-				<div class="event-schedule" data-tina-field={tinaField(event, 'schedule')}>
-					<h2 class="event-schedule-title">{t.events.scheduleTitle}</h2>
-					<ol class="event-schedule-list">
-						{event.schedule.map((item) => item && (
-							<li class="event-schedule-row">
-								{item.time && <span class="event-schedule-time">{item.time}</span>}
-								<div class="event-schedule-body">
-									<span class="event-schedule-item-title">{item.title}</span>
-									{item.speaker && <span class="event-schedule-speaker">{item.speaker}</span>}
-								</div>
-							</li>
-						))}
-					</ol>
-				</div>
-			)}
 			{(showTicketsButton || event.photoAlbumUrl) && (
 				<div class="event-detail-actions">
 					{showTicketsButton && (
@@ -164,6 +148,22 @@ const jsonLd = buildEventJsonLd({
 							{t.events.photoButtonLabel}
 						</a>
 					)}
+				</div>
+			)}
+			{event.schedule && event.schedule.length > 0 && (
+				<div class="event-schedule" data-tina-field={tinaField(event, 'schedule')}>
+					<h2 class="event-schedule-title">{t.events.scheduleTitle}</h2>
+					<ol class="event-schedule-list">
+						{event.schedule.map((item) => item && (
+							<li class="event-schedule-row">
+								{item.time && <span class="event-schedule-time">{item.time}</span>}
+								<div class="event-schedule-body">
+									<span class="event-schedule-item-title">{item.title}</span>
+									{item.speaker && <span class="event-schedule-speaker">{item.speaker}</span>}
+								</div>
+							</li>
+						))}
+					</ol>
 				</div>
 			)}
 			{showTicketWidget && (
