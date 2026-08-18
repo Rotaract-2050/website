@@ -951,6 +951,21 @@ export default defineConfig({
 					{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine (IT)', required: true },
 					{ type: 'string', name: 'imageLabelEn', label: 'Didascalia segnaposto immagine (EN)' },
 					{
+						type: 'object',
+						name: 'schedule',
+						label: 'Programma',
+						list: true,
+						description: 'Scaletta oraria dell\'evento (facoltativa): una voce per riga, mostrata nell\'ordine di inserimento.',
+						fields: [
+							{ type: 'string', name: 'time', label: 'Orario', description: 'Es. 10:00 oppure 10:00 – 10:30' },
+							{ type: 'string', name: 'title', label: 'Voce (IT)', required: true },
+							{ type: 'string', name: 'titleEn', label: 'Voce (EN)' },
+							{ type: 'string', name: 'speaker', label: 'Relatore/ruolo (IT)' },
+							{ type: 'string', name: 'speakerEn', label: 'Relatore/ruolo (EN)' },
+						],
+						ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
+					},
+					{
 						type: 'boolean',
 						name: 'ticketsOpen',
 						label: 'Biglietti in vendita',
