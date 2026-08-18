@@ -106,6 +106,7 @@ export interface UiStrings {
 		photoButtonLabel: string;
 		detailEyebrow: string;
 		backToArchive: string;
+		scheduleTitle: string;
 	};
 	materials: {
 		loading: string;
@@ -274,6 +275,7 @@ const IT: UiStrings = {
 		photoButtonLabel: 'Guarda le foto',
 		detailEyebrow: 'EVENTI DEL DISTRETTO',
 		backToArchive: '← Tutti gli eventi',
+		scheduleTitle: 'Programma',
 	},
 	materials: {
 		loading: 'Caricamento file…',
@@ -424,6 +426,7 @@ const EN: UiStrings = {
 		photoButtonLabel: 'View the photos',
 		detailEyebrow: 'DISTRICT EVENTS',
 		backToArchive: '← All events',
+		scheduleTitle: 'Schedule',
 	},
 	materials: {
 		loading: 'Loading files…',
