@@ -69,6 +69,10 @@ const activeYear =
 					<div class="year-panel" data-year-panel={yearLabelSlug(group.yearLabel)} hidden={group.yearLabel !== activeYear}>
 						{group.events.map((event) => {
 							const localized = localizeEvent(event, lang);
+							// `ticketsOpen` gates the button indipendentemente da `visible` — un socio può
+							// compilare il link in anticipo senza pubblicarlo, stessa logica della pagina
+							// dettaglio evento (src/pages/eventi/[year]/[slug].astro).
+							const ticketsOpen = event.ticketsOpen ?? true;
 							return (
 								<EventCard
 									id={eventSlug(event)}
@@ -90,7 +94,7 @@ const activeYear =
 									worksLocationLabel={t.events.worksLocationLabel}
 									dinnerLocationLabel={t.events.dinnerLocationLabel}
 									excerpt={localized.excerpt}
-									ticketsUrl={event.ticketsUrl}
+									ticketsUrl={ticketsOpen ? event.ticketsUrl : null}
 									ticketsButtonLabel={t.events.ticketsButtonLabel}
 									photoAlbumUrl={event.photoAlbumUrl}
 									photoButtonLabel={t.events.photoButtonLabel}
