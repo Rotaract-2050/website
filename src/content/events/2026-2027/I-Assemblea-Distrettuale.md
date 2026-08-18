@@ -9,7 +9,7 @@ clubs:
   - club: src/content/clubs/rotaract-club-brescia-ovest-castello.md
 image: /uploads/events/2026-2027/alla-scoperta-di-monte-isola-39730.jpeg
 imageLabel: Sale Marasino immagine
-ticketsOpen: false
+ticketsOpen: true
 ticketsUrl: Partecipa
 ticketWidgetEmbed: |-
   <!-- Ticket Tailor Widget. Paste this into your website where you want the widget to appear. Do not change the code or the widget may not work properly. -->
