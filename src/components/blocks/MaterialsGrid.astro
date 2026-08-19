@@ -531,6 +531,8 @@ const configured = Boolean(driveFolderId && driveApiKey);
 			url.searchParams.set('q', `'${folderId}' in parents and trashed = false`);
 			url.searchParams.set('fields', 'files(id,name,mimeType,size,webViewLink)');
 			url.searchParams.set('orderBy', 'folder,name');
+			url.searchParams.set('supportsAllDrives', 'true');
+			url.searchParams.set('includeItemsFromAllDrives', 'true');
 			url.searchParams.set('key', apiKey);
 
 			try {
