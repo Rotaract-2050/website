@@ -35,6 +35,7 @@ blocks:
     quote2: |
       La nostra missione è servire gli altri, promuovere l'integrità e favorire la comprensione, la buona volontà e la pace nel mondo attraverso una rete di professionisti, imprenditori e persone di spicco della comunità.
     quote2En: 'We provide service to others, promote integrity, and advance world understanding, goodwill, and peace through our fellowship of business, professional, and community leaders.'
+    body2: La bussola che orienta l'agire quotidiano e da forma concreta all'impegno rotaractiano per il bene comune.
     image: /uploads/Paesaggi/operazione-makeni.jpeg
     imageFocalX: 49
     imageFocalY: 68
