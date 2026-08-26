@@ -47,7 +47,7 @@ bodyEn: |
 >
 > — Guido Bosi, RRD A.R. 2024-2025
 
-! [tavoli conviviale](https://assets.tina.io/05aa949f-277e-4785-97d0-83822bf228d6/Formazione/WhatsApp-Image-2026-08-24-at-15.06.02.jpeg)
+![tavoli conviviale](https://assets.tina.io/05aa949f-277e-4785-97d0-83822bf228d6/Formazione/WhatsApp-Image-2026-08-24-at-15.06.02.jpeg)
 
 ## Il ruolo del Prefetto
 
