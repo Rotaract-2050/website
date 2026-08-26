@@ -43,11 +43,10 @@ bodyEn: |
 
 
 
+
 > "Nella vita di ogni Club le conviviali e i momenti di incontro rappresentano un momento di fondamentale importanza. Al fine di garantire una corretta organizzazione degli eventi all'insegna della formazione, dell'amicizia e della convivialità, il presente Cerimoniale vuole fornire le linee guida e le indicazioni necessarie per facilitare il Prefetto nello svolgimento delle sue funzioni."
 >
 > — Guido Bosi, RRD A.R. 2024-2025
-
-![tavoli conviviale](https://assets.tina.io/05aa949f-277e-4785-97d0-83822bf228d6/Formazione/WhatsApp-Image-2026-08-24-at-15.06.02.jpeg)
 
 ## Il ruolo del Prefetto
 
