@@ -3,6 +3,8 @@ title: LA STORIA
 eyebrow: DISTRETTO ROTARACT 2050
 breadcrumbCurrent: LA STORIA
 seo:
+  title: La Nostra Storia
+  titleEn: Our Story
   description: La storia del Distretto Rotaract 2050, dai club fondatori fino ad oggi, raccontata attraverso l'avvicendarsi dei Rappresentanti Distrettuali.
   descriptionEn: The story of Rotaract District 2050, from its founding clubs to today, told through the succession of District Representatives.
 blocks:

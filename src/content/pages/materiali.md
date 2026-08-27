@@ -6,6 +6,8 @@ eyebrowEn: DOWNLOAD
 breadcrumbCurrent: MATERIALI DISTRETTUALI
 breadcrumbCurrentEn: DISTRICT MATERIALS
 seo:
+  title: Materiali Distrettuali
+  titleEn: District Materials
   description: Documenti e materiali ufficiali del Distretto Rotaract 2050, disponibili per il download.
   descriptionEn: Official documents and materials of Rotaract District 2050, available for download.
 blocks:
