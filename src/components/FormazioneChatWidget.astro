@@ -110,8 +110,6 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 	</section>
 </div>
 
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer is:inline></script>
-
 <style>
 	.chat-toggle-wrapper {
 		position: fixed;
@@ -583,6 +581,24 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 	const TURNSTILE_ACTION = 'formazione-chat';
 	const MIN_SEND_INTERVAL_MS = 3000;
 
+	// Loaded on first panel open rather than unconditionally on every page — most visitors
+	// never open the chat, and the script was showing up as ~23KB of unused JS on every
+	// pageview in Lighthouse.
+	let turnstileScriptLoading: Promise<void> | null = null;
+	function loadTurnstileScript(): Promise<void> {
+		if (!turnstileScriptLoading) {
+			turnstileScriptLoading = new Promise((resolve) => {
+				const script = document.createElement('script');
+				script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+				script.async = true;
+				script.onload = () => resolve();
+				script.onerror = () => resolve();
+				document.head.appendChild(script);
+			});
+		}
+		return turnstileScriptLoading;
+	}
+
 	document.querySelectorAll<HTMLElement>('[data-chat-widget]').forEach((widget) => {
 		const lang = widget.dataset.lang === 'en' ? 'en' : 'it';
 		const sitekey = widget.dataset.sitekey ?? '';
@@ -723,6 +739,7 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 		let lastSendAt = 0;
 
 		function openPanel() {
+			loadTurnstileScript();
 			hideCallout();
 			panel!.hidden = false;
 			toggle!.setAttribute('aria-expanded', 'true');
@@ -814,6 +831,7 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 		try {
 			const storedOpen = sessionStorage.getItem(STORAGE_OPEN_KEY);
 			if (storedOpen === '1') {
+				loadTurnstileScript();
 				panel.hidden = false;
 				toggle.setAttribute('aria-expanded', 'true');
 			}
