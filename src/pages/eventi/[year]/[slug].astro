@@ -171,7 +171,7 @@ const jsonLd = buildEventJsonLd({
 			)}
 		</div>
 	</article>
-	<JsonLd data={jsonLd} />
+	{jsonLd && <JsonLd data={jsonLd} />}
 </BaseLayout>
 
 <style>
