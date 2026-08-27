@@ -73,6 +73,24 @@ const organizationGraph = buildOrganizationGraph(
 		{settings.gscVerification && <meta name="google-site-verification" content={settings.gscVerification} />}
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<!--
+			Open Sans ships from Google Fonts as a variable font: every weight in the
+			400/500/600/700 request below (for the "latin" subset our Italian/English copy
+			needs — à/è/ì/ò/ù already sit inside U+0000-00FF) resolves to this same physical
+			file. Preloading it lets the browser fetch it in parallel with HTML parsing
+			instead of waiting to discover it via the stylesheet below, which shortens the
+			fallback-to-webfont swap window that Lighthouse was attributing most of the
+			page's CLS to (the <main> reflow when headings/buttons re-flow into Open Sans).
+			If Google rotates this URL on a future font update, this preload just becomes a
+			harmless no-op — the stylesheet link still loads the font normally either way.
+		-->
+		<link
+			rel="preload"
+			as="font"
+			type="font/woff2"
+			href="https://fonts.gstatic.com/s/opensans/v44/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2"
+			crossorigin
+		/>
 		<link
 			href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Dancing+Script:wght@600;700&display=swap"
 			rel="stylesheet"
