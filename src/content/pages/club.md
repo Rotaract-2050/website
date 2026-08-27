@@ -6,6 +6,8 @@ eyebrowEn: DISTRICT 2050
 breadcrumbCurrent: I CLUB
 breadcrumbCurrentEn: CLUBS
 seo:
+  title: I Club del Distretto
+  titleEn: Our Clubs
   description: Il Distretto 2050 è organizzato in quattro zone — Francigena, Leonessa, Navigli e Padana — che riuniscono i club Rotaract attivi nella Lombardia meridionale e nella Provincia di Piacenza.
   descriptionEn: District 2050 is organized into four zones — Francigena, Leonessa, Navigli and Padana — bringing together Rotaract clubs across southern Lombardy and the Province of Piacenza.
 blocks:

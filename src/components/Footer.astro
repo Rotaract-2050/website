@@ -61,7 +61,15 @@ const addressFieldName = isEn && settings.addressEn ? 'addressEn' : 'address';
 			<div class="footer-heading">{t.footer.socialTitle}</div>
 			<div class="footer-social">
 				{SOCIAL_LINKS.map((soc) => (
-					<a href={soc.href} target="_blank" rel="noopener" class="social-icon" aria-label={soc.label}>
+					<a
+						href={soc.href}
+						target="_blank"
+						rel="noopener"
+						class="social-icon"
+						aria-label={soc.label}
+						data-track="social_link_click"
+						data-track-params={JSON.stringify({ network: soc.name })}
+					>
 						<SocialIcon name={soc.name} />
 					</a>
 				))}

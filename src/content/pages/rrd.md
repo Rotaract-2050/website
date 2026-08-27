@@ -6,6 +6,8 @@ eyebrowEn: ROTARACT DISTRICT 2050
 breadcrumbCurrent: ALBO RRD
 breadcrumbCurrentEn: RRD ROLL
 seo:
+  title: I Rappresentanti Distrettuali (RRD)
+  titleEn: District Representatives (RRD)
   description: La timeline dei Rappresentanti Rotaract Distrettuali (RRD), dall'annata più recente alla più antica.
   descriptionEn: The timeline of Rotaract District Representatives (RRD), from the most recent term to the earliest.
 blocks:

@@ -14,6 +14,7 @@ Checklist da rispettare **sempre**, su ogni componente/pagina, senza scorciatoie
 - Default: `<style>` **scoped** dentro il componente (comportamento automatico di Astro). Non serve altro nella maggior parte dei casi.
 - Mai riempire il markup di attributi `style="..."` inline sparsi come nel mockup di riferimento (`Rotaract Distretto 2050.dc.html` ne è pieno perché è un export di prototipazione, non codice da imitare). Portare ogni valore ripetuto (colori, spaziature, radius) in CSS scoped o in variabili condivise; usare `define:vars` solo per valori realmente dinamici da JS/frontmatter.
 - `<style is:global>` solo per reset/base a livello di layout radice, mai per singoli componenti — se un componente "ha bisogno" di stili globali probabilmente lo stile andrebbe scoped meglio.
+- **Un elemento toggleable via JS (`el.hidden = true/false`) non va con `display` sul selettore base.** Una regola d'autore (`.mio-pannello { display: flex; }`) batte sempre la regola UA `[hidden] { display: none }`, a prescindere dalla specificity — quindi impostare l'attributo `hidden` da JS non nasconde nulla, l'elemento resta visibile e sembra che il toggle "non funzioni" (bug reale, successo due volte: `FormazioneChatWidget.astro`/`.chat-panel`, poi `CookieConsent.astro`/`.cookie-consent`). Scoping corretto: `display` va su `.mio-pannello:not([hidden])`, mai sul selettore bare insieme a un `hidden` gestito da JS.
 
 ## Immagini
 

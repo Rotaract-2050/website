@@ -6,6 +6,8 @@ eyebrowEn: FROM THE DISTRICT
 breadcrumbCurrent: NEWS
 breadcrumbCurrentEn: NEWS
 seo:
+  title: News dal Distretto
+  titleEn: District News
   description: 'Tutte le news dal Distretto Rotaract 2050: progetti, formazione e iniziative dei club delle quattro zone.'
   descriptionEn: 'All the news from Rotaract District 2050: projects, training and initiatives from clubs across the four zones.'
 blocks:

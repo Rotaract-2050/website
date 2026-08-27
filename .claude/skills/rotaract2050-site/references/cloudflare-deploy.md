@@ -19,6 +19,8 @@ Per evitare di sprecare build su ogni branch/commit:
 
 Risultato: `main` → build produzione automatica ad ogni push. Commit con `[preview]` nel titolo → build preview di `dev` via GitHub Action + Deploy Hook. Ogni altro push → zero build.
 
+**Corollario pratico, facile da dimenticare**: lavoro pushato/committato su `dev` (anche verificato/completo in locale) **non arriva mai in produzione da solo** — serve una PR `dev` → `main` mergiata. Non basta nemmeno che qualcosa venga pushato direttamente su `main` fuori da una PR: i commit di auto-save di TinaCMS Cloud (`TinaCMS content update` / `Update from TinaCMS`) finiscono dritti su `main` ma **non** triggerano una build (solo contenuto, `src/content/`/`public/uploads/` — in questa architettura il contenuto è letto a runtime via client GraphQL Tina, non serve un rebuild). Prima di dire "il deploy non è partito" controllare `workers_builds_list_builds` per il commit hash *esatto* dell'ultima build riuscita e confrontarlo con `main` corrente (`gh api repos/.../compare/<hash>...main`), non fidarsi della data dell'ultimo commit visibile in `git log`.
+
 ## Se serve cambiare branch/pattern in futuro
 
 - Cambiare quale branch builda il Deploy Hook: dashboard Worker → Settings → Build → Deploy Hooks → modifica "Branch to build" dell'hook esistente (non serve toccare secret o workflow).

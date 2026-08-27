@@ -6,6 +6,8 @@ eyebrowEn: ROTARACT DISTRICT 2050
 breadcrumbCurrent: LA SQUADRA
 breadcrumbCurrentEn: THE TEAM
 seo:
+  title: La Squadra 2026/2027
+  titleEn: The Team 2026/2027
   description: 'L''organigramma del Distretto Rotaract 2050 per l''anno rotariano 2026/2027: Esecutivo Distrettuale, Delegati di Zona e Commissioni.'
   descriptionEn: 'The Rotaract District 2050 organizational chart for the 2026/2027 Rotary year: District Executive, Zone Delegates and Committees.'
 blocks:
