@@ -99,9 +99,13 @@ export function buildEventJsonLd(p: {
 	name: string;
 	description?: string | null;
 	startDate: string;
+	endDate?: string | null;
 	imageUrl: string;
 	url: string;
+	siteUrl: string;
 	locationName?: string | null;
+	ticketsUrl?: string | null;
+	ticketsOpen?: boolean;
 }) {
 	if (!p.locationName) return null;
 	return {
@@ -109,12 +113,29 @@ export function buildEventJsonLd(p: {
 		'@type': 'Event',
 		name: p.name,
 		startDate: p.startDate,
+		endDate: p.endDate || undefined,
 		eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
 		eventStatus: 'https://schema.org/EventScheduled',
 		image: [p.imageUrl],
 		description: p.description || undefined,
 		url: p.url,
-		location: { '@type': 'Place', name: p.locationName },
-		organizer: { '@type': 'Organization', name: SITE_NAME },
+		// `address` also accepts plain text per schema.org's Place definition — locationLavori/
+		// locationCena are free-text venue names in Tina (no separate street/city fields), so
+		// reusing the same string is the only genuine address data we actually have; not fabricating
+		// a PostalAddress out of nothing.
+		location: { '@type': 'Place', name: p.locationName, address: p.locationName },
+		organizer: { '@type': 'Organization', name: SITE_NAME, url: p.siteUrl },
+		// Only emit `offers` when there's a real ticket link — a bare Offer with no url would be
+		// worse than none. We don't have a structured price (external Ticket Tailor page owns
+		// that), so `price`/`priceCurrency` stay unset; Google may start flagging those as their own
+		// (still non-blocking) warning, which is expected and fine.
+		offers: p.ticketsUrl
+			? {
+					'@type': 'Offer',
+					url: p.ticketsUrl,
+					availability: p.ticketsOpen === false ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock',
+					validFrom: p.startDate,
+				}
+			: undefined,
 	};
 }
