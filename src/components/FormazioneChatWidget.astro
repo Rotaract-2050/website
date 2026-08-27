@@ -763,6 +763,7 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 			toggle!.setAttribute('aria-expanded', 'true');
 			input!.focus();
 			saveOpenState(true);
+			window.trackEvent?.('formazione_chat_open');
 		}
 
 		function closePanel() {

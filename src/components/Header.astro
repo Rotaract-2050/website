@@ -24,22 +24,40 @@ const distrettoActive = (['distretto', 'story', 'rrd', 'squadra'] as PageKey[]).
 <div class="utility-bar">
 	<div class="utility-links">
 		{UTILITY_LINKS.map((link) => (
-			<a href={link.href} target="_blank" rel="noopener">{link.label}</a>
+			<a href={link.href} target="_blank" rel="noopener" data-track="utility_link_click" data-track-params={JSON.stringify({ link_label: link.label })}>
+				{link.label}
+			</a>
 		))}
 	</div>
 	<div class="utility-right">
 		<div class="lang-switch">
 			{lang === 'it'
 				? <span class="lang-btn active" aria-current="true">IT</span>
-				: <a href={langSwitchHref} class="lang-btn" hreflang="it">IT</a>}
+				: (
+					<a href={langSwitchHref} class="lang-btn" hreflang="it" data-track="lang_switch_click" data-track-params={JSON.stringify({ to_lang: 'it' })}>
+						IT
+					</a>
+				)}
 			{lang === 'en'
 				? <span class="lang-btn active" aria-current="true">EN</span>
-				: <a href={langSwitchHref} class="lang-btn" hreflang="en">EN</a>}
+				: (
+					<a href={langSwitchHref} class="lang-btn" hreflang="en" data-track="lang_switch_click" data-track-params={JSON.stringify({ to_lang: 'en' })}>
+						EN
+					</a>
+				)}
 		</div>
 		<div class="divider" aria-hidden="true"></div>
 		<div class="social-icons">
 			{SOCIAL_LINKS.map((soc) => (
-				<a href={soc.href} target="_blank" rel="noopener" class="social-icon" aria-label={soc.label}>
+				<a
+					href={soc.href}
+					target="_blank"
+					rel="noopener"
+					class="social-icon"
+					aria-label={soc.label}
+					data-track="social_link_click"
+					data-track-params={JSON.stringify({ network: soc.name })}
+				>
 					<SocialIcon name={soc.name} />
 				</a>
 			))}
