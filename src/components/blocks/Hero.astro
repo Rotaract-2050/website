@@ -40,6 +40,8 @@ const resolvedCtaHref = getRelativeLocaleUrl(lang, ctaHref);
 							quality="high"
 							class="hero-image"
 							style={`--focal-x:${slide.imageFocalX ?? 50}%;--focal-y:${slide.imageFocalY ?? 50}%;`}
+							loading={i === 0 ? 'eager' : 'lazy'}
+							fetchpriority={i === 0 ? 'high' : 'auto'}
 						/>
 					) : (
 						<ImageSlot label="Foto banner distrettuale" class="hero-image" />

@@ -96,6 +96,14 @@ function tinaReloadOnContentChangePlugin() {
 export default defineConfig({
 	site: SITE,
 	output: 'server',
+	// Default 'auto' only inlines a page's CSS below ~4KB; GenericPageView/PageBanner sit
+	// above that, so they were shipped as separate render-blocking <link> requests (each an
+	// extra round trip before first paint — flagged directly by Lighthouse). Inlining
+	// everything trades that request for a few more bytes in the HTML response, which is the
+	// right trade on a server-rendered site where the HTML itself isn't cached anyway.
+	build: {
+		inlineStylesheets: 'always',
+	},
 	// Every page is server-rendered (see PAGE_SLUGS comment above), so astro:assets runs
 	// on every request, not just at build time. Sharp (Astro's default image service)
 	// cannot run in the Workers `workerd` isolate at all — no native binaries — so we
@@ -104,6 +112,15 @@ export default defineConfig({
 	// transformations/month are free (Images Free plan), then $0.50/1,000 — see
 	// https://developers.cloudflare.com/images/pricing/.
 	adapter: cloudflare({ imageService: 'cloudflare-binding' }),
+	// Tina content stores image fields as absolute assets.tina.io URLs, not local imports —
+	// astro:assets treats any remote src as unoptimized pass-through unless its host is
+	// explicitly allow-listed here. Without this, <Image>/<Picture> silently emit the raw
+	// original-size JPEG straight from Tina's CDN (no resize, no webp/avif, no width/height
+	// props honored), which is exactly what Lighthouse was flagging as oversized/wrong-format
+	// LCP and card images.
+	image: {
+		domains: ['assets.tina.io'],
+	},
 	i18n: {
 		locales: ['it', 'en'],
 		defaultLocale: 'it',
