@@ -915,6 +915,13 @@ export default defineConfig({
 					{ type: 'datetime', name: 'date', label: 'Data evento', required: true, ui: { dateFormat: 'DD MMMM YYYY' } },
 					{
 						type: 'datetime',
+						name: 'endDate',
+						label: 'Data/ora fine evento (opzionale)',
+						description:
+							'Facoltativo — compilalo se vuoi che i dati strutturati per Google includano quando finisce l\'evento (es. per gli orari mostrati nei risultati di ricerca). Se lasci vuoto, viene semplicemente omesso.',
+					},
+					{
+						type: 'datetime',
 						name: 'calendarDate',
 						label: 'Data su Google Calendar (se diversa)',
 						description:
