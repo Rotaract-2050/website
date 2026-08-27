@@ -44,6 +44,12 @@ Fonte: tina.io/docs/editing/blocks. Un campo `object` con `list: true` e `templa
 
 **Discriminazione del blocco**: il match nel renderer avviene su **`block.__typename`**, non su un campo `_template` custom — `__typename` è generato dalla GraphQL API di Tina come `<Collection>Blocks<NomeTemplate>` (es. template `Hero` nella collection `pages` → `PagesBlocksHero`). Vedi `BlockRenderer.astro` reale in `src/components/BlockRenderer.astro` per il pattern esatto (uno `{block.__typename === '...' && <Componente .../>}` per template, dentro un wrapper con `data-tina-field={tinaField(block)}`).
 
+## Nuovo template blocco: i nomi campo devono essere unici tra TUTTI i template della stessa collection
+
+Tina genera un'**unica query GraphQL** per il campo `blocks` di `pages`, che fa lo spread dei fragment di *tutti* i template registrati (`... on PagesBlocksHero { ... } ... on PagesBlocksLegalText { ... } ...`) nello stesso selection set. GraphQL richiede che campi con lo stesso nome, quando appaiono in fragment diversi dello stesso selection set, abbiano **tipo e nullability identici** — altrimenti la validazione fallisce con `Fields "x" conflict because they return conflicting types` e `tinacms dev`/`tinacms build` si rifiuta di partire (niente `tina/__generated__/*` rigenerato, tutto il sito in errore).
+
+Scoperto aggiungendo il template `LegalText` (rich-text `body`/`bodyEn`): quasi ogni altro template ha già un campo `title` (string, quasi sempre `required: true`) e alcuni un `body`/`bodyEn` **stringa semplice** (`SplitSection`, `CtaBanner`) — un nuovo `body`/`bodyEn` di tipo `rich-text` (che genera GraphQL `JSON`, non `String`) sullo stesso nome rompe la build. **Prima di dare a un campo di un nuovo template un nome già usato altrove** (`title`, `body`, `image`, ...), controllare con `grep "name: '<nome>'" tina/config.ts` che tipo/`required` coincidano esattamente in ogni occorrenza; se anche uno solo diverge, scegliere un nome univoco per il nuovo template (es. `content`/`contentEn` invece di `body`/`bodyEn` per `LegalText`) invece di allineare tutti gli altri template esistenti.
+
 ## Query e visual editing — pattern reale
 
 Ogni route/blocco che legge contenuto Tina segue questo schema (vedi `src/pages/[...slug].astro`, `src/components/blocks/ClubDirectory.astro`):
@@ -96,6 +102,8 @@ Il comando combinato originale resta disponibile come `npm run dev:raw`, solo pe
 **Prima di un build** (`npm run build` / `netlify deploy --build`): fermare eventuali dev server residenti (`npx astro dev stop`, `pkill -f "tinacms dev"`) — tengono occupate le porte 4001/9000 e il build fallisce con "Datalayer server is busy".
 
 **Cartelle/documenti fantasma o duplicati nella lista collection dell'admin** (es. due voci `it` nella stessa collection): visto dopo diverse modifiche live a `tina/config.ts` nella stessa sessione dev (ogni salvataggio fa "Config change detected, rebuilding" + re-index a caldo). Il refresh della tab browser da solo non basta. Fix verificato: fermare del tutto sia Astro (`npx astro dev stop`) che il processo `tinacms dev` (kill sul PID in ascolto su `:4001`), poi rilanciare `bash scripts/dev.sh` da zero — non un bug nei dati (verificato via query GraphQL diretta: nessun duplicato reale), solo stato in-memory dell'indexer rimasto sporco dopo troppi hot-reload dello schema.
+
+**Dev server 500 "file does not exist ... in the optimize deps directory" dopo aver editato `astro.config.mjs`**: la cache di ottimizzazione dipendenze di Vite (`node_modules/.vite`) resta agganciata a un hash di config vecchio se `astro dev` è già in esecuzione mentre si modifica `astro.config.mjs` — Vite dovrebbe re-ottimizzare da solo ma su questo progetto non lo fa in modo affidabile, e ogni pagina risponde 500 con quell'errore in overlay. Non è un bug nel codice del sito. Fix verificato: fermare il dev server (`pkill -f "tinacms dev"; pkill -f "astro dev"`), `rm -rf node_modules/.vite`, rilanciare `bash scripts/dev.sh` da zero. Stesso identico fix se il dev server muore/si disconnette da solo a metà sessione (successo più volte lavorando su un checkout condiviso con altri processi/utenti — vedi nota "Cartelle/documenti fantasma" sopra per un sintomo simile con causa diversa).
 
 ## Fonti
 
