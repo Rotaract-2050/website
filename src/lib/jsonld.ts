@@ -90,6 +90,11 @@ export function buildItemListJsonLd(items: { name: string; url: string }[]) {
 	};
 }
 
+// `location` is required by Google for Event rich results (an in-person OfflineEventAttendanceMode
+// event without one is reported as "invalid item" in Search Console, not just missing a nice-to-have
+// field) — so when a club hasn't filled in locationLavori/locationCena yet, emit no Event markup at
+// all rather than an Event object Google will flag as broken. Better to have no rich result than an
+// invalid one.
 export function buildEventJsonLd(p: {
 	name: string;
 	description?: string | null;
@@ -98,6 +103,7 @@ export function buildEventJsonLd(p: {
 	url: string;
 	locationName?: string | null;
 }) {
+	if (!p.locationName) return null;
 	return {
 		'@context': 'https://schema.org',
 		'@type': 'Event',
@@ -108,7 +114,7 @@ export function buildEventJsonLd(p: {
 		image: [p.imageUrl],
 		description: p.description || undefined,
 		url: p.url,
-		location: p.locationName ? { '@type': 'Place', name: p.locationName } : undefined,
+		location: { '@type': 'Place', name: p.locationName },
 		organizer: { '@type': 'Organization', name: SITE_NAME },
 	};
 }
