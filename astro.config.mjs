@@ -104,6 +104,15 @@ export default defineConfig({
 	// transformations/month are free (Images Free plan), then $0.50/1,000 — see
 	// https://developers.cloudflare.com/images/pricing/.
 	adapter: cloudflare({ imageService: 'cloudflare-binding' }),
+	// Tina content stores image fields as absolute assets.tina.io URLs, not local imports —
+	// astro:assets treats any remote src as unoptimized pass-through unless its host is
+	// explicitly allow-listed here. Without this, <Image>/<Picture> silently emit the raw
+	// original-size JPEG straight from Tina's CDN (no resize, no webp/avif, no width/height
+	// props honored), which is exactly what Lighthouse was flagging as oversized/wrong-format
+	// LCP and card images.
+	image: {
+		domains: ['assets.tina.io'],
+	},
 	i18n: {
 		locales: ['it', 'en'],
 		defaultLocale: 'it',
