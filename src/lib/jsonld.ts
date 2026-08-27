@@ -113,7 +113,10 @@ export function buildEventJsonLd(p: {
 		'@type': 'Event',
 		name: p.name,
 		startDate: p.startDate,
-		endDate: p.endDate || undefined,
+		// Almost every event here runs a single day; rather than make editors duplicate the start
+		// date into `endDate` for the common case, default to it automatically and only let Tina's
+		// (optional) endDate field override it for the rare multi-day event.
+		endDate: p.endDate || p.startDate,
 		eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
 		eventStatus: 'https://schema.org/EventScheduled',
 		image: [p.imageUrl],
