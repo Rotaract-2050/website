@@ -915,6 +915,13 @@ export default defineConfig({
 					{ type: 'datetime', name: 'date', label: 'Data evento', required: true, ui: { dateFormat: 'DD MMMM YYYY' } },
 					{
 						type: 'datetime',
+						name: 'endDate',
+						label: 'Data fine evento (solo se dura più di un giorno)',
+						description:
+							'Lascia vuoto per il caso normale (evento di un solo giorno): i dati strutturati per Google useranno automaticamente la stessa data di inizio. Compilalo solo per un evento che si estende su più giorni.',
+					},
+					{
+						type: 'datetime',
 						name: 'calendarDate',
 						label: 'Data su Google Calendar (se diversa)',
 						description:
@@ -977,6 +984,9 @@ export default defineConfig({
 						name: 'ticketsUrl',
 						label: 'Link info e biglietti',
 						description: 'Se compilato (e "Biglietti in vendita" è attivo), mostra un bottone "Info e biglietti" che apre questo link in una nuova scheda.',
+						// Precompila con la pagina eventi Ticket Tailor del distretto per un nuovo evento —
+						// resta un campo di testo libero, modificabile o svuotabile per ogni singolo evento.
+						ui: { defaultValue: 'https://www.tickettailor.com/events/distrettorotaract2050/' },
 					},
 					{
 						type: 'string',
