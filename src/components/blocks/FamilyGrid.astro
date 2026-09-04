@@ -23,6 +23,15 @@ interface Props {
 
 const { lang, title, intro, items } = Astro.props;
 const isExternal = (href: string) => /^https?:\/\//.test(href);
+
+const getWatermark = (t?: string) => {
+	if (!t) return '';
+	const upper = t.toUpperCase();
+	if (upper.includes('ROTARACT')) return 'RAC';
+	if (upper.includes('INTERACT')) return 'INT';
+	if (upper.includes('ROTARY')) return 'ROT';
+	return upper.substring(0, 3);
+};
 ---
 
 <section class="family-grid">
@@ -37,8 +46,7 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
 				const external = href != null && isExternal(href);
 				const resolvedHref = href == null ? undefined : external ? href : getRelativeLocaleUrl(lang, href);
 				return (
-					<div class="card" data-tina-field={item.tinaFieldAttr} style={item.color ? `--tint:${item.color};` : undefined}>
-						<div class="card-mark" aria-hidden="true">{item.title?.charAt(0)}</div>
+					<div class="card" data-tina-field={item.tinaFieldAttr} style={item.color ? `--tint:${item.color};` : undefined} data-letter={getWatermark(item.title)}>
 						<h3 class="card-title">{item.title}</h3>
 						{item.body && <p class="card-body">{item.body}</p>}
 						{item.buttonLabel && resolvedHref && (
@@ -109,44 +117,47 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
 		position: relative;
 		display: flex;
 		flex-direction: column;
-		align-items: center;
-		text-align: center;
-		background: color-mix(in srgb, var(--tint) 10%, white);
-		border-radius: var(--shape-extra-large);
-		box-shadow: 0 8px 24px color-mix(in srgb, var(--tint) 25%, transparent);
-		padding: 48px 32px;
+		background: color-mix(in srgb, var(--tint) 8%, transparent);
+		border-radius: 24px;
+		padding: 40px 32px;
 		overflow: hidden;
-		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
+		text-align: left;
+		z-index: 1;
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), background var(--motion-duration-medium) var(--motion-easing-emphasized);
 	}
 
 	.card:hover {
-		transform: translateY(-6px);
-		box-shadow: 0 16px 32px color-mix(in srgb, var(--tint) 40%, transparent);
+		transform: translateY(-6px) scale(1.02);
+		background: color-mix(in srgb, var(--tint) 15%, transparent);
 	}
 
-	.card-mark {
-		width: 72px;
-		height: 72px;
-		border-radius: 50%;
-		background: var(--tint);
-		color: #fff;
+	.card::before {
+		content: attr(data-letter);
+		position: absolute;
+		bottom: -24px;
+		right: 8px;
 		font-family: var(--font-heading);
-		font-weight: 800;
-		font-size: 30px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin-bottom: 20px;
-		flex-shrink: 0;
+		font-size: 140px;
+		font-weight: 900;
+		color: var(--tint);
+		opacity: 0.08;
+		line-height: 1;
+		z-index: -1;
+		transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+		pointer-events: none;
+	}
+
+	.card:hover::before {
+		transform: scale(1.1) rotate(-5deg);
 	}
 
 	.card-title {
 		font-family: var(--font-heading);
 		font-weight: 800;
-		font-size: 24px;
-		color: color-mix(in srgb, var(--tint) 85%, black 20%);
+		font-size: 22px;
+		color: var(--tint);
 		text-transform: uppercase;
-		margin: 0 0 14px;
+		margin: 0 0 12px;
 	}
 
 	.card-body {
@@ -169,12 +180,13 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
 		padding: 12px 26px;
 		border-radius: var(--shape-full);
 		margin-top: auto;
+		align-self: flex-start;
 		transition: transform var(--motion-duration-short) var(--motion-easing-standard), box-shadow var(--motion-duration-short) var(--motion-easing-standard);
 	}
 
 	.card-button:hover {
 		transform: translateY(-2px);
-		box-shadow: 0 8px 16px color-mix(in srgb, var(--tint) 45%, transparent);
+		box-shadow: 0 6px 16px color-mix(in srgb, var(--tint) 45%, transparent);
 		color: #fff;
 	}
 

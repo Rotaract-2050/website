@@ -46,7 +46,7 @@ blocks:
         buttonLabel: SCOPRI ROTARY
         buttonLabelEn: DISCOVER ROTARY
         buttonHref: 'https://www.rotary2050.org/site/'
-        color: '#17458F'
+        color: '#F7A81B'
       - title: ROTARACT
         body: 'Il passo successivo, dai 18 anni in su: crescita personale, amicizia e servizio alla comunità nello stesso distretto.'
         bodyEn: 'The next step, from age 18: personal growth, fellowship and community service in the same district.'
@@ -73,6 +73,26 @@ blocks:
         label: ANNI
         labelEn: YEARS OLD
     _template: StatsBar
+  - title: LE ZONE DEL DISTRETTO
+    titleEn: THE DISTRICT'S ZONES
+    items:
+      - title: Francigena
+        titleEn: Francigena
+        href: interact/club
+        color: '#009739'
+      - title: Leonessa
+        titleEn: Leonessa
+        href: interact/club
+        color: '#00ADBB'
+      - title: Navigli
+        titleEn: Navigli
+        href: interact/club
+        color: '#FF7600'
+      - title: Padana
+        titleEn: Padana
+        href: interact/club
+        color: '#901F93'
+    _template: CardGrid
   - title: EVENTI INTERACT
     titleEn: INTERACT EVENTS
     _template: InteractEventsCalendar

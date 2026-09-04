@@ -22,6 +22,8 @@ const href = (page: PageKey) => getRelativeLocaleUrl(lang, pageSlugs[page]);
 const otherLang: Lang = lang === 'it' ? 'en' : 'it';
 const langSwitchHref = getRelativeLocaleUrl(otherLang, pageSlugs[current]);
 const rotaractHomeHref = getRelativeLocaleUrl(lang, '');
+
+const distrettoActive = (['interactStoria', 'interactAlbo', 'interactSquadra'] as PageKey[]).includes(current);
 ---
 
 <div class="utility-bar">
@@ -93,10 +95,19 @@ const rotaractHomeHref = getRelativeLocaleUrl(lang, '');
 
 	<nav class="nav-links" id="primary-nav" aria-label="Interact">
 		<a href={href('interactHome')} class:list={['nav-link', { active: current === 'interactHome' }]}>{ti.navHome}</a>
-		<a href={href('interactStoria')} class:list={['nav-link', { active: current === 'interactStoria' }]}>{ti.navStoria}</a>
-		<a href={href('interactSquadra')} class:list={['nav-link', { active: current === 'interactSquadra' }]}>{ti.navSquadra}</a>
+		
+		<div class="nav-dropdown">
+			<a href="#" class:list={['nav-link', { active: distrettoActive }]}>
+				{t.nav.distrettoMenu} <span aria-hidden="true">▾</span>
+			</a>
+			<div class="dropdown-panel">
+				<a href={href('interactStoria')}>{ti.navStoria}</a>
+				<a href={href('interactAlbo')}>{ti.navAlbo}</a>
+				<a href={href('interactSquadra')}>{ti.navSquadra}</a>
+			</div>
+		</div>
+
 		<a href={href('interactClub')} class:list={['nav-link', { active: current === 'interactClub' }]}>{ti.navClub}</a>
-		<a href={href('interactAlbo')} class:list={['nav-link', { active: current === 'interactAlbo' }]}>{ti.navAlbo}</a>
 		<a href={href('interactEventi')} class:list={['nav-link', { active: current === 'interactEventi' }]}>{ti.navEventi}</a>
 		<a href={href('formazione')} class="formazione-btn">
 			<div class="fog-container" aria-hidden="true">
@@ -217,6 +228,8 @@ const rotaractHomeHref = getRelativeLocaleUrl(lang, '');
 		display: flex;
 		flex-direction: column;
 		line-height: 1.1;
+		height: 48px;
+		justify-content: center;
 	}
 
 	.brand-mark {
@@ -294,6 +307,44 @@ const rotaractHomeHref = getRelativeLocaleUrl(lang, '');
 	.nav-link.active {
 		color: var(--color-pink);
 		border-bottom-color: var(--color-pink);
+	}
+
+	.nav-dropdown {
+		position: relative;
+	}
+
+	.dropdown-panel {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		background: #fff;
+		box-shadow: var(--elevation-3);
+		border-radius: var(--shape-small);
+		min-width: 230px;
+		padding: 10px;
+		z-index: 60;
+		display: none;
+		flex-direction: column;
+	}
+
+	.nav-dropdown:hover .dropdown-panel,
+	.nav-dropdown:focus-within .dropdown-panel {
+		display: flex;
+	}
+
+	.dropdown-panel a {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		text-transform: uppercase;
+		font-size: 14px;
+		color: var(--color-navy);
+		padding: 10px 12px;
+		border-radius: var(--shape-extra-small);
+	}
+
+	.dropdown-panel a:hover {
+		background: var(--color-bg);
+		color: var(--color-pink);
 	}
 
 	/* Formazione is shared/common between Rotaract and Interact (not re-themed, on request) —
@@ -457,6 +508,26 @@ const rotaractHomeHref = getRelativeLocaleUrl(lang, '');
 		.nav-link {
 			padding: 12px 4px;
 			border-bottom: 1px solid var(--color-bg);
+		}
+
+		.nav-dropdown {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.dropdown-panel {
+			position: static;
+			display: flex;
+			flex-direction: column;
+			min-width: 0;
+			padding: 0 0 8px 16px;
+			box-shadow: var(--elevation-0);
+			border-radius: var(--shape-none);
+		}
+
+		.dropdown-panel a {
+			padding: 8px 12px;
+			font-size: 13px;
 		}
 
 		.formazione-btn,

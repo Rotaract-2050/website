@@ -83,7 +83,7 @@ blocks:
         buttonLabel: SCOPRI ROTARY
         buttonLabelEn: DISCOVER ROTARY
         buttonHref: 'https://www.rotary2050.org/site/'
-        color: '#17458F'
+        color: '#F7A81B'
       - title: ROTARACT
         body: La rete di giovani dai 18 anni in su che unisce crescita personale, amicizia e servizio alla comunità. Il distretto che stai visitando.
         bodyEn: The network for young people aged 18 and up combining personal growth, fellowship and community service. The district you're on right now.

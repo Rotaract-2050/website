@@ -7,7 +7,7 @@ const { items } = Astro.props;
 ---
 
 <section class="stats">
-	<div class="stats-card">
+	<div class="stats-card" style={`--grid-cols: ${items.length}`}>
 		{items.map((stat) => (
 			<div class="stat" data-tina-field={stat.tinaFieldAttr}>
 				<div class="stat-value">{stat.value}</div>
@@ -33,7 +33,7 @@ const { items } = Astro.props;
 		border-radius: var(--shape-extra-large);
 		padding: 32px;
 		display: grid;
-		grid-template-columns: repeat(4, 1fr);
+		grid-template-columns: repeat(var(--grid-cols, 4), 1fr);
 		gap: 20px;
 	}
 
