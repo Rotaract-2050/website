@@ -12,6 +12,7 @@ export type PageKey =
 	| 'privacy'
 	| 'interactHome'
 	| 'interactStoria'
+	| 'interactSquadra'
 	| 'interactClub'
 	| 'interactAlbo'
 	| 'interactEventi';
@@ -34,6 +35,7 @@ export const pageSlugs: Record<PageKey, string> = {
 	// tina/config.ts's pageRouter and the interactSlug guard in src/pages/[...slug].astro).
 	interactHome: 'interact',
 	interactStoria: 'interact/storia',
+	interactSquadra: 'interact/squadra',
 	interactClub: 'interact/club',
 	interactAlbo: 'interact/albo',
 	interactEventi: 'interact/eventi',

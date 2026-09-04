@@ -25,6 +25,7 @@ export interface UiStrings {
 	interact: {
 		navHome: string;
 		navStoria: string;
+		navSquadra: string;
 		navClub: string;
 		navAlbo: string;
 		navEventi: string;
@@ -191,6 +192,7 @@ const IT: UiStrings = {
 	interact: {
 		navHome: 'HOME',
 		navStoria: 'LA STORIA',
+		navSquadra: 'LA SQUADRA',
 		navClub: 'I CLUB',
 		navAlbo: 'ALBO IRD',
 		navEventi: 'EVENTI',
@@ -352,6 +354,7 @@ const EN: UiStrings = {
 	interact: {
 		navHome: 'HOME',
 		navStoria: 'HISTORY',
+		navSquadra: 'TEAM',
 		navClub: 'CLUBS',
 		navAlbo: 'IRD ROSTER',
 		navEventi: 'EVENTS',
