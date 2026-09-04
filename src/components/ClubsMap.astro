@@ -104,13 +104,22 @@ const zoneAreas = zones
 		// map looked much more zoomed out than the bounds actually needed. A finer snap lets
 		// it land on the fractional zoom closest to the real fit.
 		const map = L.map(container, { scrollWheelZoom: false, zoomSnap: 0.25 });
-		// A muted basemap (rather than OSM's default colorful green/orange land-use tiles)
+		// A muted gray basemap (rather than OSM's default colorful green/orange land-use tiles)
 		// so the zone fill colors read clearly instead of blending into the map itself.
-		L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-			maxZoom: 19,
-			attribution:
-				'&copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener noreferrer">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
-		}).addTo(map);
+		// Esri (not CARTO's anonymous free tier, which throttles to a "too many requests"
+		// watermark tile under load) — base canvas + a reference layer on top for labels.
+		L.tileLayer(
+			'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+			{
+				maxZoom: 16,
+				attribution:
+					'&copy; <a href="https://www.esri.com" target="_blank" rel="noopener noreferrer">Esri</a>',
+			},
+		).addTo(map);
+		L.tileLayer(
+			'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
+			{ maxZoom: 16 },
+		).addTo(map);
 
 		const mapBounds = L.latLngBounds([]);
 
