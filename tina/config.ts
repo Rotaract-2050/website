@@ -922,7 +922,10 @@ export default defineConfig({
 				// InteractClubDirectory.astro, a listing-only block (no per-club detail route, to
 				// sidestep the documented nested-dynamic-route-vs-catch-all routing bug rather than
 				// depend on it not applying here).
-				name: 'interact-clubs',
+				// Tina collection `name` must be alphanumeric/underscore only (no dashes) — camelCase
+				// here, `path` below keeps the dashed directory name for consistency with the rest of
+				// the site's content folders.
+				name: 'interactClubs',
 				label: 'Club Interact',
 				path: 'src/content/interact-clubs',
 				format: 'md',
@@ -1164,7 +1167,8 @@ export default defineConfig({
 				// `interact-clubs`, not `clubs`. v1 omits ticketsOpen/ticketsUrl/photoAlbumUrl/
 				// ticketWidgetEmbed — no proven ticketing need yet for 12-18-year-old members,
 				// addable later without breaking anything (additive schema change).
-				name: 'interact-events',
+				// Same naming constraint as `interactClubs` above: camelCase `name`, dashed `path`.
+				name: 'interactEvents',
 				label: 'Eventi Interact',
 				path: 'src/content/interact-events',
 				format: 'md',
@@ -1208,13 +1212,13 @@ export default defineConfig({
 						description: 'Compila solo se l\'evento ha una seconda sede (es. cena di gala dopo i lavori).',
 					},
 					// Same reference-list workaround as `events.clubs` (Tina's `reference` field doesn't
-					// support `list: true` directly): one club per row, referencing `interact-clubs`.
+					// support `list: true` directly): one club per row, referencing `interactClubs`.
 					{
 						type: 'object',
 						name: 'clubs',
 						label: 'Club Host',
 						list: true,
-						fields: [{ type: 'reference', name: 'club', label: 'Club', collections: ['interact-clubs'], required: true }],
+						fields: [{ type: 'reference', name: 'club', label: 'Club', collections: ['interactClubs'], required: true }],
 					},
 					{ type: 'string', name: 'excerpt', label: 'Descrizione (IT)', ui: { component: 'textarea' } },
 					{ type: 'string', name: 'excerptEn', label: 'Descrizione (EN)', ui: { component: 'textarea' } },
