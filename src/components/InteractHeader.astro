@@ -102,8 +102,11 @@ const rotaractHomeHref = getRelativeLocaleUrl(lang, '');
 </header>
 
 <style>
+	/* Colore letterale, non var(--color-navy): questa barra deve restare identica a quella
+	   Rotaract (Navy #0B2545) su entrambi i siti — su richiesta esplicita dell'utente, non
+	   deve seguire il resto della retheme Interact come fa il main-nav sotto. */
 	.utility-bar {
-		background: var(--color-navy);
+		background: #0b2545;
 		padding: 8px 40px;
 		display: flex;
 		justify-content: space-between;
@@ -150,7 +153,7 @@ const rotaractHomeHref = getRelativeLocaleUrl(lang, '');
 	}
 
 	.lang-btn.active {
-		color: var(--color-gold);
+		color: #f7a81b;
 	}
 
 	a.lang-btn:hover {
