@@ -87,6 +87,9 @@ const addressFieldName = isEn && settings.addressEn ? 'addressEn' : 'address';
 		</div>
 		<div>{t.footer.underRotary}</div>
 	</div>
+	<div class="footer-credit">
+		Fatto con il cuore da Alessandro Gorla
+	</div>
 </footer>
 
 <style>
@@ -239,5 +242,15 @@ const addressFieldName = isEn && settings.addressEn ? 'addressEn' : 'address';
 		.footer-grid {
 			grid-template-columns: 1fr;
 		}
+	}
+
+	.footer-credit {
+		max-width: var(--content-max);
+		margin: 0 auto;
+		padding: 10px 0 20px;
+		font-size: 11px;
+		color: rgba(255, 255, 255, 0.3);
+		text-align: center;
+		letter-spacing: 0.5px;
 	}
 </style>
