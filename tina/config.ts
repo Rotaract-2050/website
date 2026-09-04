@@ -734,7 +734,7 @@ const newsArchiveTemplate = {
 // PagesBlocksInteractDirTimeline branch in BlockItem.astro.
 const interactDirTimelineTemplate = {
 	name: 'InteractDirTimeline',
-	label: 'Timeline DIR (Delegati/Rappresentanti Distrettuali Interact)',
+	label: 'Timeline IRD (Delegati/Rappresentanti Distrettuali Interact)',
 	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 	fields: [
 		{ type: 'string' as const, name: 'title', label: 'Titolo sezione (IT)', required: true },
