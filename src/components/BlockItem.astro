@@ -59,6 +59,7 @@ function loc(itValue: string | null | undefined, enValue: string | null | undefi
 	data-reveal={[
 		'PagesBlocksHero',
 		'PagesBlocksRrdTimeline',
+		'PagesBlocksInteractDirTimeline',
 		'PagesBlocksStatsBar',
 		'PagesBlocksSplitSection',
 		'PagesBlocksCardGrid',
@@ -245,6 +246,26 @@ function loc(itValue: string | null | undefined, enValue: string | null | undefi
 		<ClubDirectory lang={lang} intro={loc(block.intro, block.introEn)} disclaimer={loc(block.disclaimer, block.disclaimerEn)} />
 	)}
 	{block.__typename === 'PagesBlocksRrdTimeline' && (
+		<RrdTimeline
+			title={loc(block.title, block.titleEn)}
+			showDisclaimer={block.showDisclaimer ?? false}
+			disclaimerText={loc(block.disclaimerText, block.disclaimerTextEn) || undefined}
+			items={(block.items ?? []).filter(nonNull).map((i) => ({
+				yearRange: i.yearRange ?? '',
+				name: i.name ?? '',
+				surname: i.surname ?? '',
+				clubName: i.clubName ?? undefined,
+				motto: loc(i.motto, i.mottoEn),
+				mottoDistretto: loc(i.mottoDistretto, i.mottoDistrettoEn) || undefined,
+				eraLabel: loc(i.eraLabel, i.eraLabelEn) || undefined,
+				tinaFieldAttr: tinaField(i),
+			}))}
+		/>
+	)}
+	{block.__typename === 'PagesBlocksInteractDirTimeline' && (
+		// Reuses RrdTimeline.astro unmodified (pure props-in, no Rotaract-specific logic) — only
+		// the Tina template differs (see interactDirTimelineTemplate in tina/config.ts), because
+		// the RRD template's own label says "RRD" in the block picker, which would be wrong here.
 		<RrdTimeline
 			title={loc(block.title, block.titleEn)}
 			showDisclaimer={block.showDisclaimer ?? false}
