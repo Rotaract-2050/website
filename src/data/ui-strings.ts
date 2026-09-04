@@ -18,6 +18,18 @@ export interface UiStrings {
 		menuClose: string;
 	};
 	breadcrumbHome: string;
+	/** Nav/footer copy for the Interact sub-section's own header/footer (InteractHeader.astro,
+	 * InteractFooter.astro) — kept separate from `nav`/`footer` above since it's a different,
+	 * smaller set of pages with its own identity, not a variant of the Rotaract nav. */
+	interact: {
+		navHome: string;
+		navStoria: string;
+		navClub: string;
+		navAlbo: string;
+		navEventi: string;
+		backToRotaract: string;
+		footerTitle: string;
+	};
 	footer: {
 		linksTitle: string;
 		contactTitle: string;
@@ -174,6 +186,15 @@ const IT: UiStrings = {
 		menuClose: 'Chiudi il menu di navigazione',
 	},
 	breadcrumbHome: 'HOME',
+	interact: {
+		navHome: 'HOME',
+		navStoria: 'LA STORIA',
+		navClub: 'I CLUB',
+		navAlbo: 'ALBO DIR',
+		navEventi: 'EVENTI',
+		backToRotaract: '← Rotaract Distretto 2050',
+		footerTitle: 'INTERACT DISTRETTO 2050',
+	},
 	footer: {
 		linksTitle: 'LINK UTILI',
 		contactTitle: 'CONTATTI',
@@ -325,6 +346,15 @@ const EN: UiStrings = {
 		menuClose: 'Close navigation menu',
 	},
 	breadcrumbHome: 'HOME',
+	interact: {
+		navHome: 'HOME',
+		navStoria: 'HISTORY',
+		navClub: 'CLUBS',
+		navAlbo: 'DIR ROSTER',
+		navEventi: 'EVENTS',
+		backToRotaract: '← Rotaract District 2050',
+		footerTitle: 'INTERACT DISTRICT 2050',
+	},
 	footer: {
 		linksTitle: 'QUICK LINKS',
 		contactTitle: 'CONTACT',
