@@ -13,6 +13,7 @@ export interface UiStrings {
 		eventi: string;
 		join: string;
 		materials: string;
+		interactLink: string;
 		formazione: string;
 		menuOpen: string;
 		menuClose: string;
@@ -181,6 +182,7 @@ const IT: UiStrings = {
 		eventi: 'EVENTI',
 		join: 'ENTRA NEL ROTARACT',
 		materials: 'MATERIALI DISTRETTUALI',
+		interactLink: 'INTERACT',
 		formazione: 'FORMAZIONE',
 		menuOpen: 'Apri il menu di navigazione',
 		menuClose: 'Chiudi il menu di navigazione',
@@ -341,6 +343,7 @@ const EN: UiStrings = {
 		eventi: 'EVENTS',
 		join: 'JOIN ROTARACT',
 		materials: 'DISTRICT MATERIALS',
+		interactLink: 'INTERACT',
 		formazione: 'TRAINING',
 		menuOpen: 'Open navigation menu',
 		menuClose: 'Close navigation menu',

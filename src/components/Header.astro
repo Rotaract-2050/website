@@ -113,6 +113,7 @@ const distrettoActive = (['distretto', 'story', 'rrd', 'squadra'] as PageKey[]).
 			<span class="btn-text">{t.nav.formazione}</span>
 		</a>
 		<a href={href('materiali')} class:list={['materials-link', { active: current === 'materiali' }]}>⬇ {t.nav.materials}</a>
+		<a href={href('interactHome')} class="interact-link" data-track="interact_link_click">{t.nav.interactLink}</a>
 		<a href={href('club')} class="join-btn" data-track="cta_join_click">{t.nav.join}</a>
 	</nav>
 </header>
@@ -339,6 +340,29 @@ const distrettoActive = (['distretto', 'story', 'rrd', 'squadra'] as PageKey[]).
 		color: #fff;
 	}
 
+	/* Interact's own official brand color (Sky Blue #00A2E0, PMS 2202C — "the color as seen in
+	   the Interact logo", see src/lib/news.ts's customClubColor()), not a var() — this link lives
+	   on the Rotaract header (outside [data-theme="interact"]'s scope) and needs to read as a
+	   deliberate cross-link into the other section, the same way ClubsMap/CtaBanner/SplitSection
+	   take an explicit Interact-blue value for a single instance rather than a theme-wide one. */
+	.interact-link {
+		color: #00a2e0;
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 13px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		padding: 10px 18px;
+		border-radius: var(--shape-full);
+		border: 2px solid #00a2e0;
+	}
+
+	.interact-link:hover,
+	.interact-link.active {
+		background: #00a2e0;
+		color: #fff;
+	}
+
 	.formazione-btn {
 		font-family: var(--font-heading);
 		font-weight: 600;
@@ -559,6 +583,7 @@ const distrettoActive = (['distretto', 'story', 'rrd', 'squadra'] as PageKey[]).
 
 		.formazione-btn,
 		.materials-link,
+		.interact-link,
 		.join-btn {
 			text-align: center;
 			margin-top: 8px;
