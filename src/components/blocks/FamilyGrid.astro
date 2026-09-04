@@ -31,9 +31,11 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
 		{intro && <p class="intro">{intro}</p>}
 		<div class="card-row">
 			{items.map((item) => {
-				const href = item.buttonHref ?? '';
-				const external = href !== '' && isExternal(href);
-				const resolvedHref = href === '' ? undefined : external ? href : getRelativeLocaleUrl(lang, href);
+				// buttonHref: '' is a real, valid target — the site root (home) — so only a genuinely
+				// missing field (null/undefined) means "no button", not an empty string.
+				const href = item.buttonHref;
+				const external = href != null && isExternal(href);
+				const resolvedHref = href == null ? undefined : external ? href : getRelativeLocaleUrl(lang, href);
 				return (
 					<div class="card" data-tina-field={item.tinaFieldAttr} style={item.color ? `--tint:${item.color};` : undefined}>
 						<div class="card-mark" aria-hidden="true">{item.title?.charAt(0)}</div>
@@ -88,11 +90,15 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
 		text-align: center;
 	}
 
+	/* auto-fit rather than a fixed repeat(3, ...): this section shows all 3 orgs on some pages
+	   and only 2 on others (each site skips its own card — see home.md/interact.md), so the
+	   layout needs to center and size cleanly either way, not leave a lopsided empty column. */
 	.card-row {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+		max-width: 900px;
 		gap: 28px;
-		margin-top: 40px;
+		margin: 40px auto 0;
 	}
 
 	/* Big M3 tonal container per organization, tinted by its own brand color (--tint) — same

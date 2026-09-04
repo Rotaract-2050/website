@@ -74,8 +74,8 @@ blocks:
     _template: SplitSection
   - title: LA NOSTRA FAMIGLIA
     titleEn: OUR FAMILY
-    intro: 'Un unico percorso di servizio e leadership, in tre tappe: dai 12 anni fino a tutta la vita.'
-    introEn: 'One path of service and leadership, in three stages: from age 12 for the rest of your life.'
+    intro: 'Il Rotaract fa parte di un unico percorso di servizio e leadership, dai 12 anni fino a tutta la vita.'
+    introEn: 'Rotaract is part of one path of service and leadership, from age 12 for the rest of your life.'
     items:
       - title: ROTARY
         body: L'organizzazione internazionale di persone d'azione che riunisce leader di comunità in tutto il mondo, dal 1905.
@@ -84,13 +84,6 @@ blocks:
         buttonLabelEn: DISCOVER ROTARY
         buttonHref: 'https://www.rotary2050.org/site/'
         color: '#17458F'
-      - title: ROTARACT
-        body: La rete di giovani dai 18 anni in su che unisce crescita personale, amicizia e servizio alla comunità. Il distretto che stai visitando.
-        bodyEn: The network for young people aged 18 and up combining personal growth, fellowship and community service. The district you're on right now.
-        buttonLabel: SCOPRI IL ROTARACT
-        buttonLabelEn: DISCOVER ROTARACT
-        buttonHref: distretto
-        color: '#D41367'
       - title: INTERACT
         body: 'La casa dei più giovani: dai 12 ai 18 anni, il primo passo nella famiglia rotariana.'
         bodyEn: 'A home for the youngest: ages 12 to 18, the first step into the Rotary family.'

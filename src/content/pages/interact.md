@@ -35,6 +35,26 @@ blocks:
     body2En: Supporting every Interact club is the Interact advisor, the sponsoring Rotary or Rotaract club, and the Interact district — which gives voice to individual clubs, helps them grow, and promotes their participation within the Rotary family.
     ctaLabelEn: READ MORE IN TRAINING
     imageLabelEn: Young Interact members
+  - title: LA NOSTRA FAMIGLIA
+    titleEn: OUR FAMILY
+    intro: 'L''Interact fa parte di un unico percorso di servizio e leadership, dai 12 anni fino a tutta la vita.'
+    introEn: 'Interact is part of one path of service and leadership, from age 12 for the rest of your life.'
+    items:
+      - title: ROTARY
+        body: L'organizzazione internazionale di persone d'azione che riunisce leader di comunità in tutto il mondo, dal 1905.
+        bodyEn: The international organization of people of action bringing together community leaders worldwide since 1905.
+        buttonLabel: SCOPRI ROTARY
+        buttonLabelEn: DISCOVER ROTARY
+        buttonHref: 'https://www.rotary2050.org/site/'
+        color: '#17458F'
+      - title: ROTARACT
+        body: 'Il passo successivo, dai 18 anni in su: crescita personale, amicizia e servizio alla comunità nello stesso distretto.'
+        bodyEn: 'The next step, from age 18: personal growth, fellowship and community service in the same district.'
+        buttonLabel: SCOPRI IL ROTARACT
+        buttonLabelEn: DISCOVER ROTARACT
+        buttonHref: ''
+        color: '#D41367'
+    _template: FamilyGrid
   - items:
       - value: '14.500'
         label: CLUB INTERACT NEL MONDO
