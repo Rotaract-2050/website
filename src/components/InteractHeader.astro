@@ -97,6 +97,15 @@ const rotaractHomeHref = getRelativeLocaleUrl(lang, '');
 		<a href={href('interactClub')} class:list={['nav-link', { active: current === 'interactClub' }]}>{ti.navClub}</a>
 		<a href={href('interactAlbo')} class:list={['nav-link', { active: current === 'interactAlbo' }]}>{ti.navAlbo}</a>
 		<a href={href('interactEventi')} class:list={['nav-link', { active: current === 'interactEventi' }]}>{ti.navEventi}</a>
+		<a href={href('formazione')} class="formazione-btn">
+			<div class="fog-container" aria-hidden="true">
+				<div class="fog-bank fog-bank-1"></div>
+				<div class="fog-bank fog-bank-2"></div>
+				<div class="fog-bank fog-bank-3"></div>
+				<div class="fog-bank fog-bank-4"></div>
+			</div>
+			<span class="btn-text">{t.nav.formazione}</span>
+		</a>
 		<a href={rotaractHomeHref} class="back-pill">{ti.backToRotaract}</a>
 	</nav>
 </header>
@@ -286,6 +295,109 @@ const rotaractHomeHref = getRelativeLocaleUrl(lang, '');
 		border-bottom-color: var(--color-pink);
 	}
 
+	/* Formazione is shared/common between Rotaract and Interact (not re-themed, on request) —
+	   same markup/animation as Header.astro's .formazione-btn, verbatim, including the literal
+	   #0b2545 (not var(--color-navy), which would resolve to Royal Blue here) so the button reads
+	   identically on both headers. */
+	.formazione-btn {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 15px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		color: #0b2545;
+		padding: 10px 20px;
+		position: relative;
+		border-radius: var(--shape-small);
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		--smoke-c1: 255, 184, 0;
+		--smoke-c2: 212, 19, 103;
+		--smoke-c3: 0, 200, 255;
+		--smoke-c4: 13, 110, 253;
+	}
+
+	.formazione-btn .btn-text {
+		position: relative;
+		z-index: 1;
+	}
+
+	.fog-container {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		z-index: 0;
+		opacity: 0.5;
+		-webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+		mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+		-webkit-mask-size: 100% 100%;
+		mask-size: 100% 100%;
+		-webkit-mask-position: center;
+		mask-position: center;
+		-webkit-mask-repeat: no-repeat;
+		mask-repeat: no-repeat;
+		transition: -webkit-mask-size 0.4s ease, mask-size 0.4s ease, opacity 0.4s ease;
+	}
+
+	.formazione-btn:hover .fog-container {
+		-webkit-mask-size: 300% 300%;
+		mask-size: 300% 300%;
+		opacity: 0.85;
+	}
+
+	.fog-bank {
+		position: absolute;
+		border-radius: 45%;
+		filter: blur(8px);
+		opacity: 0.85;
+		will-change: transform, opacity;
+	}
+
+	.fog-bank-1 {
+		width: 150%; height: 150%; top: -25%; left: -25%;
+		background: radial-gradient(ellipse at center, rgba(var(--smoke-c1), 0.5) 0%, transparent 70%);
+		animation: navFogDrift1 8s ease-in-out infinite alternate;
+	}
+
+	.fog-bank-2 {
+		width: 150%; height: 150%; bottom: -25%; right: -25%;
+		background: radial-gradient(ellipse at center, rgba(var(--smoke-c2), 0.5) 0%, transparent 70%);
+		animation: navFogDrift2 10s ease-in-out infinite alternate;
+		animation-delay: -2s;
+	}
+
+	.fog-bank-3 {
+		width: 120%; height: 120%; top: 0%; right: 10%;
+		background: radial-gradient(circle at center, rgba(var(--smoke-c3), 0.45) 0%, transparent 60%);
+		animation: navFogSwirl 12s linear infinite;
+		animation-delay: -4s;
+	}
+
+	.fog-bank-4 {
+		width: 130%; height: 130%; bottom: 0%; left: 10%;
+		background: radial-gradient(circle at center, rgba(var(--smoke-c4), 0.45) 0%, transparent 60%);
+		animation: navFogSwirl 14s linear infinite reverse;
+		animation-delay: -1s;
+	}
+
+	@keyframes navFogDrift1 {
+		0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+		100% { transform: translate(15%, 5%) scale(1.1) rotate(5deg); }
+	}
+
+	@keyframes navFogDrift2 {
+		0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+		100% { transform: translate(-15%, -5%) scale(1.15) rotate(-5deg); }
+	}
+
+	@keyframes navFogSwirl {
+		0% { transform: rotate(0deg) scale(1) translate(0, 0); }
+		50% { transform: rotate(180deg) scale(1.2) translate(5%, -2%); }
+		100% { transform: rotate(360deg) scale(1) translate(0, 0); }
+	}
+
 	/* Not present on the Rotaract header — makes the "second home, one click back" framing
 	   legible in the UI itself, not just implied by the URL. */
 	.back-pill {
@@ -346,6 +458,7 @@ const rotaractHomeHref = getRelativeLocaleUrl(lang, '');
 			border-bottom: 1px solid var(--color-bg);
 		}
 
+		.formazione-btn,
 		.back-pill {
 			text-align: center;
 			margin-top: 8px;
