@@ -29,7 +29,13 @@ pkill -f "tinacms dev" >/dev/null 2>&1 || true
 sleep 1
 
 echo "Avvio TinaCMS (GraphQL + admin, :4001)..."
-npx tinacms dev > /tmp/rotaract2050-tinacms-dev.log 2>&1 &
+# --datalayer-port: la 9000 di default di Tina collide con servizi Docker che la usano
+# spesso (es. MinIO, porta API di default anch'essa 9000) — capita facilmente su una
+# macchina con altri stack di sviluppo attivi. Sintomo se capita di nuovo: "Datalayer
+# server is busy on port 9000" nel log sopra, e/o pagine bianche con "[@tinacms/astro]
+# client query failed [Error: Network connection lost.]" nei log di astro dev — la causa
+# è quella porta occupata, non un bug nelle pagine.
+npx tinacms dev --datalayer-port 9433 > /tmp/rotaract2050-tinacms-dev.log 2>&1 &
 TINA_PID=$!
 
 echo "Attendo che TinaCMS sia pronto..."
