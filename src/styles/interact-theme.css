@@ -1,0 +1,45 @@
+/* Interact sub-section theme override — see references/rotary-brand.md and the Interact
+   implementation plan. Scoped to [data-theme="interact"] (set on BaseLayout's .page wrapper
+   when theme="interact"), so this file has zero effect on Rotaract pages: every block already
+   consumes these same custom-property names via var(--color-x), nothing else needs to change.
+
+   Colors sourced only from the official Rotary secondary/primary palette (brandcenter.rotary.org),
+   same rationale documented per-token below — no invented hex values. */
+[data-theme='interact'] {
+	/* Sky Blue, PMS 2202C — the color as seen in the Interact logo (already used for this exact
+	   purpose in src/lib/news.ts's customClubColor()). Takes over --color-pink's role (accent/
+	   CTA/link/pill — "the logo color"), same functional role Cranberry plays for Rotaract. */
+	--color-pink: #00a2e0;
+
+	/* Rotary Royal Blue, PMS 286C — the official "Rotary" wordmark color. Takes over --color-navy's
+	   role (dark chrome: header/footer/dark blocks). Interact operates under Rotary, so anchoring
+	   the dark chrome in Rotary's own official blue is brand-apt — and, unlike Rotaract's Navy
+	   (a non-official aesthetic choice), this IS a real Brand Center swatch. */
+	--color-navy: #17458f;
+
+	/* Derived hover shade of Sky Blue (~25% darker), same non-official-derivation precedent as
+	   Rotaract's own --color-pink-dark (#A80F53 isn't a standalone Brand Center swatch either). */
+	--color-pink-dark: #076994;
+
+	/* Rotary Orange, PMS 2018C — fills --color-gold's role (warm accent on dark backgrounds)
+	   with a color already vetted for site use (one of the 4 official zone-tag colors). */
+	--color-gold: #ff7600;
+
+	/* Rotary Azure, PMS 2175C — takes over --color-royal-blue's role (3rd punctual accent: DIR/RRD
+	   motto text, StatsBar) now that Royal Blue moved to --color-navy above. Azure is documented
+	   as a "reserved" primary, but this is the same kind of deliberate, singular sub-brand
+	   exception already used for the Areas-of-Focus water icon. */
+	--color-royal-blue: #0067c8;
+
+	/* Tonal container surfaces: generated via color-mix() rather than hand-picked hex, same
+	   pattern already in production in ClubDirectory.astro's zone-tint cards. Two of the four
+	   "on-container" tokens are var()-referenced at :root (on-navy-container → --color-navy,
+	   on-pink-container → --color-pink-dark) so they retint automatically from the overrides
+	   above without needing their own line here — only the remaining two need one. */
+	--color-pink-container: color-mix(in srgb, var(--color-pink) 12%, white);
+	--color-navy-container: color-mix(in srgb, var(--color-navy) 12%, white);
+	--color-gold-container: color-mix(in srgb, var(--color-gold) 12%, white);
+	--color-on-gold-container: color-mix(in srgb, var(--color-gold) 65%, black);
+	--color-royal-container: color-mix(in srgb, var(--color-royal-blue) 12%, white);
+	--color-on-royal-container: var(--color-royal-blue);
+}
