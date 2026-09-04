@@ -30,6 +30,13 @@ const resourcesRouter = ({ document }: { document: { _sys: { breadcrumbs: string
 	return `/formazione/${slug}`;
 };
 
+// Same shape as eventsRouter, isolated collection for the Interact sub-section (own detail
+// route under /interact/eventi/<slug> — see src/pages/interact/eventi/[year]/[slug].astro).
+const interactEventsRouter = ({ document }: { document: { _sys: { breadcrumbs: string[] } } }) => {
+	const slug = document._sys.breadcrumbs.join('/');
+	return `/interact/eventi/${slug}`;
+};
+
 const heroTemplate = {
 	name: 'Hero',
 	label: 'Hero (Carosello)',
@@ -650,6 +657,112 @@ const newsArchiveTemplate = {
 	],
 };
 
+// Clone of rrdTimelineTemplate, same field shape (already generic wording: yearRange/name/
+// surname/clubName/motto/eraLabel) — a separate template only because the RRD one's `label`
+// literally says "RRD (Rappresentanti Rotaract Distrettuali)" in the Tina block-picker UI,
+// which would be wrong shown as an option while building the Interact roster page. Renders via
+// the same RrdTimeline.astro component (pure props-in, no Rotaract-specific logic) — see the
+// PagesBlocksInteractDirTimeline branch in BlockItem.astro.
+const interactDirTimelineTemplate = {
+	name: 'InteractDirTimeline',
+	label: 'Timeline DIR (Delegati/Rappresentanti Distrettuali Interact)',
+	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
+	fields: [
+		{ type: 'string' as const, name: 'title', label: 'Titolo sezione (IT)', required: true },
+		{ type: 'string' as const, name: 'titleEn', label: 'Titolo sezione (EN)' },
+		{ type: 'boolean' as const, name: 'showDisclaimer', label: 'Mostra disclaimer' },
+		{ type: 'string' as const, name: 'disclaimerText', label: 'Testo disclaimer (IT)' },
+		{ type: 'string' as const, name: 'disclaimerTextEn', label: 'Testo disclaimer (EN)' },
+		{
+			type: 'object' as const,
+			name: 'items',
+			label: 'Annate (dalla più recente alla più antica)',
+			list: true,
+			ui: {
+				itemProps: (item: { yearRange?: string; name?: string; surname?: string }) => ({ label: item.yearRange ? `${item.yearRange} — ${item.name ?? ''} ${item.surname ?? ''}` : undefined }),
+				addItemBehavior: 'prepend',
+			},
+			fields: [
+				{ type: 'string' as const, name: 'yearRange', label: 'Anno rotariano (es. 2026/2027)' },
+				{ type: 'string' as const, name: 'name', label: 'Nome' },
+				{ type: 'string' as const, name: 'surname', label: 'Cognome' },
+				{ type: 'string' as const, name: 'clubName', label: 'Club di provenienza' },
+				{ type: 'string' as const, name: 'motto', label: 'Motto Rotary International (IT, tema dell’anno rotariano)' },
+				{ type: 'string' as const, name: 'mottoEn', label: 'Motto Rotary International (EN, tema dell’anno rotariano)' },
+				{ type: 'string' as const, name: 'mottoDistretto', label: 'Motto del distretto (IT, opzionale)' },
+				{ type: 'string' as const, name: 'mottoDistrettoEn', label: 'Motto del distretto (EN, opzionale)' },
+				{
+					type: 'string' as const,
+					name: 'eraLabel',
+					label: 'Separatore era (IT, opzionale)',
+					description: 'Se compilato, mostra un separatore con questa etichetta sopra questa annata — usalo sull’annata in cui inizia un nuovo nome di distretto.',
+				},
+				{
+					type: 'string' as const,
+					name: 'eraLabelEn',
+					label: 'Separatore era (EN, opzionale)',
+				},
+			],
+		},
+	],
+};
+
+// Clone of clubDirectoryTemplate: same editorial fields (clubs/zones themselves come live from
+// their own collections, not authored here), but the Astro component behind this template
+// (InteractClubDirectory.astro) queries `interactClubsConnection` instead of `clubsConnection` —
+// Tina generates one typed query per collection name, so the two can't share one component.
+// Zones stay shared with Rotaract (interact-clubs.zone still references the `zones` collection).
+const interactClubDirectoryTemplate = {
+	name: 'InteractClubDirectory',
+	label: 'Elenco club Interact (per zona)',
+	fields: [
+		{ type: 'string' as const, name: 'intro', label: 'Introduzione (IT)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'introEn', label: 'Introduzione (EN)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'disclaimer', label: 'Disclaimer (IT)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'disclaimerEn', label: 'Disclaimer (EN)', ui: { component: 'textarea' } },
+	],
+};
+
+// Clone of eventsCalendarTemplate, bound to InteractEventsCalendar.astro (own Google Calendar
+// source, own cross-links into /interact/eventi/<slug> — see src/lib/interact-events.ts).
+const interactEventsCalendarTemplate = {
+	name: 'InteractEventsCalendar',
+	label: 'Calendario eventi Interact',
+	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
+	fields: [
+		{ type: 'string' as const, name: 'title', label: 'Titolo sezione (IT)', required: true },
+		{ type: 'string' as const, name: 'titleEn', label: 'Titolo sezione (EN)' },
+		{
+			type: 'string' as const,
+			name: 'calendarId',
+			label: 'ID Calendario Google (opzionale)',
+			description:
+				'Da Google Calendar → Impostazioni del calendario → "Integra calendario" → "ID calendario". Lascia vuoto per usare il calendario di default del distretto Interact.',
+		},
+	],
+};
+
+// Clone of eventsArchiveTemplate, bound to InteractEventsArchive.astro (reads the isolated
+// `interact-events` collection instead of `events`).
+const interactEventsArchiveTemplate = {
+	name: 'InteractEventsArchive',
+	label: 'Archivio eventi Interact (elenco)',
+	fields: [
+		{
+			type: 'string' as const,
+			name: 'emptyMessage',
+			label: 'Messaggio se non ci sono eventi (IT, opzionale)',
+			ui: { component: 'textarea' },
+		},
+		{
+			type: 'string' as const,
+			name: 'emptyMessageEn',
+			label: 'Messaggio se non ci sono eventi (EN, opzionale)',
+			ui: { component: 'textarea' },
+		},
+	],
+};
+
 export default defineConfig({
 	branch: process.env.WORKERS_CI_BRANCH || process.env.HEAD || process.env.VERCEL_GIT_COMMIT_REF || 'main',
 	clientId: process.env.TINA_CLIENT_ID || null,
@@ -738,6 +851,10 @@ export default defineConfig({
 							newsArchiveTemplate,
 							materialsGridTemplate,
 							resourceArchiveTemplate,
+							interactDirTimelineTemplate,
+							interactClubDirectoryTemplate,
+							interactEventsCalendarTemplate,
+							interactEventsArchiveTemplate,
 						],
 					},
 				],
@@ -771,6 +888,43 @@ export default defineConfig({
 				name: 'clubs',
 				label: 'Club',
 				path: 'src/content/clubs',
+				format: 'md',
+				fields: [
+					{ type: 'string', name: 'name', label: 'Nome club', isTitle: true, required: true },
+					{ type: 'reference', name: 'zone', label: 'Zona', collections: ['zones'], required: true },
+					{ type: 'number', name: 'foundationYear', label: 'Anno di fondazione' },
+					{
+						type: 'number',
+						name: 'lat',
+						label: 'Latitudine (mappa club)',
+						description: 'Coordinate approssimative del comune sede del club, da OpenStreetMap. Compilare insieme a Longitudine.',
+					},
+					{
+						type: 'number',
+						name: 'lng',
+						label: 'Longitudine (mappa club)',
+						description: 'Coordinate approssimative del comune sede del club, da OpenStreetMap. Compilare insieme a Latitudine.',
+					},
+					...focalImageFields('photo', 'Foto club'),
+					{ type: 'string', name: 'email', label: 'Email' },
+					{ type: 'string', name: 'website', label: 'Sito web' },
+					{ type: 'string', name: 'instagram', label: 'Instagram' },
+					{ type: 'string', name: 'facebook', label: 'Facebook' },
+					{ type: 'string', name: 'story', label: 'Storia del club (IT)', ui: { component: 'textarea' } },
+					{ type: 'string', name: 'storyEn', label: 'Storia del club (EN)', ui: { component: 'textarea' } },
+				],
+			},
+			{
+				// Isolated from `clubs` per an explicit decision: Interact clubs get their own
+				// collection rather than mixing into the Rotaract club list, while still referencing
+				// the SAME `zones` collection (the district's Interact clubs use the same 4
+				// geographic zones as Rotaract). No `ui.router`/detail page — see
+				// InteractClubDirectory.astro, a listing-only block (no per-club detail route, to
+				// sidestep the documented nested-dynamic-route-vs-catch-all routing bug rather than
+				// depend on it not applying here).
+				name: 'interact-clubs',
+				label: 'Club Interact',
+				path: 'src/content/interact-clubs',
 				format: 'md',
 				fields: [
 					{ type: 'string', name: 'name', label: 'Nome club', isTitle: true, required: true },
@@ -1001,6 +1155,86 @@ export default defineConfig({
 						ui: { component: 'textarea' },
 						description:
 							'Incolla qui l\'intero snippet HTML fornito dal servizio di biglietteria (es. Ticket Tailor, "Paste this into your website"), tag <script> compreso: verrà inserito così com\'è nella pagina evento (se "Biglietti in vendita" è attivo). Lascia vuoto per non mostrare nessun widget. Usare solo snippet copiati direttamente dal fornitore di biglietteria, mai testo incollato da altre fonti.',
+					},
+				],
+			},
+			{
+				// Isolated from `events` per an explicit decision: Interact events get their own
+				// collection/calendar/archive, no cross-programma filtering. `clubs` references
+				// `interact-clubs`, not `clubs`. v1 omits ticketsOpen/ticketsUrl/photoAlbumUrl/
+				// ticketWidgetEmbed — no proven ticketing need yet for 12-18-year-old members,
+				// addable later without breaking anything (additive schema change).
+				name: 'interact-events',
+				label: 'Eventi Interact',
+				path: 'src/content/interact-events',
+				format: 'md',
+				ui: { router: interactEventsRouter },
+				fields: [
+					{ type: 'string', name: 'title', label: 'Titolo (IT)', isTitle: true, required: true },
+					{ type: 'string', name: 'titleEn', label: 'Titolo (EN)' },
+					{
+						type: 'boolean',
+						name: 'visible',
+						label: 'Mostra evento',
+						description: 'Disattiva per preparare un evento senza pubblicarlo ancora nell\'archivio eventi Interact del sito.',
+					},
+					{ type: 'datetime', name: 'date', label: 'Data evento', required: true, ui: { dateFormat: 'DD MMMM YYYY' } },
+					{
+						type: 'datetime',
+						name: 'endDate',
+						label: 'Data fine evento (solo se dura più di un giorno)',
+						description:
+							'Lascia vuoto per il caso normale (evento di un solo giorno): i dati strutturati per Google useranno automaticamente la stessa data di inizio. Compilalo solo per un evento che si estende su più giorni.',
+					},
+					{
+						type: 'datetime',
+						name: 'calendarDate',
+						label: 'Data su Google Calendar (se diversa)',
+						description:
+							'Usata per collegare questo evento alla voce corrispondente nel widget "Calendario eventi Interact", quando la data su Google Calendar non coincide con la Data evento sopra (o per forzare/disambiguare il collegamento). Lascia vuoto per usare direttamente la Data evento.',
+					},
+					{
+						type: 'string',
+						name: 'eventType',
+						label: 'Tipo evento',
+						options: ['Distrettuale', 'Altro'],
+						required: true,
+					},
+					{ type: 'string', name: 'locationLavori', label: 'Luogo (lavori)' },
+					{
+						type: 'string',
+						name: 'locationCena',
+						label: 'Luogo (cena)',
+						description: 'Compila solo se l\'evento ha una seconda sede (es. cena di gala dopo i lavori).',
+					},
+					// Same reference-list workaround as `events.clubs` (Tina's `reference` field doesn't
+					// support `list: true` directly): one club per row, referencing `interact-clubs`.
+					{
+						type: 'object',
+						name: 'clubs',
+						label: 'Club Host',
+						list: true,
+						fields: [{ type: 'reference', name: 'club', label: 'Club', collections: ['interact-clubs'], required: true }],
+					},
+					{ type: 'string', name: 'excerpt', label: 'Descrizione (IT)', ui: { component: 'textarea' } },
+					{ type: 'string', name: 'excerptEn', label: 'Descrizione (EN)', ui: { component: 'textarea' } },
+					...focalImageFields('image', 'Immagine'),
+					{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine (IT)', required: true },
+					{ type: 'string', name: 'imageLabelEn', label: 'Didascalia segnaposto immagine (EN)' },
+					{
+						type: 'object',
+						name: 'schedule',
+						label: 'Programma',
+						list: true,
+						description: 'Scaletta oraria dell\'evento (facoltativa): una voce per riga, mostrata nell\'ordine di inserimento.',
+						fields: [
+							{ type: 'string', name: 'time', label: 'Orario', description: 'Es. 10:00 oppure 10:00 – 10:30' },
+							{ type: 'string', name: 'title', label: 'Voce (IT)', required: true },
+							{ type: 'string', name: 'titleEn', label: 'Voce (EN)' },
+							{ type: 'string', name: 'speaker', label: 'Relatore/ruolo (IT)' },
+							{ type: 'string', name: 'speakerEn', label: 'Relatore/ruolo (EN)' },
+						],
+						ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
 					},
 				],
 			},
