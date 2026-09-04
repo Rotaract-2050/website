@@ -13,12 +13,24 @@ export function calendarUrls(calendarId: string = DEFAULT_CALENDAR_ID) {
 	};
 }
 
+export type EventKind = 'rotaract' | 'interact' | 'rotary';
+
+/** Classifies an event by its title — "Interact"/"Rotary" (case-insensitive, whole word) win over the
+ * default `rotaract`, same precedent as `customClubColor()` in `src/lib/news.ts`. No Tina field for
+ * this: events come from a shared Google Calendar ICS feed, not a Tina collection. */
+export function eventKind(summary: string): EventKind {
+	if (/\binteract\b/i.test(summary)) return 'interact';
+	if (/\brotary\b/i.test(summary)) return 'rotary';
+	return 'rotaract';
+}
+
 export interface DistrictEvent {
 	uid: string;
 	start: Date;
 	allDay: boolean;
 	summary: string;
 	location: string;
+	kind: EventKind;
 }
 
 export type CalendarResult = { ok: true; events: DistrictEvent[] } | { ok: false };
@@ -37,12 +49,14 @@ async function fetchEvents(calendarId: string): Promise<DistrictEvent[]> {
 
 	for (const component of Object.values(data)) {
 		if (!component || component.type !== 'VEVENT') continue;
+		const summary = textValue(component.summary);
 		events.push({
 			uid: component.uid,
 			start: new Date(component.start),
 			allDay: component.datetype === 'date' || Boolean(component.start.dateOnly),
-			summary: textValue(component.summary),
+			summary,
 			location: textValue(component.location),
+			kind: eventKind(summary),
 		});
 	}
 
