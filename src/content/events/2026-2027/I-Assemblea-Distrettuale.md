@@ -21,7 +21,7 @@ schedule:
     speaker: Massimo Ballotta - Direttore RI 2026-2028
   - time: '11:10'
     title: 'La forza della coesione: come il servizio rigenera le comunità e disegna il futuro'
-    speaker: Giuliomaria Terzi di Sant'Agata - Senatore della Repubblica
+    speaker: 'Giulio Terzi di Sant''Agata - Presidente Commissione Politiche UE, Senato della Repubblica'
   - time: '11:30'
     title: Pausa Caffè
   - time: '11:50'
@@ -36,10 +36,10 @@ schedule:
     title: Presentazione del nuovo sito web
     speaker: Alessandro Gorla - Delegato IT
   - time: '12:30'
-    title: Presentazione, discussione e votazione del bilancio consuntivo A.R. 2025-2026
+    title: 'Presentazione, discussione e votazione del bilancio consuntivo A.R. 2025-2026'
     speaker: Sebastiano Fortugno - R.R.D. A.R. 2026-2027 / Lorenzo Pancini - R.R.D. A.R. 2025-2026 / Riccardo Amerio - Tesoriere A.R. 2025-2026
   - time: '12:40'
-    title: Presentazione, discussione e votazione del bilancio di previsione A.R. 2026-2027
+    title: 'Presentazione, discussione e votazione del bilancio di previsione A.R. 2026-2027'
     speaker: Sebastiano Fortugno - R.R.D. A.R. 2026-2027 / Virginia Goffredi - Tesoriere A.R. 2026-2027
   - time: '12:50'
     title: Varie ed eventuali
