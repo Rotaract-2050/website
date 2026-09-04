@@ -11,7 +11,6 @@ seo:
   description: Gli eventi del distretto Interact.
   descriptionEn: The Interact district's events.
 blocks:
-  - message: Il calendario eventi Interact è in arrivo.
-    messageEn: The Interact events calendar is coming soon.
-    _template: PagePlaceholder
+  - _template: InteractEventsArchive
+    emptyMessageEn: ''
 ---

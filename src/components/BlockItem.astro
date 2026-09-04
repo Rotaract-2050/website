@@ -23,6 +23,9 @@ import EventsArchive from './blocks/EventsArchive.astro';
 import NewsArchive from './blocks/NewsArchive.astro';
 import MaterialsGrid from './blocks/MaterialsGrid.astro';
 import ResourceArchive from './blocks/ResourceArchive.astro';
+import InteractClubDirectory from './blocks/InteractClubDirectory.astro';
+import InteractEventsCalendar from './blocks/InteractEventsCalendar.astro';
+import InteractEventsArchive from './blocks/InteractEventsArchive.astro';
 
 function nonNull<T>(value: T | null | undefined): value is T {
 	return value != null;
@@ -244,6 +247,15 @@ function loc(itValue: string | null | undefined, enValue: string | null | undefi
 	)}
 	{block.__typename === 'PagesBlocksClubDirectory' && (
 		<ClubDirectory lang={lang} intro={loc(block.intro, block.introEn)} disclaimer={loc(block.disclaimer, block.disclaimerEn)} />
+	)}
+	{block.__typename === 'PagesBlocksInteractClubDirectory' && (
+		<InteractClubDirectory lang={lang} intro={loc(block.intro, block.introEn)} disclaimer={loc(block.disclaimer, block.disclaimerEn)} />
+	)}
+	{block.__typename === 'PagesBlocksInteractEventsCalendar' && (
+		<InteractEventsCalendar lang={lang} title={loc(block.title, block.titleEn)} calendarId={block.calendarId ?? undefined} />
+	)}
+	{block.__typename === 'PagesBlocksInteractEventsArchive' && (
+		<InteractEventsArchive lang={lang} emptyMessage={loc(block.emptyMessage, block.emptyMessageEn) || undefined} />
 	)}
 	{block.__typename === 'PagesBlocksRrdTimeline' && (
 		<RrdTimeline

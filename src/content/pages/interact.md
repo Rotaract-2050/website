@@ -46,4 +46,7 @@ blocks:
         label: ANNI
         labelEn: YEARS OLD
     _template: StatsBar
+  - title: EVENTI INTERACT
+    titleEn: INTERACT EVENTS
+    _template: InteractEventsCalendar
 ---

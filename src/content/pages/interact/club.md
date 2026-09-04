@@ -11,7 +11,9 @@ seo:
   description: L'elenco dei club Interact del distretto, per zona.
   descriptionEn: The list of the district's Interact clubs, by zone.
 blocks:
-  - message: Il direttorio dei club Interact per zona è in arrivo.
-    messageEn: The Interact club directory, by zone, is coming soon.
-    _template: PagePlaceholder
+  - intro: 'I club Interact del distretto, raggruppati nelle stesse zone geografiche del Rotaract Distretto 2050.'
+    introEn: 'The district''s Interact clubs, grouped in the same geographic zones as Rotaract District 2050.'
+    disclaimer: Elenco in fase di completamento con il distretto Interact — zone e coordinate potrebbero non essere ancora definitive.
+    disclaimerEn: List currently being completed with the Interact district — zones and coordinates may not be final yet.
+    _template: InteractClubDirectory
 ---
