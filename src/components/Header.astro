@@ -326,16 +326,12 @@ const distrettoActive = (['distretto', 'story', 'rrd', 'squadra'] as PageKey[]).
 	/* Interact's own official brand color (Sky Blue #00A2E0, PMS 2202C — "the color as seen in
 	   the Interact logo", see src/lib/news.ts's customClubColor()), not a var() — this link lives
 	   on the Rotaract header (outside [data-theme="interact"]'s scope) and needs to read as a
-	   deliberate cross-link into the other section. Styled as its own pill inside the "Il
-	   Distretto" dropdown (not a separate top-level nav item — moved there on request), outline
-	   that fills solid on hover. */
+	   deliberate cross-link into the other section. Same size/weight/padding as its dropdown
+	   siblings (no pill/border/all-caps treatment) — on request, reads as "one more item in the
+	   list", just tinted blue, filling solid blue with white text on hover like the others fill
+	   pink. */
 	.dropdown-panel a.dropdown-interact-link {
-		margin-top: 6px;
-		border: 2px solid #00a2e0;
-		border-radius: var(--shape-full);
 		color: #00a2e0;
-		font-weight: 700;
-		text-align: center;
 	}
 
 	.dropdown-panel a.dropdown-interact-link:hover {
