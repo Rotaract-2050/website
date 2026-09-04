@@ -125,6 +125,7 @@ function loc(itValue: string | null | undefined, enValue: string | null | undefi
 			imageFocalY={block.imageFocalY ?? undefined}
 			imageLabel={loc(block.imageLabel, block.imageLabelEn)}
 			imageSide={block.imageSide === 'left' ? 'left' : 'right'}
+			accent={block.accent}
 		/>
 	)}
 	{block.__typename === 'PagesBlocksCardGrid' && (

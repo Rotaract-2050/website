@@ -114,6 +114,18 @@ const splitSectionTemplate = {
 			label: 'Lato immagine',
 			options: ['left', 'right'],
 		},
+		{
+			type: 'string' as const,
+			name: 'accent',
+			label: 'Colore accento (opzionale, default Cranberry)',
+			description: 'Per differenziare una sezione puntuale — es. un rimando dalla home Rotaract alla sezione Interact.',
+			options: [
+				{ value: '#D41367', label: 'Cranberry (default)' },
+				{ value: '#00A2E0', label: 'Sky Blue (Interact)' },
+				{ value: '#F7A81B', label: 'Rotary Gold' },
+				{ value: '#0067C8', label: 'Azure' },
+			],
+		},
 	],
 };
 

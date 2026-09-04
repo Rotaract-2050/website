@@ -72,6 +72,23 @@ blocks:
     imageLabelEn: Photo of members on a service project
     imageSide: right
     _template: SplitSection
+  - kicker: SCOPRI ANCHE
+    kickerEn: DISCOVER TOO
+    title: IL DISTRETTO DELL'INTERACT
+    titleEn: THE INTERACT DISTRICT
+    body: 'Il Rotaract non è solo per i maggiorenni: l''Interact accoglie ragazze e ragazzi dai 12 ai 18 anni sulla stessa strada di leadership, amicizia e servizio, nella stessa area del nostro distretto.'
+    bodyEn: 'Rotaract isn''t just for adults: Interact welcomes girls and boys aged 12 to 18 on the same path of leadership, fellowship and service, across the same area as our district.'
+    body2: 'Un distretto Interact proprio, con la stessa struttura del nostro: club, zone, storia e un albo dei suoi rappresentanti.'
+    body2En: 'Its own Interact district, structured just like ours: clubs, zones, history and a roster of its own representatives.'
+    ctaLabel: SCOPRI L'INTERACT
+    ctaLabelEn: DISCOVER INTERACT
+    ctaHref: interact
+    accent: '#00A2E0'
+    image: /uploads/Paesaggi/paesaggio-5.jpeg
+    imageLabel: Giovani soci Interact
+    imageLabelEn: Young Interact members
+    imageSide: left
+    _template: SplitSection
   - autoplay: true
     images:
       - image: /uploads/Paesaggi/paesaggio-1.jpeg
@@ -131,15 +148,6 @@ blocks:
     titleEn: DISTRICT NEWS
     limit: 3
     _template: NewsGrid
-  - title: SCOPRI IL DISTRETTO DELL'INTERACT
-    titleEn: DISCOVER THE INTERACT DISTRICT
-    body: 'Il Rotaract non è solo per i maggiorenni: scopri l''Interact, la nostra "casa dei più giovani" (12-18 anni).'
-    bodyEn: 'Rotaract isn''t just for adults: discover Interact, our "home for the youngest" (ages 12-18).'
-    buttonLabel: VAI ALL'INTERACT
-    buttonLabelEn: GO TO INTERACT
-    buttonHref: interact
-    accent: '#00A2E0'
-    _template: CtaBanner
   - title: DIVENTA SOCIO DEL ROTARACT
     titleEn: BECOME A ROTARACT MEMBER
     body: Hai già compiuto 18 anni?
