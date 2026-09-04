@@ -1,0 +1,47 @@
+import { focalImageFields } from '../fields/focalPointImage';
+
+export const splitSectionTemplate = {
+	name: 'SplitSection',
+	label: 'Sezione divisa (testo + immagine)',
+	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
+	fields: [
+		{ type: 'string' as const, name: 'kicker', label: 'Eyebrow (IT)' },
+		{ type: 'string' as const, name: 'kickerEn', label: 'Eyebrow (EN)' },
+		{ type: 'string' as const, name: 'title', label: 'Titolo (IT)', required: true },
+		{ type: 'string' as const, name: 'titleEn', label: 'Titolo (EN)' },
+		{ type: 'string' as const, name: 'quote', label: 'Citazione (IT)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'quoteEn', label: 'Citazione (EN)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'body', label: 'Testo (IT)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'bodyEn', label: 'Testo (EN)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'subhead', label: 'Sottotitolo secondario (IT)' },
+		{ type: 'string' as const, name: 'subheadEn', label: 'Sottotitolo secondario (EN)' },
+		{ type: 'string' as const, name: 'quote2', label: 'Citazione secondaria (IT)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'quote2En', label: 'Citazione secondaria (EN)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'body2', label: 'Testo secondario (IT)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'body2En', label: 'Testo secondario (EN)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'ctaLabel', label: 'Testo pulsante (IT)' },
+		{ type: 'string' as const, name: 'ctaLabelEn', label: 'Testo pulsante (EN)' },
+		{ type: 'string' as const, name: 'ctaHref', label: 'Link pulsante (slug pagina)' },
+		...focalImageFields('image', 'Immagine'),
+		{ type: 'string' as const, name: 'imageLabel', label: 'Didascalia segnaposto immagine (IT)', required: true },
+		{ type: 'string' as const, name: 'imageLabelEn', label: 'Didascalia segnaposto immagine (EN)' },
+		{
+			type: 'string' as const,
+			name: 'imageSide',
+			label: 'Lato immagine',
+			options: ['left', 'right'],
+		},
+		{
+			type: 'string' as const,
+			name: 'accent',
+			label: 'Colore accento (opzionale, default Cranberry)',
+			description: 'Per differenziare una sezione puntuale — es. un rimando dalla home Rotaract alla sezione Interact.',
+			options: [
+				{ value: '#D41367', label: 'Cranberry (default)' },
+				{ value: '#00A2E0', label: 'Sky Blue (Interact)' },
+				{ value: '#F7A81B', label: 'Rotary Gold' },
+				{ value: '#0067C8', label: 'Azure' },
+			],
+		},
+	],
+};
