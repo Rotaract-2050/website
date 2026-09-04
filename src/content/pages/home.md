@@ -131,6 +131,15 @@ blocks:
     titleEn: DISTRICT NEWS
     limit: 3
     _template: NewsGrid
+  - title: SCOPRI IL DISTRETTO DELL'INTERACT
+    titleEn: DISCOVER THE INTERACT DISTRICT
+    body: 'Il Rotaract non è solo per i maggiorenni: scopri l''Interact, la nostra "casa dei più giovani" (12-18 anni).'
+    bodyEn: 'Rotaract isn''t just for adults: discover Interact, our "home for the youngest" (ages 12-18).'
+    buttonLabel: VAI ALL'INTERACT
+    buttonLabelEn: GO TO INTERACT
+    buttonHref: interact
+    accent: '#00A2E0'
+    _template: CtaBanner
   - title: DIVENTA SOCIO DEL ROTARACT
     titleEn: BECOME A ROTARACT MEMBER
     body: Hai già compiuto 18 anni?

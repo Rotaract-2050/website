@@ -1,0 +1,327 @@
+---
+// EN twin of ../../../../interact/eventi/[year]/[slug].astro — see that file for the full
+// rationale (clone of the Rotaract event-detail route, pointed at the isolated `interactEvents`
+// collection). Only lang/locale/alternateHref differ, same pattern as the Rotaract EN twin.
+import { requestWithMetadata, tinaField } from '@tinacms/astro';
+import client from '../../../../../../tina/__generated__/client';
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import PageBanner from '../../../../../components/PageBanner.astro';
+import JsonLd from '../../../../../components/JsonLd.astro';
+import { Image } from 'astro:assets';
+import ImageSlot from '../../../../../components/ImageSlot.astro';
+import { uiStrings } from '../../../../../data/ui-strings';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { localizeInteractEvent, interactEventTypeTag, isUpcomingInteractEvent } from '../../../../../lib/interact-events';
+import { tagPillStyle, clubTagLabels } from '../../../../../lib/news';
+import { buildEventJsonLd } from '../../../../../lib/jsonld';
+
+const lang = 'en' as const;
+const t = uiStrings[lang];
+const year = Astro.params.year ?? '';
+const slug = Astro.params.slug ?? '';
+const eventSlug = `${year}/${slug}`;
+const relativePath = `${eventSlug}.md`;
+
+const result = await requestWithMetadata(client.queries.interactEvents({ relativePath }), { priority: 'primary' });
+const event = result.data.interactEvents;
+
+if (!event || event.visible === false) {
+	return Astro.redirect(getRelativeLocaleUrl(lang, 'interact/eventi'));
+}
+
+const dateFormatter = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+const typeTags = interactEventTypeTag(event);
+const clubTags = clubTagLabels(event.clubs);
+const localized = localizeInteractEvent(event, lang);
+const titleField = event.titleEn ? 'titleEn' : 'title';
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const jsonLd = buildEventJsonLd({
+	name: localized.title,
+	description: localized.excerpt,
+	startDate: event.date,
+	endDate: event.endDate,
+	imageUrl: new URL(event.image || '/uploads/Loghi/Logo-distretto.png', Astro.site).toString(),
+	url: canonicalUrl.toString(),
+	siteUrl: Astro.site!.toString(),
+	locationName: event.locationLavori || event.locationCena,
+});
+---
+
+<BaseLayout
+	lang={lang}
+	current="interactEventi"
+	title={localized.title}
+	description={localized.excerpt || t.events.empty}
+	alternateHref={getRelativeLocaleUrl('it', `interact/eventi/${eventSlug}`)}
+	image={event.image}
+	type="article"
+	publishedTime={event.date}
+	theme="interact"
+	siteName="Interact District 2050"
+>
+	<PageBanner
+		lang={lang}
+		eyebrow={t.events.detailEyebrow}
+		title={localized.title}
+		breadcrumbCurrent={t.interact.navEventi}
+		titleField={tinaField(event, titleField)}
+	/>
+	<article class="event-detail">
+		<div class="event-detail-inner">
+			<a href={getRelativeLocaleUrl(lang, 'interact/eventi')} class="back-link">{t.events.backToArchive}</a>
+			<div class="event-detail-meta">
+				{typeTags.length > 0 && (
+					<div class="event-detail-tags">
+						{typeTags.map((tag) => (
+							<span class="event-detail-tag" style={tagPillStyle(tag.color)}>{tag.label}</span>
+						))}
+					</div>
+				)}
+				<span class="event-detail-date" data-tina-field={tinaField(event, 'date')}>
+					{isUpcomingInteractEvent(event.date) && <span class="event-detail-upcoming-badge">{t.events.upcomingBadge}</span>}
+					{dateFormatter.format(new Date(event.date))}
+				</span>
+			</div>
+			{clubTags.length > 0 && (
+				<div class="event-detail-clubs">
+					<span class="event-detail-clubs-label">{t.events.hostClubLabel}</span>
+					{clubTags.map((tag) => (
+						<span class="event-detail-tag" style={tagPillStyle(tag.color)}>{tag.label}</span>
+					))}
+				</div>
+			)}
+			<div data-tina-field={tinaField(event, 'image')}>
+				{event.image ? (
+					<Image
+						src={event.image}
+						alt={localized.imageLabel}
+						width={960}
+						height={420}
+						fit="cover"
+						style={`--focal-x:${event.imageFocalX ?? 50}%;--focal-y:${event.imageFocalY ?? 50}%;`}
+						quality="high"
+						class="event-detail-image"
+					/>
+				) : (
+					<ImageSlot label={localized.imageLabel} class="event-detail-image" />
+				)}
+			</div>
+			{event.locationLavori && event.locationCena ? (
+				<div class="event-detail-locations">
+					<div><span class="event-detail-location-label">{t.events.worksLocationLabel}:</span> {event.locationLavori}</div>
+					<div><span class="event-detail-location-label">{t.events.dinnerLocationLabel}:</span> {event.locationCena}</div>
+				</div>
+			) : (
+				(event.locationLavori || event.locationCena) && (
+					<div class="event-detail-locations">
+						<div><span class="event-detail-location-label">{t.events.locationLabel}:</span> {event.locationLavori || event.locationCena}</div>
+					</div>
+				)
+			)}
+			{localized.excerpt && <p class="event-detail-excerpt">{localized.excerpt}</p>}
+			{event.schedule && event.schedule.length > 0 && (
+				<div class="event-schedule" data-tina-field={tinaField(event, 'schedule')}>
+					<h2 class="event-schedule-title">{t.events.scheduleTitle}</h2>
+					<ol class="event-schedule-list">
+						{event.schedule.map((item) => item && (
+							<li class="event-schedule-row">
+								{item.time && <span class="event-schedule-time">{item.time}</span>}
+								<div class="event-schedule-body">
+									<span class="event-schedule-item-title">{item.title}</span>
+									{item.speaker && <span class="event-schedule-speaker">{item.speaker}</span>}
+								</div>
+							</li>
+						))}
+					</ol>
+				</div>
+			)}
+		</div>
+	</article>
+	{jsonLd && <JsonLd data={jsonLd} />}
+</BaseLayout>
+
+<style>
+	.event-detail {
+		background: #fff;
+		padding: 50px 40px 90px;
+	}
+
+	.event-detail-inner {
+		max-width: 760px;
+		margin: 0 auto;
+	}
+
+	.back-link {
+		display: inline-block;
+		margin-bottom: 24px;
+		color: var(--color-pink);
+		font-weight: 700;
+		font-size: 14px;
+	}
+
+	.back-link:hover {
+		text-decoration: underline;
+	}
+
+	.event-detail-meta {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 10px 14px;
+		margin-bottom: 20px;
+	}
+
+	.event-detail-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+	}
+
+	.event-detail-clubs {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin-bottom: 20px;
+	}
+
+	.event-detail-clubs-label {
+		font-size: 12px;
+		font-weight: 700;
+		color: var(--color-navy);
+		text-transform: uppercase;
+		letter-spacing: 0.4px;
+	}
+
+	.event-detail-tag {
+		display: inline-block;
+		background: var(--tag-bg, rgba(0, 162, 224, 0.1));
+		color: var(--tag-color, var(--color-pink));
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.5px;
+		text-transform: uppercase;
+		padding: 4px 10px;
+		border-radius: 999px;
+	}
+
+	.event-detail-date {
+		font-size: 12px;
+		color: var(--color-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+
+	.event-detail-upcoming-badge {
+		display: inline-block;
+		background: var(--color-gold);
+		color: var(--color-navy);
+		font-weight: 700;
+		font-size: 11px;
+		letter-spacing: 0.5px;
+		padding: 3px 9px;
+		border-radius: 999px;
+		margin-right: 8px;
+	}
+
+	.event-detail-inner :global(.event-detail-image) {
+		width: 100%;
+		height: 340px;
+		object-fit: cover;
+		border-radius: 14px;
+		margin-bottom: 24px;
+	}
+
+	.event-detail-locations {
+		font-size: 15px;
+		color: var(--color-text);
+		line-height: 1.7;
+		margin-bottom: 20px;
+	}
+
+	.event-detail-location-label {
+		color: var(--color-pink);
+		font-weight: 700;
+	}
+
+	.event-detail-excerpt {
+		font-size: 16px;
+		color: var(--color-text);
+		line-height: 1.75;
+		margin: 0 0 24px;
+	}
+
+	.event-schedule {
+		background: #f6f8fa;
+		border-radius: var(--shape-large);
+		padding: 28px 26px;
+		margin-bottom: 28px;
+	}
+
+	.event-schedule-title {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 20px;
+		color: var(--color-navy);
+		text-transform: uppercase;
+		margin: 0 0 18px;
+	}
+
+	.event-schedule-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+	}
+
+	.event-schedule-row {
+		display: grid;
+		grid-template-columns: 64px 1fr;
+		gap: 16px;
+	}
+
+	.event-schedule-time {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 14px;
+		color: var(--color-pink);
+	}
+
+	.event-schedule-body {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+
+	.event-schedule-item-title {
+		font-size: 15px;
+		color: var(--color-text);
+		line-height: 1.5;
+	}
+
+	.event-schedule-speaker {
+		font-size: 13px;
+		color: var(--color-muted);
+	}
+
+	@media (max-width: 720px) {
+		.event-detail {
+			padding: 40px 20px 60px;
+		}
+
+		.event-detail-inner :global(.event-detail-image) {
+			height: 220px;
+		}
+
+		.event-schedule {
+			padding: 20px;
+		}
+
+		.event-schedule-row {
+			grid-template-columns: 52px 1fr;
+			gap: 10px;
+		}
+	}
+</style>

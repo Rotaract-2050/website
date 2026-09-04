@@ -1,0 +1,65 @@
+---
+// Clone of GenericPageView.astro — same `pages` query, same title/eyebrow/breadcrumbCurrent/seo
+// extraction — but calls BaseLayout with theme="interact" (+ localized siteName). Cloned rather
+// than adding an `if` branch to GenericPageView.astro to keep that file (the site's highest-
+// traffic code path) untouched and low-risk.
+import { requestWithMetadata, tinaField } from '@tinacms/astro';
+import client from '../../tina/__generated__/client';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageBanner from './PageBanner.astro';
+import BlockRenderer from './BlockRenderer.astro';
+import type { Lang } from '../data/ui-strings';
+import type { PageKey } from '../data/routes';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+interface Props {
+	lang: Lang;
+	/** Page slug, e.g. `interact` or `interact/storia` — always under the `interact` prefix. */
+	slug: string;
+}
+
+const { lang, slug } = Astro.props;
+const relativePath = `${slug}.md`;
+
+const result = await requestWithMetadata(client.queries.pages({ relativePath }), { priority: 'primary' });
+const page = result.data.pages;
+
+if (!page) {
+	return Astro.redirect(getRelativeLocaleUrl(lang, 'interact'));
+}
+
+const current = slug as PageKey;
+
+// Pages are a single file (IT + EN fields together, like clubs.story/storyEn) — pick the EN
+// value when present, falling back to IT, same as GenericPageView.astro.
+const isEn = lang === 'en';
+const title = (isEn && page.titleEn) || page.title;
+const titleFieldName = isEn && page.titleEn ? 'titleEn' : 'title';
+const eyebrow = (isEn && page.eyebrowEn) || page.eyebrow;
+const breadcrumbCurrent = (isEn && page.breadcrumbCurrentEn) || page.breadcrumbCurrent;
+const seoTitle = (isEn && page.seo?.titleEn) || page.seo?.title || title;
+const seoDescription = (isEn && page.seo?.descriptionEn) || page.seo?.description || '';
+const siteName = isEn ? 'Interact District 2050' : 'Interact Distretto 2050';
+---
+
+<BaseLayout
+	lang={lang}
+	current={current}
+	title={seoTitle}
+	description={seoDescription}
+	image={page.seo?.ogImage}
+	noindex={page.seo?.noindex ?? false}
+	theme="interact"
+	siteName={siteName}
+>
+	{slug !== 'interact' && eyebrow && breadcrumbCurrent && (
+		<PageBanner
+			lang={lang}
+			eyebrow={eyebrow}
+			title={title}
+			breadcrumbCurrent={breadcrumbCurrent}
+			titleField={tinaField(page, titleFieldName)}
+		/>
+	)}
+	<BlockRenderer lang={lang} blocks={page.blocks ?? []} />
+</BaseLayout>
