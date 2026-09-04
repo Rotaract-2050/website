@@ -150,6 +150,23 @@ const monthWindow = Array.from({ length: WINDOW_HALF * 2 + 1 }, (_, i) => {
 const uid = crypto.randomUUID().slice(0, 8);
 const agendaTabId = `cal-agenda-${uid}`;
 const monthTabId = `cal-month-${uid}`;
+
+// Event-kind filter (Rotaract/Interact/Rotary) — see eventKind() in lib/calendar.ts. Server-rendered
+// from `?kind=` so it works with no JS (real link + CSS attribute selector below); the script further
+// down intercepts clicks to swap instantly without a reload, same pattern as month/day.
+const KIND_FILTERS = ['all', 'rotaract', 'interact', 'rotary'] as const;
+type KindFilter = (typeof KIND_FILTERS)[number];
+const kindParam = Astro.url.searchParams.get('kind');
+const activeKind: KindFilter = (KIND_FILTERS as readonly string[]).includes(kindParam ?? '')
+	? (kindParam as KindFilter)
+	: 'all';
+
+function kindFilterLabel(k: KindFilter): string {
+	if (k === 'rotaract') return t.filterRotaract;
+	if (k === 'interact') return t.filterInteract;
+	if (k === 'rotary') return t.filterRotary;
+	return t.filterAll;
+}
 ---
 
 <section class="events-calendar" id="interact-eventi-calendario">
@@ -166,8 +183,20 @@ const monthTabId = `cal-month-${uid}`;
 		{!result.ok && <p class="calendar-status">{t.unavailable}</p>}
 
 		{result.ok && (
-			<fieldset class="view-switch" data-calendar data-default-month={activeMonthKey}>
+			<fieldset class="view-switch" data-calendar data-default-month={activeMonthKey} data-kind-filter={activeKind}>
 				<legend class="sr-only">{t.viewToggleLabel}</legend>
+
+				<div class="kind-filter" role="group" aria-label={t.filterLabel}>
+					{KIND_FILTERS.map((k) => (
+						<a
+							class={`kind-pill kind-pill-${k}${activeKind === k ? ' active' : ''}`}
+							href={`?kind=${k}#interact-eventi-calendario`}
+							aria-current={activeKind === k ? 'true' : undefined}
+						>
+							{kindFilterLabel(k)}
+						</a>
+					))}
+				</div>
 
 				<input type="radio" name={`calendar-view-${uid}`} id={agendaTabId} checked={!monthTabActive} />
 				<label for={agendaTabId}>{t.agendaTab}</label>
@@ -182,7 +211,7 @@ const monthTabId = `cal-month-${uid}`;
 							const href = archiveLinkFor(ev);
 							const RowTag = href ? 'a' : 'div';
 							return (
-								<RowTag class="event-row" {...(href ? { href } : {})}>
+								<RowTag class="event-row" data-kind={ev.kind} {...(href ? { href } : {})}>
 									<div class="event-date">
 										<div class="event-day">{String(day).padStart(2, '0')}</div>
 										<div class="event-month">{t.monthsShort[month]}</div>
@@ -210,7 +239,7 @@ const monthTabId = `cal-month-${uid}`;
 								const href = archiveLinkFor(ev);
 								const RowTag = href ? 'a' : 'div';
 								return (
-									<RowTag class="event-row" {...(href ? { href } : {})}>
+									<RowTag class="event-row" data-kind={ev.kind} {...(href ? { href } : {})}>
 										<div class="event-date">
 											<div class="event-day">{String(dateParts(key).day).padStart(2, '0')}</div>
 											<div class="event-month">{t.monthsShort[dateParts(key).month]}</div>
@@ -247,15 +276,26 @@ const monthTabId = `cal-month-${uid}`;
 								{month.cells.map((cell) => {
 									if (cell === null) return <div class="day-cell empty" />;
 									const cellClass = `day-cell${cell.key === todayKey ? ' today' : ''}`;
+									// All of the day's events are rendered (not just a top-3 slice) so the client script
+									// can recompute a correct per-kind top-3 + "+N" when the filter changes without a
+									// reload; `hidden` here is just the correct initial state for `activeKind` at request time.
+									const matchingActive = activeKind === 'all' ? cell.events : cell.events.filter((ev) => ev.kind === activeKind);
+									const visibleActive = new Set(matchingActive.slice(0, 3));
+									const moreActiveCount = Math.max(0, matchingActive.length - 3);
 									const cellContent = (
 										<>
 											<span class="day-number">{cell.day}</span>
-											{cell.events.slice(0, 3).map((ev) => (
-												<span class="day-event" title={`${ev.summary}${ev.location ? ' · ' + ev.location : ''}`}>
+											{cell.events.map((ev) => (
+												<span
+													class="day-event"
+													data-kind={ev.kind}
+													hidden={!visibleActive.has(ev)}
+													title={`${ev.summary}${ev.location ? ' · ' + ev.location : ''}`}
+												>
 													{ev.summary}
 												</span>
 											))}
-											{cell.events.length > 3 && <span class="day-event-more">+{cell.events.length - 3}</span>}
+											<em class="day-event-more" hidden={moreActiveCount === 0}>{moreActiveCount > 0 ? `+${moreActiveCount}` : ''}</em>
 										</>
 									);
 									return cell.events.length > 0 ? (
@@ -439,6 +479,71 @@ const monthTabId = `cal-month-${uid}`;
 		outline-offset: 2px;
 	}
 
+	/* Event-kind filter (Rotaract/Interact/Rotary/Tutti) — real links so it degrades to full page
+	   nav without JS; forced onto its own row inside the flex fieldset via flex-basis:100%. */
+	.kind-filter {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px 10px;
+		flex: 1 1 100%;
+		margin-bottom: 6px;
+	}
+
+	.kind-pill {
+		flex: 0 0 auto;
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 12px;
+		letter-spacing: 0.3px;
+		text-transform: uppercase;
+		color: var(--color-navy);
+		background: var(--color-bg);
+		border: 1px solid var(--color-border);
+		border-radius: var(--shape-full);
+		padding: 6px 16px;
+	}
+
+	.kind-pill:focus-visible {
+		outline: 2px solid var(--color-gold);
+		outline-offset: 2px;
+	}
+
+	.kind-pill-rotaract.active {
+		background: var(--color-kind-rotaract);
+		border-color: var(--color-kind-rotaract);
+		color: #fff;
+	}
+
+	.kind-pill-interact.active {
+		background: var(--color-kind-interact);
+		border-color: var(--color-kind-interact);
+		color: #fff;
+	}
+
+	.kind-pill-rotary.active {
+		background: var(--color-kind-rotary);
+		border-color: var(--color-kind-rotary);
+		color: #fff;
+	}
+
+	.kind-pill-all.active {
+		background: var(--color-navy);
+		border-color: var(--color-navy);
+		color: #fff;
+	}
+
+	.view-switch[data-kind-filter='rotaract'] [data-kind]:not([data-kind='rotaract']) {
+		display: none;
+	}
+
+	.view-switch[data-kind-filter='interact'] [data-kind]:not([data-kind='interact']) {
+		display: none;
+	}
+
+	.view-switch[data-kind-filter='rotary'] [data-kind]:not([data-kind='rotary']) {
+		display: none;
+	}
+
 	.view-panel {
 		display: none;
 		flex: 1 1 100%;
@@ -491,10 +596,28 @@ const monthTabId = `cal-month-${uid}`;
 		cursor: default;
 	}
 
+	/* Event-kind color (Rotaract/Interact/Rotary) via local custom properties, consumed by
+	   .event-date/.event-day/.event-month below — Rotaract is the implicit default (no [data-kind]
+	   override needed, per the classification rule in eventKind()). */
+	.event-row {
+		--event-container: var(--color-kind-rotaract-container);
+		--event-on-container: var(--color-kind-rotaract-on-container);
+	}
+
+	.event-row[data-kind='interact'] {
+		--event-container: var(--color-kind-interact-container);
+		--event-on-container: var(--color-kind-interact-on-container);
+	}
+
+	.event-row[data-kind='rotary'] {
+		--event-container: var(--color-kind-rotary-container);
+		--event-on-container: var(--color-kind-rotary-on-container);
+	}
+
 	.event-date {
 		flex: 0 0 auto;
 		width: 64px;
-		background: var(--color-pink-container);
+		background: var(--event-container);
 		border-radius: var(--shape-small);
 		text-align: center;
 		padding: 10px 0;
@@ -504,13 +627,13 @@ const monthTabId = `cal-month-${uid}`;
 		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: 22px;
-		color: var(--color-on-pink-container);
+		color: var(--event-on-container);
 		line-height: 1;
 	}
 
 	.event-month {
 		font-size: 11px;
-		color: var(--color-on-pink-container);
+		color: var(--event-on-container);
 		opacity: 0.75;
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
@@ -645,13 +768,21 @@ const monthTabId = `cal-month-${uid}`;
 	.day-event {
 		font-size: 11px;
 		line-height: 1.3;
-		color: var(--color-pink-dark);
+		color: var(--color-kind-rotaract-dark);
 		background: #f6f8fa;
 		border-radius: var(--shape-extra-small);
 		padding: 3px 6px;
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
+	}
+
+	.day-event[data-kind='interact'] {
+		color: var(--color-kind-interact-dark);
+	}
+
+	.day-event[data-kind='rotary'] {
+		color: var(--color-kind-rotary-dark);
 	}
 
 	.day-cell.today .day-event {
@@ -709,11 +840,27 @@ const monthTabId = `cal-month-${uid}`;
 			border-radius: 2px;
 			font-size: 0;
 			overflow: hidden;
-			background: var(--color-pink-dark);
+			background: var(--color-kind-rotaract-dark);
+		}
+
+		.day-event[data-kind='interact'] {
+			background: var(--color-kind-interact-dark);
+		}
+
+		.day-event[data-kind='rotary'] {
+			background: var(--color-kind-rotary-dark);
 		}
 
 		.day-cell.today .day-event {
-			background: var(--color-pink-dark);
+			background: var(--color-kind-rotaract-dark);
+		}
+
+		.day-cell.today .day-event[data-kind='interact'] {
+			background: var(--color-kind-interact-dark);
+		}
+
+		.day-cell.today .day-event[data-kind='rotary'] {
+			background: var(--color-kind-rotary-dark);
 		}
 
 		.day-event-more {
@@ -734,6 +881,38 @@ const monthTabId = `cal-month-${uid}`;
 		const monthPanels = Array.from(root.querySelectorAll<HTMLElement>('[data-month]'));
 		const dayPanels = Array.from(root.querySelectorAll<HTMLElement>('[data-day-agenda]'));
 		const agendaRadio = root.querySelector<HTMLInputElement>('input[id^="cal-agenda-"]');
+		const kindPills = Array.from(root.querySelectorAll<HTMLAnchorElement>('.kind-pill'));
+
+		// Every day cell renders ALL of its events (see this file's frontmatter), not just a top-3
+		// slice, so this can recompute a correct per-kind top-3 + "+N" instantly on filter change —
+		// matches exactly what the server computes for the initial `activeKind` at request time.
+		function applyKindCap() {
+			const kind = root.dataset.kindFilter ?? 'all';
+			root.querySelectorAll<HTMLElement>('.day-cell:not(.empty)').forEach((cellEl) => {
+				const dayEvents = Array.from(cellEl.querySelectorAll<HTMLElement>('.day-event'));
+				const matching = kind === 'all' ? dayEvents : dayEvents.filter((el) => el.dataset.kind === kind);
+				const visible = new Set(matching.slice(0, 3));
+				dayEvents.forEach((el) => {
+					el.hidden = !visible.has(el);
+				});
+				const more = cellEl.querySelector<HTMLElement>('.day-event-more');
+				if (!more) return;
+				const extra = matching.length - 3;
+				more.hidden = extra <= 0;
+				more.textContent = extra > 0 ? `+${extra}` : '';
+			});
+		}
+
+		function setActiveKind(kind: string) {
+			root.dataset.kindFilter = kind;
+			kindPills.forEach((pill) => {
+				const isActive = pill.classList.contains(`kind-pill-${kind}`);
+				pill.classList.toggle('active', isActive);
+				if (isActive) pill.setAttribute('aria-current', 'true');
+				else pill.removeAttribute('aria-current');
+			});
+			applyKindCap();
+		}
 
 		function showMonth(key: string): boolean {
 			const panel = monthPanels.find((p) => p.dataset.month === key);
@@ -784,6 +963,15 @@ const monthTabId = `cal-month-${uid}`;
 				const url = new URL(resetLink.href);
 				history.pushState(null, '', url.pathname + url.hash);
 			}
+
+			const kindLink = target.closest<HTMLAnchorElement>('.kind-pill');
+			if (kindLink) {
+				const url = new URL(kindLink.href);
+				const kind = url.searchParams.get('kind') ?? 'all';
+				event.preventDefault();
+				setActiveKind(kind);
+				history.pushState(null, '', url.pathname + url.search + url.hash);
+			}
 		});
 
 		window.addEventListener('popstate', () => {
@@ -791,6 +979,7 @@ const monthTabId = `cal-month-${uid}`;
 			const month = params.get('month') ?? root.dataset.defaultMonth;
 			if (month) showMonth(month);
 			showDay(params.get('day'));
+			setActiveKind(params.get('kind') ?? 'all');
 		});
 	}
 
