@@ -234,6 +234,7 @@ function loc(itValue: string | null | undefined, enValue: string | null | undefi
 			body={loc(block.body, block.bodyEn)}
 			buttonLabel={loc(block.buttonLabel, block.buttonLabelEn)}
 			buttonHref={block.buttonHref ?? ''}
+			accent={block.accent}
 		/>
 	)}
 	{block.__typename === 'PagesBlocksPagePlaceholder' && <PagePlaceholder message={loc(block.message, block.messageEn)} />}

@@ -22,9 +22,16 @@ interface Props {
 	lang: Lang;
 	clubs: MapClub[];
 	zones?: MapZone[];
+	/** Leaflet pin fill color, e.g. Interact's Sky Blue instead of Rotaract's Cranberry — a
+	 * literal SVG string, not a CSS var, so it can't retheme via [data-theme] alone. */
+	pinColor?: string;
+	/** Base path for the "view club" popup link (e.g. `club`  → `/club/<slug>`). Pass `null`
+	 * when the caller has no per-club detail page (e.g. Interact clubs, deliberately listing-only —
+	 * see InteractClubDirectory.astro) — the popup then shows just the club name, no link. */
+	linkBase?: string | null;
 }
 
-const { lang, clubs, zones = [] } = Astro.props;
+const { lang, clubs, zones = [], pinColor = '#d41367', linkBase = 'club' } = Astro.props;
 const t = uiStrings[lang].clubMap;
 
 const markers = clubs
@@ -33,7 +40,7 @@ const markers = clubs
 		name: club.name,
 		lat: club.lat,
 		lng: club.lng,
-		href: getRelativeLocaleUrl(lang, `club/${club._sys.filename}`),
+		href: linkBase ? getRelativeLocaleUrl(lang, `${linkBase}/${club._sys.filename}`) : null,
 	}));
 
 // Real municipal (comune) boundaries, unioned per zone by scripts/fetch-zone-boundaries.mjs
@@ -58,6 +65,7 @@ const zoneAreas = zones
 				data-clubs={JSON.stringify(markers)}
 				data-zones={JSON.stringify(zoneAreas)}
 				data-view-label={t.viewClub}
+				data-pin-color={pinColor}
 				role="application"
 				aria-label={t.title}
 			>
@@ -75,7 +83,7 @@ const zoneAreas = zones
 		name: string;
 		lat: number;
 		lng: number;
-		href: string;
+		href: string | null;
 	}
 
 	interface MapZone {
@@ -88,6 +96,7 @@ const zoneAreas = zones
 		const markers: MapMarker[] = JSON.parse(container.dataset.clubs ?? '[]');
 		const zones: MapZone[] = JSON.parse(container.dataset.zones ?? '[]');
 		const viewClubLabel = container.dataset.viewLabel ?? '';
+		const pinColor = container.dataset.pinColor ?? '#d41367';
 		if (markers.length === 0) return;
 
 		// zoomSnap: 1 (Leaflet's default) forces fitBounds to round DOWN to the nearest whole
@@ -126,7 +135,7 @@ const zoneAreas = zones
 
 		const pinIcon = L.divIcon({
 			className: 'club-pin',
-			html: '<svg viewBox="0 0 24 32" width="28" height="36" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20c0-6.6-5.4-12-12-12z" fill="#d41367" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="4.5" fill="#fff"/></svg>',
+			html: `<svg viewBox="0 0 24 32" width="28" height="36" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20c0-6.6-5.4-12-12-12z" fill="${pinColor}" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="4.5" fill="#fff"/></svg>`,
 			iconSize: [28, 36],
 			iconAnchor: [14, 36],
 			popupAnchor: [0, -32],
@@ -151,14 +160,16 @@ const zoneAreas = zones
 				const wrapper = document.createElement('div');
 				const title = document.createElement('strong');
 				title.textContent = club.name;
-				const link = document.createElement('a');
-				link.href = club.href;
-				link.textContent = viewClubLabel;
-				link.dataset.track = 'club_click';
-				link.dataset.trackParams = JSON.stringify({ club_name: club.name, zone_name: 'map' });
 				wrapper.appendChild(title);
-				wrapper.appendChild(document.createElement('br'));
-				wrapper.appendChild(link);
+				if (club.href) {
+					const link = document.createElement('a');
+					link.href = club.href;
+					link.textContent = viewClubLabel;
+					link.dataset.track = 'club_click';
+					link.dataset.trackParams = JSON.stringify({ club_name: club.name, zone_name: 'map' });
+					wrapper.appendChild(document.createElement('br'));
+					wrapper.appendChild(link);
+				}
 				return wrapper;
 			});
 
