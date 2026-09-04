@@ -37,8 +37,8 @@ blocks:
     imageLabelEn: Young Interact members
   - title: LA NOSTRA FAMIGLIA
     titleEn: OUR FAMILY
-    intro: 'L''Interact fa parte di un unico percorso di servizio e leadership, dai 12 anni fino a tutta la vita.'
-    introEn: 'Interact is part of one path of service and leadership, from age 12 for the rest of your life.'
+    intro: 'Un unico percorso di servizio e leadership, in tre tappe: dai 12 anni fino a tutta la vita.'
+    introEn: 'One path of service and leadership, in three stages: from age 12 for the rest of your life.'
     items:
       - title: ROTARY
         body: L'organizzazione internazionale di persone d'azione che riunisce leader di comunità in tutto il mondo, dal 1905.
@@ -54,6 +54,13 @@ blocks:
         buttonLabelEn: DISCOVER ROTARACT
         buttonHref: ''
         color: '#D41367'
+      - title: INTERACT
+        body: 'La casa dei più giovani: dai 12 ai 18 anni, il primo passo nella famiglia rotariana. Il distretto che stai visitando.'
+        bodyEn: "A home for the youngest: ages 12 to 18, the first step into the Rotary family. The district you're on right now."
+        buttonLabel: SCOPRI I CLUB
+        buttonLabelEn: DISCOVER THE CLUBS
+        buttonHref: interact/club
+        color: '#00A2E0'
     _template: FamilyGrid
   - items:
       - value: '14.500'

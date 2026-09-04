@@ -74,8 +74,7 @@ Tre, aggiunti in momenti diversi su richiesta esplicita, tutti attivi contempora
 
 Non è specifico dell'Interact — è un blocco generico (`tina/config.ts`: `familyGridTemplate`, componente `src/components/blocks/FamilyGrid.astro`) che compare **su entrambe le home**, ognuna con le proprie card:
 
-- `home.md` (Rotaract): card Rotary + Interact (Rotaract omesso — è il sito su cui si è già).
-- `interact.md`: card Rotary + Rotaract (Interact omesso, stesso motivo). Card Rotaract linka alla root (`buttonHref: ''`).
+- `home.md` (Rotaract) e `interact.md`: **tutte e 3 le card su entrambe le pagine** (decisione esplicita dell'utente, dopo una versione precedente che ne nascondeva una per pagina — poi tornata indietro: "mi piaceva che ci fossero tutte 3"). Cambia solo il bottone della card del sito su cui ci si trova già: su `home.md` la card Rotaract linka a `distretto`, su `interact.md` la card Interact linka a `interact/club` — non un giro a vuoto verso la pagina stessa. La card Rotaract su `interact.md` linka alla root Rotaract (`buttonHref: ''`).
 
 **Non usare `CardGrid`** per pattern simili: `CardGrid.color` è la palette secondaria per tag/zona (Turquoise/Violet/Orange/Grass), semanticamente diversa dai colori identitari primari (Royal Blue/Cranberry/Sky Blue) che `FamilyGrid` usa per card grandi con corpo testo + bottone.
 
