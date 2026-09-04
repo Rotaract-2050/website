@@ -63,6 +63,11 @@ export interface UiStrings {
 		dayFilterPrefix: string;
 		dayFilterEmpty: string;
 		dayFilterReset: string;
+		filterLabel: string;
+		filterAll: string;
+		filterRotaract: string;
+		filterInteract: string;
+		filterRotary: string;
 		weekdaysShort: string[];
 		monthsShort: string[];
 		monthsFull: string[];
@@ -230,6 +235,11 @@ const IT: UiStrings = {
 		dayFilterPrefix: 'Eventi del',
 		dayFilterEmpty: 'Nessun evento in questo giorno.',
 		dayFilterReset: '× Mostra i prossimi eventi',
+		filterLabel: 'Filtra per tipo evento',
+		filterAll: 'Tutti',
+		filterRotaract: 'Rotaract',
+		filterInteract: 'Interact',
+		filterRotary: 'Rotary',
 		weekdaysShort: ['LUN', 'MAR', 'MER', 'GIO', 'VEN', 'SAB', 'DOM'],
 		monthsShort: ['GEN', 'FEB', 'MAR', 'APR', 'MAG', 'GIU', 'LUG', 'AGO', 'SET', 'OTT', 'NOV', 'DIC'],
 		monthsFull: [
@@ -392,6 +402,11 @@ const EN: UiStrings = {
 		dayFilterPrefix: 'Events on',
 		dayFilterEmpty: 'No events on this day.',
 		dayFilterReset: '× Show upcoming events',
+		filterLabel: 'Filter by event type',
+		filterAll: 'All',
+		filterRotaract: 'Rotaract',
+		filterInteract: 'Interact',
+		filterRotary: 'Rotary',
 		weekdaysShort: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
 		monthsShort: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
 		monthsFull: [
