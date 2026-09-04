@@ -26,6 +26,7 @@ import ResourceArchive from './blocks/ResourceArchive.astro';
 import InteractClubDirectory from './blocks/InteractClubDirectory.astro';
 import InteractEventsCalendar from './blocks/InteractEventsCalendar.astro';
 import InteractEventsArchive from './blocks/InteractEventsArchive.astro';
+import FamilyGrid from './blocks/FamilyGrid.astro';
 
 function nonNull<T>(value: T | null | undefined): value is T {
 	return value != null;
@@ -66,6 +67,7 @@ function loc(itValue: string | null | undefined, enValue: string | null | undefi
 		'PagesBlocksStatsBar',
 		'PagesBlocksSplitSection',
 		'PagesBlocksCardGrid',
+		'PagesBlocksFamilyGrid',
 		'PagesBlocksNewsGrid',
 		'PagesBlocksEventsCalendar',
 	].includes(block.__typename) ? undefined : true}
@@ -126,6 +128,21 @@ function loc(itValue: string | null | undefined, enValue: string | null | undefi
 			imageLabel={loc(block.imageLabel, block.imageLabelEn)}
 			imageSide={block.imageSide === 'left' ? 'left' : 'right'}
 			accent={block.accent}
+		/>
+	)}
+	{block.__typename === 'PagesBlocksFamilyGrid' && (
+		<FamilyGrid
+			lang={lang}
+			title={loc(block.title, block.titleEn)}
+			intro={loc(block.intro, block.introEn) || undefined}
+			items={(block.items ?? []).filter(nonNull).map((i) => ({
+				title: loc(i.title, i.titleEn),
+				body: loc(i.body, i.bodyEn) || undefined,
+				buttonLabel: loc(i.buttonLabel, i.buttonLabelEn) || undefined,
+				buttonHref: i.buttonHref ?? undefined,
+				color: i.color ?? undefined,
+				tinaFieldAttr: tinaField(i),
+			}))}
 		/>
 	)}
 	{block.__typename === 'PagesBlocksCardGrid' && (

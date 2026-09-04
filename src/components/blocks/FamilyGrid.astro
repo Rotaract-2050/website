@@ -1,0 +1,198 @@
+---
+// "La nostra famiglia" — Rotary/Rotaract/Interact, one big card per organization, each tinted
+// with its own official brand color (not CardGrid: that block's `color` is the secondary
+// zone-tag palette, not a primary brand identity color — see tina/config.ts's familyGridTemplate).
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { Lang } from '../../data/ui-strings';
+
+interface FamilyCard {
+	title: string;
+	body?: string;
+	buttonLabel?: string;
+	buttonHref?: string;
+	color?: string;
+	tinaFieldAttr?: string;
+}
+
+interface Props {
+	lang: Lang;
+	title: string;
+	intro?: string;
+	items: FamilyCard[];
+}
+
+const { lang, title, intro, items } = Astro.props;
+const isExternal = (href: string) => /^https?:\/\//.test(href);
+---
+
+<section class="family-grid">
+	<div class="section-inner">
+		<h2 class="section-title">{title}</h2>
+		{intro && <p class="intro">{intro}</p>}
+		<div class="card-row">
+			{items.map((item) => {
+				const href = item.buttonHref ?? '';
+				const external = href !== '' && isExternal(href);
+				const resolvedHref = href === '' ? undefined : external ? href : getRelativeLocaleUrl(lang, href);
+				return (
+					<div class="card" data-tina-field={item.tinaFieldAttr} style={item.color ? `--tint:${item.color};` : undefined}>
+						<div class="card-mark" aria-hidden="true">{item.title?.charAt(0)}</div>
+						<h3 class="card-title">{item.title}</h3>
+						{item.body && <p class="card-body">{item.body}</p>}
+						{item.buttonLabel && resolvedHref && (
+							<a
+								href={resolvedHref}
+								class="card-button"
+								target={external ? '_blank' : undefined}
+								rel={external ? 'noopener noreferrer' : undefined}
+								data-track="family_card_click"
+								data-track-params={JSON.stringify({ family_org: item.title })}
+							>
+								{item.buttonLabel}
+							</a>
+						)}
+					</div>
+				);
+			})}
+		</div>
+	</div>
+</section>
+
+<style>
+	.family-grid {
+		background: var(--color-bg);
+		padding: 96px 40px;
+	}
+
+	.section-inner {
+		max-width: var(--content-max);
+		margin: 0 auto;
+	}
+
+	.section-title {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 34px;
+		color: var(--color-navy);
+		text-transform: uppercase;
+		text-align: center;
+		margin: 0 0 12px;
+	}
+
+	.intro {
+		font-size: 16px;
+		color: var(--color-text);
+		line-height: 1.7;
+		max-width: 640px;
+		margin: 0 auto 40px;
+		text-align: center;
+	}
+
+	.card-row {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 28px;
+		margin-top: 40px;
+	}
+
+	/* Big M3 tonal container per organization, tinted by its own brand color (--tint) — same
+	   "the color IS the surface" pattern as Home's zone CardGrid, just richer (body + button,
+	   not just a title/meta link). */
+	.card {
+		--tint: var(--color-navy);
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		background: color-mix(in srgb, var(--tint) 10%, white);
+		border-radius: var(--shape-extra-large);
+		box-shadow: 0 8px 24px color-mix(in srgb, var(--tint) 25%, transparent);
+		padding: 48px 32px;
+		overflow: hidden;
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
+	}
+
+	.card:hover {
+		transform: translateY(-6px);
+		box-shadow: 0 16px 32px color-mix(in srgb, var(--tint) 40%, transparent);
+	}
+
+	.card-mark {
+		width: 72px;
+		height: 72px;
+		border-radius: 50%;
+		background: var(--tint);
+		color: #fff;
+		font-family: var(--font-heading);
+		font-weight: 800;
+		font-size: 30px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: 20px;
+		flex-shrink: 0;
+	}
+
+	.card-title {
+		font-family: var(--font-heading);
+		font-weight: 800;
+		font-size: 24px;
+		color: color-mix(in srgb, var(--tint) 85%, black 20%);
+		text-transform: uppercase;
+		margin: 0 0 14px;
+	}
+
+	.card-body {
+		font-size: 15px;
+		color: var(--color-text);
+		line-height: 1.65;
+		margin: 0 0 28px;
+		flex-grow: 1;
+	}
+
+	.card-button {
+		display: inline-block;
+		background: var(--tint);
+		color: #fff;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 13px;
+		letter-spacing: 0.5px;
+		text-transform: uppercase;
+		padding: 12px 26px;
+		border-radius: var(--shape-full);
+		margin-top: auto;
+		transition: transform var(--motion-duration-short) var(--motion-easing-standard), box-shadow var(--motion-duration-short) var(--motion-easing-standard);
+	}
+
+	.card-button:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 16px color-mix(in srgb, var(--tint) 45%, transparent);
+		color: #fff;
+	}
+
+	@media (max-width: 900px) {
+		.card-row {
+			grid-template-columns: 1fr;
+			max-width: 380px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+
+	@media (max-width: 720px) {
+		.family-grid {
+			padding: 60px 20px;
+		}
+	}
+</style>
+
+<script>
+	import { revealOnScroll, cappedStagger } from '../../lib/motion';
+
+	document.querySelectorAll<HTMLElement>('.family-grid').forEach((section) => {
+		const cards = Array.from(section.querySelectorAll<HTMLElement>('.card'));
+		revealOnScroll(section, cards, { opacity: [0, 1], y: [16, 0] }, { delay: cappedStagger(0.1) });
+	});
+</script>
