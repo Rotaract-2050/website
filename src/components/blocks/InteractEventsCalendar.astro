@@ -177,6 +177,7 @@ function kindFilterLabel(k: KindFilter): string {
 <section class="events-calendar" id="interact-eventi-calendario">
 	<div class="section-inner">
 	<div class="calendar-card">
+		<div class="watermark" aria-hidden="true">INT</div>
 		<div class="calendar-header">
 			<h2 class="section-title">{title}</h2>
 			<div class="calendar-actions">
@@ -345,9 +346,31 @@ function kindFilterLabel(k: KindFilter): string {
 	/* Everything else on the site floats as a big rounded card by now — the calendar
 	   was the last section still a flat panel flush with the page background. */
 	.calendar-card {
-		background: #f6f8fa;
+		--tint: var(--color-navy);
+		background: color-mix(in srgb, var(--tint) 4%, white);
+		box-shadow: 0 8px 24px color-mix(in srgb, var(--tint) 15%, transparent);
 		border-radius: var(--shape-extra-large);
 		padding: 48px 40px;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.watermark {
+		font-family: var(--font-heading);
+		font-size: 180px;
+		line-height: 1;
+		font-weight: 900;
+		color: color-mix(in srgb, var(--tint) 4%, transparent);
+		position: absolute;
+		right: 4px;
+		bottom: -40px;
+		pointer-events: none;
+		z-index: 0;
+	}
+
+	.calendar-header, .view-switch, .calendar-status {
+		position: relative;
+		z-index: 1;
 	}
 
 	.calendar-header {
@@ -477,14 +500,20 @@ function kindFilterLabel(k: KindFilter): string {
 		text-transform: uppercase;
 		color: var(--color-navy);
 		background: var(--color-bg);
-		border: 1px solid var(--color-border);
+		border: none;
+		box-shadow: var(--elevation-1);
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
 		border-radius: var(--shape-small);
 		padding: 8px 22px;
 	}
 
+	.view-switch label:hover {
+		transform: translateY(-2px);
+		box-shadow: var(--elevation-2);
+	}
+
 	.view-switch input[type='radio']:checked + label {
 		background: var(--color-pink);
-		border-color: var(--color-pink);
 		color: #fff;
 	}
 
@@ -512,9 +541,16 @@ function kindFilterLabel(k: KindFilter): string {
 		text-transform: uppercase;
 		color: var(--color-navy);
 		background: var(--color-bg);
-		border: 1px solid var(--color-border);
+		border: none;
+		box-shadow: var(--elevation-1);
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
 		border-radius: var(--shape-full);
 		padding: 6px 16px;
+	}
+
+	.kind-pill:hover {
+		transform: translateY(-2px);
+		box-shadow: var(--elevation-2);
 	}
 
 	.kind-pill:focus-visible {
@@ -524,25 +560,21 @@ function kindFilterLabel(k: KindFilter): string {
 
 	.kind-pill-rotaract.active {
 		background: var(--color-kind-rotaract);
-		border-color: var(--color-kind-rotaract);
 		color: #fff;
 	}
 
 	.kind-pill-interact.active {
 		background: var(--color-kind-interact);
-		border-color: var(--color-kind-interact);
 		color: #fff;
 	}
 
 	.kind-pill-rotary.active {
 		background: var(--color-kind-rotary);
-		border-color: var(--color-kind-rotary);
 		color: #fff;
 	}
 
 	.kind-pill-all.active {
 		background: var(--color-navy);
-		border-color: var(--color-navy);
 		color: #fff;
 	}
 
@@ -633,10 +665,10 @@ function kindFilterLabel(k: KindFilter): string {
 	}
 
 	/* Deadline overlay ("scadenza" in the title, see isDeadlineEvent()) — highlights the whole card
-	   in Cardinal red regardless of kind, an urgency signal layered on top of the kind color. */
+	   with a subtle danger tint instead of an aggressive solid block, matching the glassmorphism system. */
 	.event-row[data-deadline='true'] {
-		background: var(--color-danger-container);
-		box-shadow: 0 0 0 2px var(--color-danger), var(--elevation-1);
+		background: color-mix(in srgb, var(--color-danger) 4%, white);
+		box-shadow: 0 4px 12px color-mix(in srgb, var(--color-danger) 15%, transparent);
 	}
 
 	/* Event-kind color (Rotaract/Interact/Rotary) via local custom properties, consumed by
@@ -802,11 +834,11 @@ function kindFilterLabel(k: KindFilter): string {
 		box-shadow: 0 0 0 2px var(--color-gold), var(--elevation-1);
 	}
 
-	/* Deadline overlay ("scadenza" in the title) — whole cell in Cardinal red, wins over the
-	   gold "today" ring since a deadline is the more urgent signal. */
+	/* Deadline overlay ("scadenza" in the title) — whole cell gets a subtle red tint.
+	   Wins over the gold "today" ring in urgency, but avoids being visually aggressive. */
 	.day-cell[data-deadline='true'] {
-		background: var(--color-danger-container);
-		box-shadow: 0 0 0 2px var(--color-danger), var(--elevation-1);
+		background: color-mix(in srgb, var(--color-danger) 4%, white);
+		box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-danger) 20%, transparent), var(--elevation-1);
 	}
 
 	.day-number {
