@@ -70,7 +70,13 @@ pushd "$WORKTREE_DIR" >/dev/null
 npm ci
 # Comando reale (stesso della CI di produzione), --skip-search-index perche'
 # in locale non abbiamo le credenziali dedicate per l'upload dell'indice.
-NODE_OPTIONS=--max-old-space-size=4096 npx tinacms build -c "astro build" --skip-cloud-checks --skip-search-index
+#
+# HEAD=dev: tina/config.ts legge `branch` da WORKERS_CI_BRANCH (solo
+# Workers Builds la inietta) o da HEAD, altrimenti "main" — senza questo il
+# client Tina interroga sempre lo schema di main su Tina Cloud, e un
+# blocco/campo nuovo solo su dev fa fallire la query GraphQL (pagina
+# bianca, nessun errore visibile lato Worker deployato).
+NODE_OPTIONS=--max-old-space-size=4096 HEAD=dev npx tinacms build -c "astro build" --skip-cloud-checks --skip-search-index
 
 echo ""
 echo "=== wrangler versions upload (non promuove mai, nessun rischio produzione) ==="

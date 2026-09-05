@@ -36,9 +36,19 @@ jobs:
       # script manuale locale, qui i secret Tina sono valori veri (secrets
       # GitHub), non riferimenti 1Password non risolti, quindi non serve
       # --skip-search-index.
+      #
+      # HEAD=dev: tina/config.ts legge `branch` da WORKERS_CI_BRANCH (var
+      # che solo Workers Builds inietta) o da HEAD, altrimenti cade su
+      # "main". Bypassando Workers Builds abbiamo perso la prima, quindi
+      # va passata la seconda a mano — altrimenti il client Tina interroga
+      # sempre lo schema di main su Tina Cloud, e qualunque blocco/campo
+      # nuovo solo su dev fa fallire la query GraphQL (pagina bianca,
+      # nessun errore visibile lato Worker deployato — visto per la prima
+      # volta il 2026-09-05 dopo il merge di feature/interact-section).
       - name: Build
         env:
           NODE_OPTIONS: --max-old-space-size=4096
+          HEAD: dev
           TINA_CLIENT_ID: ${{ secrets.TINA_CLIENT_ID }}
           TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
           TINA_SEARCH_TOKEN: ${{ secrets.TINA_SEARCH_TOKEN }}
