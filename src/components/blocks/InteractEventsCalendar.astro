@@ -228,10 +228,68 @@ function kindTitle(k: KindFilter): string {
 					))}
 				</div>
 
-				<input type="radio" name={`calendar-view-${uid}`} id={agendaTabId} checked={!monthTabActive} />
-				<label for={agendaTabId}>{t.agendaTab}</label>
-				<input type="radio" name={`calendar-view-${uid}`} id={monthTabId} checked={monthTabActive} />
-				<label for={monthTabId}>{t.monthTab}</label>
+
+				<div class="calendar-split">
+				<div class="view-panel month-panel">
+					{monthWindow.map((month) => (
+						<div class="month-single" data-month={month.key} hidden={month.key !== activeMonthKey}>
+							<div class="month-nav">
+								<a class="month-nav-btn" href={`?month=${month.prevKey}#interact-eventi-calendario`} aria-label={t.prevMonth}>‹</a>
+								<div class="month-grid-title">{month.label}</div>
+								<a class="month-nav-btn" href={`?month=${month.nextKey}#interact-eventi-calendario`} aria-label={t.nextMonth}>›</a>
+							</div>
+							<div class="weekday-row">
+								{t.weekdaysShort.map((wd) => (
+									<div class="weekday-cell">{wd}</div>
+								))}
+							</div>
+							<div class="day-grid">
+								{month.cells.map((cell) => {
+									if (cell === null) return <div class="day-cell empty" />;
+									const cellClass = `day-cell${cell.key === todayKey ? ' today' : ''}`;
+									const cellHasDeadline = cell.events.some((ev) => ev.isDeadline);
+									// All of the day's events are rendered (not just a top-3 slice) so the client script
+									// can recompute a correct per-kind top-3 + "+N" when the filter changes without a
+									// reload; `hidden` here is just the correct initial state for `activeKind` at request time.
+									const matchingActive =
+										activeKind === 'all'
+											? cell.events
+											: activeKind === 'scadenze'
+												? cell.events.filter((ev) => ev.isDeadline)
+												: cell.events.filter((ev) => ev.kind === activeKind);
+									const visibleActive = new Set(matchingActive.slice(0, 3));
+									const moreActiveCount = Math.max(0, matchingActive.length - 3);
+									const cellContent = (
+										<>
+											<span class="day-number">{cell.day}</span>
+											<div class="day-events-dots">
+												{cell.events.map((ev) => (
+													<span
+														class="day-event"
+														data-kind={ev.kind}
+														data-deadline={ev.isDeadline}
+														hidden={!visibleActive.has(ev)}
+														title={`${ev.summary}${ev.location ? ' · ' + ev.location : ''}`}
+													>
+														{ev.summary}
+													</span>
+												))}
+												<em class="day-event-more" hidden={moreActiveCount === 0}>{moreActiveCount > 0 ? `+${moreActiveCount}` : ''}</em>
+											</div>
+										</>
+									);
+									return cell.events.length > 0 ? (
+										<a class={cellClass} data-deadline={cellHasDeadline} href={`?day=${cell.key}#interact-eventi-calendario`}>
+											{cellContent}
+										</a>
+									) : (
+										<div class={cellClass} data-deadline={cellHasDeadline}>{cellContent}</div>
+									);
+								})}
+							</div>
+						</div>
+					))}
+				</div>
 
 				<div class="view-panel agenda-panel">
 					<div class="agenda-content" data-day-agenda="default" hidden={dayFilter !== null}>
@@ -297,65 +355,6 @@ function kindTitle(k: KindFilter): string {
 					))}
 				</div>
 
-				<div class="view-panel month-panel">
-					{monthWindow.map((month) => (
-						<div class="month-single" data-month={month.key} hidden={month.key !== activeMonthKey}>
-							<div class="month-nav">
-								<a class="month-nav-btn" href={`?month=${month.prevKey}#interact-eventi-calendario`} aria-label={t.prevMonth}>‹</a>
-								<div class="month-grid-title">{month.label}</div>
-								<a class="month-nav-btn" href={`?month=${month.nextKey}#interact-eventi-calendario`} aria-label={t.nextMonth}>›</a>
-							</div>
-							<div class="weekday-row">
-								{t.weekdaysShort.map((wd) => (
-									<div class="weekday-cell">{wd}</div>
-								))}
-							</div>
-							<div class="day-grid">
-								{month.cells.map((cell) => {
-									if (cell === null) return <div class="day-cell empty" />;
-									const cellClass = `day-cell${cell.key === todayKey ? ' today' : ''}`;
-									const cellHasDeadline = cell.events.some((ev) => ev.isDeadline);
-									// All of the day's events are rendered (not just a top-3 slice) so the client script
-									// can recompute a correct per-kind top-3 + "+N" when the filter changes without a
-									// reload; `hidden` here is just the correct initial state for `activeKind` at request time.
-									const matchingActive =
-										activeKind === 'all'
-											? cell.events
-											: activeKind === 'scadenze'
-												? cell.events.filter((ev) => ev.isDeadline)
-												: cell.events.filter((ev) => ev.kind === activeKind);
-									const visibleActive = new Set(matchingActive.slice(0, 3));
-									const moreActiveCount = Math.max(0, matchingActive.length - 3);
-									const cellContent = (
-										<>
-											<span class="day-number">{cell.day}</span>
-											<div class="day-events-dots">
-												{cell.events.map((ev) => (
-													<span
-														class="day-event"
-														data-kind={ev.kind}
-														data-deadline={ev.isDeadline}
-														hidden={!visibleActive.has(ev)}
-														title={`${ev.summary}${ev.location ? ' · ' + ev.location : ''}`}
-													>
-														{ev.summary}
-													</span>
-												))}
-												<em class="day-event-more" hidden={moreActiveCount === 0}>{moreActiveCount > 0 ? `+${moreActiveCount}` : ''}</em>
-											</div>
-										</>
-									);
-									return cell.events.length > 0 ? (
-										<a class={cellClass} data-deadline={cellHasDeadline} href={`?day=${cell.key}#interact-eventi-calendario`}>
-											{cellContent}
-										</a>
-									) : (
-										<div class={cellClass} data-deadline={cellHasDeadline}>{cellContent}</div>
-									);
-								})}
-							</div>
-						</div>
-					))}
 				</div>
 			</fieldset>
 		)}
@@ -651,17 +650,21 @@ function kindTitle(k: KindFilter): string {
 		display: none;
 	}
 
+	.calendar-split {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 40px;
+		margin-top: 32px;
+	}
+
+	@media (min-width: 900px) {
+		.calendar-split {
+			grid-template-columns: 340px 1fr;
+			gap: 64px;
+		}
+	}
+
 	.view-panel {
-		display: none;
-		flex: 1 1 100%;
-		margin-top: 28px;
-	}
-
-	.view-switch input[id^='cal-agenda-']:checked ~ .agenda-panel {
-		display: block;
-	}
-
-	.view-switch input[id^='cal-month-']:checked ~ .month-panel {
 		display: block;
 	}
 
@@ -996,8 +999,7 @@ function kindTitle(k: KindFilter): string {
 	function initCalendar(root: HTMLElement) {
 		const monthPanels = Array.from(root.querySelectorAll<HTMLElement>('[data-month]'));
 		const dayPanels = Array.from(root.querySelectorAll<HTMLElement>('[data-day-agenda]'));
-		const agendaRadio = root.querySelector<HTMLInputElement>('input[id^="cal-agenda-"]');
-		const kindPills = Array.from(root.querySelectorAll<HTMLAnchorElement>('.kind-pill'));
+				const kindPills = Array.from(root.querySelectorAll<HTMLAnchorElement>('.kind-pill'));
 		// .section-title lives in .calendar-header, a sibling of this fieldset (not a descendant),
 		// so it's reached via the shared .calendar-card ancestor instead of root.querySelector.
 		const titleEl = root.closest<HTMLElement>('.calendar-card')?.querySelector<HTMLElement>('.section-title') ?? null;
@@ -1081,7 +1083,6 @@ function kindTitle(k: KindFilter): string {
 				const day = url.searchParams.get('day');
 				if (!day || !showDay(day)) return;
 				event.preventDefault();
-				if (agendaRadio) agendaRadio.checked = true;
 				history.pushState(null, '', url.pathname + url.search + url.hash);
 				return;
 			}
