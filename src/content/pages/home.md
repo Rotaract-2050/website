@@ -151,8 +151,8 @@ blocks:
         href: club
         color: '#901F93'
     _template: CardGrid
-  - title: EVENTI DISTRETTUALI
-    titleEn: DISTRICT EVENTS
+  - title: EVENTI DELLA NOSTRA FAMIGLIA
+    titleEn: OUR FAMILY'S EVENTS
     _template: EventsCalendar
   - title: NEWS DAL DISTRETTO
     titleEn: DISTRICT NEWS

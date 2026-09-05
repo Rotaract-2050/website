@@ -1029,6 +1029,11 @@ function kindTitle(k: KindFilter): string {
 				if (isActive) pill.setAttribute('aria-current', 'true');
 				else pill.removeAttribute('aria-current');
 			});
+			if (titleEl) {
+				titleEl.dataset.activeKind = kind;
+				const titleAttr = kind === 'all' ? 'titleAll' : kind === 'rotaract' ? 'titleRotaract' : kind === 'interact' ? 'titleInteract' : 'titleRotary';
+				titleEl.textContent = titleEl.dataset[titleAttr] ?? titleEl.dataset.titleAll ?? '';
+			}
 			applyKindCap();
 		}
 

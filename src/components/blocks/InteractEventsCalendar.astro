@@ -172,6 +172,16 @@ function kindFilterLabel(k: KindFilter): string {
 	if (k === 'rotary') return t.filterRotary;
 	return t.filterAll;
 }
+
+// The "Tutti" title stays whatever a socio set in Tina (the `title` prop); filtering to one kind
+// swaps it for a fixed label in that kind's color instead — a Tina text field can't hold 4 states
+// that must switch instantly client-side, so these three are code-level like kindFilterLabel above.
+function kindTitle(k: KindFilter): string {
+	if (k === 'rotaract') return t.titleRotaract;
+	if (k === 'interact') return t.titleInteract;
+	if (k === 'rotary') return t.titleRotary;
+	return title;
+}
 ---
 
 <section class="events-calendar" id="interact-eventi-calendario">
@@ -179,7 +189,16 @@ function kindFilterLabel(k: KindFilter): string {
 	<div class="calendar-card">
 		<div class="watermark" aria-hidden="true">INT</div>
 		<div class="calendar-header">
-			<h2 class="section-title">{title}</h2>
+			<h2
+				class="section-title"
+				data-active-kind={activeKind}
+				data-title-all={title}
+				data-title-rotaract={t.titleRotaract}
+				data-title-interact={t.titleInteract}
+				data-title-rotary={t.titleRotary}
+			>
+				{kindTitle(activeKind)}
+			</h2>
 			<div class="calendar-actions">
 				<a class="view-full" href={CALENDAR_VIEW_URL} target="_blank" rel="noopener">{t.viewFullCalendar}</a>
 				<a class="subscribe-btn" href={CALENDAR_SUBSCRIBE_URL} target="_blank" rel="noopener">{t.subscribe}</a>
@@ -389,6 +408,21 @@ function kindFilterLabel(k: KindFilter): string {
 		color: var(--color-navy);
 		text-transform: uppercase;
 		margin: 0;
+		transition: color var(--motion-duration-medium) var(--motion-easing-emphasized);
+	}
+
+	/* Title text/color swap with the active kind filter (see kindTitle() and the script below) —
+	   "Tutti" keeps the page's default color and whatever title a socio set in Tina. */
+	.section-title[data-active-kind='rotaract'] {
+		color: var(--color-kind-rotaract);
+	}
+
+	.section-title[data-active-kind='interact'] {
+		color: var(--color-kind-interact);
+	}
+
+	.section-title[data-active-kind='rotary'] {
+		color: var(--color-kind-rotary);
 	}
 
 	.calendar-actions {
@@ -964,6 +998,9 @@ function kindFilterLabel(k: KindFilter): string {
 		const dayPanels = Array.from(root.querySelectorAll<HTMLElement>('[data-day-agenda]'));
 		const agendaRadio = root.querySelector<HTMLInputElement>('input[id^="cal-agenda-"]');
 		const kindPills = Array.from(root.querySelectorAll<HTMLAnchorElement>('.kind-pill'));
+		// .section-title lives in .calendar-header, a sibling of this fieldset (not a descendant),
+		// so it's reached via the shared .calendar-card ancestor instead of root.querySelector.
+		const titleEl = root.closest<HTMLElement>('.calendar-card')?.querySelector<HTMLElement>('.section-title') ?? null;
 
 		// Every day cell renders ALL of its events (see this file's frontmatter), not just a top-3
 		// slice, so this can recompute a correct per-kind top-3 + "+N" instantly on filter change —
@@ -993,6 +1030,11 @@ function kindFilterLabel(k: KindFilter): string {
 				if (isActive) pill.setAttribute('aria-current', 'true');
 				else pill.removeAttribute('aria-current');
 			});
+			if (titleEl) {
+				titleEl.dataset.activeKind = kind;
+				const titleAttr = kind === 'all' ? 'titleAll' : kind === 'rotaract' ? 'titleRotaract' : kind === 'interact' ? 'titleInteract' : 'titleRotary';
+				titleEl.textContent = titleEl.dataset[titleAttr] ?? titleEl.dataset.titleAll ?? '';
+			}
 			applyKindCap();
 		}
 
