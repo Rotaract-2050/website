@@ -1,6 +1,6 @@
 ## Agent instructions location
 
-This repo also keeps agent skills and instructions under `.claude/` (Claude Code's config dir), not just `.agents/`. Read `.claude/skills/*/SKILL.md` and any `.claude/*.md` files too — shared skills are symlinked from `.agents/skills/` into `.claude/skills/` so both locations stay in sync.
+This repo keeps agent skills and instructions centrally in `.claude/` (Claude Code's config dir). To ensure Gemini and other agents can use them automatically, shared skills are symlinked from `.claude/skills/` into `.agents/skills/`. Since your environment automatically loads `.agents/`, you will pick them up through the symlinks without needing to manually read `.claude/`.
 
 ## Development
 
