@@ -78,9 +78,14 @@ for (const event of events) {
 const dayFilter = dayFilterParam && eventsByDay.has(dayFilterParam) ? dayFilterParam : null;
 
 function dateParts(key: string) {
-	const [, month, day] = key.split('-').map(Number);
-	return { month: month - 1, day };
+	const [year, month, day] = key.split('-').map(Number);
+	return { year, month: month - 1, day };
 }
+
+// Agenda spans months (and, near year-end, years) — without a marker, a January event right
+// after a December one reads as already past instead of "next year". One entry per agendaEvents
+// index, null when it's the same year as the previous entry (i.e. no divider needed there).
+const agendaYears = agendaEvents.map((ev) => dateParts(eventDateKey(ev)).year);
 
 function formatTime(event: DistrictEvent): string {
 	if (event.allDay) return t.allDay;
@@ -202,25 +207,33 @@ function kindFilterLabel(k: KindFilter): string {
 				<div class="view-panel agenda-panel">
 					<div class="agenda-content" data-day-agenda="default" hidden={dayFilter !== null}>
 						{agendaEvents.length === 0 && <p class="calendar-status">{t.noEvents}</p>}
-						{agendaEvents.map((ev) => {
+						{agendaEvents.map((ev, i) => {
 							const { day, month } = dateParts(eventDateKey(ev));
 							const href = archiveLinkFor(ev);
 							const RowTag = href ? 'a' : 'div';
+							const showYearDivider = i > 0 && agendaYears[i] !== agendaYears[i - 1];
 							return (
-								<RowTag class="event-row" data-kind={ev.kind} data-deadline={ev.isDeadline} {...(href ? { href } : {})}>
-									<div class="event-date">
-										<div class="event-day">{String(day).padStart(2, '0')}</div>
-										<div class="event-month">{t.monthsShort[month]}</div>
-									</div>
-									<div class="event-body">
-										<div class="event-title">{ev.summary}</div>
-										<div class="event-meta">
-											{formatWeekday(eventDateKey(ev))} · {formatTime(ev)}
-											{ev.location ? ` · ${ev.location}` : ''}
+								<>
+									{showYearDivider && (
+										<div class="year-divider" role="separator">
+											<span>{agendaYears[i]}</span>
 										</div>
-									</div>
-									<div class="event-arrow" aria-hidden="true">→</div>
-								</RowTag>
+									)}
+									<RowTag class="event-row" data-kind={ev.kind} data-deadline={ev.isDeadline} {...(href ? { href } : {})}>
+										<div class="event-date">
+											<div class="event-day">{String(day).padStart(2, '0')}</div>
+											<div class="event-month">{t.monthsShort[month]}</div>
+										</div>
+										<div class="event-body">
+											<div class="event-title">{ev.summary}</div>
+											<div class="event-meta">
+												{formatWeekday(eventDateKey(ev))} · {formatTime(ev)}
+												{ev.location ? ` · ${ev.location}` : ''}
+											</div>
+										</div>
+										<div class="event-arrow" aria-hidden="true">→</div>
+									</RowTag>
+								</>
 							);
 						})}
 					</div>
@@ -571,6 +584,28 @@ function kindFilterLabel(k: KindFilter): string {
 	   display above would otherwise unhide every panel at once. */
 	.agenda-content[hidden] {
 		display: none;
+	}
+
+	/* Marks a year change inside the upcoming-agenda list (see agendaYears in the frontmatter) —
+	   without it, a January event right after a December one reads as already past. */
+	.year-divider {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 13px;
+		letter-spacing: 0.5px;
+		color: var(--color-muted);
+		margin: 4px 0;
+	}
+
+	.year-divider::before,
+	.year-divider::after {
+		content: '';
+		flex: 1;
+		height: 1px;
+		background: var(--color-border);
 	}
 
 	.event-row {
