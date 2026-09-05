@@ -1,0 +1,30 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	// Standalone config for the isolated beta-preview Worker (dev branch).
+	// Deliberately NOT an `env` block inside wrangler.jsonc: an earlier attempt to use
+	// env.beta.name to retarget the deploy silently deployed to production instead
+	// (root cause unconfirmed — see references/cloudflare-deploy.md). This file is
+	// the fix: a fully separate config, only ever deployed via scripts/deploy-beta.sh,
+	// which double-checks the target name before touching anything live.
+	"name": "website-beta",
+	// Keep in lockstep with wrangler.jsonc's compatibility_date/flags — same runtime,
+	// just a different branch's build. Bump both together, never separately.
+	"compatibility_date": "2026-08-11",
+	"compatibility_flags": ["nodejs_compat"],
+	"images": {
+		"binding": "IMAGES",
+		"remote": true
+	},
+	"observability": {
+		"enabled": true,
+		"head_sampling_rate": 1,
+		"logs": {
+			"enabled": true,
+			"head_sampling_rate": 1,
+			"invocation_logs": true
+		}
+	},
+	// Explicit even though it's the default with no routes/custom domain: guarantees
+	// the interim https://website-beta.<subdomain>.workers.dev share link exists.
+	"workers_dev": true
+}
