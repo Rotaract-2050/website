@@ -54,11 +54,17 @@ jobs:
           TINA_SEARCH_TOKEN: ${{ secrets.TINA_SEARCH_TOKEN }}
         run: npm run build -- --skip-cloud-checks
 
+      # `deployments status` (non `deployments list`): mostra solo la
+      # versione attiva al 100%, una riga sola. `deployments list` stampa
+      # tutta la history e un grep -m1 prende la voce piu' vecchia visibile
+      # nella finestra, che puo' scorrere e "cambiare" da sola tra prima e
+      # dopo senza che produzione si sia mossa davvero — falso positivo
+      # visto il 2026-09-05 (produzione era invariata, verificato a mano).
       - name: Baseline produzione (deve restare invariata)
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: da2b3eaf5dee7d1c080061936d1f7e17
-        run: npx wrangler deployments list --name website | tee /tmp/prod-before.log
+        run: npx wrangler deployments status --name website | tee /tmp/prod-before.log
 
       - name: Upload Worker Version (non promuove mai al traffico live)
         env:
@@ -71,7 +77,7 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: da2b3eaf5dee7d1c080061936d1f7e17
         run: |
-          npx wrangler deployments list --name website | tee /tmp/prod-after.log
+          npx wrangler deployments status --name website | tee /tmp/prod-after.log
           BEFORE="$(grep -m1 -E 'Version' /tmp/prod-before.log)"
           AFTER="$(grep -m1 -E 'Version' /tmp/prod-after.log)"
           if [ "$BEFORE" != "$AFTER" ]; then

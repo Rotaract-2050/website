@@ -40,7 +40,7 @@ readonly REMOTE_REF="origin/dev"
 readonly WORKTREE_DIR=".wrangler-preview-worktree"
 
 echo "Leggo lo stato attuale di produzione (baseline, deve restare invariato)..."
-PROD_BASELINE="$(npx wrangler deployments list --name "$PROD_NAME" 2>&1)" \
+PROD_BASELINE="$(npx wrangler deployments status --name "$PROD_NAME" 2>&1)" \
   || { echo "ABORT: impossibile leggere lo stato di produzione — rifiuto di procedere senza baseline."; exit 1; }
 PROD_BASELINE_HEAD="$(echo "$PROD_BASELINE" | grep -m1 -E "Version")"
 
@@ -85,7 +85,7 @@ popd >/dev/null
 
 echo ""
 echo "Ricontrollo che produzione non si sia mossa..."
-PROD_AFTER="$(npx wrangler deployments list --name "$PROD_NAME" 2>&1)"
+PROD_AFTER="$(npx wrangler deployments status --name "$PROD_NAME" 2>&1)"
 PROD_AFTER_HEAD="$(echo "$PROD_AFTER" | grep -m1 -E "Version")"
 
 if [ "$PROD_BASELINE_HEAD" != "$PROD_AFTER_HEAD" ]; then
