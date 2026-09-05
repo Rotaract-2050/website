@@ -24,6 +24,12 @@ export function eventKind(summary: string): EventKind {
 	return 'rotaract';
 }
 
+/** Same title-keyword approach as eventKind() — "scadenza"/"scadenze" (case-insensitive) flags an
+ * event as a deadline, independent of its Rotaract/Interact/Rotary kind (an event can be both). */
+export function isDeadlineEvent(summary: string): boolean {
+	return /\bscadenz/i.test(summary);
+}
+
 export interface DistrictEvent {
 	uid: string;
 	start: Date;
@@ -31,6 +37,7 @@ export interface DistrictEvent {
 	summary: string;
 	location: string;
 	kind: EventKind;
+	isDeadline: boolean;
 }
 
 export type CalendarResult = { ok: true; events: DistrictEvent[] } | { ok: false };
@@ -57,6 +64,7 @@ async function fetchEvents(calendarId: string): Promise<DistrictEvent[]> {
 			summary,
 			location: textValue(component.location),
 			kind: eventKind(summary),
+			isDeadline: isDeadlineEvent(summary),
 		});
 	}
 

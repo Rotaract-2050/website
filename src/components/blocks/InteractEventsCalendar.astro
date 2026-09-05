@@ -211,7 +211,7 @@ function kindFilterLabel(k: KindFilter): string {
 							const href = archiveLinkFor(ev);
 							const RowTag = href ? 'a' : 'div';
 							return (
-								<RowTag class="event-row" data-kind={ev.kind} {...(href ? { href } : {})}>
+								<RowTag class="event-row" data-kind={ev.kind} data-deadline={ev.isDeadline} {...(href ? { href } : {})}>
 									<div class="event-date">
 										<div class="event-day">{String(day).padStart(2, '0')}</div>
 										<div class="event-month">{t.monthsShort[month]}</div>
@@ -239,7 +239,7 @@ function kindFilterLabel(k: KindFilter): string {
 								const href = archiveLinkFor(ev);
 								const RowTag = href ? 'a' : 'div';
 								return (
-									<RowTag class="event-row" data-kind={ev.kind} {...(href ? { href } : {})}>
+									<RowTag class="event-row" data-kind={ev.kind} data-deadline={ev.isDeadline} {...(href ? { href } : {})}>
 										<div class="event-date">
 											<div class="event-day">{String(dateParts(key).day).padStart(2, '0')}</div>
 											<div class="event-month">{t.monthsShort[dateParts(key).month]}</div>
@@ -276,6 +276,7 @@ function kindFilterLabel(k: KindFilter): string {
 								{month.cells.map((cell) => {
 									if (cell === null) return <div class="day-cell empty" />;
 									const cellClass = `day-cell${cell.key === todayKey ? ' today' : ''}`;
+									const cellHasDeadline = cell.events.some((ev) => ev.isDeadline);
 									// All of the day's events are rendered (not just a top-3 slice) so the client script
 									// can recompute a correct per-kind top-3 + "+N" when the filter changes without a
 									// reload; `hidden` here is just the correct initial state for `activeKind` at request time.
@@ -299,11 +300,11 @@ function kindFilterLabel(k: KindFilter): string {
 										</>
 									);
 									return cell.events.length > 0 ? (
-										<a class={cellClass} href={`?day=${cell.key}#interact-eventi-calendario`}>
+										<a class={cellClass} data-deadline={cellHasDeadline} href={`?day=${cell.key}#interact-eventi-calendario`}>
 											{cellContent}
 										</a>
 									) : (
-										<div class={cellClass}>{cellContent}</div>
+										<div class={cellClass} data-deadline={cellHasDeadline}>{cellContent}</div>
 									);
 								})}
 							</div>
@@ -596,6 +597,13 @@ function kindFilterLabel(k: KindFilter): string {
 		cursor: default;
 	}
 
+	/* Deadline overlay ("scadenza" in the title, see isDeadlineEvent()) — highlights the whole card
+	   in Cardinal red regardless of kind, an urgency signal layered on top of the kind color. */
+	.event-row[data-deadline='true'] {
+		background: var(--color-danger-container);
+		box-shadow: 0 0 0 2px var(--color-danger), var(--elevation-1);
+	}
+
 	/* Event-kind color (Rotaract/Interact/Rotary) via local custom properties, consumed by
 	   .event-date/.event-day/.event-month below — Rotaract is the implicit default (no [data-kind]
 	   override needed, per the classification rule in eventKind()). */
@@ -757,6 +765,13 @@ function kindFilterLabel(k: KindFilter): string {
 	.day-cell.today {
 		background: #ffffff;
 		box-shadow: 0 0 0 2px var(--color-gold), var(--elevation-1);
+	}
+
+	/* Deadline overlay ("scadenza" in the title) — whole cell in Cardinal red, wins over the
+	   gold "today" ring since a deadline is the more urgent signal. */
+	.day-cell[data-deadline='true'] {
+		background: var(--color-danger-container);
+		box-shadow: 0 0 0 2px var(--color-danger), var(--elevation-1);
 	}
 
 	.day-number {

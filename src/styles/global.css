@@ -83,6 +83,13 @@
 	--color-kind-rotary-dark: #7a5300;
 	--color-kind-rotary-container: #fef3df;
 	--color-kind-rotary-on-container: #7a5300;
+
+	/* Deadline overlay (calendar "scadenza" tag) — Rotary Cardinal 485C, the official red normally
+	   reserved (see references/rotary-brand.md) for End Polio Now / Aree di Intervento artwork.
+	   Deliberate second exception here: a deadline is exactly the alert/urgency case that color is
+	   for. Frozen like the kind tokens above, for the same cross-theme reason. */
+	--color-danger: #e02927;
+	--color-danger-container: color-mix(in srgb, #e02927 12%, white);
 }
 
 *,
