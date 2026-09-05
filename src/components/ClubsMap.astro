@@ -190,6 +190,17 @@ const zoneAreas = zones
 		} else {
 			map.fitBounds(mapBounds, { padding: [8, 8], maxZoom: 13 });
 		}
+
+		// Leaflet creates hidden <input> elements for keyboard navigation.
+		// Password managers often mistake these for login fields. Add standard ignore attributes
+		// for all major password managers to prevent their popups from appearing over the map.
+		container.querySelectorAll('input').forEach(input => {
+			input.setAttribute('autocomplete', 'off');
+			input.setAttribute('data-1p-ignore', 'true');
+			input.setAttribute('data-lpignore', 'true');
+			input.setAttribute('data-bwignore', 'true');
+			input.setAttribute('data-form-type', 'other');
+		});
 	}
 
 	document.querySelectorAll<HTMLElement>('#clubs-map').forEach(initClubsMap);
