@@ -60,7 +60,25 @@ const breadcrumbJsonLd = buildBreadcrumbList([
 	}
 
 	.banner-card.theme-family {
-		background: linear-gradient(135deg, var(--color-kind-rotary) 0%, var(--color-kind-rotaract) 50%, var(--color-kind-interact) 100%) !important;
+		background: linear-gradient(135deg, var(--color-kind-rotary-container) 0%, var(--color-kind-rotaract-container) 50%, var(--color-kind-interact-container) 100%) !important;
+	}
+
+	/* When using the light pastel gradient, the text must be dark for contrast */
+	.banner-card.theme-family .title,
+	.banner-card.theme-family .eyebrow {
+		color: var(--color-navy);
+	}
+
+	.banner-card.theme-family .breadcrumb {
+		color: rgba(11, 37, 69, 0.6);
+	}
+
+	.banner-card.theme-family .breadcrumb a:hover {
+		color: var(--color-navy);
+	}
+
+	.banner-card.theme-family .mark {
+		color: rgba(11, 37, 69, 0.03);
 	}
 
 	/* Signature mark: the district's own number, echoed faintly on every inner page —
