@@ -191,7 +191,7 @@ const IT: UiStrings = {
 	nav: {
 		home: 'HOME',
 		distrettoMenu: 'IL DISTRETTO',
-		distrettoSub: 'PANORAMICA',
+		distrettoSub: 'IL ROTARACT',
 		story: 'LA STORIA',
 		rrd: 'ALBO RRD',
 		squadra: 'LA SQUADRA',
@@ -363,7 +363,7 @@ const EN: UiStrings = {
 	nav: {
 		home: 'HOME',
 		distrettoMenu: 'THE DISTRICT',
-		distrettoSub: 'OVERVIEW',
+		distrettoSub: 'THE ROTARACT',
 		story: 'OUR STORY',
 		rrd: 'RRD ROLL',
 		squadra: 'THE TEAM',
