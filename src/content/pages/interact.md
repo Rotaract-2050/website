@@ -93,7 +93,7 @@ blocks:
         href: interact/club
         color: '#901F93'
     _template: CardGrid
-  - title: EVENTI INTERACT
-    titleEn: INTERACT EVENTS
+  - title: EVENTI DELLA NOSTRA FAMIGLIA
+    titleEn: OUR FAMILY'S EVENTS
     _template: InteractEventsCalendar
 ---

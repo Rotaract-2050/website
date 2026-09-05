@@ -228,10 +228,68 @@ function kindTitle(k: KindFilter): string {
 					))}
 				</div>
 
-				<input type="radio" name={`calendar-view-${uid}`} id={agendaTabId} checked={!monthTabActive} />
-				<label for={agendaTabId}>{t.agendaTab}</label>
-				<input type="radio" name={`calendar-view-${uid}`} id={monthTabId} checked={monthTabActive} />
-				<label for={monthTabId}>{t.monthTab}</label>
+
+				<div class="calendar-split">
+				<div class="view-panel month-panel">
+					{monthWindow.map((month) => (
+						<div class="month-single" data-month={month.key} hidden={month.key !== activeMonthKey}>
+							<div class="month-nav">
+								<a class="month-nav-btn" href={`?month=${month.prevKey}#interact-eventi-calendario`} aria-label={t.prevMonth}>‹</a>
+								<div class="month-grid-title">{month.label}</div>
+								<a class="month-nav-btn" href={`?month=${month.nextKey}#interact-eventi-calendario`} aria-label={t.nextMonth}>›</a>
+							</div>
+							<div class="weekday-row">
+								{t.weekdaysShort.map((wd) => (
+									<div class="weekday-cell">{wd}</div>
+								))}
+							</div>
+							<div class="day-grid">
+								{month.cells.map((cell) => {
+									if (cell === null) return <div class="day-cell empty" />;
+									const cellClass = `day-cell${cell.key === todayKey ? ' today' : ''}`;
+									const cellHasDeadline = cell.events.some((ev) => ev.isDeadline);
+									// All of the day's events are rendered (not just a top-3 slice) so the client script
+									// can recompute a correct per-kind top-3 + "+N" when the filter changes without a
+									// reload; `hidden` here is just the correct initial state for `activeKind` at request time.
+									const matchingActive =
+										activeKind === 'all'
+											? cell.events
+											: activeKind === 'scadenze'
+												? cell.events.filter((ev) => ev.isDeadline)
+												: cell.events.filter((ev) => ev.kind === activeKind);
+									const visibleActive = new Set(matchingActive.slice(0, 3));
+									const moreActiveCount = Math.max(0, matchingActive.length - 3);
+									const cellContent = (
+										<>
+											<span class="day-number">{cell.day}</span>
+											<div class="day-events-dots">
+												{cell.events.map((ev) => (
+													<span
+														class="day-event"
+														data-kind={ev.kind}
+														data-deadline={ev.isDeadline}
+														hidden={!visibleActive.has(ev)}
+														title={`${ev.summary}${ev.location ? ' · ' + ev.location : ''}`}
+													>
+														{ev.summary}
+													</span>
+												))}
+												<em class="day-event-more" hidden={moreActiveCount === 0}>{moreActiveCount > 0 ? `+${moreActiveCount}` : ''}</em>
+											</div>
+										</>
+									);
+									return cell.events.length > 0 ? (
+										<a class={cellClass} data-deadline={cellHasDeadline} href={`?day=${cell.key}#interact-eventi-calendario`}>
+											{cellContent}
+										</a>
+									) : (
+										<div class={cellClass} data-deadline={cellHasDeadline}>{cellContent}</div>
+									);
+								})}
+							</div>
+						</div>
+					))}
+				</div>
 
 				<div class="view-panel agenda-panel">
 					<div class="agenda-content" data-day-agenda="default" hidden={dayFilter !== null}>
@@ -297,63 +355,6 @@ function kindTitle(k: KindFilter): string {
 					))}
 				</div>
 
-				<div class="view-panel month-panel">
-					{monthWindow.map((month) => (
-						<div class="month-single" data-month={month.key} hidden={month.key !== activeMonthKey}>
-							<div class="month-nav">
-								<a class="month-nav-btn" href={`?month=${month.prevKey}#interact-eventi-calendario`} aria-label={t.prevMonth}>‹</a>
-								<div class="month-grid-title">{month.label}</div>
-								<a class="month-nav-btn" href={`?month=${month.nextKey}#interact-eventi-calendario`} aria-label={t.nextMonth}>›</a>
-							</div>
-							<div class="weekday-row">
-								{t.weekdaysShort.map((wd) => (
-									<div class="weekday-cell">{wd}</div>
-								))}
-							</div>
-							<div class="day-grid">
-								{month.cells.map((cell) => {
-									if (cell === null) return <div class="day-cell empty" />;
-									const cellClass = `day-cell${cell.key === todayKey ? ' today' : ''}`;
-									const cellHasDeadline = cell.events.some((ev) => ev.isDeadline);
-									// All of the day's events are rendered (not just a top-3 slice) so the client script
-									// can recompute a correct per-kind top-3 + "+N" when the filter changes without a
-									// reload; `hidden` here is just the correct initial state for `activeKind` at request time.
-									const matchingActive =
-										activeKind === 'all'
-											? cell.events
-											: activeKind === 'scadenze'
-												? cell.events.filter((ev) => ev.isDeadline)
-												: cell.events.filter((ev) => ev.kind === activeKind);
-									const visibleActive = new Set(matchingActive.slice(0, 3));
-									const moreActiveCount = Math.max(0, matchingActive.length - 3);
-									const cellContent = (
-										<>
-											<span class="day-number">{cell.day}</span>
-											{cell.events.map((ev) => (
-												<span
-													class="day-event"
-													data-kind={ev.kind}
-													data-deadline={ev.isDeadline}
-													hidden={!visibleActive.has(ev)}
-													title={`${ev.summary}${ev.location ? ' · ' + ev.location : ''}`}
-												>
-													{ev.summary}
-												</span>
-											))}
-											<em class="day-event-more" hidden={moreActiveCount === 0}>{moreActiveCount > 0 ? `+${moreActiveCount}` : ''}</em>
-										</>
-									);
-									return cell.events.length > 0 ? (
-										<a class={cellClass} data-deadline={cellHasDeadline} href={`?day=${cell.key}#interact-eventi-calendario`}>
-											{cellContent}
-										</a>
-									) : (
-										<div class={cellClass} data-deadline={cellHasDeadline}>{cellContent}</div>
-									);
-								})}
-							</div>
-						</div>
-					))}
 				</div>
 			</fieldset>
 		)}
@@ -473,9 +474,19 @@ function kindTitle(k: KindFilter): string {
 	}
 
 	.calendar-status {
-		font-size: 15px;
-		color: var(--color-text);
-		font-style: italic;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 240px;
+		background: rgba(255, 255, 255, 0.4);
+		border: 2px dashed var(--color-border);
+		border-radius: var(--shape-large);
+		color: var(--color-muted);
+		font-family: var(--font-heading);
+		font-size: 16px;
+		font-weight: 500;
+		text-align: center;
+		margin: 0;
 	}
 
 	.day-filter-bar {
@@ -649,17 +660,22 @@ function kindTitle(k: KindFilter): string {
 		display: none;
 	}
 
+	.calendar-split {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 40px;
+		margin-top: 32px;
+		width: 100%;
+	}
+
+	@media (min-width: 900px) {
+		.calendar-split {
+			grid-template-columns: 340px 1fr;
+			gap: 64px;
+		}
+	}
+
 	.view-panel {
-		display: none;
-		flex: 1 1 100%;
-		margin-top: 28px;
-	}
-
-	.view-switch input[id^='cal-agenda-']:checked ~ .agenda-panel {
-		display: block;
-	}
-
-	.view-switch input[id^='cal-month-']:checked ~ .month-panel {
 		display: block;
 	}
 
@@ -669,6 +685,7 @@ function kindTitle(k: KindFilter): string {
 		display: flex;
 		flex-direction: column;
 		gap: 12px;
+		align-items: stretch;
 	}
 
 	/* The `hidden` attribute toggles which day's panel shows (see the script below) —
@@ -704,6 +721,8 @@ function kindTitle(k: KindFilter): string {
 		display: flex;
 		align-items: center;
 		gap: 24px;
+		width: 100%;
+		box-sizing: border-box;
 		background: #ffffff;
 		border-radius: var(--shape-medium);
 		padding: 18px 20px;
@@ -860,13 +879,15 @@ function kindTitle(k: KindFilter): string {
 	}
 
 	.day-cell {
-		min-height: 96px;
+		aspect-ratio: 1 / 1;
 		border: none;
 		border-radius: var(--shape-small);
-		padding: 10px;
+		padding: 8px;
 		display: flex;
 		flex-direction: column;
-		gap: 4px;
+		align-items: center;
+		justify-content: flex-start;
+		gap: 6px;
 		background: #ffffff;
 		margin: 3px;
 		box-shadow: var(--elevation-1);
@@ -901,38 +922,51 @@ function kindTitle(k: KindFilter): string {
 	}
 
 	.day-number {
-		font-size: 14px;
+		font-size: 16px;
 		font-weight: 600;
 		color: var(--color-navy);
+		line-height: 1;
+	}
+
+	.day-events-dots {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 4px;
+		width: 100%;
 	}
 
 	.day-event {
-		font-size: 11px;
-		line-height: 1.3;
-		color: var(--color-kind-rotaract-dark);
-		background: #f6f8fa;
-		border-radius: var(--shape-extra-small);
-		padding: 3px 6px;
-		white-space: nowrap;
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--color-kind-rotaract-dark);
+		font-size: 0;
+		color: transparent;
+		padding: 0;
 		overflow: hidden;
-		text-overflow: ellipsis;
 	}
 
 	.day-event[data-kind='interact'] {
-		color: var(--color-kind-interact-dark);
+		background: var(--color-kind-interact-dark);
 	}
 
 	.day-event[data-kind='rotary'] {
-		color: var(--color-kind-rotary-dark);
+		background: var(--color-kind-rotary-dark);
 	}
 
 	.day-cell.today .day-event {
-		background: #f6f8fa;
+		background: var(--color-kind-rotaract-dark);
 	}
 
 	.day-event-more {
-		font-size: 10px;
-		color: var(--color-muted);
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--color-muted);
+		font-size: 0;
+		color: transparent;
 	}
 
 	@media (max-width: 720px) {
@@ -950,10 +984,6 @@ function kindTitle(k: KindFilter): string {
 			font-size: 26px;
 		}
 
-		.day-cell {
-			min-height: 72px;
-		}
-
 		.month-grid-title {
 			font-size: 18px;
 			min-width: 0;
@@ -966,46 +996,8 @@ function kindTitle(k: KindFilter): string {
 		}
 
 		.day-cell {
-			min-height: 52px;
 			padding: 4px;
-			gap: 2px;
-		}
-
-		/* Too narrow for readable text: show a colored bar per event instead — still
-		   visible whatever the count (unlike the old "hide text, rely on +N" approach,
-		   which left 1-3 event days blank). Full text stays one tap away in Agenda. */
-		.day-event {
-			width: 100%;
-			height: 4px;
-			padding: 0;
-			border-radius: 2px;
-			font-size: 0;
-			overflow: hidden;
-			background: var(--color-kind-rotaract-dark);
-		}
-
-		.day-event[data-kind='interact'] {
-			background: var(--color-kind-interact-dark);
-		}
-
-		.day-event[data-kind='rotary'] {
-			background: var(--color-kind-rotary-dark);
-		}
-
-		.day-cell.today .day-event {
-			background: var(--color-kind-rotaract-dark);
-		}
-
-		.day-cell.today .day-event[data-kind='interact'] {
-			background: var(--color-kind-interact-dark);
-		}
-
-		.day-cell.today .day-event[data-kind='rotary'] {
-			background: var(--color-kind-rotary-dark);
-		}
-
-		.day-event-more {
-			font-size: 8px;
+			gap: 4px;
 		}
 	}
 </style>
@@ -1021,8 +1013,7 @@ function kindTitle(k: KindFilter): string {
 	function initCalendar(root: HTMLElement) {
 		const monthPanels = Array.from(root.querySelectorAll<HTMLElement>('[data-month]'));
 		const dayPanels = Array.from(root.querySelectorAll<HTMLElement>('[data-day-agenda]'));
-		const agendaRadio = root.querySelector<HTMLInputElement>('input[id^="cal-agenda-"]');
-		const kindPills = Array.from(root.querySelectorAll<HTMLAnchorElement>('.kind-pill'));
+				const kindPills = Array.from(root.querySelectorAll<HTMLAnchorElement>('.kind-pill'));
 		// .section-title lives in .calendar-header, a sibling of this fieldset (not a descendant),
 		// so it's reached via the shared .calendar-card ancestor instead of root.querySelector.
 		const titleEl = root.closest<HTMLElement>('.calendar-card')?.querySelector<HTMLElement>('.section-title') ?? null;
@@ -1106,7 +1097,6 @@ function kindTitle(k: KindFilter): string {
 				const day = url.searchParams.get('day');
 				if (!day || !showDay(day)) return;
 				event.preventDefault();
-				if (agendaRadio) agendaRadio.checked = true;
 				history.pushState(null, '', url.pathname + url.search + url.hash);
 				return;
 			}

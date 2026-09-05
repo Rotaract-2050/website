@@ -20,7 +20,7 @@ export type PageKey =
 /** Path segment (relative to the locale root) for each page. */
 export const pageSlugs: Record<PageKey, string> = {
 	home: '',
-	distretto: 'distretto',
+	distretto: 'rotaract',
 	story: 'story',
 	rrd: 'rrd',
 	club: 'club',

@@ -20,6 +20,8 @@ export const interactClubsCollection: Collection = {
 		{ type: 'string', name: 'name', label: 'Nome club', isTitle: true, required: true },
 		{ type: 'reference', name: 'zone', label: 'Zona', collections: ['zones'], required: true },
 		{ type: 'number', name: 'foundationYear', label: 'Anno di fondazione' },
+		{ type: 'string', name: 'presidentName', label: 'Presidente attuale' },
+		{ type: 'number', name: 'presidentBirthYear', label: 'Anno di nascita presidente' },
 		{
 			type: 'number',
 			name: 'lat',
