@@ -156,10 +156,12 @@ const uid = crypto.randomUUID().slice(0, 8);
 const agendaTabId = `cal-agenda-${uid}`;
 const monthTabId = `cal-month-${uid}`;
 
-// Event-kind filter (Rotaract/Interact/Rotary) — see eventKind() in lib/calendar.ts. Server-rendered
-// from `?kind=` so it works with no JS (real link + CSS attribute selector below); the script further
-// down intercepts clicks to swap instantly without a reload, same pattern as month/day.
-const KIND_FILTERS = ['all', 'rotaract', 'interact', 'rotary'] as const;
+// Event-kind filter (Rotaract/Interact/Rotary), plus "Scadenze" which isn't a kind — it's the
+// isDeadlineEvent() overlay (an event can be e.g. both Rotary and a scadenza) surfaced as its own
+// pill so it can be isolated across all kinds at once. Server-rendered from `?kind=` so it works
+// with no JS (real link + CSS attribute selector below); the script further down intercepts
+// clicks to swap instantly without a reload, same pattern as month/day.
+const KIND_FILTERS = ['all', 'rotaract', 'interact', 'rotary', 'scadenze'] as const;
 type KindFilter = (typeof KIND_FILTERS)[number];
 const kindParam = Astro.url.searchParams.get('kind');
 const activeKind: KindFilter = (KIND_FILTERS as readonly string[]).includes(kindParam ?? '')
@@ -170,16 +172,18 @@ function kindFilterLabel(k: KindFilter): string {
 	if (k === 'rotaract') return t.filterRotaract;
 	if (k === 'interact') return t.filterInteract;
 	if (k === 'rotary') return t.filterRotary;
+	if (k === 'scadenze') return t.filterScadenze;
 	return t.filterAll;
 }
 
 // The "Tutti" title stays whatever a socio set in Tina (the `title` prop); filtering to one kind
-// swaps it for a fixed label in that kind's color instead — a Tina text field can't hold 4 states
-// that must switch instantly client-side, so these three are code-level like kindFilterLabel above.
+// swaps it for a fixed label in that kind's color instead — a Tina text field can't hold 5 states
+// that must switch instantly client-side, so these are code-level like kindFilterLabel above.
 function kindTitle(k: KindFilter): string {
 	if (k === 'rotaract') return t.titleRotaract;
 	if (k === 'interact') return t.titleInteract;
 	if (k === 'rotary') return t.titleRotary;
+	if (k === 'scadenze') return t.titleScadenze;
 	return title;
 }
 ---
@@ -196,6 +200,7 @@ function kindTitle(k: KindFilter): string {
 				data-title-rotaract={t.titleRotaract}
 				data-title-interact={t.titleInteract}
 				data-title-rotary={t.titleRotary}
+				data-title-scadenze={t.titleScadenze}
 			>
 				{kindTitle(activeKind)}
 			</h2>
@@ -313,7 +318,12 @@ function kindTitle(k: KindFilter): string {
 									// All of the day's events are rendered (not just a top-3 slice) so the client script
 									// can recompute a correct per-kind top-3 + "+N" when the filter changes without a
 									// reload; `hidden` here is just the correct initial state for `activeKind` at request time.
-									const matchingActive = activeKind === 'all' ? cell.events : cell.events.filter((ev) => ev.kind === activeKind);
+									const matchingActive =
+										activeKind === 'all'
+											? cell.events
+											: activeKind === 'scadenze'
+												? cell.events.filter((ev) => ev.isDeadline)
+												: cell.events.filter((ev) => ev.kind === activeKind);
 									const visibleActive = new Set(matchingActive.slice(0, 3));
 									const moreActiveCount = Math.max(0, matchingActive.length - 3);
 									const cellContent = (
@@ -323,6 +333,7 @@ function kindTitle(k: KindFilter): string {
 												<span
 													class="day-event"
 													data-kind={ev.kind}
+													data-deadline={ev.isDeadline}
 													hidden={!visibleActive.has(ev)}
 													title={`${ev.summary}${ev.location ? ' · ' + ev.location : ''}`}
 												>
@@ -423,6 +434,10 @@ function kindTitle(k: KindFilter): string {
 
 	.section-title[data-active-kind='rotary'] {
 		color: var(--color-kind-rotary);
+	}
+
+	.section-title[data-active-kind='scadenze'] {
+		color: var(--color-danger);
 	}
 
 	.calendar-actions {
@@ -612,6 +627,11 @@ function kindTitle(k: KindFilter): string {
 		color: #fff;
 	}
 
+	.kind-pill-scadenze.active {
+		background: var(--color-danger);
+		color: #fff;
+	}
+
 	.view-switch[data-kind-filter='rotaract'] [data-kind]:not([data-kind='rotaract']) {
 		display: none;
 	}
@@ -621,6 +641,11 @@ function kindTitle(k: KindFilter): string {
 	}
 
 	.view-switch[data-kind-filter='rotary'] [data-kind]:not([data-kind='rotary']) {
+		display: none;
+	}
+
+	/* "Scadenze" isn't a kind — it isolates the isDeadlineEvent() overlay across all kinds instead. */
+	.view-switch[data-kind-filter='scadenze'] [data-kind]:not([data-deadline='true']) {
 		display: none;
 	}
 
@@ -1009,7 +1034,12 @@ function kindTitle(k: KindFilter): string {
 			const kind = root.dataset.kindFilter ?? 'all';
 			root.querySelectorAll<HTMLElement>('.day-cell:not(.empty)').forEach((cellEl) => {
 				const dayEvents = Array.from(cellEl.querySelectorAll<HTMLElement>('.day-event'));
-				const matching = kind === 'all' ? dayEvents : dayEvents.filter((el) => el.dataset.kind === kind);
+				const matching =
+					kind === 'all'
+						? dayEvents
+						: kind === 'scadenze'
+							? dayEvents.filter((el) => el.dataset.deadline === 'true')
+							: dayEvents.filter((el) => el.dataset.kind === kind);
 				const visible = new Set(matching.slice(0, 3));
 				dayEvents.forEach((el) => {
 					el.hidden = !visible.has(el);
@@ -1032,7 +1062,8 @@ function kindTitle(k: KindFilter): string {
 			});
 			if (titleEl) {
 				titleEl.dataset.activeKind = kind;
-				const titleAttr = kind === 'all' ? 'titleAll' : kind === 'rotaract' ? 'titleRotaract' : kind === 'interact' ? 'titleInteract' : 'titleRotary';
+				const titleAttr =
+					kind === 'all' ? 'titleAll' : kind === 'rotaract' ? 'titleRotaract' : kind === 'interact' ? 'titleInteract' : kind === 'rotary' ? 'titleRotary' : 'titleScadenze';
 				titleEl.textContent = titleEl.dataset[titleAttr] ?? titleEl.dataset.titleAll ?? '';
 			}
 			applyKindCap();

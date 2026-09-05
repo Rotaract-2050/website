@@ -68,9 +68,11 @@ export interface UiStrings {
 		filterRotaract: string;
 		filterInteract: string;
 		filterRotary: string;
+		filterScadenze: string;
 		titleRotaract: string;
 		titleInteract: string;
 		titleRotary: string;
+		titleScadenze: string;
 		weekdaysShort: string[];
 		monthsShort: string[];
 		monthsFull: string[];
@@ -250,9 +252,11 @@ const IT: UiStrings = {
 		filterRotaract: 'Rotaract',
 		filterInteract: 'Interact',
 		filterRotary: 'Rotary',
+		filterScadenze: 'Scadenze',
 		titleRotaract: 'Eventi Rotaract',
 		titleInteract: 'Eventi Interact',
 		titleRotary: 'Eventi Rotary',
+		titleScadenze: 'Eventi in scadenza',
 		weekdaysShort: ['LUN', 'MAR', 'MER', 'GIO', 'VEN', 'SAB', 'DOM'],
 		monthsShort: ['GEN', 'FEB', 'MAR', 'APR', 'MAG', 'GIU', 'LUG', 'AGO', 'SET', 'OTT', 'NOV', 'DIC'],
 		monthsFull: [
@@ -420,9 +424,11 @@ const EN: UiStrings = {
 		filterRotaract: 'Rotaract',
 		filterInteract: 'Interact',
 		filterRotary: 'Rotary',
+		filterScadenze: 'Deadlines',
 		titleRotaract: 'Rotaract Events',
 		titleInteract: 'Interact Events',
 		titleRotary: 'Rotary Events',
+		titleScadenze: 'Upcoming deadlines',
 		weekdaysShort: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
 		monthsShort: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
 		monthsFull: [
