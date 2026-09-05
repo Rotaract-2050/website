@@ -13,11 +13,25 @@ export interface UiStrings {
 		eventi: string;
 		join: string;
 		materials: string;
+		interactLink: string;
 		formazione: string;
 		menuOpen: string;
 		menuClose: string;
 	};
 	breadcrumbHome: string;
+	/** Nav/footer copy for the Interact sub-section's own header/footer (InteractHeader.astro,
+	 * InteractFooter.astro) — kept separate from `nav`/`footer` above since it's a different,
+	 * smaller set of pages with its own identity, not a variant of the Rotaract nav. */
+	interact: {
+		navHome: string;
+		navStoria: string;
+		navSquadra: string;
+		navClub: string;
+		navAlbo: string;
+		navEventi: string;
+		backToRotaract: string;
+		footerTitle: string;
+	};
 	footer: {
 		linksTitle: string;
 		contactTitle: string;
@@ -49,6 +63,16 @@ export interface UiStrings {
 		dayFilterPrefix: string;
 		dayFilterEmpty: string;
 		dayFilterReset: string;
+		filterLabel: string;
+		filterAll: string;
+		filterRotaract: string;
+		filterInteract: string;
+		filterRotary: string;
+		filterScadenze: string;
+		titleRotaract: string;
+		titleInteract: string;
+		titleRotary: string;
+		titleScadenze: string;
 		weekdaysShort: string[];
 		monthsShort: string[];
 		monthsFull: string[];
@@ -145,6 +169,13 @@ export const SOCIAL_LINKS: { name: SocialName; label: string; href: string }[] =
 ];
 
 export const SITE_NAME = 'Rotaract Distretto 2050';
+/** Interact Distretto 2050 è un'entità distinta dal Rotaract sotto lo stesso ombrello Rotary
+ * International, non una sotto-sezione a tema — mai riusare SITE_NAME per contenuto Interact
+ * (title/JSON-LD/organizer evento). Unica fonte per questo nome: non ripetere la stringa altrove. */
+export const INTERACT_SITE_NAME: Record<Lang, string> = {
+	it: 'Interact Distretto 2050',
+	en: 'Interact District 2050',
+};
 /** Fallback finale se pagina/articolo/evento e settings.defaultOgImage sono tutti vuoti. */
 export const DEFAULT_OG_IMAGE = '/uploads/Loghi/Logo-distretto.png';
 
@@ -169,11 +200,22 @@ const IT: UiStrings = {
 		eventi: 'EVENTI',
 		join: 'ENTRA NEL ROTARACT',
 		materials: 'MATERIALI DISTRETTUALI',
+		interactLink: "L'INTERACT",
 		formazione: 'FORMAZIONE',
 		menuOpen: 'Apri il menu di navigazione',
 		menuClose: 'Chiudi il menu di navigazione',
 	},
 	breadcrumbHome: 'HOME',
+	interact: {
+		navHome: 'HOME',
+		navStoria: 'LA STORIA',
+		navSquadra: 'LA SQUADRA',
+		navClub: 'I CLUB',
+		navAlbo: 'ALBO IRD',
+		navEventi: 'EVENTI',
+		backToRotaract: '← Rotaract Distretto 2050',
+		footerTitle: 'INTERACT DISTRETTO 2050',
+	},
 	footer: {
 		linksTitle: 'LINK UTILI',
 		contactTitle: 'CONTATTI',
@@ -205,6 +247,16 @@ const IT: UiStrings = {
 		dayFilterPrefix: 'Eventi del',
 		dayFilterEmpty: 'Nessun evento in questo giorno.',
 		dayFilterReset: '× Mostra i prossimi eventi',
+		filterLabel: 'Filtra per tipo evento',
+		filterAll: 'Tutti',
+		filterRotaract: 'Rotaract',
+		filterInteract: 'Interact',
+		filterRotary: 'Rotary',
+		filterScadenze: 'Scadenze',
+		titleRotaract: 'Eventi Rotaract',
+		titleInteract: 'Eventi Interact',
+		titleRotary: 'Eventi Rotary',
+		titleScadenze: 'Scadenze',
 		weekdaysShort: ['LUN', 'MAR', 'MER', 'GIO', 'VEN', 'SAB', 'DOM'],
 		monthsShort: ['GEN', 'FEB', 'MAR', 'APR', 'MAG', 'GIU', 'LUG', 'AGO', 'SET', 'OTT', 'NOV', 'DIC'],
 		monthsFull: [
@@ -320,11 +372,22 @@ const EN: UiStrings = {
 		eventi: 'EVENTS',
 		join: 'JOIN ROTARACT',
 		materials: 'DISTRICT MATERIALS',
+		interactLink: 'INTERACT',
 		formazione: 'TRAINING',
 		menuOpen: 'Open navigation menu',
 		menuClose: 'Close navigation menu',
 	},
 	breadcrumbHome: 'HOME',
+	interact: {
+		navHome: 'HOME',
+		navStoria: 'HISTORY',
+		navSquadra: 'TEAM',
+		navClub: 'CLUBS',
+		navAlbo: 'IRD ROSTER',
+		navEventi: 'EVENTS',
+		backToRotaract: '← Rotaract District 2050',
+		footerTitle: 'INTERACT DISTRICT 2050',
+	},
 	footer: {
 		linksTitle: 'QUICK LINKS',
 		contactTitle: 'CONTACT',
@@ -356,6 +419,16 @@ const EN: UiStrings = {
 		dayFilterPrefix: 'Events on',
 		dayFilterEmpty: 'No events on this day.',
 		dayFilterReset: '× Show upcoming events',
+		filterLabel: 'Filter by event type',
+		filterAll: 'All',
+		filterRotaract: 'Rotaract',
+		filterInteract: 'Interact',
+		filterRotary: 'Rotary',
+		filterScadenze: 'Deadlines',
+		titleRotaract: 'Rotaract Events',
+		titleInteract: 'Interact Events',
+		titleRotary: 'Rotary Events',
+		titleScadenze: 'Upcoming deadlines',
 		weekdaysShort: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
 		monthsShort: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
 		monthsFull: [

@@ -6,7 +6,7 @@ import PageBanner from '../../../components/PageBanner.astro';
 import JsonLd from '../../../components/JsonLd.astro';
 import { Image } from 'astro:assets';
 import ImageSlot from '../../../components/ImageSlot.astro';
-import { uiStrings } from '../../../data/ui-strings';
+import { uiStrings, SITE_NAME } from '../../../data/ui-strings';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { localizeEvent, eventTypeTag, isUpcomingEvent } from '../../../lib/events';
 import { tagPillStyle, clubTagLabels } from '../../../lib/news';
@@ -50,6 +50,7 @@ const jsonLd = buildEventJsonLd({
 	imageUrl: new URL(event.image || '/uploads/Loghi/Logo-distretto.png', Astro.site).toString(),
 	url: canonicalUrl.toString(),
 	siteUrl: Astro.site!.toString(),
+	organizerName: SITE_NAME,
 	locationName: event.locationLavori || event.locationCena,
 	ticketsUrl: event.ticketsUrl,
 	ticketsOpen,

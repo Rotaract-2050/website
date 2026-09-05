@@ -1,0 +1,1153 @@
+---
+// Clone of EventsCalendar.astro, pointed at the isolated `interactEvents` collection (via
+// src/lib/interact-events.ts) instead of `events` — see the Interact implementation plan.
+// lib/calendar.ts itself (the live Google Calendar fetch) is already generic/parametrized by
+// `calendarId`, so it's reused unchanged; only the archive cross-link source and the /interact
+// prefix on matched-day links differ from the Rotaract version.
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { uiStrings, type Lang } from '../../data/ui-strings';
+import { getDistrictEvents, eventDateKey, calendarUrls, type DistrictEvent } from '../../lib/calendar';
+import { getInteractArchiveEvents, interactEventSlug, interactEventCalendarDayKey } from '../../lib/interact-events';
+
+interface Props {
+	lang: Lang;
+	title: string;
+	calendarId?: string;
+}
+
+const { lang, title, calendarId } = Astro.props;
+const t = uiStrings[lang].calendar;
+const { viewUrl: CALENDAR_VIEW_URL, subscribeUrl: CALENDAR_SUBSCRIBE_URL } = calendarUrls(calendarId);
+
+const forceRefresh = Astro.url.searchParams.has('refresh');
+const result = await getDistrictEvents({ calendarId, forceRefresh });
+const events = result.ok ? result.events : [];
+
+// Links a calendar entry to its /interact/eventi detail page when exactly one published event
+// shares its day (Europe/Rome) — see interactEventCalendarDayKey in src/lib/interact-events.ts.
+// Ambiguous days (0 or 2+ candidates) are left unlinked rather than guessing.
+const archiveEvents = await getInteractArchiveEvents();
+const archiveSlugsByDay = new Map<string, string[]>();
+for (const event of archiveEvents) {
+	const key = interactEventCalendarDayKey(event);
+	const bucket = archiveSlugsByDay.get(key);
+	const slug = interactEventSlug(event);
+	if (bucket) bucket.push(slug);
+	else archiveSlugsByDay.set(key, [slug]);
+}
+
+function archiveLinkFor(ev: DistrictEvent): string | null {
+	const candidates = archiveSlugsByDay.get(eventDateKey(ev));
+	if (!candidates || candidates.length !== 1) return null;
+	return getRelativeLocaleUrl(lang, `interact/eventi/${candidates[0]}`);
+}
+
+const todayKey = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Rome' }).format(new Date());
+const upcomingEvents = events.filter((ev) => eventDateKey(ev) >= todayKey);
+
+const AGENDA_LIMIT = 6;
+const agendaEvents = upcomingEvents.slice(0, AGENDA_LIMIT);
+
+// Clicking a day cell in the month view jumps to Agenda filtered to just that day (searches
+// all events, not just upcoming — a past day clicked while browsing an earlier month should
+// still show what was there). The "reset" link clears `day` to get back to the normal list.
+// Validated against eventsByDay below (a day with no events never gets its own panel/link).
+const dayFilterParam = Astro.url.searchParams.get('day')?.match(/^\d{4}-\d{2}-\d{2}$/)?.[0] ?? null;
+
+function formatFullDate(key: string): string {
+	const [y, m, d] = key.split('-').map(Number);
+	return new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-GB', {
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric',
+	}).format(new Date(y, m - 1, d));
+}
+
+function formatWeekday(key: string): string {
+	const [y, m, d] = key.split('-').map(Number);
+	const label = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-GB', { weekday: 'long' }).format(
+		new Date(y, m - 1, d)
+	);
+	return label.charAt(0).toUpperCase() + label.slice(1);
+}
+
+const eventsByDay = new Map<string, DistrictEvent[]>();
+for (const event of events) {
+	const key = eventDateKey(event);
+	const bucket = eventsByDay.get(key);
+	if (bucket) bucket.push(event);
+	else eventsByDay.set(key, [event]);
+}
+
+const dayFilter = dayFilterParam && eventsByDay.has(dayFilterParam) ? dayFilterParam : null;
+
+function dateParts(key: string) {
+	const [year, month, day] = key.split('-').map(Number);
+	return { year, month: month - 1, day };
+}
+
+// Agenda spans months (and, near year-end, years) — without a marker, a January event right
+// after a December one reads as already past instead of "next year". One entry per agendaEvents
+// index, null when it's the same year as the previous entry (i.e. no divider needed there).
+const agendaYears = agendaEvents.map((ev) => dateParts(eventDateKey(ev)).year);
+
+function formatTime(event: DistrictEvent): string {
+	if (event.allDay) return t.allDay;
+	return new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-GB', {
+		timeZone: 'Europe/Rome',
+		hour: '2-digit',
+		minute: '2-digit',
+	}).format(event.start);
+}
+
+interface DayCell {
+	day: number;
+	key: string;
+	events: DistrictEvent[];
+}
+
+function buildMonth(year: number, month: number) {
+	const daysInMonth = new Date(year, month + 1, 0).getDate();
+	const firstWeekday = (new Date(year, month, 1).getDay() + 6) % 7; // Monday = 0
+
+	const cells: (DayCell | null)[] = Array.from({ length: firstWeekday }, () => null);
+	for (let day = 1; day <= daysInMonth; day++) {
+		const key = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+		cells.push({ day, key, events: eventsByDay.get(key) ?? [] });
+	}
+	while (cells.length % 7 !== 0) cells.push(null);
+
+	return { label: `${t.monthsFull[month]} ${year}`, cells };
+}
+
+const now = new Date();
+
+function monthParamFor(year: number, month: number): string {
+	// Normalize via Date so month under/overflow (e.g. month -1 or 12) rolls into the adjacent year.
+	const normalized = new Date(year, month, 1);
+	return `${normalized.getFullYear()}-${String(normalized.getMonth() + 1).padStart(2, '0')}`;
+}
+
+const monthParamMatch = Astro.url.searchParams.get('month')?.match(/^(\d{4})-(\d{2})$/);
+const monthTabActive = Boolean(monthParamMatch) && !dayFilter;
+const viewYear = monthParamMatch ? Number(monthParamMatch[1]) : now.getFullYear();
+const viewMonth = monthParamMatch ? Number(monthParamMatch[2]) - 1 : now.getMonth();
+const activeMonthKey = monthParamFor(viewYear, viewMonth);
+
+// Pre-render a year of months around the current one so the prev/next arrows can page
+// through instantly client-side (see the <script> below) instead of reloading the page.
+// Stepping past this window falls back to a real navigation to `?month=...`, which lands
+// back here re-centered on the new month — see the fallback in the click handler.
+const WINDOW_HALF = 6;
+const monthWindow = Array.from({ length: WINDOW_HALF * 2 + 1 }, (_, i) => {
+	const offset = i - WINDOW_HALF;
+	const date = new Date(viewYear, viewMonth + offset, 1);
+	const year = date.getFullYear();
+	const month = date.getMonth();
+	return {
+		key: monthParamFor(year, month),
+		prevKey: monthParamFor(year, month - 1),
+		nextKey: monthParamFor(year, month + 1),
+		...buildMonth(year, month),
+	};
+});
+
+const uid = crypto.randomUUID().slice(0, 8);
+const agendaTabId = `cal-agenda-${uid}`;
+const monthTabId = `cal-month-${uid}`;
+
+// Event-kind filter (Rotaract/Interact/Rotary), plus "Scadenze" which isn't a kind — it's the
+// isDeadlineEvent() overlay (an event can be e.g. both Rotary and a scadenza) surfaced as its own
+// pill so it can be isolated across all kinds at once. Server-rendered from `?kind=` so it works
+// with no JS (real link + CSS attribute selector below); the script further down intercepts
+// clicks to swap instantly without a reload, same pattern as month/day.
+const KIND_FILTERS = ['all', 'rotaract', 'interact', 'rotary', 'scadenze'] as const;
+type KindFilter = (typeof KIND_FILTERS)[number];
+const kindParam = Astro.url.searchParams.get('kind');
+const activeKind: KindFilter = (KIND_FILTERS as readonly string[]).includes(kindParam ?? '')
+	? (kindParam as KindFilter)
+	: 'all';
+
+function kindFilterLabel(k: KindFilter): string {
+	if (k === 'rotaract') return t.filterRotaract;
+	if (k === 'interact') return t.filterInteract;
+	if (k === 'rotary') return t.filterRotary;
+	if (k === 'scadenze') return t.filterScadenze;
+	return t.filterAll;
+}
+
+// The "Tutti" title stays whatever a socio set in Tina (the `title` prop); filtering to one kind
+// swaps it for a fixed label in that kind's color instead — a Tina text field can't hold 5 states
+// that must switch instantly client-side, so these are code-level like kindFilterLabel above.
+function kindTitle(k: KindFilter): string {
+	if (k === 'rotaract') return t.titleRotaract;
+	if (k === 'interact') return t.titleInteract;
+	if (k === 'rotary') return t.titleRotary;
+	if (k === 'scadenze') return t.titleScadenze;
+	return title;
+}
+---
+
+<section class="events-calendar" id="interact-eventi-calendario">
+	<div class="section-inner">
+	<div class="calendar-card">
+		<div class="watermark" aria-hidden="true">INT</div>
+		<div class="calendar-header">
+			<h2
+				class="section-title"
+				data-active-kind={activeKind}
+				data-title-all={title}
+				data-title-rotaract={t.titleRotaract}
+				data-title-interact={t.titleInteract}
+				data-title-rotary={t.titleRotary}
+				data-title-scadenze={t.titleScadenze}
+			>
+				{kindTitle(activeKind)}
+			</h2>
+			<div class="calendar-actions">
+				<a class="view-full" href={CALENDAR_VIEW_URL} target="_blank" rel="noopener">{t.viewFullCalendar}</a>
+				<a class="subscribe-btn" href={CALENDAR_SUBSCRIBE_URL} target="_blank" rel="noopener">{t.subscribe}</a>
+			</div>
+		</div>
+
+		{!result.ok && <p class="calendar-status">{t.unavailable}</p>}
+
+		{result.ok && (
+			<fieldset class="view-switch" data-calendar data-default-month={activeMonthKey} data-kind-filter={activeKind}>
+				<legend class="sr-only">{t.viewToggleLabel}</legend>
+
+				<div class="kind-filter" role="group" aria-label={t.filterLabel}>
+					{KIND_FILTERS.map((k) => (
+						<a
+							class={`kind-pill kind-pill-${k}${activeKind === k ? ' active' : ''}`}
+							href={`?kind=${k}#interact-eventi-calendario`}
+							aria-current={activeKind === k ? 'true' : undefined}
+						>
+							{kindFilterLabel(k)}
+						</a>
+					))}
+				</div>
+
+				<input type="radio" name={`calendar-view-${uid}`} id={agendaTabId} checked={!monthTabActive} />
+				<label for={agendaTabId}>{t.agendaTab}</label>
+				<input type="radio" name={`calendar-view-${uid}`} id={monthTabId} checked={monthTabActive} />
+				<label for={monthTabId}>{t.monthTab}</label>
+
+				<div class="view-panel agenda-panel">
+					<div class="agenda-content" data-day-agenda="default" hidden={dayFilter !== null}>
+						{agendaEvents.length === 0 && <p class="calendar-status">{t.noEvents}</p>}
+						{agendaEvents.map((ev, i) => {
+							const { day, month } = dateParts(eventDateKey(ev));
+							const href = archiveLinkFor(ev);
+							const RowTag = href ? 'a' : 'div';
+							const showYearDivider = i > 0 && agendaYears[i] !== agendaYears[i - 1];
+							return (
+								<>
+									{showYearDivider && (
+										<div class="year-divider" role="separator">
+											<span>{agendaYears[i]}</span>
+										</div>
+									)}
+									<RowTag class="event-row" data-kind={ev.kind} data-deadline={ev.isDeadline} {...(href ? { href } : {})}>
+										<div class="event-date">
+											<div class="event-day">{String(day).padStart(2, '0')}</div>
+											<div class="event-month">{t.monthsShort[month]}</div>
+										</div>
+										<div class="event-body">
+											<div class="event-title">{ev.summary}</div>
+											<div class="event-meta">
+												{formatWeekday(eventDateKey(ev))} · {formatTime(ev)}
+												{ev.location ? ` · ${ev.location}` : ''}
+											</div>
+										</div>
+										<div class="event-arrow" aria-hidden="true">→</div>
+									</RowTag>
+								</>
+							);
+						})}
+					</div>
+
+					{Array.from(eventsByDay.entries()).map(([key, dayEvents]) => (
+						<div class="agenda-content" data-day-agenda={key} hidden={dayFilter !== key}>
+							<div class="day-filter-bar">
+								<span class="day-filter-label">{t.dayFilterPrefix} {formatFullDate(key)}</span>
+								<a class="day-filter-reset" href="?#interact-eventi-calendario">{t.dayFilterReset}</a>
+							</div>
+							{dayEvents.map((ev) => {
+								const href = archiveLinkFor(ev);
+								const RowTag = href ? 'a' : 'div';
+								return (
+									<RowTag class="event-row" data-kind={ev.kind} data-deadline={ev.isDeadline} {...(href ? { href } : {})}>
+										<div class="event-date">
+											<div class="event-day">{String(dateParts(key).day).padStart(2, '0')}</div>
+											<div class="event-month">{t.monthsShort[dateParts(key).month]}</div>
+										</div>
+										<div class="event-body">
+											<div class="event-title">{ev.summary}</div>
+											<div class="event-meta">
+												{formatWeekday(eventDateKey(ev))} · {formatTime(ev)}
+												{ev.location ? ` · ${ev.location}` : ''}
+											</div>
+										</div>
+										<div class="event-arrow" aria-hidden="true">→</div>
+									</RowTag>
+								);
+							})}
+						</div>
+					))}
+				</div>
+
+				<div class="view-panel month-panel">
+					{monthWindow.map((month) => (
+						<div class="month-single" data-month={month.key} hidden={month.key !== activeMonthKey}>
+							<div class="month-nav">
+								<a class="month-nav-btn" href={`?month=${month.prevKey}#interact-eventi-calendario`} aria-label={t.prevMonth}>‹</a>
+								<div class="month-grid-title">{month.label}</div>
+								<a class="month-nav-btn" href={`?month=${month.nextKey}#interact-eventi-calendario`} aria-label={t.nextMonth}>›</a>
+							</div>
+							<div class="weekday-row">
+								{t.weekdaysShort.map((wd) => (
+									<div class="weekday-cell">{wd}</div>
+								))}
+							</div>
+							<div class="day-grid">
+								{month.cells.map((cell) => {
+									if (cell === null) return <div class="day-cell empty" />;
+									const cellClass = `day-cell${cell.key === todayKey ? ' today' : ''}`;
+									const cellHasDeadline = cell.events.some((ev) => ev.isDeadline);
+									// All of the day's events are rendered (not just a top-3 slice) so the client script
+									// can recompute a correct per-kind top-3 + "+N" when the filter changes without a
+									// reload; `hidden` here is just the correct initial state for `activeKind` at request time.
+									const matchingActive =
+										activeKind === 'all'
+											? cell.events
+											: activeKind === 'scadenze'
+												? cell.events.filter((ev) => ev.isDeadline)
+												: cell.events.filter((ev) => ev.kind === activeKind);
+									const visibleActive = new Set(matchingActive.slice(0, 3));
+									const moreActiveCount = Math.max(0, matchingActive.length - 3);
+									const cellContent = (
+										<>
+											<span class="day-number">{cell.day}</span>
+											{cell.events.map((ev) => (
+												<span
+													class="day-event"
+													data-kind={ev.kind}
+													data-deadline={ev.isDeadline}
+													hidden={!visibleActive.has(ev)}
+													title={`${ev.summary}${ev.location ? ' · ' + ev.location : ''}`}
+												>
+													{ev.summary}
+												</span>
+											))}
+											<em class="day-event-more" hidden={moreActiveCount === 0}>{moreActiveCount > 0 ? `+${moreActiveCount}` : ''}</em>
+										</>
+									);
+									return cell.events.length > 0 ? (
+										<a class={cellClass} data-deadline={cellHasDeadline} href={`?day=${cell.key}#interact-eventi-calendario`}>
+											{cellContent}
+										</a>
+									) : (
+										<div class={cellClass} data-deadline={cellHasDeadline}>{cellContent}</div>
+									);
+								})}
+							</div>
+						</div>
+					))}
+				</div>
+			</fieldset>
+		)}
+	</div>
+	</div>
+</section>
+
+<style>
+	.events-calendar {
+		background: var(--color-bg);
+		padding: 80px 40px;
+		scroll-margin-top: 90px;
+	}
+
+	.section-inner {
+		max-width: var(--content-max);
+		margin: 0 auto;
+	}
+
+	/* Everything else on the site floats as a big rounded card by now — the calendar
+	   was the last section still a flat panel flush with the page background. */
+	.calendar-card {
+		--tint: var(--color-navy);
+		background: color-mix(in srgb, var(--tint) 4%, white);
+		box-shadow: 0 8px 24px color-mix(in srgb, var(--tint) 15%, transparent);
+		border-radius: var(--shape-extra-large);
+		padding: 48px 40px;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.watermark {
+		font-family: var(--font-heading);
+		font-size: 180px;
+		line-height: 1;
+		font-weight: 900;
+		color: color-mix(in srgb, var(--tint) 4%, transparent);
+		position: absolute;
+		right: 4px;
+		bottom: -40px;
+		pointer-events: none;
+		z-index: 0;
+	}
+
+	.calendar-header, .view-switch, .calendar-status {
+		position: relative;
+		z-index: 1;
+	}
+
+	.calendar-header {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 8px 20px;
+		margin: 0 0 34px;
+	}
+
+	.section-title {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 34px;
+		color: var(--color-navy);
+		text-transform: uppercase;
+		margin: 0;
+		transition: color var(--motion-duration-medium) var(--motion-easing-emphasized);
+	}
+
+	/* Title text/color swap with the active kind filter (see kindTitle() and the script below) —
+	   "Tutti" keeps the page's default color and whatever title a socio set in Tina. */
+	.section-title[data-active-kind='rotaract'] {
+		color: var(--color-kind-rotaract);
+	}
+
+	.section-title[data-active-kind='interact'] {
+		color: var(--color-kind-interact);
+	}
+
+	.section-title[data-active-kind='rotary'] {
+		color: var(--color-kind-rotary);
+	}
+
+	.section-title[data-active-kind='scadenze'] {
+		color: var(--color-danger);
+	}
+
+	.calendar-actions {
+		display: flex;
+		align-items: center;
+		gap: 20px;
+		flex-wrap: wrap;
+	}
+
+	.view-full {
+		font-size: 13px;
+		font-weight: 600;
+		color: var(--color-pink);
+		white-space: nowrap;
+	}
+
+	.subscribe-btn {
+		background: var(--color-pink);
+		color: #fff;
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 13px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		padding: 10px 20px;
+		border-radius: var(--shape-full);
+		white-space: nowrap;
+	}
+
+	.subscribe-btn:hover {
+		background: var(--color-pink-dark);
+		color: #fff;
+	}
+
+	.calendar-status {
+		font-size: 15px;
+		color: var(--color-text);
+		font-style: italic;
+	}
+
+	.day-filter-bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 8px 16px;
+		background: var(--color-pink-container);
+		border-radius: var(--shape-small);
+		padding: 12px 18px;
+		margin-bottom: 18px;
+	}
+
+	.day-filter-label {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 14px;
+		color: var(--color-on-pink-container);
+		text-transform: capitalize;
+	}
+
+	.day-filter-reset {
+		font-size: 13px;
+		font-weight: 600;
+		color: var(--color-pink);
+		white-space: nowrap;
+	}
+
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	.view-switch {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 10px 12px;
+		border: 0;
+		margin: 0;
+		padding: 0;
+	}
+
+	.view-switch input[type='radio'] {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	.view-switch label {
+		flex: 0 0 auto;
+		cursor: pointer;
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 13px;
+		letter-spacing: 0.4px;
+		text-transform: uppercase;
+		color: var(--color-navy);
+		background: var(--color-bg);
+		border: none;
+		box-shadow: var(--elevation-1);
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
+		border-radius: var(--shape-small);
+		padding: 8px 22px;
+	}
+
+	.view-switch label:hover {
+		transform: translateY(-2px);
+		box-shadow: var(--elevation-2);
+	}
+
+	.view-switch input[type='radio']:checked + label {
+		background: var(--color-pink);
+		color: #fff;
+	}
+
+	.view-switch input[type='radio']:focus-visible + label {
+		outline: 2px solid var(--color-gold);
+		outline-offset: 2px;
+	}
+
+	/* Event-kind filter (Rotaract/Interact/Rotary/Tutti) — real links so it degrades to full page
+	   nav without JS; forced onto its own row inside the flex fieldset via flex-basis:100%. */
+	.kind-filter {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px 10px;
+		flex: 1 1 100%;
+		margin-bottom: 6px;
+	}
+
+	.kind-pill {
+		flex: 0 0 auto;
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 12px;
+		letter-spacing: 0.3px;
+		text-transform: uppercase;
+		color: var(--color-navy);
+		background: var(--color-bg);
+		border: none;
+		box-shadow: var(--elevation-1);
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
+		border-radius: var(--shape-full);
+		padding: 6px 16px;
+	}
+
+	.kind-pill:hover {
+		transform: translateY(-2px);
+		box-shadow: var(--elevation-2);
+	}
+
+	.kind-pill:focus-visible {
+		outline: 2px solid var(--color-gold);
+		outline-offset: 2px;
+	}
+
+	.kind-pill-rotaract.active {
+		background: var(--color-kind-rotaract);
+		color: #fff;
+	}
+
+	.kind-pill-interact.active {
+		background: var(--color-kind-interact);
+		color: #fff;
+	}
+
+	.kind-pill-rotary.active {
+		background: var(--color-kind-rotary);
+		color: #fff;
+	}
+
+	.kind-pill-all.active {
+		background: var(--color-navy);
+		color: #fff;
+	}
+
+	.kind-pill-scadenze.active {
+		background: var(--color-danger);
+		color: #fff;
+	}
+
+	.view-switch[data-kind-filter='rotaract'] [data-kind]:not([data-kind='rotaract']) {
+		display: none;
+	}
+
+	.view-switch[data-kind-filter='interact'] [data-kind]:not([data-kind='interact']) {
+		display: none;
+	}
+
+	.view-switch[data-kind-filter='rotary'] [data-kind]:not([data-kind='rotary']) {
+		display: none;
+	}
+
+	/* "Scadenze" isn't a kind — it isolates the isDeadlineEvent() overlay across all kinds instead. */
+	.view-switch[data-kind-filter='scadenze'] [data-kind]:not([data-deadline='true']) {
+		display: none;
+	}
+
+	.view-panel {
+		display: none;
+		flex: 1 1 100%;
+		margin-top: 28px;
+	}
+
+	.view-switch input[id^='cal-agenda-']:checked ~ .agenda-panel {
+		display: block;
+	}
+
+	.view-switch input[id^='cal-month-']:checked ~ .month-panel {
+		display: block;
+	}
+
+	/* Agenda view — each event is its own tonal card (same elevation-card language as
+	   NewsCard/EventCard elsewhere) instead of a bare row separated by a border line. */
+	.agenda-content {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	/* The `hidden` attribute toggles which day's panel shows (see the script below) —
+	   author styles beat the UA's [hidden] rule on a specificity tie, so the flex
+	   display above would otherwise unhide every panel at once. */
+	.agenda-content[hidden] {
+		display: none;
+	}
+
+	/* Marks a year change inside the upcoming-agenda list (see agendaYears in the frontmatter) —
+	   without it, a January event right after a December one reads as already past. */
+	.year-divider {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 13px;
+		letter-spacing: 0.5px;
+		color: var(--color-muted);
+		margin: 4px 0;
+	}
+
+	.year-divider::before,
+	.year-divider::after {
+		content: '';
+		flex: 1;
+		height: 1px;
+		background: var(--color-border);
+	}
+
+	.event-row {
+		display: flex;
+		align-items: center;
+		gap: 24px;
+		background: #ffffff;
+		border-radius: var(--shape-medium);
+		padding: 18px 20px;
+		box-shadow: var(--elevation-1);
+		transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized), box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
+	}
+
+	/* Only linked cards (matched to an /interact/eventi detail page — see archiveLinkFor above)
+	   lift on hover and show a pink arrow; unmatched cards stay flat so the arrow doesn't promise
+	   a click that goes nowhere. */
+	a.event-row:hover {
+		transform: translateY(-2px);
+		box-shadow: var(--elevation-2);
+	}
+
+	div.event-row {
+		cursor: default;
+	}
+
+	/* Deadline overlay ("scadenza" in the title, see isDeadlineEvent()) — highlights the whole card
+	   with a subtle danger tint instead of an aggressive solid block, matching the glassmorphism system. */
+	.event-row[data-deadline='true'] {
+		background: color-mix(in srgb, var(--color-danger) 4%, white);
+		box-shadow: 0 4px 12px color-mix(in srgb, var(--color-danger) 15%, transparent);
+	}
+
+	/* Event-kind color (Rotaract/Interact/Rotary) via local custom properties, consumed by
+	   .event-date/.event-day/.event-month below — Rotaract is the implicit default (no [data-kind]
+	   override needed, per the classification rule in eventKind()). */
+	.event-row {
+		--event-container: var(--color-kind-rotaract-container);
+		--event-on-container: var(--color-kind-rotaract-on-container);
+	}
+
+	.event-row[data-kind='interact'] {
+		--event-container: var(--color-kind-interact-container);
+		--event-on-container: var(--color-kind-interact-on-container);
+	}
+
+	.event-row[data-kind='rotary'] {
+		--event-container: var(--color-kind-rotary-container);
+		--event-on-container: var(--color-kind-rotary-on-container);
+	}
+
+	.event-date {
+		flex: 0 0 auto;
+		width: 64px;
+		background: var(--event-container);
+		border-radius: var(--shape-small);
+		text-align: center;
+		padding: 10px 0;
+	}
+
+	.event-day {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 22px;
+		color: var(--event-on-container);
+		line-height: 1;
+	}
+
+	.event-month {
+		font-size: 11px;
+		color: var(--event-on-container);
+		opacity: 0.75;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		margin-top: 2px;
+	}
+
+	.event-body {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.event-title {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 18px;
+		color: var(--color-navy);
+		margin-bottom: 4px;
+	}
+
+	.event-meta {
+		font-size: 13px;
+		color: var(--color-text);
+	}
+
+	.event-arrow {
+		color: var(--color-muted);
+		font-size: 20px;
+	}
+
+	a.event-row .event-arrow {
+		color: var(--color-pink);
+	}
+
+	/* Month view — one big single month, navigable. */
+	.month-single {
+		max-width: 720px;
+		margin: 0 auto;
+	}
+
+	.month-nav {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 28px;
+		margin: 0 0 20px;
+	}
+
+	.month-nav-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: var(--color-bg);
+		border: 1px solid var(--color-border);
+		color: var(--color-navy);
+		font-size: 22px;
+		line-height: 1;
+	}
+
+	.month-nav-btn:hover {
+		background: var(--color-pink);
+		border-color: var(--color-pink);
+		color: #fff;
+	}
+
+	.month-grid-title {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 22px;
+		color: var(--color-navy);
+		text-transform: uppercase;
+		min-width: 220px;
+		text-align: center;
+	}
+
+	.weekday-row,
+	.day-grid {
+		display: grid;
+		grid-template-columns: repeat(7, 1fr);
+	}
+
+	.weekday-cell {
+		font-size: 12px;
+		font-weight: 600;
+		color: var(--color-muted);
+		text-align: center;
+		padding-bottom: 8px;
+	}
+
+	.day-cell {
+		min-height: 96px;
+		border: none;
+		border-radius: var(--shape-small);
+		padding: 10px;
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		background: #ffffff;
+		margin: 3px;
+		box-shadow: var(--elevation-1);
+		transition: transform var(--motion-duration-short) var(--motion-easing-emphasized), box-shadow var(--motion-duration-short) var(--motion-easing-emphasized);
+	}
+
+	a.day-cell {
+		cursor: pointer;
+	}
+
+	a.day-cell:hover {
+		transform: translateY(-2px);
+		box-shadow: var(--elevation-2);
+	}
+
+	.day-cell.empty {
+		border: none;
+		background: transparent;
+		box-shadow: none;
+	}
+
+	.day-cell.today {
+		background: #ffffff;
+		box-shadow: 0 0 0 2px var(--color-gold), var(--elevation-1);
+	}
+
+	/* Deadline overlay ("scadenza" in the title) — whole cell gets a subtle red tint.
+	   Wins over the gold "today" ring in urgency, but avoids being visually aggressive. */
+	.day-cell[data-deadline='true'] {
+		background: color-mix(in srgb, var(--color-danger) 4%, white);
+		box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-danger) 20%, transparent), var(--elevation-1);
+	}
+
+	.day-number {
+		font-size: 14px;
+		font-weight: 600;
+		color: var(--color-navy);
+	}
+
+	.day-event {
+		font-size: 11px;
+		line-height: 1.3;
+		color: var(--color-kind-rotaract-dark);
+		background: #f6f8fa;
+		border-radius: var(--shape-extra-small);
+		padding: 3px 6px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.day-event[data-kind='interact'] {
+		color: var(--color-kind-interact-dark);
+	}
+
+	.day-event[data-kind='rotary'] {
+		color: var(--color-kind-rotary-dark);
+	}
+
+	.day-cell.today .day-event {
+		background: #f6f8fa;
+	}
+
+	.day-event-more {
+		font-size: 10px;
+		color: var(--color-muted);
+	}
+
+	@media (max-width: 720px) {
+		.events-calendar {
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+
+		.calendar-card {
+			border-radius: var(--shape-large);
+			padding: 28px 20px;
+		}
+
+		.section-title {
+			font-size: 26px;
+		}
+
+		.day-cell {
+			min-height: 72px;
+		}
+
+		.month-grid-title {
+			font-size: 18px;
+			min-width: 0;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.month-nav {
+			gap: 16px;
+		}
+
+		.day-cell {
+			min-height: 52px;
+			padding: 4px;
+			gap: 2px;
+		}
+
+		/* Too narrow for readable text: show a colored bar per event instead — still
+		   visible whatever the count (unlike the old "hide text, rely on +N" approach,
+		   which left 1-3 event days blank). Full text stays one tap away in Agenda. */
+		.day-event {
+			width: 100%;
+			height: 4px;
+			padding: 0;
+			border-radius: 2px;
+			font-size: 0;
+			overflow: hidden;
+			background: var(--color-kind-rotaract-dark);
+		}
+
+		.day-event[data-kind='interact'] {
+			background: var(--color-kind-interact-dark);
+		}
+
+		.day-event[data-kind='rotary'] {
+			background: var(--color-kind-rotary-dark);
+		}
+
+		.day-cell.today .day-event {
+			background: var(--color-kind-rotaract-dark);
+		}
+
+		.day-cell.today .day-event[data-kind='interact'] {
+			background: var(--color-kind-interact-dark);
+		}
+
+		.day-cell.today .day-event[data-kind='rotary'] {
+			background: var(--color-kind-rotary-dark);
+		}
+
+		.day-event-more {
+			font-size: 8px;
+		}
+	}
+</style>
+
+<script>
+	import { revealOnScroll, cappedStagger } from '../../lib/motion';
+
+	// Progressive enhancement over the plain `?month=`/`?day=` links: swap between
+	// pre-rendered panels in place instead of reloading the page. If a target wasn't
+	// pre-rendered (month outside the server's preloaded window, or a day with no events —
+	// which never gets a panel or a link), the click falls through to a real navigation,
+	// which lands back on this component correctly re-rendered for that target.
+	function initCalendar(root: HTMLElement) {
+		const monthPanels = Array.from(root.querySelectorAll<HTMLElement>('[data-month]'));
+		const dayPanels = Array.from(root.querySelectorAll<HTMLElement>('[data-day-agenda]'));
+		const agendaRadio = root.querySelector<HTMLInputElement>('input[id^="cal-agenda-"]');
+		const kindPills = Array.from(root.querySelectorAll<HTMLAnchorElement>('.kind-pill'));
+		// .section-title lives in .calendar-header, a sibling of this fieldset (not a descendant),
+		// so it's reached via the shared .calendar-card ancestor instead of root.querySelector.
+		const titleEl = root.closest<HTMLElement>('.calendar-card')?.querySelector<HTMLElement>('.section-title') ?? null;
+
+		// Every day cell renders ALL of its events (see this file's frontmatter), not just a top-3
+		// slice, so this can recompute a correct per-kind top-3 + "+N" instantly on filter change —
+		// matches exactly what the server computes for the initial `activeKind` at request time.
+		function applyKindCap() {
+			const kind = root.dataset.kindFilter ?? 'all';
+			root.querySelectorAll<HTMLElement>('.day-cell:not(.empty)').forEach((cellEl) => {
+				const dayEvents = Array.from(cellEl.querySelectorAll<HTMLElement>('.day-event'));
+				const matching =
+					kind === 'all'
+						? dayEvents
+						: kind === 'scadenze'
+							? dayEvents.filter((el) => el.dataset.deadline === 'true')
+							: dayEvents.filter((el) => el.dataset.kind === kind);
+				const visible = new Set(matching.slice(0, 3));
+				dayEvents.forEach((el) => {
+					el.hidden = !visible.has(el);
+				});
+				const more = cellEl.querySelector<HTMLElement>('.day-event-more');
+				if (!more) return;
+				const extra = matching.length - 3;
+				more.hidden = extra <= 0;
+				more.textContent = extra > 0 ? `+${extra}` : '';
+			});
+		}
+
+		function setActiveKind(kind: string) {
+			root.dataset.kindFilter = kind;
+			kindPills.forEach((pill) => {
+				const isActive = pill.classList.contains(`kind-pill-${kind}`);
+				pill.classList.toggle('active', isActive);
+				if (isActive) pill.setAttribute('aria-current', 'true');
+				else pill.removeAttribute('aria-current');
+			});
+			if (titleEl) {
+				titleEl.dataset.activeKind = kind;
+				const titleAttr =
+					kind === 'all' ? 'titleAll' : kind === 'rotaract' ? 'titleRotaract' : kind === 'interact' ? 'titleInteract' : kind === 'rotary' ? 'titleRotary' : 'titleScadenze';
+				titleEl.textContent = titleEl.dataset[titleAttr] ?? titleEl.dataset.titleAll ?? '';
+			}
+			applyKindCap();
+		}
+
+		function showMonth(key: string): boolean {
+			const panel = monthPanels.find((p) => p.dataset.month === key);
+			if (!panel) return false;
+			monthPanels.forEach((p) => {
+				p.hidden = p !== panel;
+			});
+			return true;
+		}
+
+		function showDay(key: string | null): boolean {
+			const panel = dayPanels.find((p) => p.dataset.dayAgenda === (key ?? 'default'));
+			if (!panel) return false;
+			dayPanels.forEach((p) => {
+				p.hidden = p !== panel;
+			});
+			return true;
+		}
+
+		root.addEventListener('click', (event) => {
+			const target = event.target as HTMLElement;
+
+			const monthLink = target.closest<HTMLAnchorElement>('.month-nav-btn');
+			if (monthLink) {
+				const url = new URL(monthLink.href);
+				const month = url.searchParams.get('month');
+				if (!month || !showMonth(month)) return;
+				event.preventDefault();
+				history.pushState(null, '', url.pathname + url.search + url.hash);
+				return;
+			}
+
+			const dayLink = target.closest<HTMLAnchorElement>('a.day-cell');
+			if (dayLink) {
+				const url = new URL(dayLink.href);
+				const day = url.searchParams.get('day');
+				if (!day || !showDay(day)) return;
+				event.preventDefault();
+				if (agendaRadio) agendaRadio.checked = true;
+				history.pushState(null, '', url.pathname + url.search + url.hash);
+				return;
+			}
+
+			const resetLink = target.closest<HTMLAnchorElement>('.day-filter-reset');
+			if (resetLink) {
+				if (!showDay(null)) return;
+				event.preventDefault();
+				const url = new URL(resetLink.href);
+				history.pushState(null, '', url.pathname + url.hash);
+			}
+
+			const kindLink = target.closest<HTMLAnchorElement>('.kind-pill');
+			if (kindLink) {
+				const url = new URL(kindLink.href);
+				const kind = url.searchParams.get('kind') ?? 'all';
+				event.preventDefault();
+				setActiveKind(kind);
+				history.pushState(null, '', url.pathname + url.search + url.hash);
+			}
+		});
+
+		window.addEventListener('popstate', () => {
+			const params = new URLSearchParams(location.search);
+			const month = params.get('month') ?? root.dataset.defaultMonth;
+			if (month) showMonth(month);
+			showDay(params.get('day'));
+			setActiveKind(params.get('kind') ?? 'all');
+		});
+	}
+
+	document.querySelectorAll<HTMLElement>('[data-calendar]').forEach(initCalendar);
+
+	// Only the default agenda panel (bounded to AGENDA_LIMIT items server-side) gets a
+	// stagger entrance - the per-day filter panels can be numerous and are reached via
+	// click-through, not scroll discovery, so animating them would just add unobserved
+	// IntersectionObservers for content most visitors never scroll to.
+	document.querySelectorAll<HTMLElement>('.events-calendar').forEach((section) => {
+		const defaultPanel = section.querySelector<HTMLElement>('[data-day-agenda="default"]');
+		if (!defaultPanel) return;
+		const rows = Array.from(defaultPanel.querySelectorAll<HTMLElement>('.event-row'));
+		revealOnScroll(section, rows, { opacity: [0, 1], y: [12, 0] }, { delay: cappedStagger(0.06) });
+	});
+</script>

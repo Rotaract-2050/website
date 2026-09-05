@@ -20,14 +20,22 @@ interface Props {
 	imageFocalY?: number | null;
 	imageLabel: string;
 	imageSide?: 'left' | 'right';
+	/** Override this one instance's accent (eyebrow/quote-mark/CTA — everything that normally
+	 * reads --color-pink) without touching every other SplitSection on the site. Scoped inline
+	 * override of the same custom-property names the component already reads, same mechanism as
+	 * the site-wide [data-theme="interact"] scope, just narrowed to this one <section>. */
+	accent?: string | null;
 }
 
-const { lang, kicker, title, quote, body, subhead, quote2, body2, ctaLabel, ctaHref, image, imageFocalX, imageFocalY, imageLabel, imageSide = 'right' } = Astro.props;
+const { lang, kicker, title, quote, body, subhead, quote2, body2, ctaLabel, ctaHref, image, imageFocalX, imageFocalY, imageLabel, imageSide = 'right', accent } = Astro.props;
 const resolvedCtaHref = ctaHref ? getRelativeLocaleUrl(lang, ctaHref) : undefined;
 const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 50}%;`;
+const accentStyle = accent
+	? `--color-pink: ${accent}; --color-pink-dark: color-mix(in srgb, ${accent} 75%, black); --color-pink-container: color-mix(in srgb, ${accent} 12%, white); --color-on-pink-container: color-mix(in srgb, ${accent} 75%, black);`
+	: undefined;
 ---
 
-<section class="split" data-side={imageSide}>
+<section class="split" data-side={imageSide} style={accentStyle}>
 	<div class="split-inner">
 		<div class="split-media">
 			{image ? <Image src={image} alt={imageLabel} width={800} height={420} quality="high" class="split-image" style={focalStyle} /> : <ImageSlot label={imageLabel} shape="rounded" class="split-image" />}

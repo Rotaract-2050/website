@@ -1,6 +1,8 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import InteractHeader from '../components/InteractHeader.astro';
+import InteractFooter from '../components/InteractFooter.astro';
 import SeoHead from '../components/SeoHead.astro';
 import JsonLd from '../components/JsonLd.astro';
 import FormazioneChatWidget from '../components/FormazioneChatWidget.astro';
@@ -9,11 +11,12 @@ import { getRelativeLocaleUrl } from 'astro:i18n';
 import { requestWithMetadata } from '@tinacms/astro';
 import client from '../../tina/__generated__/client';
 import type { Lang } from '../data/ui-strings';
-import { SITE_NAME, DEFAULT_OG_IMAGE } from '../data/ui-strings';
+import { SITE_NAME, DEFAULT_OG_IMAGE, SOCIAL_LINKS } from '../data/ui-strings';
 import { pageSlugs, type PageKey } from '../data/routes';
 import { buildOrganizationGraph } from '../lib/jsonld';
 import { isProdHost } from '../lib/env';
 import '../styles/global.css';
+import '../styles/interact-theme.css';
 
 interface Props {
 	lang: Lang;
@@ -27,6 +30,12 @@ interface Props {
 	type?: 'website' | 'article';
 	publishedTime?: string;
 	noindex?: boolean;
+	/** Which header/footer + color theme to render — see src/styles/interact-theme.css. Default
+	 * 'rotaract' keeps today's exact behavior (Header/Footer, no [data-theme] attribute). */
+	theme?: 'rotaract' | 'interact';
+	/** "<title> | X" suffix override — the Interact sub-section uses its own site name instead
+	 * of SITE_NAME ("Rotaract Distretto 2050"). */
+	siteName?: string;
 }
 
 const {
@@ -39,6 +48,8 @@ const {
 	type = 'website',
 	publishedTime,
 	noindex = false,
+	theme = 'rotaract',
+	siteName = SITE_NAME,
 } = Astro.props;
 const otherLang: Lang = lang === 'it' ? 'en' : 'it';
 const alternateHref = alternateHrefProp ?? getRelativeLocaleUrl(otherLang, pageSlugs[current]);
@@ -51,12 +62,36 @@ const settings = data.settings;
 const onProdHost = isProdHost(Astro.url, Astro.site);
 const effectiveNoindex = noindex || !onProdHost;
 const resolvedImage = image || settings.defaultOgImage || DEFAULT_OG_IMAGE;
-const pageTitle = title === SITE_NAME ? title : `${title} | ${SITE_NAME}`;
+const pageTitle = title === siteName ? title : `${title} | ${siteName}`;
 const localizedAbout = (lang === 'en' && settings.aboutEn) || settings.about;
-const organizationGraph = buildOrganizationGraph(
-	{ about: localizedAbout, logo: new URL(settings.logo || DEFAULT_OG_IMAGE, Astro.site).toString(), fiscalCode: settings.fiscalCode },
-	Astro.site!.toString()
-);
+// Rotaract Distretto 2050 e Interact Distretto 2050 sono due entità distinte sotto lo stesso
+// ombrello Rotary International (vedi references/interact-section.md) — mai emettere un solo
+// grafo Organization/WebSite "Rotaract" su pagine /interact/*. Interact non ha ancora un proprio
+// logo/testo "chi siamo"/codice fiscale confermati in Tina (vedi placeholder wordmark in
+// InteractHeader): li si omette piuttosto che riusare per finzione quelli del Rotaract. `sameAs`
+// resta condiviso perché Header/Footer Interact già promuovono gli stessi canali social del
+// distretto (decisione già presa, non una scorciatoia presa qui).
+const organizationGraph =
+	theme === 'interact'
+		? buildOrganizationGraph(
+				{
+					name: siteName,
+					idSuffix: 'interact-organization',
+					url: new URL('/interact', Astro.site).toString(),
+					sameAs: SOCIAL_LINKS.map((s) => s.href),
+				},
+				Astro.site!.toString()
+			)
+		: buildOrganizationGraph(
+				{
+					name: siteName,
+					about: localizedAbout,
+					logo: new URL(settings.logo || DEFAULT_OG_IMAGE, Astro.site).toString(),
+					fiscalCode: settings.fiscalCode,
+					sameAs: SOCIAL_LINKS.map((s) => s.href),
+				},
+				Astro.site!.toString()
+			);
 ---
 
 <!doctype html>
@@ -110,12 +145,16 @@ const organizationGraph = buildOrganizationGraph(
 		<JsonLd data={organizationGraph} />
 	</head>
 	<body>
-		<div class="page">
-			<Header lang={lang} current={current} />
+		<div class="page" data-theme={theme === 'interact' ? 'interact' : undefined}>
+			{theme === 'interact'
+				? <InteractHeader lang={lang} current={current} />
+				: <Header lang={lang} current={current} />}
 			<main>
 				<slot />
 			</main>
-			<Footer lang={lang} settings={settings} />
+			{theme === 'interact'
+				? <InteractFooter lang={lang} settings={settings} />
+				: <Footer lang={lang} settings={settings} />}
 			<FormazioneChatWidget lang={lang} chatSettings={settings.chatAssistant} />
 		</div>
 		<CookieConsent lang={lang} gaMeasurementId={onProdHost ? settings.gaMeasurementId : null} />

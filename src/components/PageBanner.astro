@@ -2,7 +2,7 @@
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import type { Lang } from '../data/ui-strings';
 import { uiStrings } from '../data/ui-strings';
-import { pageSlugs } from '../data/routes';
+import { pageSlugs, type PageKey } from '../data/routes';
 import JsonLd from './JsonLd.astro';
 import { buildBreadcrumbList } from '../lib/jsonld';
 
@@ -12,11 +12,16 @@ interface Props {
 	title: string;
 	breadcrumbCurrent: string;
 	titleField?: string;
+	theme?: 'default' | 'family';
+	/** Which page the breadcrumb's "Home" points to — Interact pages must link back to the Interact
+	 * home (`interactHome`), never the Rotaract root: two distinct entities under Rotary
+	 * International, not one site with a color theme (see references/interact-section.md). */
+	homeSlug?: PageKey;
 }
 
-const { lang, eyebrow, title, breadcrumbCurrent, titleField } = Astro.props;
+const { lang, eyebrow, title, breadcrumbCurrent, titleField, theme = 'default', homeSlug = 'home' } = Astro.props;
 const t = uiStrings[lang];
-const homeHref = getRelativeLocaleUrl(lang, pageSlugs.home);
+const homeHref = getRelativeLocaleUrl(lang, pageSlugs[homeSlug]);
 const breadcrumbJsonLd = buildBreadcrumbList([
 	{ name: t.breadcrumbHome, url: new URL(homeHref, Astro.site).toString() },
 	{ name: breadcrumbCurrent, url: new URL(Astro.url.pathname, Astro.site).toString() },
@@ -25,7 +30,7 @@ const breadcrumbJsonLd = buildBreadcrumbList([
 
 <JsonLd data={breadcrumbJsonLd} />
 <div class="page-banner">
-	<div class="banner-card">
+	<div class={`banner-card theme-${theme}`}>
 		<span class="mark" aria-hidden="true">2050</span>
 		<div class="breadcrumb">
 			<a href={homeHref}>{t.breadcrumbHome}</a> / {breadcrumbCurrent}
@@ -52,6 +57,28 @@ const breadcrumbJsonLd = buildBreadcrumbList([
 		border-radius: var(--shape-extra-large);
 		box-shadow: var(--elevation-3);
 		padding: 72px 48px;
+	}
+
+	.banner-card.theme-family {
+		background: linear-gradient(135deg, var(--color-kind-rotary-container) 0%, var(--color-kind-rotaract-container) 50%, var(--color-kind-interact-container) 100%) !important;
+	}
+
+	/* When using the light pastel gradient, the text must be dark for contrast */
+	.banner-card.theme-family .title,
+	.banner-card.theme-family .eyebrow {
+		color: var(--color-navy);
+	}
+
+	.banner-card.theme-family .breadcrumb {
+		color: rgba(11, 37, 69, 0.6);
+	}
+
+	.banner-card.theme-family .breadcrumb a:hover {
+		color: var(--color-navy);
+	}
+
+	.banner-card.theme-family .mark {
+		color: rgba(11, 37, 69, 0.03);
 	}
 
 	/* Signature mark: the district's own number, echoed faintly on every inner page —

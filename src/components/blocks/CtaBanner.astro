@@ -8,13 +8,18 @@ interface Props {
 	body: string;
 	buttonLabel: string;
 	buttonHref: string;
+	/** Override the default --color-pink accent for this one banner instance (e.g. the
+	 * Interact Sky Blue on the "Scopri il distretto dell'Interact" CTA on the Rotaract home,
+	 * which sits on an otherwise Rotaract-themed page — a full [data-theme] scope isn't right
+	 * for a single banner, only a section-wide retheme). */
+	accent?: string | null;
 }
 
-const { lang, title, body, buttonLabel, buttonHref } = Astro.props;
+const { lang, title, body, buttonLabel, buttonHref, accent } = Astro.props;
 ---
 
 <section class="cta-banner">
-	<div class="cta-card">
+	<div class="cta-card" style={accent ? `--cta-accent: ${accent}` : undefined}>
 		<span class="mark" aria-hidden="true">2050</span>
 		<h2 class="cta-title">{title}</h2>
 		<p class="cta-body">{body}</p>
@@ -39,14 +44,15 @@ const { lang, title, body, buttonLabel, buttonHref } = Astro.props;
 		padding: 80px 40px;
 		text-align: center;
 		
-		/* Piastrina (Metallic Pink Plate) */
-		background: linear-gradient(105deg, var(--color-pink) 0%, color-mix(in srgb, var(--color-pink) 85%, white) 25%, var(--color-pink) 50%, color-mix(in srgb, var(--color-pink) 85%, white) 75%, var(--color-pink) 100%);
+		/* Piastrina (Metallic Plate) — --cta-accent falls back to the site's default pink,
+		   overridden per-instance via the `accent` prop (see Props above). */
+		background: linear-gradient(105deg, var(--cta-accent, var(--color-pink)) 0%, color-mix(in srgb, var(--cta-accent, var(--color-pink)) 85%, white) 25%, var(--cta-accent, var(--color-pink)) 50%, color-mix(in srgb, var(--cta-accent, var(--color-pink)) 85%, white) 75%, var(--cta-accent, var(--color-pink)) 100%);
 		color: #fff;
 		box-shadow:
 			inset 0 2px 4px rgba(255, 255, 255, 0.4),
 			inset 0 -2px 6px rgba(0, 0, 0, 0.2),
 			0 12px 32px rgba(0,0,0,0.15);
-		border: 1px solid color-mix(in srgb, var(--color-pink) 50%, white);
+		border: 1px solid color-mix(in srgb, var(--cta-accent, var(--color-pink)) 50%, white);
 
 		/* Movimento leggero: solo transform, il riflesso è nel ::after qui sotto */
 		animation: float 6s ease-in-out infinite;
@@ -114,7 +120,7 @@ const { lang, title, body, buttonLabel, buttonHref } = Astro.props;
 		position: relative;
 		display: inline-block;
 		background: #fff;
-		color: var(--color-pink);
+		color: var(--cta-accent, var(--color-pink));
 		font-family: var(--font-heading);
 		font-weight: 600;
 		font-size: 14px;

@@ -1,0 +1,234 @@
+---
+// Not a parametrized Footer.astro: that component hardcodes the "ROTARACT DISTRETTO 2050"
+// title and a fixed Rotaract-only nav-link array inline. Same grid shell/CSS classes here
+// (already var-driven, retheme for free under [data-theme="interact"]) — only the title string
+// and nav links differ. Privacy stays a single shared page for the whole domain.
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { tinaField } from '@tinacms/astro';
+import type { SettingsQuery } from '../../tina/__generated__/types';
+import type { Lang } from '../data/ui-strings';
+import { uiStrings, SOCIAL_LINKS } from '../data/ui-strings';
+import { pageSlugs, type PageKey } from '../data/routes';
+import SocialIcon from './SocialIcon.astro';
+
+interface Props {
+	lang: Lang;
+	settings: SettingsQuery['settings'];
+}
+
+const { lang, settings } = Astro.props;
+const t = uiStrings[lang];
+const ti = t.interact;
+const href = (page: PageKey) => getRelativeLocaleUrl(lang, pageSlugs[page]);
+
+// settings is a single file for both languages (like clubs.story/storyEn) — pick the EN value
+// when present, falling back to IT, same as Footer.astro's own about/address ternary.
+const isEn = lang === 'en';
+const about = (isEn && settings.aboutEn) || settings.about;
+const aboutFieldName = isEn && settings.aboutEn ? 'aboutEn' : 'about';
+const address = (isEn && settings.addressEn) || settings.address;
+const addressFieldName = isEn && settings.addressEn ? 'addressEn' : 'address';
+---
+
+<footer class="site-footer">
+	<div class="footer-grid">
+		<div>
+			<div class="footer-title">{ti.footerTitle}</div>
+			<p class="footer-about" data-tina-field={tinaField(settings, aboutFieldName)}>{about}</p>
+		</div>
+		<div>
+			<div class="footer-heading">{t.footer.linksTitle}</div>
+			<div class="footer-links">
+				<a href={href('interactHome')}>{ti.navHome}</a>
+				<a href={href('interactStoria')}>{ti.navStoria}</a>
+				<a href={href('interactSquadra')}>{ti.navSquadra}</a>
+				<a href={href('interactClub')}>{ti.navClub}</a>
+				<a href={href('interactAlbo')}>{ti.navAlbo}</a>
+				<a href={href('interactEventi')}>{ti.navEventi}</a>
+				<a href={href('privacy')}>{t.footer.privacyLink}</a>
+			</div>
+		</div>
+		<div>
+			<div class="footer-heading">{t.footer.contactTitle}</div>
+			<p class="footer-contact">
+				<span data-tina-field={tinaField(settings, addressFieldName)}>{address}</span>
+				{settings.fiscalCode && (
+					<>
+						<br />
+						<span data-tina-field={tinaField(settings, 'fiscalCode')}>
+							{t.footer.fiscalCodeLabel}: {settings.fiscalCode}
+						</span>
+					</>
+				)}
+				<br />
+				<a href={`mailto:${settings.email}`} class="footer-email" data-tina-field={tinaField(settings, 'email')}>{settings.email}</a>
+			</p>
+		</div>
+		<div>
+			<div class="footer-heading">{t.footer.socialTitle}</div>
+			<div class="footer-social">
+				{SOCIAL_LINKS.map((soc) => (
+					<a
+						href={soc.href}
+						target="_blank"
+						rel="noopener"
+						class="social-icon"
+						aria-label={soc.label}
+						data-track="social_link_click"
+						data-track-params={JSON.stringify({ network: soc.name })}
+					>
+						<SocialIcon name={soc.name} />
+					</a>
+				))}
+			</div>
+		</div>
+	</div>
+	<div class="footer-bottom">
+		<div class="footer-copyright">
+			<span>{t.footer.copyright}</span>
+		</div>
+		<div>{t.footer.underRotary}</div>
+	</div>
+	<div class="footer-credit">
+		Fatto con il cuore da Alessandro Gorla
+	</div>
+</footer>
+
+<style>
+	.site-footer {
+		background: var(--color-navy);
+		color: #fff;
+		padding: 60px 40px 0;
+	}
+
+	.footer-grid {
+		max-width: var(--content-max);
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: 1.4fr 0.8fr 1fr 0.8fr;
+		gap: 40px;
+		padding-bottom: 40px;
+	}
+
+	.footer-title {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 20px;
+		margin-bottom: 14px;
+	}
+
+	.footer-about {
+		font-size: 14px;
+		color: rgba(255, 255, 255, 0.65);
+		line-height: 1.6;
+		margin: 0;
+	}
+
+	.footer-heading {
+		font-weight: 700;
+		font-size: 12px;
+		letter-spacing: 1px;
+		text-transform: uppercase;
+		margin-bottom: 16px;
+		color: var(--color-gold);
+	}
+
+	.footer-links {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.footer-links a {
+		font-size: 14px;
+		color: rgba(255, 255, 255, 0.75);
+	}
+
+	.footer-links a:hover {
+		color: #fff;
+	}
+
+	.footer-contact {
+		font-size: 14px;
+		color: rgba(255, 255, 255, 0.75);
+		line-height: 1.7;
+		margin: 0;
+	}
+
+	.footer-email {
+		color: inherit;
+	}
+
+	.footer-email:hover {
+		color: #fff;
+	}
+
+	.footer-social {
+		display: flex;
+		gap: 10px;
+	}
+
+	.social-icon {
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+		background: rgba(255, 255, 255, 0.1);
+		color: #fff;
+		padding: 7px;
+		box-sizing: border-box;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.social-icon:hover {
+		background: rgba(255, 255, 255, 0.2);
+		color: #fff;
+	}
+
+	.footer-bottom {
+		border-top: 1px solid rgba(255, 255, 255, 0.12);
+		padding: 20px 0;
+		display: flex;
+		justify-content: space-between;
+		max-width: var(--content-max);
+		margin: 0 auto;
+		font-size: 12px;
+		color: rgba(255, 255, 255, 0.5);
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+
+	.footer-copyright {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 8px;
+	}
+
+	@media (max-width: 900px) {
+		.site-footer {
+			padding: 60px 20px 0;
+		}
+
+		.footer-grid {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+
+	@media (max-width: 540px) {
+		.footer-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.footer-credit {
+		max-width: var(--content-max);
+		margin: 0 auto;
+		padding: 10px 0 20px;
+		font-size: 11px;
+		color: rgba(255, 255, 255, 0.3);
+		text-align: center;
+		letter-spacing: 0.5px;
+	}
+</style>

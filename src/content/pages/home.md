@@ -72,6 +72,33 @@ blocks:
     imageLabelEn: Photo of members on a service project
     imageSide: right
     _template: SplitSection
+  - title: LA NOSTRA FAMIGLIA
+    titleEn: OUR FAMILY
+    intro: 'Un unico percorso di servizio e leadership, in tre tappe: dai 12 anni fino a tutta la vita.'
+    introEn: 'One path of service and leadership, in three stages: from age 12 for the rest of your life.'
+    items:
+      - title: ROTARY
+        body: L'organizzazione internazionale di persone d'azione che riunisce leader di comunità in tutto il mondo, dal 1905.
+        bodyEn: The international organization of people of action bringing together community leaders worldwide since 1905.
+        buttonLabel: SCOPRI ROTARY
+        buttonLabelEn: DISCOVER ROTARY
+        buttonHref: 'https://www.rotary2050.org/site/'
+        color: '#F7A81B'
+      - title: ROTARACT
+        body: La rete di giovani dai 18 anni in su che unisce crescita personale, amicizia e servizio alla comunità. Il distretto che stai visitando.
+        bodyEn: The network for young people aged 18 and up combining personal growth, fellowship and community service. The district you're on right now.
+        buttonLabel: SCOPRI IL ROTARACT
+        buttonLabelEn: DISCOVER ROTARACT
+        buttonHref: distretto
+        color: '#D41367'
+      - title: INTERACT
+        body: 'La casa dei più giovani: dai 12 ai 18 anni, il primo passo nella famiglia rotariana.'
+        bodyEn: 'A home for the youngest: ages 12 to 18, the first step into the Rotary family.'
+        buttonLabel: SCOPRI L'INTERACT
+        buttonLabelEn: DISCOVER INTERACT
+        buttonHref: interact
+        color: '#00A2E0'
+    _template: FamilyGrid
   - autoplay: true
     images:
       - image: /uploads/Paesaggi/paesaggio-1.jpeg
@@ -124,8 +151,8 @@ blocks:
         href: club
         color: '#901F93'
     _template: CardGrid
-  - title: EVENTI DISTRETTUALI
-    titleEn: DISTRICT EVENTS
+  - title: EVENTI DELLA NOSTRA FAMIGLIA
+    titleEn: OUR FAMILY'S EVENTS
     _template: EventsCalendar
   - title: NEWS DAL DISTRETTO
     titleEn: DISTRICT NEWS

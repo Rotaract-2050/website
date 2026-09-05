@@ -97,6 +97,7 @@ const distrettoActive = (['distretto', 'story', 'rrd', 'squadra'] as PageKey[]).
 				<a href={href('story')}>{t.nav.story}</a>
 				<a href={href('rrd')}>{t.nav.rrd}</a>
 				<a href={href('squadra')}>{t.nav.squadra}</a>
+				<a href={href('interactHome')} class="dropdown-interact-link" data-track="interact_link_click">{t.nav.interactLink}</a>
 			</div>
 		</div>
 
@@ -311,6 +312,9 @@ const distrettoActive = (['distretto', 'story', 'rrd', 'squadra'] as PageKey[]).
 	}
 
 	.dropdown-panel a {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		text-transform: uppercase;
 		font-size: 14px;
 		color: var(--color-navy);
 		padding: 10px 12px;
@@ -320,6 +324,22 @@ const distrettoActive = (['distretto', 'story', 'rrd', 'squadra'] as PageKey[]).
 	.dropdown-panel a:hover {
 		background: var(--color-bg);
 		color: var(--color-pink);
+	}
+
+	/* Interact's own official brand color (Sky Blue #00A2E0, PMS 2202C — "the color as seen in
+	   the Interact logo", see src/lib/news.ts's customClubColor()), not a var() — this link lives
+	   on the Rotaract header (outside [data-theme="interact"]'s scope) and needs to read as a
+	   deliberate cross-link into the other section. Same size/weight/padding as its dropdown
+	   siblings (no pill/border/all-caps treatment) — on request, reads as "one more item in the
+	   list", just tinted blue, filling solid blue with white text on hover like the others fill
+	   pink. */
+	.dropdown-panel a.dropdown-interact-link {
+		color: #00a2e0;
+	}
+
+	.dropdown-panel a.dropdown-interact-link:hover {
+		background: #00a2e0;
+		color: #fff;
 	}
 
 	.materials-link {

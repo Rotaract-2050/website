@@ -1,3 +1,7 @@
+## Agent instructions location
+
+This repo also keeps agent skills and instructions under `.claude/` (Claude Code's config dir), not just `.agents/`. Read `.claude/skills/*/SKILL.md` and any `.claude/*.md` files too — shared skills are symlinked from `.agents/skills/` into `.claude/skills/` so both locations stay in sync.
+
 ## Development
 
 Don't run plain `astro dev` — it skips the TinaCMS GraphQL/admin server (`:4001`) that the site's data layer depends on. Use the project's own script instead, in background mode:

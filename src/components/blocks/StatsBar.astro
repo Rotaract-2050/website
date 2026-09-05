@@ -7,7 +7,7 @@ const { items } = Astro.props;
 ---
 
 <section class="stats">
-	<div class="stats-card">
+	<div class="stats-card" style={`--grid-cols: ${items.length}`}>
 		{items.map((stat) => (
 			<div class="stat" data-tina-field={stat.tinaFieldAttr}>
 				<div class="stat-value">{stat.value}</div>
@@ -33,7 +33,7 @@ const { items } = Astro.props;
 		border-radius: var(--shape-extra-large);
 		padding: 32px;
 		display: grid;
-		grid-template-columns: repeat(4, 1fr);
+		grid-template-columns: repeat(var(--grid-cols, 4), 1fr);
 		gap: 20px;
 	}
 
@@ -86,12 +86,24 @@ const { items } = Astro.props;
 		.stats-card {
 			grid-template-columns: repeat(2, 1fr);
 		}
+		
+		/* Se ci sono esattamente 3 elementi, l'ultimo occupa entrambe le colonne su tablet 
+		   per evitare il "buco" in basso a destra. */
+		.stats-card[style*="--grid-cols: 3"] .stat:last-child {
+			grid-column: span 2;
+		}
 	}
 
 	@media (max-width: 480px) {
 		.stats-card {
 			grid-template-columns: 1fr;
 		}
+		
+		/* Resetta il col-span per il mobile (una sola colonna) */
+		.stats-card[style*="--grid-cols: 3"] .stat:last-child {
+			grid-column: span 1;
+		}
+
 		.stat {
 			padding: 28px 16px;
 		}

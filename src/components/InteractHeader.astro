@@ -1,0 +1,578 @@
+---
+// Deliberately NOT a parametrized Header.astro (606 lines, tightly coupled to Rotaract's own
+// PageKey/nav structure and decorative elements with no Interact equivalent, e.g. the
+// .formazione-btn rainbow gradient) — see the Interact implementation plan. Reuses what IS
+// site-wide/generic: SOCIAL_LINKS, UTILITY_LINKS, the lang switch, the mobile menu-toggle script.
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { Lang } from '../data/ui-strings';
+import { uiStrings, SOCIAL_LINKS, UTILITY_LINKS } from '../data/ui-strings';
+import { pageSlugs, type PageKey } from '../data/routes';
+import SocialIcon from './SocialIcon.astro';
+
+interface Props {
+	lang: Lang;
+	current: PageKey;
+}
+
+const { lang, current } = Astro.props;
+const t = uiStrings[lang];
+const ti = t.interact;
+
+const href = (page: PageKey) => getRelativeLocaleUrl(lang, pageSlugs[page]);
+const otherLang: Lang = lang === 'it' ? 'en' : 'it';
+const langSwitchHref = getRelativeLocaleUrl(otherLang, pageSlugs[current]);
+const rotaractHomeHref = getRelativeLocaleUrl(lang, '');
+
+const distrettoActive = (['interactStoria', 'interactAlbo', 'interactSquadra'] as PageKey[]).includes(current);
+---
+
+<div class="utility-bar">
+	<div class="utility-links">
+		{UTILITY_LINKS.map((link) => (
+			<a href={link.href} target="_blank" rel="noopener" data-track="utility_link_click" data-track-params={JSON.stringify({ link_label: link.label })}>
+				{link.label}
+			</a>
+		))}
+	</div>
+	<div class="utility-right">
+		<div class="lang-switch">
+			{lang === 'it'
+				? <span class="lang-btn active" aria-current="true">IT</span>
+				: (
+					<a href={langSwitchHref} class="lang-btn" hreflang="it" data-track="lang_switch_click" data-track-params={JSON.stringify({ to_lang: 'it' })}>
+						IT
+					</a>
+				)}
+			{lang === 'en'
+				? <span class="lang-btn active" aria-current="true">EN</span>
+				: (
+					<a href={langSwitchHref} class="lang-btn" hreflang="en" data-track="lang_switch_click" data-track-params={JSON.stringify({ to_lang: 'en' })}>
+						EN
+					</a>
+				)}
+		</div>
+		<div class="divider" aria-hidden="true"></div>
+		<div class="social-icons">
+			{SOCIAL_LINKS.map((soc) => (
+				<a
+					href={soc.href}
+					target="_blank"
+					rel="noopener"
+					class="social-icon"
+					aria-label={soc.label}
+					data-track="social_link_click"
+					data-track-params={JSON.stringify({ network: soc.name })}
+				>
+					<SocialIcon name={soc.name} />
+				</a>
+			))}
+		</div>
+	</div>
+</div>
+
+<header class="main-nav">
+	<a href={href('interactHome')} class="brand">
+		{/* Wordmark placeholder — swap for the official Interact logo (Rotary Brand Center) once
+		    supplied; keep the link/markup shape, only the visual mark changes. */}
+		<span class="brand-mark">INTERACT</span>
+		<span class="brand-sub">Distretto 2050</span>
+	</a>
+
+	<button
+		type="button"
+		class="menu-toggle"
+		aria-expanded="false"
+		aria-controls="primary-nav"
+		aria-label={t.nav.menuOpen}
+		data-menu-toggle
+		data-label-open={t.nav.menuOpen}
+		data-label-close={t.nav.menuClose}
+	>
+		<span class="menu-toggle-bar" aria-hidden="true"></span>
+		<span class="menu-toggle-bar" aria-hidden="true"></span>
+		<span class="menu-toggle-bar" aria-hidden="true"></span>
+	</button>
+
+	<nav class="nav-links" id="primary-nav" aria-label="Interact">
+		<a href={href('interactHome')} class:list={['nav-link', { active: current === 'interactHome' }]}>{ti.navHome}</a>
+		
+		<div class="nav-dropdown">
+			<a href="#" class:list={['nav-link', { active: distrettoActive }]}>
+				{t.nav.distrettoMenu} <span aria-hidden="true">▾</span>
+			</a>
+			<div class="dropdown-panel">
+				<a href={href('interactStoria')}>{ti.navStoria}</a>
+				<a href={href('interactAlbo')}>{ti.navAlbo}</a>
+				<a href={href('interactSquadra')}>{ti.navSquadra}</a>
+			</div>
+		</div>
+
+		<a href={href('interactClub')} class:list={['nav-link', { active: current === 'interactClub' }]}>{ti.navClub}</a>
+		<a href={href('interactEventi')} class:list={['nav-link', { active: current === 'interactEventi' }]}>{ti.navEventi}</a>
+		<a href={href('formazione')} class="formazione-btn">
+			<div class="fog-container" aria-hidden="true">
+				<div class="fog-bank fog-bank-1"></div>
+				<div class="fog-bank fog-bank-2"></div>
+				<div class="fog-bank fog-bank-3"></div>
+				<div class="fog-bank fog-bank-4"></div>
+			</div>
+			<span class="btn-text">{t.nav.formazione}</span>
+		</a>
+		<a href={rotaractHomeHref} class="back-pill">{ti.backToRotaract}</a>
+	</nav>
+</header>
+
+<style>
+	/* Colore letterale, non var(--color-navy): questa barra deve restare identica a quella
+	   Rotaract (Navy #0B2545) su entrambi i siti — su richiesta esplicita dell'utente, non
+	   deve seguire il resto della retheme Interact come fa il main-nav sotto. */
+	.utility-bar {
+		background: #0b2545;
+		padding: 8px 40px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 10px;
+	}
+
+	.utility-links {
+		display: flex;
+		gap: 20px;
+		flex-wrap: wrap;
+	}
+
+	.utility-links a {
+		color: #b9d9eb;
+		font-size: 12px;
+		letter-spacing: 0.4px;
+		text-transform: uppercase;
+		font-weight: 500;
+	}
+
+	.utility-links a:hover {
+		color: #fff;
+	}
+
+	.utility-right {
+		display: flex;
+		gap: 16px;
+		align-items: center;
+	}
+
+	.lang-switch {
+		display: flex;
+		gap: 6px;
+	}
+
+	.lang-btn {
+		font-size: 12px;
+		font-weight: 700;
+		letter-spacing: 0.5px;
+		padding: 2px 6px;
+		color: rgba(255, 255, 255, 0.55);
+	}
+
+	.lang-btn.active {
+		color: #f7a81b;
+	}
+
+	a.lang-btn:hover {
+		color: #fff;
+	}
+
+	.divider {
+		width: 1px;
+		height: 14px;
+		background: rgba(255, 255, 255, 0.2);
+	}
+
+	.social-icons {
+		display: flex;
+		gap: 8px;
+	}
+
+	.social-icon {
+		width: 22px;
+		height: 22px;
+		border-radius: 50%;
+		background: rgba(255, 255, 255, 0.12);
+		color: #fff;
+		padding: 5px;
+		box-sizing: border-box;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.social-icon:hover {
+		background: rgba(255, 255, 255, 0.22);
+		color: #fff;
+	}
+
+	.main-nav {
+		background: #fff;
+		padding: 14px 40px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 16px;
+		box-shadow: var(--elevation-1);
+		position: sticky;
+		top: 0;
+		z-index: 50;
+	}
+
+	.brand {
+		display: flex;
+		flex-direction: column;
+		line-height: 1.1;
+		height: 48px;
+		justify-content: center;
+	}
+
+	.brand-mark {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 24px;
+		letter-spacing: 0.5px;
+		color: var(--color-pink);
+	}
+
+	.brand-sub {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 12px;
+		letter-spacing: 0.5px;
+		color: var(--color-navy);
+	}
+
+	.menu-toggle {
+		display: none;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 5px;
+		width: 40px;
+		height: 40px;
+		padding: 0;
+		border: none;
+		background: transparent;
+		flex-shrink: 0;
+	}
+
+	.menu-toggle-bar {
+		width: 24px;
+		height: 2px;
+		border-radius: 2px;
+		background: var(--color-navy);
+		transition: transform var(--motion-duration-short) var(--motion-easing-standard), opacity var(--motion-duration-short) var(--motion-easing-standard);
+	}
+
+	.menu-toggle[aria-expanded='true'] .menu-toggle-bar:nth-child(1) {
+		transform: translateY(7px) rotate(45deg);
+	}
+
+	.menu-toggle[aria-expanded='true'] .menu-toggle-bar:nth-child(2) {
+		opacity: 0;
+	}
+
+	.menu-toggle[aria-expanded='true'] .menu-toggle-bar:nth-child(3) {
+		transform: translateY(-7px) rotate(-45deg);
+	}
+
+	.nav-links {
+		display: flex;
+		align-items: center;
+		gap: 26px;
+		flex-wrap: wrap;
+	}
+
+	.nav-link {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 15px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		color: var(--color-navy);
+		padding: 8px 2px;
+		border-bottom: 3px solid transparent;
+	}
+
+	.nav-link:hover {
+		color: var(--color-pink);
+	}
+
+	.nav-link.active {
+		color: var(--color-pink);
+		border-bottom-color: var(--color-pink);
+	}
+
+	.nav-dropdown {
+		position: relative;
+	}
+
+	.dropdown-panel {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		background: #fff;
+		box-shadow: var(--elevation-3);
+		border-radius: var(--shape-small);
+		min-width: 230px;
+		padding: 10px;
+		z-index: 60;
+		display: none;
+		flex-direction: column;
+	}
+
+	.nav-dropdown:hover .dropdown-panel,
+	.nav-dropdown:focus-within .dropdown-panel {
+		display: flex;
+	}
+
+	.dropdown-panel a {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		text-transform: uppercase;
+		font-size: 14px;
+		color: var(--color-navy);
+		padding: 10px 12px;
+		border-radius: var(--shape-extra-small);
+	}
+
+	.dropdown-panel a:hover {
+		background: var(--color-bg);
+		color: var(--color-pink);
+	}
+
+	/* Formazione is shared/common between Rotaract and Interact (not re-themed, on request) —
+	   same markup/animation as Header.astro's .formazione-btn, verbatim, including the literal
+	   #0b2545 (not var(--color-navy), which would resolve to Royal Blue here) so the button reads
+	   identically on both headers. */
+	.formazione-btn {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 15px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		color: #0b2545;
+		padding: 10px 20px;
+		position: relative;
+		border-radius: var(--shape-small);
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		--smoke-c1: 255, 184, 0;
+		--smoke-c2: 212, 19, 103;
+		--smoke-c3: 0, 200, 255;
+		--smoke-c4: 13, 110, 253;
+	}
+
+	.formazione-btn .btn-text {
+		position: relative;
+		z-index: 1;
+	}
+
+	.fog-container {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		z-index: 0;
+		opacity: 0.5;
+		-webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+		mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+		-webkit-mask-size: 100% 100%;
+		mask-size: 100% 100%;
+		-webkit-mask-position: center;
+		mask-position: center;
+		-webkit-mask-repeat: no-repeat;
+		mask-repeat: no-repeat;
+		transition: -webkit-mask-size 0.4s ease, mask-size 0.4s ease, opacity 0.4s ease;
+	}
+
+	.formazione-btn:hover .fog-container {
+		-webkit-mask-size: 300% 300%;
+		mask-size: 300% 300%;
+		opacity: 0.85;
+	}
+
+	.fog-bank {
+		position: absolute;
+		border-radius: 45%;
+		filter: blur(8px);
+		opacity: 0.85;
+		will-change: transform, opacity;
+	}
+
+	.fog-bank-1 {
+		width: 150%; height: 150%; top: -25%; left: -25%;
+		background: radial-gradient(ellipse at center, rgba(var(--smoke-c1), 0.5) 0%, transparent 70%);
+		animation: navFogDrift1 8s ease-in-out infinite alternate;
+	}
+
+	.fog-bank-2 {
+		width: 150%; height: 150%; bottom: -25%; right: -25%;
+		background: radial-gradient(ellipse at center, rgba(var(--smoke-c2), 0.5) 0%, transparent 70%);
+		animation: navFogDrift2 10s ease-in-out infinite alternate;
+		animation-delay: -2s;
+	}
+
+	.fog-bank-3 {
+		width: 120%; height: 120%; top: 0%; right: 10%;
+		background: radial-gradient(circle at center, rgba(var(--smoke-c3), 0.45) 0%, transparent 60%);
+		animation: navFogSwirl 12s linear infinite;
+		animation-delay: -4s;
+	}
+
+	.fog-bank-4 {
+		width: 130%; height: 130%; bottom: 0%; left: 10%;
+		background: radial-gradient(circle at center, rgba(var(--smoke-c4), 0.45) 0%, transparent 60%);
+		animation: navFogSwirl 14s linear infinite reverse;
+		animation-delay: -1s;
+	}
+
+	@keyframes navFogDrift1 {
+		0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+		100% { transform: translate(15%, 5%) scale(1.1) rotate(5deg); }
+	}
+
+	@keyframes navFogDrift2 {
+		0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+		100% { transform: translate(-15%, -5%) scale(1.15) rotate(-5deg); }
+	}
+
+	@keyframes navFogSwirl {
+		0% { transform: rotate(0deg) scale(1) translate(0, 0); }
+		50% { transform: rotate(180deg) scale(1.2) translate(5%, -2%); }
+		100% { transform: rotate(360deg) scale(1) translate(0, 0); }
+	}
+
+	/* Not present on the Rotaract header — makes the "second home, one click back" framing
+	   legible in the UI itself, not just implied by the URL. */
+	.back-pill {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 12px;
+		letter-spacing: 0.3px;
+		color: var(--color-navy);
+		padding: 8px 16px;
+		border-radius: var(--shape-full);
+		border: 2px solid var(--color-border);
+	}
+
+	.back-pill:hover {
+		background: var(--color-bg);
+		border-color: var(--color-navy);
+	}
+
+	@media (max-width: 860px) {
+		.main-nav {
+			padding: 14px 20px;
+		}
+
+		.utility-bar {
+			padding: 8px 20px;
+		}
+
+		.brand-mark {
+			font-size: 20px;
+		}
+
+		.menu-toggle {
+			display: flex;
+		}
+
+		.nav-links {
+			display: none;
+			position: absolute;
+			top: 100%;
+			left: 0;
+			right: 0;
+			flex-direction: column;
+			align-items: stretch;
+			gap: 4px;
+			background: #fff;
+			padding: 8px 20px 24px;
+			box-shadow: var(--elevation-3);
+			max-height: calc(100vh - 100%);
+			overflow-y: auto;
+		}
+
+		.nav-links[data-open] {
+			display: flex;
+		}
+
+		.nav-link {
+			padding: 12px 4px;
+			border-bottom: 1px solid var(--color-bg);
+		}
+
+		.nav-dropdown {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.dropdown-panel {
+			position: static;
+			display: flex;
+			flex-direction: column;
+			min-width: 0;
+			padding: 0 0 8px 16px;
+			box-shadow: var(--elevation-0);
+			border-radius: var(--shape-none);
+		}
+
+		.dropdown-panel a {
+			padding: 8px 12px;
+			font-size: 13px;
+		}
+
+		.formazione-btn,
+		.back-pill {
+			text-align: center;
+			margin-top: 8px;
+		}
+	}
+</style>
+
+<script>
+	function initMenu(header: Element) {
+		const toggle = header.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+		const panel = header.querySelector<HTMLElement>('#primary-nav');
+		if (!toggle || !panel) return;
+
+		const openLabel = toggle.dataset.labelOpen ?? '';
+		const closeLabel = toggle.dataset.labelClose ?? '';
+
+		function setOpen(open: boolean) {
+			toggle!.setAttribute('aria-expanded', String(open));
+			toggle!.setAttribute('aria-label', open ? closeLabel : openLabel);
+			panel!.toggleAttribute('data-open', open);
+		}
+
+		toggle.addEventListener('click', () => {
+			setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+		});
+
+		panel.addEventListener('click', (event) => {
+			if ((event.target as HTMLElement).closest('a')) setOpen(false);
+		});
+
+		document.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+				setOpen(false);
+				toggle.focus();
+			}
+		});
+
+		const desktopQuery = window.matchMedia('(min-width: 861px)');
+		desktopQuery.addEventListener('change', (event) => {
+			if (event.matches) setOpen(false);
+		});
+	}
+
+	document.querySelectorAll('.main-nav').forEach(initMenu);
+</script>
