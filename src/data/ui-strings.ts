@@ -102,6 +102,7 @@ export interface UiStrings {
 		eyebrow: string;
 		zoneLabel: string;
 		foundationYearLabel: string;
+		presidentLabel: string;
 		emailLabel: string;
 		websiteLabel: string;
 		instagramLabel: string;
@@ -299,6 +300,7 @@ const IT: UiStrings = {
 		eyebrow: 'I CLUB',
 		zoneLabel: 'Zona',
 		foundationYearLabel: 'Anno di fondazione',
+		presidentLabel: 'Presidente',
 		emailLabel: 'Email',
 		websiteLabel: 'Sito web',
 		instagramLabel: 'Instagram',
@@ -471,6 +473,7 @@ const EN: UiStrings = {
 		eyebrow: 'CLUBS',
 		zoneLabel: 'Zone',
 		foundationYearLabel: 'Founded in',
+		presidentLabel: 'President',
 		emailLabel: 'Email',
 		websiteLabel: 'Website',
 		instagramLabel: 'Instagram',
