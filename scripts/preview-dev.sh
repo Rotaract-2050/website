@@ -15,6 +15,22 @@
 # Vedi .claude/skills/rotaract2050-site/references/cloudflare-deploy.md per
 # la storia di com'e' nato questo script (incidente + tentativo con Worker
 # separato, poi abbandonato).
+#
+# IMPORTANTE: .env in chiaro contiene riferimenti 1Password non risolti
+# (TINA_CLIENT_ID/TINA_TOKEN/TINA_SEARCH_TOKEN = "op://..."), non i valori
+# veri — un build con quei valori grezzi produce un sito con l'homepage
+# bianca (lo stream si interrompe a meta') e /llms.txt a 500, perche' il
+# client Tina generato incorpora un client id/token non validi. Lancia
+# questo script dentro `op run`, cosi' i secret arrivano gia' risolti come
+# variabili d'ambiente vere e lo script li usa al posto delle righe "op://"
+# in .env:
+#
+#   op signin   # una tantum, richiede il vault 1Password del progetto
+#   op run --env-file=.env -- bash scripts/preview-dev.sh
+#
+# Senza `op run` lo script builda comunque (per non bloccarsi silenziosamente),
+# ma il sito risultante avra' lo stesso problema di homepage bianca finche'
+# non lanci col wrapper giusto.
 
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -36,6 +52,19 @@ DEPLOY_SHA="$(git -C "$WORKTREE_DIR" rev-parse HEAD)"
 echo "Commit da buildare: $DEPLOY_SHA ($REMOTE_REF)"
 
 cp .env "$WORKTREE_DIR/.env" 2>/dev/null || true
+
+# Se lanciato dentro `op run`, i secret Tina arrivano gia' risolti come
+# variabili d'ambiente vere in questo processo: sovrascrivono le righe
+# "op://..." grezze copiate da .env qui sopra. Mai stampati, letti/scritti
+# solo tramite variabili di shell.
+for _var in TINA_CLIENT_ID TINA_TOKEN TINA_SEARCH_TOKEN; do
+  _val="${!_var:-}"
+  if [ -n "$_val" ] && [[ "$_val" != op://* ]]; then
+    grep -v "^${_var}=" "$WORKTREE_DIR/.env" > "$WORKTREE_DIR/.env.tmp" 2>/dev/null || true
+    printf '%s=%s\n' "$_var" "$_val" >> "$WORKTREE_DIR/.env.tmp"
+    mv "$WORKTREE_DIR/.env.tmp" "$WORKTREE_DIR/.env"
+  fi
+done
 
 pushd "$WORKTREE_DIR" >/dev/null
 npm ci
