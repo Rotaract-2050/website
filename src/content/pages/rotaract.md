@@ -6,8 +6,8 @@ eyebrowEn: ROTARACT DISTRICT 2050
 breadcrumbCurrent: IL ROTARACT
 breadcrumbCurrentEn: THE ROTARACT
 seo:
-  title: Chi Siamo
-  titleEn: About Us
+  title: Il Rotaract
+  titleEn: The Rotaract
   description: 'Il Distretto Rotaract 2050 riunisce i club attivi nelle province di Cremona, Brescia, Lodi, Mantova, Milano Sud, Pavia e Piacenza, sotto gli auspici del Rotary Distretto 2050.'
   descriptionEn: 'Rotaract District 2050 brings together clubs active in the provinces of Cremona, Brescia, Lodi, Mantova, Milano Sud, Pavia and Piacenza, sponsored by Rotary District 2050.'
 blocks:
