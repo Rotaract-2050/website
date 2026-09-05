@@ -1,0 +1,77 @@
+name: Preview dev branch
+
+# Builda `dev` a ogni push e carica una nuova Worker Version con un suo
+# Preview URL. Usa `wrangler versions upload`, mai `wrangler deploy`: quel
+# comando non promuove nulla al traffico live per design, quindi questa
+# automazione non puo' ripetere l'incidente descritto in
+# .claude/skills/rotaract2050-site/references/cloudflare-deploy.md (un
+# blocco env.beta con `wrangler deploy` che ha sovrascritto produzione).
+#
+# Bypassa del tutto Cloudflare Workers Builds: quel sistema ha un bug
+# upstream confermato (cloudflare/workers-sdk#15140) che impedisce di
+# aggiungere un secondo trigger a uno script che ne ha gia' uno — questo
+# script "website" ne ha gia' uno per il branch main.
+
+on:
+  push:
+    branches: [dev]
+    paths-ignore:
+      - 'src/content/**'
+      - 'public/uploads/**'
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - run: npm ci
+
+      # Comando reale (stesso della CI di produzione) — a differenza dello
+      # script manuale locale, qui i secret Tina sono valori veri (secrets
+      # GitHub), non riferimenti 1Password non risolti, quindi non serve
+      # --skip-search-index.
+      - name: Build
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+          TINA_CLIENT_ID: ${{ secrets.TINA_CLIENT_ID }}
+          TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
+          TINA_SEARCH_TOKEN: ${{ secrets.TINA_SEARCH_TOKEN }}
+        run: npm run build -- --skip-cloud-checks
+
+      - name: Baseline produzione (deve restare invariata)
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: da2b3eaf5dee7d1c080061936d1f7e17
+        run: npx wrangler deployments list --name website | tee /tmp/prod-before.log
+
+      - name: Upload Worker Version (non promuove mai al traffico live)
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: da2b3eaf5dee7d1c080061936d1f7e17
+        run: npx wrangler versions upload --config dist/server/wrangler.json | tee /tmp/upload.log
+
+      - name: Verifica che produzione non si sia mossa
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: da2b3eaf5dee7d1c080061936d1f7e17
+        run: |
+          npx wrangler deployments list --name website | tee /tmp/prod-after.log
+          BEFORE="$(grep -m1 -E 'Version' /tmp/prod-before.log)"
+          AFTER="$(grep -m1 -E 'Version' /tmp/prod-after.log)"
+          if [ "$BEFORE" != "$AFTER" ]; then
+            echo "::error::Produzione (website) e' cambiata durante questo upload — non dovrebbe essere possibile con versions upload. Investigare subito."
+            exit 1
+          fi
+          echo "Produzione invariata, ok."
+
+      - name: Link di preview
+        run: |
+          URL="$(grep -oE 'https://[a-z0-9-]+\.[a-z0-9-]+\.workers\.dev' /tmp/upload.log | head -1)"
+          echo "### Preview link" >> "$GITHUB_STEP_SUMMARY"
+          echo "$URL" >> "$GITHUB_STEP_SUMMARY"
+          echo "Preview: $URL"
