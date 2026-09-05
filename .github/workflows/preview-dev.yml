@@ -18,6 +18,7 @@ on:
     paths-ignore:
       - 'src/content/**'
       - 'public/uploads/**'
+  workflow_dispatch: {}
 
 jobs:
   preview:
