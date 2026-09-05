@@ -256,7 +256,7 @@ const IT: UiStrings = {
 		titleRotaract: 'Eventi Rotaract',
 		titleInteract: 'Eventi Interact',
 		titleRotary: 'Eventi Rotary',
-		titleScadenze: 'Eventi in scadenza',
+		titleScadenze: 'Scadenze',
 		weekdaysShort: ['LUN', 'MAR', 'MER', 'GIO', 'VEN', 'SAB', 'DOM'],
 		monthsShort: ['GEN', 'FEB', 'MAR', 'APR', 'MAG', 'GIU', 'LUG', 'AGO', 'SET', 'OTT', 'NOV', 'DIC'],
 		monthsFull: [
