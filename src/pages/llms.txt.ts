@@ -18,7 +18,7 @@ export const GET: APIRoute = async ({ site }) => {
 Sito bilingue italiano (default) / inglese del Distretto Rotaract 2050. / Bilingual Italian (default) / English site of Rotaract District 2050.
 
 ## Pagine principali (italiano)
-- [Il Distretto](${abs(pageSlugs.distretto, 'it')})
+- [Il Rotaract](${abs(pageSlugs.distretto, 'it')})
 - [I Club](${abs(pageSlugs.club, 'it')})
 - [La Squadra](${abs(pageSlugs.squadra, 'it')})
 - [News dal distretto](${abs(pageSlugs.news, 'it')})

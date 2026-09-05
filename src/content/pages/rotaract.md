@@ -1,10 +1,10 @@
 ---
-title: IL DISTRETTO
-titleEn: THE DISTRICT
+title: IL ROTARACT
+titleEn: THE ROTARACT
 eyebrow: ROTARACT DISTRETTO 2050
 eyebrowEn: ROTARACT DISTRICT 2050
-breadcrumbCurrent: IL DISTRETTO
-breadcrumbCurrentEn: THE DISTRICT
+breadcrumbCurrent: IL ROTARACT
+breadcrumbCurrentEn: THE ROTARACT
 seo:
   title: Chi Siamo
   titleEn: About Us
