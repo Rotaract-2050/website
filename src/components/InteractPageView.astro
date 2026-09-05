@@ -9,6 +9,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageBanner from './PageBanner.astro';
 import BlockRenderer from './BlockRenderer.astro';
 import type { Lang } from '../data/ui-strings';
+import { INTERACT_SITE_NAME } from '../data/ui-strings';
 import type { PageKey } from '../data/routes';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
@@ -39,7 +40,7 @@ const eyebrow = (isEn && page.eyebrowEn) || page.eyebrow;
 const breadcrumbCurrent = (isEn && page.breadcrumbCurrentEn) || page.breadcrumbCurrent;
 const seoTitle = (isEn && page.seo?.titleEn) || page.seo?.title || title;
 const seoDescription = (isEn && page.seo?.descriptionEn) || page.seo?.description || '';
-const siteName = isEn ? 'Interact District 2050' : 'Interact Distretto 2050';
+const siteName = INTERACT_SITE_NAME[lang];
 ---
 
 <BaseLayout
@@ -59,6 +60,7 @@ const siteName = isEn ? 'Interact District 2050' : 'Interact Distretto 2050';
 			title={title}
 			breadcrumbCurrent={breadcrumbCurrent}
 			titleField={tinaField(page, titleFieldName)}
+			homeSlug="interactHome"
 		/>
 	)}
 	<BlockRenderer lang={lang} blocks={page.blocks ?? []} />

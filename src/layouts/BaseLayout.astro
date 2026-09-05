@@ -11,7 +11,7 @@ import { getRelativeLocaleUrl } from 'astro:i18n';
 import { requestWithMetadata } from '@tinacms/astro';
 import client from '../../tina/__generated__/client';
 import type { Lang } from '../data/ui-strings';
-import { SITE_NAME, DEFAULT_OG_IMAGE } from '../data/ui-strings';
+import { SITE_NAME, DEFAULT_OG_IMAGE, SOCIAL_LINKS } from '../data/ui-strings';
 import { pageSlugs, type PageKey } from '../data/routes';
 import { buildOrganizationGraph } from '../lib/jsonld';
 import { isProdHost } from '../lib/env';
@@ -64,10 +64,34 @@ const effectiveNoindex = noindex || !onProdHost;
 const resolvedImage = image || settings.defaultOgImage || DEFAULT_OG_IMAGE;
 const pageTitle = title === siteName ? title : `${title} | ${siteName}`;
 const localizedAbout = (lang === 'en' && settings.aboutEn) || settings.about;
-const organizationGraph = buildOrganizationGraph(
-	{ about: localizedAbout, logo: new URL(settings.logo || DEFAULT_OG_IMAGE, Astro.site).toString(), fiscalCode: settings.fiscalCode },
-	Astro.site!.toString()
-);
+// Rotaract Distretto 2050 e Interact Distretto 2050 sono due entità distinte sotto lo stesso
+// ombrello Rotary International (vedi references/interact-section.md) — mai emettere un solo
+// grafo Organization/WebSite "Rotaract" su pagine /interact/*. Interact non ha ancora un proprio
+// logo/testo "chi siamo"/codice fiscale confermati in Tina (vedi placeholder wordmark in
+// InteractHeader): li si omette piuttosto che riusare per finzione quelli del Rotaract. `sameAs`
+// resta condiviso perché Header/Footer Interact già promuovono gli stessi canali social del
+// distretto (decisione già presa, non una scorciatoia presa qui).
+const organizationGraph =
+	theme === 'interact'
+		? buildOrganizationGraph(
+				{
+					name: siteName,
+					idSuffix: 'interact-organization',
+					url: new URL('/interact', Astro.site).toString(),
+					sameAs: SOCIAL_LINKS.map((s) => s.href),
+				},
+				Astro.site!.toString()
+			)
+		: buildOrganizationGraph(
+				{
+					name: siteName,
+					about: localizedAbout,
+					logo: new URL(settings.logo || DEFAULT_OG_IMAGE, Astro.site).toString(),
+					fiscalCode: settings.fiscalCode,
+					sameAs: SOCIAL_LINKS.map((s) => s.href),
+				},
+				Astro.site!.toString()
+			);
 ---
 
 <!doctype html>

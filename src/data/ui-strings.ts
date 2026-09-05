@@ -164,6 +164,13 @@ export const SOCIAL_LINKS: { name: SocialName; label: string; href: string }[] =
 ];
 
 export const SITE_NAME = 'Rotaract Distretto 2050';
+/** Interact Distretto 2050 è un'entità distinta dal Rotaract sotto lo stesso ombrello Rotary
+ * International, non una sotto-sezione a tema — mai riusare SITE_NAME per contenuto Interact
+ * (title/JSON-LD/organizer evento). Unica fonte per questo nome: non ripetere la stringa altrove. */
+export const INTERACT_SITE_NAME: Record<Lang, string> = {
+	it: 'Interact Distretto 2050',
+	en: 'Interact District 2050',
+};
 /** Fallback finale se pagina/articolo/evento e settings.defaultOgImage sono tutti vuoti. */
 export const DEFAULT_OG_IMAGE = '/uploads/Loghi/Logo-distretto.png';
 

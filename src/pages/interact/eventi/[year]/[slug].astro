@@ -12,7 +12,7 @@ import PageBanner from '../../../../components/PageBanner.astro';
 import JsonLd from '../../../../components/JsonLd.astro';
 import { Image } from 'astro:assets';
 import ImageSlot from '../../../../components/ImageSlot.astro';
-import { uiStrings } from '../../../../data/ui-strings';
+import { uiStrings, INTERACT_SITE_NAME } from '../../../../data/ui-strings';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { localizeInteractEvent, interactEventTypeTag, isUpcomingInteractEvent } from '../../../../lib/interact-events';
 import { tagPillStyle, clubTagLabels } from '../../../../lib/news';
@@ -49,6 +49,7 @@ const jsonLd = buildEventJsonLd({
 	imageUrl: new URL(event.image || '/uploads/Loghi/Logo-distretto.png', Astro.site).toString(),
 	url: canonicalUrl.toString(),
 	siteUrl: Astro.site!.toString(),
+	organizerName: INTERACT_SITE_NAME[lang],
 	locationName: event.locationLavori || event.locationCena,
 });
 ---
@@ -63,7 +64,7 @@ const jsonLd = buildEventJsonLd({
 	type="article"
 	publishedTime={event.date}
 	theme="interact"
-	siteName="Interact Distretto 2050"
+	siteName={INTERACT_SITE_NAME[lang]}
 >
 	<PageBanner
 		lang={lang}
@@ -71,6 +72,7 @@ const jsonLd = buildEventJsonLd({
 		title={localized.title}
 		breadcrumbCurrent={t.interact.navEventi}
 		titleField={tinaField(event, 'title')}
+		homeSlug="interactHome"
 	/>
 	<article class="event-detail">
 		<div class="event-detail-inner">
