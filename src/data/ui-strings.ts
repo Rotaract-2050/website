@@ -190,7 +190,7 @@ export const UTILITY_LINKS = [
 const IT: UiStrings = {
 	nav: {
 		home: 'HOME',
-		distrettoMenu: 'IL DISTRETTO',
+		distrettoMenu: 'IL ROTARACT',
 		distrettoSub: 'IL ROTARACT',
 		story: 'LA STORIA',
 		rrd: 'ALBO RRD',
@@ -362,7 +362,7 @@ const IT: UiStrings = {
 const EN: UiStrings = {
 	nav: {
 		home: 'HOME',
-		distrettoMenu: 'THE DISTRICT',
+		distrettoMenu: 'THE ROTARACT',
 		distrettoSub: 'THE ROTARACT',
 		story: 'OUR STORY',
 		rrd: 'RRD ROLL',
