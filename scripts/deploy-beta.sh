@@ -59,11 +59,17 @@ cp "$CONFIG_FILE" "$WORKTREE_DIR/$CONFIG_FILE"
 
 pushd "$WORKTREE_DIR" >/dev/null
 npm ci
-# astro build diretto, non il wrapper tinacms: il contenuto si legge a runtime
-# via client GraphQL Tina, non serve infornarlo a build time (vedi
+# Serve comunque il wrapper tinacms (non solo `astro build`): genera
+# tina/__generated__/client.ts e types.ts, da cui dipendono le pagine (es.
+# src/pages/llms.txt.ts). --skip-cloud-checks salta la validazione dello
+# schema su Tina Cloud, --skip-search-index salta l'upload dell'indice di
+# ricerca (richiede credenziali CI dedicate che non abbiamo in locale) — il
+# contenuto delle pagine resta comunque letto a runtime via client GraphQL
+# Tina, non serve un indice di ricerca fresco per una preview (vedi
 # references/tina.md). Il build CI automatico (Workers Builds/Action) usa
-# invece il comando reale "npm run build -- --skip-cloud-checks".
-NODE_OPTIONS=--max-old-space-size=4096 npx astro build
+# invece il comando reale "npm run build -- --skip-cloud-checks" (con indice
+# di ricerca, credenziali CI dedicate).
+NODE_OPTIONS=--max-old-space-size=4096 npx tinacms build -c "astro build" --skip-cloud-checks --skip-search-index
 
 echo ""
 echo "=== DRY RUN (nessuna modifica live) — verifico il nome target prima di continuare ==="
