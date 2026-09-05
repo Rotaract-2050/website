@@ -26,3 +26,34 @@ Risultato: `main` → build produzione automatica ad ogni push. Commit con `[pre
 - Cambiare quale branch builda il Deploy Hook: dashboard Worker → Settings → Build → Deploy Hooks → modifica "Branch to build" dell'hook esistente (non serve toccare secret o workflow).
 - Cambiare la keyword che fa scattare il workflow: editare `contains(github.event.head_commit.message, '[preview]')` in [`cf-preview-build.yml`](../../../.github/workflows/cf-preview-build.yml).
 - Per un filtro branch-native più granulare (senza passare da commit message/GitHub Action), servirebbe la Builds API (`branch_includes`/`branch_excludes` su trigger) con un token API con permesso Workers Scripts:Edit — non fattibile dai tool MCP Cloudflare disponibili in questa sessione, richiede curl diretto.
+
+## Preview link per `dev`: script manuale, stesso Worker (2026-09-05)
+
+Bisogno reale: un link condivisibile con i soci per vedere `dev` prima del merge in produzione — non un dominio fisso, non un "ambiente beta" separato.
+
+### Incidente: `env.beta` ha deployato su produzione
+
+Primo tentativo: isolare il deploy di `dev` con un blocco `env.beta` dentro `wrangler.jsonc` + `wrangler deploy --env beta`. L'override del nome è stato ignorato e il deploy è finito su **produzione** — `rotaract2050.org` ha servito per alcuni minuti la build di `dev`, risolto subito con `wrangler rollback --name website --version-id <versione-precedente>`.
+
+Causa reale (trovata dopo): `@astrojs/cloudflare` **rigenera un config completo ad ogni build**, `dist/server/wrangler.json` (guardarlo dopo un build per credere), con `main`/`assets` compilati e il campo `name` preso **sempre dal top-level** di `wrangler.jsonc` — non guarda dentro nessun blocco `env`. Il deploy vero legge quel file generato, non il `wrangler.jsonc` con l'`env` scritto a mano: `--env beta` non aveva letteralmente nulla da selezionare nel file che veniva davvero deployato.
+
+Fix per un deploy mirato a un nome preciso: `wrangler deploy --config dist/server/wrangler.json --name <nome-voluto>` — il flag `--name` sulla CLI vince sempre sul `name` dentro qualunque config file.
+
+### Tentativo intermedio (abbandonato): Worker separato `website-beta`
+
+Standing up di un Worker + KV + Custom Domain (`beta.rotaract2050.org`) dedicati a `dev`, con un trigger Workers Builds scoped `branch_includes:["dev"]`. Il trigger si è creato senza errori (lo script era nuovo, zero trigger preesistenti), ma la prima build automatica è fallita: mancavano le variabili d'ambiente Tina (`TINA_CLIENT_ID`/`TINA_TOKEN`/`TINA_SEARCH_TOKEN`), che sono **per-trigger** — non condivise tra trigger diversi anche sullo stesso account/script. A quel punto si è deciso che Worker/dominio/KV separati erano più infrastruttura di quanta ne servisse per il bisogno reale (un link da condividere), e tutto è stato smontato (Custom Domain, trigger, KV, script — nessun residuo rimasto sull'account).
+
+### Conferma diretta del bug #15140 su questo progetto
+
+Prima ancora del tentativo `website-beta`, creare un **secondo trigger** (preview, scoped a `dev`) sullo script di produzione stesso (`website`, tag `fb98d3dc23b04928a997e88c61e994b2`, che ha già il trigger production `02d36cc9-7984-4909-be67-26680de678ab`) è fallito con `code 12042: "A trigger already exists for this configuration"` — nessun secondo trigger è mai apparso in `GET .../builds/workers/<tag>/triggers`. Conferma diretta, su questo account, del bug upstream [cloudflare/workers-sdk#15140](https://github.com/cloudflare/workers-sdk/issues/15140) (un maintainer Cloudflare l'ha confermato, fix in corso al momento di scrivere). **Automazione "push su dev → build automatica" quindi non è oggi possibile aggiungendo un secondo trigger a uno script che ne ha già uno** — solo uno script nuovo di zecca (zero trigger preesistenti) può riceverne uno, come confermato dal tentativo `website-beta` sopra (poi comunque abbandonato per il motivo delle env var).
+
+### Soluzione adottata: `scripts/preview-dev.sh`
+
+Niente Worker separato, niente trigger CI, niente dominio. Lo script:
+
+1. builda `origin/dev` in un worktree git pulito **non annidato dentro un altro worktree** — l'adapter Astro/Vite ha un bug di risoluzione del `tsconfig.json` (`extends: "astro/tsconfigs/strict"`, errore "Tsconfig not found") se il build gira in un worktree annidato dentro un altro worktree, anche con `node_modules` installato correttamente. Lo script va lanciato dalla root del repo reale, mai da dentro un worktree già esistente.
+2. usa il comando reale `tinacms build -c "astro build" --skip-cloud-checks --skip-search-index` — non basta il solo `astro build`: salta il codegen di Tina (`tina/__generated__/client.ts`), da cui dipendono alcune pagine (es. `src/pages/llms.txt.ts`), e il build fallisce con `Could not resolve import`. Il flag extra `--skip-search-index` (oltre a `--skip-cloud-checks`, uguale alla CI di produzione) serve perché in locale non ci sono le credenziali dedicate per l'upload dell'indice di ricerca, e una preview non ne ha bisogno.
+3. esegue `wrangler versions upload` (**non** `wrangler deploy`) contro il `wrangler.jsonc` di produzione così com'è, senza `--config`/`--name` custom — `versions upload` crea una Version nuova con un suo **Preview URL** automatico e **non promuove mai al traffico live**. La sicurezza qui non viene da un nome/config isolato (quello che ha fallito nell'incidente sopra), viene dal comando stesso: impossibile da confondere con un deploy vero, per costruzione.
+4. ricontrolla comunque `wrangler deployments list --name website` prima/dopo (difesa in profondità, anche se strutturalmente non dovrebbe poter cambiare).
+
+Uso: `bash scripts/preview-dev.sh` dalla root del repo. Il link stampato a fine script (`https://<version-id>-website.<subdomain>.workers.dev`) è condivisibile subito con i soci; **cambia a ogni run**, non è un dominio fisso — se in futuro serve un dominio fisso `beta.rotaract2050.org`, la strada torna a essere un Worker separato (i Custom Domains puntano sempre al deployment "vivo" di uno script, mai a una singola Version), e per automatizzarlo via Workers Builds servirà comunque aspettare il fix upstream del #15140 — nel frattempo resterebbe praticabile un GitHub Action che gira `wrangler versions upload`/`deploy` direttamente, bypassando del tutto Workers Builds.
