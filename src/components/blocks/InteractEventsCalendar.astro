@@ -474,9 +474,19 @@ function kindTitle(k: KindFilter): string {
 	}
 
 	.calendar-status {
-		font-size: 15px;
-		color: var(--color-text);
-		font-style: italic;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 240px;
+		background: rgba(255, 255, 255, 0.4);
+		border: 2px dashed var(--color-border);
+		border-radius: var(--shape-large);
+		color: var(--color-muted);
+		font-family: var(--font-heading);
+		font-size: 16px;
+		font-weight: 500;
+		text-align: center;
+		margin: 0;
 	}
 
 	.day-filter-bar {
@@ -674,6 +684,7 @@ function kindTitle(k: KindFilter): string {
 		display: flex;
 		flex-direction: column;
 		gap: 12px;
+		align-items: stretch;
 	}
 
 	/* The `hidden` attribute toggles which day's panel shows (see the script below) —
@@ -709,6 +720,8 @@ function kindTitle(k: KindFilter): string {
 		display: flex;
 		align-items: center;
 		gap: 24px;
+		width: 100%;
+		box-sizing: border-box;
 		background: #ffffff;
 		border-radius: var(--shape-medium);
 		padding: 18px 20px;
