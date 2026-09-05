@@ -404,6 +404,21 @@ function kindTitle(k: KindFilter): string {
 		color: var(--color-navy);
 		text-transform: uppercase;
 		margin: 0;
+		transition: color var(--motion-duration-medium) var(--motion-easing-emphasized);
+	}
+
+	/* Title text/color swap with the active kind filter (see kindTitle() and the script below) —
+	   "Tutti" keeps the navy default and whatever title a socio set in Tina. */
+	.section-title[data-active-kind='rotaract'] {
+		color: var(--color-kind-rotaract);
+	}
+
+	.section-title[data-active-kind='interact'] {
+		color: var(--color-kind-interact);
+	}
+
+	.section-title[data-active-kind='rotary'] {
+		color: var(--color-kind-rotary);
 	}
 
 	.calendar-actions {
@@ -982,6 +997,9 @@ function kindTitle(k: KindFilter): string {
 		const dayPanels = Array.from(root.querySelectorAll<HTMLElement>('[data-day-agenda]'));
 		const agendaRadio = root.querySelector<HTMLInputElement>('input[id^="cal-agenda-"]');
 		const kindPills = Array.from(root.querySelectorAll<HTMLAnchorElement>('.kind-pill'));
+		// .section-title lives in .calendar-header, a sibling of this fieldset (not a descendant),
+		// so it's reached via the shared .calendar-card ancestor instead of root.querySelector.
+		const titleEl = root.closest<HTMLElement>('.calendar-card')?.querySelector<HTMLElement>('.section-title') ?? null;
 
 		// Every day cell renders ALL of its events (see EventsCalendar.astro), not just a top-3 slice,
 		// so this can recompute a correct per-kind top-3 + "+N" instantly on filter change — matches
