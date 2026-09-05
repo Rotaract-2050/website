@@ -329,18 +329,20 @@ function kindTitle(k: KindFilter): string {
 									const cellContent = (
 										<>
 											<span class="day-number">{cell.day}</span>
-											{cell.events.map((ev) => (
-												<span
-													class="day-event"
-													data-kind={ev.kind}
-													data-deadline={ev.isDeadline}
-													hidden={!visibleActive.has(ev)}
-													title={`${ev.summary}${ev.location ? ' · ' + ev.location : ''}`}
-												>
-													{ev.summary}
-												</span>
-											))}
-											<em class="day-event-more" hidden={moreActiveCount === 0}>{moreActiveCount > 0 ? `+${moreActiveCount}` : ''}</em>
+											<div class="day-events-dots">
+												{cell.events.map((ev) => (
+													<span
+														class="day-event"
+														data-kind={ev.kind}
+														data-deadline={ev.isDeadline}
+														hidden={!visibleActive.has(ev)}
+														title={`${ev.summary}${ev.location ? ' · ' + ev.location : ''}`}
+													>
+														{ev.summary}
+													</span>
+												))}
+												<em class="day-event-more" hidden={moreActiveCount === 0}>{moreActiveCount > 0 ? `+${moreActiveCount}` : ''}</em>
+											</div>
 										</>
 									);
 									return cell.events.length > 0 ? (
@@ -860,13 +862,15 @@ function kindTitle(k: KindFilter): string {
 	}
 
 	.day-cell {
-		min-height: 96px;
+		aspect-ratio: 1 / 1;
 		border: none;
 		border-radius: var(--shape-small);
-		padding: 10px;
+		padding: 8px;
 		display: flex;
 		flex-direction: column;
-		gap: 4px;
+		align-items: center;
+		justify-content: flex-start;
+		gap: 6px;
 		background: #ffffff;
 		margin: 3px;
 		box-shadow: var(--elevation-1);
@@ -901,38 +905,51 @@ function kindTitle(k: KindFilter): string {
 	}
 
 	.day-number {
-		font-size: 14px;
+		font-size: 16px;
 		font-weight: 600;
 		color: var(--color-navy);
+		line-height: 1;
+	}
+
+	.day-events-dots {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 4px;
+		width: 100%;
 	}
 
 	.day-event {
-		font-size: 11px;
-		line-height: 1.3;
-		color: var(--color-kind-rotaract-dark);
-		background: #f6f8fa;
-		border-radius: var(--shape-extra-small);
-		padding: 3px 6px;
-		white-space: nowrap;
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--color-kind-rotaract-dark);
+		font-size: 0;
+		color: transparent;
+		padding: 0;
 		overflow: hidden;
-		text-overflow: ellipsis;
 	}
 
 	.day-event[data-kind='interact'] {
-		color: var(--color-kind-interact-dark);
+		background: var(--color-kind-interact-dark);
 	}
 
 	.day-event[data-kind='rotary'] {
-		color: var(--color-kind-rotary-dark);
+		background: var(--color-kind-rotary-dark);
 	}
 
 	.day-cell.today .day-event {
-		background: #f6f8fa;
+		background: var(--color-kind-rotaract-dark);
 	}
 
 	.day-event-more {
-		font-size: 10px;
-		color: var(--color-muted);
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--color-muted);
+		font-size: 0;
+		color: transparent;
 	}
 
 	@media (max-width: 720px) {
@@ -950,10 +967,6 @@ function kindTitle(k: KindFilter): string {
 			font-size: 26px;
 		}
 
-		.day-cell {
-			min-height: 72px;
-		}
-
 		.month-grid-title {
 			font-size: 18px;
 			min-width: 0;
@@ -966,46 +979,8 @@ function kindTitle(k: KindFilter): string {
 		}
 
 		.day-cell {
-			min-height: 52px;
 			padding: 4px;
-			gap: 2px;
-		}
-
-		/* Too narrow for readable text: show a colored bar per event instead — still
-		   visible whatever the count (unlike the old "hide text, rely on +N" approach,
-		   which left 1-3 event days blank). Full text stays one tap away in Agenda. */
-		.day-event {
-			width: 100%;
-			height: 4px;
-			padding: 0;
-			border-radius: 2px;
-			font-size: 0;
-			overflow: hidden;
-			background: var(--color-kind-rotaract-dark);
-		}
-
-		.day-event[data-kind='interact'] {
-			background: var(--color-kind-interact-dark);
-		}
-
-		.day-event[data-kind='rotary'] {
-			background: var(--color-kind-rotary-dark);
-		}
-
-		.day-cell.today .day-event {
-			background: var(--color-kind-rotaract-dark);
-		}
-
-		.day-cell.today .day-event[data-kind='interact'] {
-			background: var(--color-kind-interact-dark);
-		}
-
-		.day-cell.today .day-event[data-kind='rotary'] {
-			background: var(--color-kind-rotary-dark);
-		}
-
-		.day-event-more {
-			font-size: 8px;
+			gap: 4px;
 		}
 	}
 </style>
