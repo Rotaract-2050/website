@@ -15,7 +15,7 @@ blocks:
     title: INTERNATIONAL ACTION
     body: 'Il nome Interact nasce dall''unione di "INTERnational" e "ACTion". Il programma è stato lanciato da Rotary International nel 1962, con l''obiettivo di offrire a ragazze e ragazzi dai 12 ai 18 anni uno spazio dove sviluppare doti di leadership e scoprire il valore del servire con disinteresse — molti anni prima che nascesse il Rotaract per i giovani adulti.'
     body2: 'Ogni club Interact nasce sotto il patrocinio di un club Rotary (o Rotaract), che individua un consulente Interact incaricato di seguirne la crescita. Un club può essere a base scolastica o comunitaria, e organizza almeno due progetti l''anno: uno a beneficio della scuola o della comunità, l''altro per promuovere la comprensione internazionale.'
-    image: /uploads/Paesaggi/paesaggio-6.jpeg
+    image: /uploads/paesaggi/paesaggio-6.jpeg
     imageLabel: Giovani soci Interact al lavoro su un progetto
     imageSide: left
     _template: SplitSection
@@ -30,7 +30,7 @@ blocks:
     body2: 'La collaborazione tra Rotaract e Interact nel nostro distretto è coordinata dal/dalla Delegato/a Rotaract per l''Interact, un ruolo pensato per facilitare la cooperazione tra le due generazioni della famiglia rotariana e custodirne la continuità associativa.'
     ctaLabel: SCOPRI LA SQUADRA DEL DISTRETTO
     ctaHref: la-squadra
-    image: /uploads/Paesaggi/paesaggio-7.jpeg
+    image: /uploads/paesaggi/paesaggio-7.jpeg
     imageLabel: Rappresentanti dei club Interact e Rotaract
     imageSide: right
     _template: SplitSection

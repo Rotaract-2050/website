@@ -147,6 +147,7 @@ export interface UiStrings {
 	};
 	chat: {
 		fabLabel: string;
+		fabCallout: string;
 		title: string;
 		closeLabel: string;
 		placeholder: string;
@@ -178,7 +179,7 @@ export const INTERACT_SITE_NAME: Record<Lang, string> = {
 	en: 'Interact District 2050',
 };
 /** Fallback finale se pagina/articolo/evento e settings.defaultOgImage sono tutti vuoti. */
-export const DEFAULT_OG_IMAGE = '/uploads/Loghi/Logo-distretto.png';
+export const DEFAULT_OG_IMAGE = '/uploads/loghi/Logo-distretto.png';
 
 export const UTILITY_LINKS = [
 	{ label: 'ROTARY INTERNATIONAL', href: 'https://www.rotary.org/' },

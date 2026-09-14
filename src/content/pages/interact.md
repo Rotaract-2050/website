@@ -9,7 +9,7 @@ seo:
 blocks:
   - ctaHref: interact/club
     slides:
-      - image: /uploads/Paesaggi/paesaggio-5.jpeg
+      - image: /uploads/paesaggi/paesaggio-5.jpeg
         eyebrow: INTERACT DISTRETTO 2050
         eyebrowEn: INTERACT DISTRICT 2050
         title: LA CASA DEI PIÙ GIOVANI
@@ -25,7 +25,7 @@ blocks:
     body2: A supportare ogni club Interact c'è il consulente Interact, il club Rotary o Rotaract padrino, e il distretto Interact — che dà voce ai singoli club, li fa crescere e ne promuove la partecipazione all'interno della famiglia rotariana.
     ctaLabel: APPROFONDISCI IN FORMAZIONE
     ctaHref: formazione/club-interact
-    image: /uploads/Paesaggi/paesaggio-2.jpeg
+    image: /uploads/paesaggi/paesaggio-2.jpeg
     imageLabel: Giovani soci Interact
     imageSide: right
     _template: SplitSection
