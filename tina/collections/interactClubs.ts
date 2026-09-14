@@ -4,9 +4,7 @@ import { focalImageFields } from '../fields/focalPointImage';
 // Isolated from `clubs` per an explicit decision: Interact clubs get their own collection
 // rather than mixing into the Rotaract club list, while still referencing the SAME `zones`
 // collection (the district's Interact clubs use the same 4 geographic zones as Rotaract).
-// No `ui.router`/detail page — see InteractClubDirectory.astro, a listing-only block (no
-// per-club detail route, to sidestep the documented nested-dynamic-route-vs-catch-all routing
-// bug rather than depend on it not applying here).
+//
 //
 // Tina collection `name` must be alphanumeric/underscore only (no dashes) — camelCase here,
 // `path` below keeps the dashed directory name for consistency with the rest of the site's

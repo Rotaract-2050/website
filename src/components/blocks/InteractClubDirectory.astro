@@ -8,6 +8,7 @@
 // bug rather than risking it, see the Interact implementation plan). Only the social icons stay
 // clickable.
 import { requestWithMetadata, tinaField } from '@tinacms/astro';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import client from '../../../tina/__generated__/client';
 import ClubsMap from '../ClubsMap.astro';
 import type { Lang } from '../../data/ui-strings';
@@ -38,7 +39,7 @@ const zoneGroups = zones.map((zone) => ({
 }));
 ---
 
-<ClubsMap lang={lang} clubs={clubs} zones={zoneGroups} pinColor="#00a2e0" linkBase={null} />
+<ClubsMap lang={lang} clubs={clubs} zones={zoneGroups} pinColor="#00a2e0" linkBase="interact/club" />
 
 <section class="club-list">
 	<div class="section-inner">
@@ -55,7 +56,7 @@ const zoneGroups = zones.map((zone) => ({
 					{zone.clubs.map((club) => (
 						<div class="club-card" data-tina-field={tinaField(club)}>
 							<div class="club-body">
-								<div class="club-link">
+								<a class="club-link" href={getRelativeLocaleUrl(lang, `interact/club/${club._sys.filename}`)}>
 									<div class="club-name">{club.name}</div>
 									<div class="club-zone">{zone.name}</div>
 									{club.presidentName && (
@@ -63,7 +64,7 @@ const zoneGroups = zones.map((zone) => ({
 											{t.presidentLabel}: {club.presidentName}
 										</div>
 									)}
-								</div>
+								</a>
 								{(club.website || club.instagram || club.facebook) && (
 									<div class="club-social">
 										{club.website && (
