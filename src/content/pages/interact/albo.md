@@ -16,6 +16,24 @@ blocks:
     showDisclaimer: true
     disclaimerText: Albo in fase di aggiornamento con il distretto Interact — le annate verranno pubblicate non appena confermate.
     disclaimerTextEn: Roster currently being updated with the Interact district — terms will be published as soon as confirmed.
-    items: []
+    items:
+      - yearRange: 2026-2027
+        name: Angela
+        surname: Rebecchi
+        clubName: Interact Club Piacenza
+        motto: Create Lasting Impact
+        mottoEn: Create Lasting Impact
+      - yearRange: 2025-2026
+        name: Nicolò
+        surname: Zanibelli
+        clubName: Interact Leonessa
+        motto: Unite for Good
+        mottoEn: Unite for Good
+      - yearRange: 2024-2025
+        name: Alessandro
+        surname: Drovanti
+        clubName: Interact Club Vigevano Lomellina
+        motto: The Magic of Rotary
+        mottoEn: The Magic of Rotary
     _template: InteractDirTimeline
 ---

@@ -58,6 +58,11 @@ const zoneGroups = zones.map((zone) => ({
 								<div class="club-link">
 									<div class="club-name">{club.name}</div>
 									<div class="club-zone">{zone.name}</div>
+									{club.presidentName && (
+										<div class="club-president" data-tina-field={tinaField(club, 'presidentName')}>
+											{t.presidentLabel}: {club.presidentName}
+										</div>
+									)}
 								</div>
 								{(club.website || club.instagram || club.facebook) && (
 									<div class="club-social">
@@ -187,6 +192,12 @@ const zoneGroups = zones.map((zone) => ({
 	.club-zone {
 		font-size: 13px;
 		color: var(--color-text);
+	}
+
+	.club-president {
+		font-size: 13px;
+		color: var(--color-text);
+		margin-top: 4px;
 	}
 
 	.club-social {
