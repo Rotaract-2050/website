@@ -1,4 +1,6 @@
 ---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
 interface Props {
 	title: string;
 	showDisclaimer?: boolean;
@@ -7,6 +9,16 @@ interface Props {
 }
 
 const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
+const lang = Astro.currentLocale || 'it';
+
+const getClubHref = (name?: string) => {
+	if (!name) return undefined;
+	const isInteract = /interact/i.test(name);
+	const isRotaract = /rotaract/i.test(name) || /rotary/i.test(name);
+	if (!isInteract && !isRotaract) return undefined;
+	const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+	return getRelativeLocaleUrl(lang, isInteract ? `interact/club/${slug}` : `club/${slug}`);
+};
 ---
 
 <section class="rrd-timeline">
@@ -30,7 +42,13 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 						<div class="timeline-card">
 							<span class="timeline-year">A.R. {item.yearRange}</span>
 							<span class="timeline-name">{item.name} {item.surname}</span>
-							{item.clubName && <span class="timeline-club">{item.clubName}</span>}
+							{item.clubName && (
+								getClubHref(item.clubName) ? (
+									<a href={getClubHref(item.clubName)} class="timeline-club hover-link">{item.clubName}</a>
+								) : (
+									<span class="timeline-club">{item.clubName}</span>
+								)
+							)}
 							{item.motto && <span class="timeline-motto">{item.motto}</span>}
 							{item.mottoDistretto && <span class="timeline-motto-distretto">{item.mottoDistretto}</span>}
 						</div>
@@ -193,6 +211,12 @@ const { title, showDisclaimer = false, disclaimerText, items } = Astro.props;
 		font-weight: 600;
 		letter-spacing: 0.3px;
 		color: var(--color-muted);
+		text-decoration: none;
+	}
+
+	a.hover-link:hover {
+		text-decoration: underline;
+		color: var(--color-pink);
 	}
 
 	.timeline-motto {

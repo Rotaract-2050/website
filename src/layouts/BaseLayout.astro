@@ -2,7 +2,6 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import InteractHeader from '../components/InteractHeader.astro';
-import InteractFooter from '../components/InteractFooter.astro';
 import SeoHead from '../components/SeoHead.astro';
 import JsonLd from '../components/JsonLd.astro';
 import FormazioneChatWidget from '../components/FormazioneChatWidget.astro';
@@ -152,9 +151,7 @@ const organizationGraph =
 			<main>
 				<slot />
 			</main>
-			{theme === 'interact'
-				? <InteractFooter lang={lang} settings={settings} />
-				: <Footer lang={lang} settings={settings} />}
+			<Footer lang={lang} settings={settings} isInteract={theme === 'interact'} />
 			<FormazioneChatWidget lang={lang} chatSettings={settings.chatAssistant} />
 		</div>
 		<CookieConsent lang={lang} gaMeasurementId={onProdHost ? settings.gaMeasurementId : null} />

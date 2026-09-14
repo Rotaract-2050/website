@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import ImageSlot from './ImageSlot.astro';
 import { tagPillStyle, type NewsTag } from '../lib/news';
 
@@ -56,6 +57,7 @@ const {
 	photoButtonLabel,
 	tinaFieldAttr,
 } = Astro.props;
+const lang = Astro.currentLocale || 'it';
 const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 50}%;`;
 ---
 
@@ -85,7 +87,11 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 			<div class="event-clubs">
 				<span class="event-clubs-label">{hostClubLabel}</span>
 				{clubTags.map((tag) => (
-					<span class="event-club-tag" style={tagPillStyle(tag.color)}>{tag.label}</span>
+					tag.urlPath ? (
+						<a class="event-club-tag hover-link" href={getRelativeLocaleUrl(lang, tag.urlPath)} style={tagPillStyle(tag.color)}>{tag.label}</a>
+					) : (
+						<span class="event-club-tag" style={tagPillStyle(tag.color)}>{tag.label}</span>
+					)
 				))}
 			</div>
 		)}
@@ -240,6 +246,11 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 		letter-spacing: 0.2px;
 		padding: 3px 10px;
 		border-radius: var(--shape-full);
+		text-decoration: none;
+	}
+
+	a.event-club-tag.hover-link:hover {
+		text-decoration: underline;
 	}
 
 	.event-title {
