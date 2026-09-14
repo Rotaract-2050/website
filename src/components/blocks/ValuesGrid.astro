@@ -5,7 +5,7 @@ interface Props {
 	title: string;
 	intro?: string;
 	accent?: string;
-	layout?: "badge" | "path" | "icon";
+	layout?: "badge" | "path" | "icon" | "statement";
 	items: {
 		letter: string;
 		icon?: string;
@@ -31,7 +31,7 @@ const AOF_ICON_FILE: Record<string, string> = {
 	leaf: "environment",
 };
 const aofIconSrc = (icon: string) =>
-	`/uploads/Aree-Azione/color/no_title/AOF_${AOF_ICON_FILE[icon]}_color_no_title.png`;
+	`/uploads/aree-azione/color/no_title/AOF_${AOF_ICON_FILE[icon]}_color_no_title.png`;
 
 // The official artwork's own baked-in color per area, read off the source PNGs —
 // each matches a color already in the Rotary secondary palette (references/rotary-brand.md):

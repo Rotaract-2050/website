@@ -46,7 +46,7 @@ const jsonLd = buildEventJsonLd({
 	description: localized.excerpt,
 	startDate: event.date,
 	endDate: event.endDate,
-	imageUrl: new URL(event.image || '/uploads/Loghi/Logo-distretto.png', Astro.site).toString(),
+	imageUrl: new URL(event.image || '/uploads/loghi/Logo-distretto.png', Astro.site).toString(),
 	url: canonicalUrl.toString(),
 	siteUrl: Astro.site!.toString(),
 	organizerName: INTERACT_SITE_NAME[lang],

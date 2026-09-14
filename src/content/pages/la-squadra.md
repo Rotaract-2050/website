@@ -16,7 +16,7 @@ blocks:
     highlightFirst: true
     items:
       - initials: RD
-        photo: /uploads/Squadra/2026-2027/Profili/Fortugno-Sebastiano.jpeg
+        photo: /uploads/squadra/2026-2027/Profili/Fortugno-Sebastiano.jpeg
         photoFocalX: 66
         photoFocalY: 26
         photoZoom: 165
@@ -27,9 +27,9 @@ blocks:
         club: src/content/clubs/rotaract-club-casalmaggiore-viadana-sabbioneta.md
         themeMotto: Prendi il largo con entusiasmo
         themeMottoEn: Set sail with enthusiasm
-        themeLogo: /uploads/Squadra/2026-2027/Logo-Distrettuale.svg
+        themeLogo: /uploads/squadra/2026-2027/Logo-Distrettuale.svg
       - initials: RDE
-        photo: /uploads/Squadra/2026-2027/Profili/Zacchetti-Marco.jpg
+        photo: /uploads/squadra/2026-2027/Profili/Zacchetti-Marco.jpg
         photoFocalX: 49
         photoFocalY: 43
         photoZoom: 235
@@ -39,7 +39,7 @@ blocks:
         email: rd.incoming@rotaract2050.org
         club: src/content/clubs/rotaract-club-pavia-nord.md
       - initials: SD
-        photo: /uploads/Squadra/2026-2027/Profili/Drovanti-Alessandro.jpg
+        photo: /uploads/squadra/2026-2027/Profili/Drovanti-Alessandro.jpg
         photoFocalX: 47
         photoFocalY: 28
         photoZoom: 205
@@ -49,7 +49,7 @@ blocks:
         email: segreteria@rotaract2050.org
         club: src/content/clubs/rotaract-club-vigevano-lomellina.md
       - initials: TD
-        photo: /uploads/Squadra/2026-2027/Profili/Goffredi-Virginia.jpg
+        photo: /uploads/squadra/2026-2027/Profili/Goffredi-Virginia.jpg
         photoFocalX: 30
         photoFocalY: 18
         photoZoom: 245
@@ -60,7 +60,7 @@ blocks:
         club: src/content/clubs/rotaract-club-brescia.md
         clubCustom: RC Zerotrenta
       - initials: PR
-        photo: /uploads/Squadra/2026-2027/Profili/Pizzi-Andrea.jpg
+        photo: /uploads/squadra/2026-2027/Profili/Pizzi-Andrea.jpg
         photoFocalX: 46
         photoFocalY: 29
         photoZoom: 230
@@ -70,7 +70,7 @@ blocks:
         email: prefettura@rotaract2050.org
         club: src/content/clubs/rotaract-club-vigevano-lomellina.md
       - initials: PR
-        photo: /uploads/Squadra/2026-2027/Profili/Toselli-Leonardo.jpg
+        photo: /uploads/squadra/2026-2027/Profili/Toselli-Leonardo.jpg
         photoFocalX: 44
         photoFocalY: 31
         photoZoom: 230
@@ -80,7 +80,7 @@ blocks:
         email: prefettura@rotaract2050.org
         club: src/content/clubs/rotaract-club-castiglione-delle-stiviere-e-alto-mantovano.md
       - initials: CO
-        photo: /uploads/Squadra/2026-2027/Profili/Cattadori-Martina.jpg
+        photo: /uploads/squadra/2026-2027/Profili/Cattadori-Martina.jpg
         photoFocalX: 26
         photoFocalY: 27
         photoZoom: 230
@@ -90,7 +90,7 @@ blocks:
         email: consiglieri@rotaract2050.org
         club: src/content/clubs/rotaract-club-piacenza.md
       - initials: CO
-        photo: /uploads/Squadra/2026-2027/Profili/Rebecchi-Angela.jpg
+        photo: /uploads/squadra/2026-2027/Profili/Rebecchi-Angela.jpg
         photoFocalX: 37
         photoFocalY: 26
         photoZoom: 235
@@ -100,7 +100,7 @@ blocks:
         email: consiglieri@rotaract2050.org
         clubCustom: Interact Club Piacenza
       - initials: PRD
-        photo: /uploads/Squadra/2026-2027/Profili/Pancini-Lorenzo.jpg
+        photo: /uploads/squadra/2026-2027/Profili/Pancini-Lorenzo.jpg
         name: Lorenzo Pancini
         role: Rappresentante Distrettuale A.R. 2025/2026 (Past RD)
         roleEn: District Representative 2025/2026 (Past RD)
@@ -111,7 +111,7 @@ blocks:
     titleEn: Zone Delegates
     items:
       - initials: DZ
-        photo: /uploads/Squadra/2026-2027/Profili/Bosio-Davide.jpeg
+        photo: /uploads/squadra/2026-2027/Profili/Bosio-Davide.jpeg
         photoFocalX: 51
         photoFocalY: 27
         name: Davide Bosio
@@ -120,7 +120,7 @@ blocks:
         email: dz.francigena@rotaract2050.org
         club: src/content/clubs/rotaract-club-terre-cremasche.md
       - initials: DZ
-        photo: /uploads/Squadra/2026-2027/Profili/Vetturi-Elena.jpeg
+        photo: /uploads/squadra/2026-2027/Profili/Vetturi-Elena.jpeg
         photoFocalX: 48
         photoFocalY: 16
         name: Elena Vetturi
@@ -129,7 +129,7 @@ blocks:
         email: dz.leonessa@rotaract2050.org
         club: src/content/clubs/rotaract-club-garda-valle-sabbia.md
       - initials: DZ
-        photo: /uploads/Squadra/2026-2027/Profili/Pisano-Andrea.jpg
+        photo: /uploads/squadra/2026-2027/Profili/Pisano-Andrea.jpg
         photoFocalX: 48
         photoFocalY: 21
         photoZoom: 165
@@ -139,7 +139,7 @@ blocks:
         email: dz.navigli@rotaract2050.org
         club: src/content/clubs/rotaract-club-vigevano-castello.md
       - initials: DZ
-        photo: /uploads/Squadra/2026-2027/Profili/Bombeccari-Hildegard.jpg
+        photo: /uploads/squadra/2026-2027/Profili/Bombeccari-Hildegard.jpg
         photoFocalX: 35
         photoFocalY: 26
         photoZoom: 270
@@ -161,7 +161,7 @@ blocks:
         membersLabel: Membro
         membersLabelEn: Member
         lead:
-          photo: /uploads/Squadra/2026-2027/Profili/Rispo-Alexander.jpeg
+          photo: /uploads/squadra/2026-2027/Profili/Rispo-Alexander.jpeg
           photoFocalX: 8
           photoFocalY: 35
           photoZoom: 145
@@ -169,24 +169,24 @@ blocks:
           email: azione.interna@rotaract2050.org
           club: src/content/clubs/rotaract-club-fiorenzuola-d-arda.md
         members:
-          - photo: /uploads/Squadra/2026-2027/Profili/Zito-Michele.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Zito-Michele.jpeg
             photoFocalX: 85
             photoFocalY: 21
             photoZoom: 175
             name: Michele Zito
             club: src/content/clubs/rotaract-club-pavia-nord.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Steffani-Emanuele.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Steffani-Emanuele.jpeg
             photoFocalX: 52
             photoFocalY: 36
             photoZoom: 255
             name: Emanuele Steffani
             club: src/content/clubs/rotaract-club-castiglione-delle-stiviere-e-alto-mantovano.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Benelli-Mario-Alessio.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Benelli-Mario-Alessio.jpeg
             photoFocalX: 53
             photoFocalY: 18
             name: Mario Alessio Benelli
             club: src/content/clubs/rotaract-club-terre-cremasche.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Bontempi-Jessica.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Bontempi-Jessica.jpeg
             photoFocalX: 28
             photoFocalY: 38
             photoZoom: 120
@@ -201,31 +201,31 @@ blocks:
         membersLabel: Membro
         membersLabelEn: Member
         lead:
-          photo: /uploads/Squadra/2026-2027/Profili/Tosi-GiovanniMaria.jpeg
+          photo: /uploads/squadra/2026-2027/Profili/Tosi-GiovanniMaria.jpeg
           photoFocalX: 51
           photoFocalY: 24
           name: Giovanni Maria Tosi
           email: azione.professionale@rotaract2050.org
           club: src/content/clubs/rotaract-club-piacenza.md
         members:
-          - photo: /uploads/Squadra/2026-2027/Profili/Tegano-Gianluca.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Tegano-Gianluca.jpeg
             photoFocalX: 41
             photoFocalY: 12
             photoZoom: 180
             name: Gianluca Tegano
             club: src/content/clubs/rotaract-club-voghera.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Treccani-Caterina.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Treccani-Caterina.jpeg
             photoFocalX: 81
             photoFocalY: 14
             photoZoom: 175
             name: Caterina Treccani
             club: src/content/clubs/rotaract-club-brescia.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Goi-Elisa.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Goi-Elisa.jpeg
             photoZoom: 155
             name: Elisa Goi
             club: src/content/clubs/rotaract-club-piadena-casalmaggiore-asola.md
             clubCustom: RC Cremona
-          - photo: /uploads/Squadra/2026-2027/Profili/Costa-Simone.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Costa-Simone.jpeg
             photoFocalX: 49
             photoFocalY: 43
             photoZoom: 115
@@ -240,7 +240,7 @@ blocks:
         membersLabel: Membro
         membersLabelEn: Member
         lead:
-          photo: /uploads/Squadra/2026-2027/Profili/Vetturi-Silvia.jpeg
+          photo: /uploads/squadra/2026-2027/Profili/Vetturi-Silvia.jpeg
           photoFocalX: 32
           photoFocalY: 25
           photoZoom: 125
@@ -248,22 +248,22 @@ blocks:
           email: azione.pubblico.interesse@rotaract2050.org
           club: src/content/clubs/rotaract-club-garda-valle-sabbia.md
         members:
-          - photo: /uploads/Squadra/2026-2027/Profili/Pennacchio-Giulia.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Pennacchio-Giulia.jpeg
             photoFocalX: 57
             photoFocalY: 57
             photoZoom: 240
             name: Giulia Pennacchio
             club: src/content/clubs/rotaract-club-pavia.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Mazza-Erika.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Mazza-Erika.jpeg
             photoFocalX: 48
             photoFocalY: 14
             photoZoom: 190
             name: Erika Mazza
             club: src/content/clubs/rotaract-club-gonzaga-suzzara.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Festa-Mattia.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Festa-Mattia.jpeg
             name: Mattia Festa
             club: src/content/clubs/rotaract-club-casalmaggiore-viadana-sabbioneta.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Brugali-Clara.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Brugali-Clara.jpeg
             name: Clara Brugali
             club: src/content/clubs/rotaract-club-brescia-franciacorta.md
       - name: Azione Internazionale
@@ -275,7 +275,7 @@ blocks:
         membersLabel: Membro
         membersLabelEn: Member
         lead:
-          photo: /uploads/Squadra/2026-2027/Profili/Alberti-Alessio.jpeg
+          photo: /uploads/squadra/2026-2027/Profili/Alberti-Alessio.jpeg
           photoFocalX: 51
           photoFocalY: 38
           photoZoom: 190
@@ -283,19 +283,19 @@ blocks:
           email: azione.internazionale@rotaract2050.org
           club: src/content/clubs/rotaract-club-pavia.md
         members:
-          - photo: /uploads/Squadra/2026-2027/Profili/Di-Mola-Federica-Maria.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Di-Mola-Federica-Maria.jpeg
             photoFocalX: 51
             photoFocalY: 39
             photoZoom: 115
             name: Federica Maria Di Mola
             club: src/content/clubs/rotaract-club-pavia.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Iembo-Francesca.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Iembo-Francesca.jpeg
             photoFocalX: 25
             photoFocalY: 26
             photoZoom: 250
             name: Francesca Iembo
             club: src/content/clubs/rotaract-club-gonzaga-suzzara.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Romani-Benedetta.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Romani-Benedetta.jpeg
             photoFocalX: 49
             photoFocalY: 40
             photoZoom: 130
@@ -308,7 +308,7 @@ blocks:
         leadLabel: Delegato
         leadLabelEn: Delegate
         lead:
-          photo: /uploads/Squadra/2026-2027/Profili/Calori-Leonardo.jpeg
+          photo: /uploads/squadra/2026-2027/Profili/Calori-Leonardo.jpeg
           photoFocalX: 53
           photoFocalY: 31
           photoZoom: 150
@@ -325,7 +325,7 @@ blocks:
         membersLabel: Membro
         membersLabelEn: Member
         lead:
-          photo: /uploads/Squadra/2026-2027/Profili/Garavani-Maria-Gloria.jpeg
+          photo: /uploads/squadra/2026-2027/Profili/Garavani-Maria-Gloria.jpeg
           photoFocalX: 35
           photoFocalY: 32
           photoZoom: 195
@@ -333,24 +333,24 @@ blocks:
           email: azione.giovani@rotaract2050.org
           club: src/content/clubs/rotaract-club-voghera.md
         members:
-          - photo: /uploads/Squadra/2026-2027/Profili/Varchi-Carlotta.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Varchi-Carlotta.jpeg
             photoFocalX: 50
             photoFocalY: 25
             name: Carlotta Varchi
             club: src/content/clubs/rotaract-club-morimondo-abbazia.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Righetti-Matteo.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Righetti-Matteo.jpeg
             photoFocalX: 53
             photoFocalY: 41
             photoZoom: 155
             name: Matteo Righetti
             club: src/content/clubs/rotaract-club-castiglione-delle-stiviere-e-alto-mantovano.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Lamperti-Mario.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Lamperti-Mario.jpeg
             photoFocalX: 50
             photoFocalY: 38
             photoZoom: 140
             name: Mario Lamperti
             club: src/content/clubs/rotaract-club-lodi-adda.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Lauricella-Alma.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Lauricella-Alma.jpeg
             photoFocalX: 54
             photoFocalY: 33
             photoZoom: 130
@@ -363,7 +363,7 @@ blocks:
         leadLabel: Delegato
         leadLabelEn: Delegate
         lead:
-          photo: /uploads/Squadra/2026-2027/Profili/Somenzi-Sofia.jpeg
+          photo: /uploads/squadra/2026-2027/Profili/Somenzi-Sofia.jpeg
           photoFocalX: 47
           photoFocalY: 42
           photoZoom: 240
@@ -379,22 +379,22 @@ blocks:
         membersLabel: Membro
         membersLabelEn: Member
         lead:
-          photo: /uploads/Squadra/2026-2027/Profili/Grassi-Federica.jpeg
+          photo: /uploads/squadra/2026-2027/Profili/Grassi-Federica.jpeg
           photoZoom: 140
           name: Federica Grassi
           email: immagine.pubblica@rotaract2050.org
           club: src/content/clubs/rotaract-club-abbiategrasso.md
         members:
-          - photo: /uploads/Squadra/2026-2027/Profili/Santagostino-Marco.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Santagostino-Marco.jpeg
             name: Marco Santagostino
             club: src/content/clubs/rotaract-club-morimondo-abbazia.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Lazzari-Annalisa.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Lazzari-Annalisa.jpeg
             name: Annalisa Lazzari
             club: src/content/clubs/rotaract-club-lodi-adda.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Vincenzi-Marta.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Vincenzi-Marta.jpeg
             name: Marta Vincenzi
             club: src/content/clubs/rotaract-club-brescia-vittoria-alata.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Cantini-Filippo.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Cantini-Filippo.jpeg
             photoFocalX: 52
             photoFocalY: 30
             name: Filippo Cantini
@@ -408,7 +408,7 @@ blocks:
         membersLabel: Membro
         membersLabelEn: Member
         lead:
-          photo: /uploads/Squadra/2026-2027/Profili/Magni-Federico.jpeg
+          photo: /uploads/squadra/2026-2027/Profili/Magni-Federico.jpeg
           photoFocalX: 54
           photoFocalY: 35
           photoZoom: 130
@@ -416,22 +416,22 @@ blocks:
           email: cultura@rotaract2050.org
           club: src/content/clubs/rotaract-club-abbiategrasso.md
         members:
-          - photo: /uploads/Squadra/2026-2027/Profili/Locatelli-Francesco-Pietro.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Locatelli-Francesco-Pietro.jpeg
             photoFocalX: 28
             photoFocalY: 26
             photoZoom: 260
             name: Francesco Pietro Locatelli
             club: src/content/clubs/rotaract-club-vigevano-castello.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Balasini-Filippo.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Balasini-Filippo.jpeg
             photoFocalX: 46
             photoFocalY: 37
             photoZoom: 145
             name: Filippo Balasini
             club: src/content/clubs/rotaract-club-gonzaga-suzzara.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Brignani-Daniele.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Brignani-Daniele.jpeg
             name: Daniele Brignani
             club: src/content/clubs/rotaract-club-brescia-vittoria-alata.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Zandon-Lucrezia-Giuseppina.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Zandon-Lucrezia-Giuseppina.jpeg
             photoFocalX: 50
             photoFocalY: 39
             photoZoom: 130
@@ -446,7 +446,7 @@ blocks:
         membersLabel: Membro
         membersLabelEn: Member
         lead:
-          photo: /uploads/Squadra/2026-2027/Profili/Scielzo-Giovanni.jpeg
+          photo: /uploads/squadra/2026-2027/Profili/Scielzo-Giovanni.jpeg
           photoFocalX: 50
           photoFocalY: 14
           photoZoom: 165
@@ -455,13 +455,13 @@ blocks:
           club: src/content/clubs/rotaract-club-pavia.md
           clubCustom: RC Pavia Porta Nuova
         members:
-          - photo: /uploads/Squadra/2026-2027/Profili/Ginevra-Alessandro.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Ginevra-Alessandro.jpeg
             photoFocalX: 41
             photoFocalY: 41
             photoZoom: 140
             name: Alessandro Ginevra
             club: src/content/clubs/rotaract-club-cremona.md
-          - photo: /uploads/Squadra/2026-2027/Profili/Goi-Valeria.jpeg
+          - photo: /uploads/squadra/2026-2027/Profili/Goi-Valeria.jpeg
             photoFocalX: 51
             photoFocalY: 31
             photoZoom: 130
@@ -474,7 +474,7 @@ blocks:
         leadLabel: Delegato
         leadLabelEn: Delegate
         lead:
-          photo: /uploads/Squadra/2026-2027/Profili/Pesce-Alberto.jpeg
+          photo: /uploads/squadra/2026-2027/Profili/Pesce-Alberto.jpeg
           photoFocalX: 39
           photoFocalY: 32
           name: Alberto Pesce
@@ -488,7 +488,7 @@ blocks:
         leadLabel: Delegato
         leadLabelEn: Delegate
         lead:
-          photo: /uploads/Squadra/2026-2027/Profili/Gilardi-Benedetta.jpeg
+          photo: /uploads/squadra/2026-2027/Profili/Gilardi-Benedetta.jpeg
           name: Benedetta Gilardi
           club: src/content/clubs/rotaract-club-morimondo-abbazia.md
       - name: Delegato per la Rotary Foundation
@@ -498,7 +498,7 @@ blocks:
         leadLabel: Delegato
         leadLabelEn: Delegate
         lead:
-          photo: /uploads/Squadra/2026-2027/Profili/Cappello-Davide.jpeg
+          photo: /uploads/squadra/2026-2027/Profili/Cappello-Davide.jpeg
           photoFocalX: 51
           photoFocalY: 31
           photoZoom: 300
@@ -512,7 +512,7 @@ blocks:
         leadLabel: Delegato
         leadLabelEn: Delegate
         lead:
-          photo: /uploads/Squadra/2026-2027/Profili/Gorla-Alessandro.jpg
+          photo: /uploads/squadra/2026-2027/Profili/Gorla-Alessandro.jpg
           photoFocalX: 51
           photoFocalY: 41
           photoZoom: 200
