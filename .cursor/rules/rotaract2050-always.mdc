@@ -1,0 +1,47 @@
+---
+description: Regole sempre attive per il sito Rotaract Distretto 2050
+alwaysApply: true
+---
+
+# Rotaract Distretto 2050 — regole globali
+
+## Stack
+- **Astro** (output: server) + **TinaCMS** (git-backed, GraphQL) + **Cloudflare Workers**
+- Zero Tailwind — vanilla CSS in `<style>` Astro scoped
+- Zero React islands — script vanilla per interattività leggera
+- Bilingue **IT (default) + EN** — un file per pagina con campi `xEn`
+
+## Dev locale
+
+```bash
+bash scripts/dev.sh
+# Se sito bianco (env .env non risolto da 1Password):
+op run --env-file=.env -- bash scripts/dev.sh
+# Se crash "optimize deps" (cache Vite corrotta):
+rm -rf node_modules/.vite && bash scripts/dev.sh
+```
+
+## Regole non negoziabili
+
+- **Navy `#0B2545`** è il primario scuro — NON migrare a Royal Blue `#17458F` (scelta definitiva utente)
+- **Niente hardcode hex** se esiste `var(--color-x)` in `src/styles/global.css`
+- **Niente `<div onClick>`** — usare `<a href>` o `<button>` semantici
+- **Niente `set:html`** su contenuto Tina non sanificato
+- **Niente `astro:content` / `getCollection()`** per contenuti Tina — leggere sempre via `requestWithMetadata(client.queries.x(...))`
+- **Niente stili inline `style="..."`** sparsi per valori ripetuti
+- **Niente trattini nel `name` di una collection Tina** (solo alfanumerico/underscore)
+- **Niente push diretti su `dev`** — branch protection attiva, serve sempre una PR
+
+## Lettura dati
+
+```ts
+import { requestWithMetadata, tinaField } from '@tinacms/astro';
+import client from '../../tina/__generated__/client';
+// relativePath senza prefisso lingua (un file per pagina dal 2026-08-16)
+const result = await requestWithMetadata(client.queries.pages({ relativePath: `${slug}.md` }), { priority: 'primary' });
+```
+
+## Deploy
+- `main` → produzione automatica (Workers Builds)
+- `dev` → preview via `wrangler versions upload` nella GitHub Action `preview-dev.yml` — **mai** `wrangler deploy`
+- Commit con `[preview]` nel titolo → trigger build preview di `dev`

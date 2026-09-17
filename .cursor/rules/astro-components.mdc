@@ -1,0 +1,45 @@
+---
+description: Standard qualità per componenti e pagine Astro
+globs: src/**/*.astro
+---
+
+# Astro — standard qualità componenti
+
+Checklist da verificare su ogni componente prima di considerarlo finito.
+
+## HTML e accessibilità
+
+- **Elementi interattivi**: `<a href>` per navigazione, `<button>` per azioni — mai `<div onClick>`
+- **Gerarchia titoli**: `h1` unico per pagina, `h2`/`h3` in ordine — mai `<div class="title">`
+- **Immagini**: sempre `<Image>` o `<Picture>` da `astro:assets`, mai `<img>` diretto. `alt` obbligatorio e descrittivo (mai `alt=""` salvo immagine puramente decorativa)
+
+## CSS
+
+- **Scoped di default**: tutto dentro `<style>` nel componente — niente `is:global` salvo layout radice
+- **Niente `style="..."`** inline sparsi per valori ripetuti — portare in CSS scoped o `define:vars` solo per valori dinamici
+- **Toggle via JS**: `.selector:not([hidden]) { display: flex }` — NON `.selector { display: flex }` + `el.hidden = true/false` (la regola UA `[hidden]{ display:none }` perde sempre contro una regola autore)
+
+## Sicurezza
+
+- **Niente `set:html`** su contenuto Tina non sanificato — usare `<TinaMarkdown>` o i renderer ufficiali
+- Le espressioni `{value}` in template Astro escapano automaticamente — è la scelta giusta per default
+
+## TypeScript
+
+- `interface Props` dichiarata in ogni componente con props — mai `Astro.props` non tipizzato
+- Mai `any` — usare i tipi generati da Tina o i tipi Astro corretti
+
+## Animazioni (motion.ts)
+
+- Usare gli helper in `src/lib/motion.ts`: `revealOnLoad`, `revealOnScroll`, `cappedStagger`
+- **Bug critico**: dopo un'animazione Motion, `el.style.transform` resta inline e rompe `:hover` CSS. Gli helper puliscono già — per animazioni custom aggiungere `.then(() => { el.style.transform = ''; el.style.opacity = ''; })`
+- Blocco con animazione per-elemento → escluderlo da `data-reveal` in `BlockItem.astro`
+
+## Immagini
+
+```astro
+---
+import { Image } from 'astro:assets';
+---
+<Image src={imageUrl} alt="Descrizione obbligatoria" width={800} height={450} />
+```

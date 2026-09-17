@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "TinaCMS config quality gate",
+      "trigger": "PostFileSave",
+      "description": "When a Tina config or block file is saved, reminds the agent about the TypeScript Collection annotation gotcha and unique field names rule.",
+      "matcher": "tina/(collections|blocks|config)\\.(ts|tsx?)$",
+      "action": {
+        "type": "agent",
+        "prompt": "A file inside tina/collections/, tina/blocks/, or tina/config.ts was just saved. Before proceeding, verify:\n\n1. **TypeScript annotation**: every exported collection/template object MUST be annotated with an explicit type from tinacms (`import type { Collection, Template } from 'tinacms'`). Without it, TypeScript loses contextual inference and `astro check` fails with a misleading \"Property 'templates' is missing\" error even though the schema is correct.\n\n2. **Unique field names across block templates**: if the saved file adds or renames a field, check that no other template in `tina/blocks/` uses the same field name with a different GraphQL type (e.g. `body` as `string` vs `body` as `rich-text`). Run `grep -rn \"name: '&lt;fieldname&gt;'\" tina/blocks/` to check before finishing.\n\n3. **No hyphens in collection names**: collection `name` must be alphanumeric/underscore only — `interactClubs` not `interact-clubs`.\n\nIf any of these issues is present, fix it now rather than leaving it for the build to catch."
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Rotaract 2050 project context",
+      "trigger": "SessionStart",
+      "description": "Loads key project context at the start of every session so the agent always knows the stack and critical gotchas without re-reading all docs.",
+      "action": {
+        "type": "agent",
+        "prompt": "This is the Rotaract Distretto 2050 website. Key facts to keep in mind for this session:\n\n**Stack**: Astro (output: server) + TinaCMS (git-backed, GraphQL client) + Cloudflare Workers. No Tailwind. No React islands unless strictly needed.\n\n**Never run `astro dev` directly** — always use `bash scripts/dev.sh` (or `op run --env-file=.env -- bash scripts/dev.sh` if the site shows a blank page).\n\n**Bilingual IT/EN** — every page and editorial string must exist in both languages. One file per page with `xEn` field pairs (e.g. `titleEn`, `bodyEn`), NOT separate `it/`/`en/` directories.\n\n**Tina schema is split** (since 2026-09-04): `tina/config.ts` is just the orchestrator; real schema lives in `tina/collections/*.ts` and `tina/blocks/*.ts`. Every exported object MUST have an explicit `Collection`/`Template` type annotation from `tinacms` — without it the build breaks.\n\n**Deploy**: only `main` auto-builds to production. `dev` branch builds a Cloudflare Version Preview (not a real deploy) via GitHub Action `preview-dev.yml`. Branch `dev` has branch protection — always use a PR, no direct pushes.\n\n**CSS**: vanilla CSS in Astro scoped `<style>` blocks. Never add inline `style=\"...\"` attributes for repeated values. Never hardcode hex colors that have a CSS variable. Navy `#0B2545` is the primary dark — do NOT migrate to Royal Blue `#17458F` (user's explicit decision).\n\n**Content read via Tina GraphQL client** — never `astro:content` / `getCollection()` for editable content. Always use `requestWithMetadata(client.queries.x(...))`.\n\nRead the steering files in `.kiro/steering/` for full rules. Read the reference files in `.claude/skills/rotaract2050-site/references/` before working on a specific area."
+      }
+    }
+  ]
+}

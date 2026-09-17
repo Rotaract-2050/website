@@ -1,0 +1,49 @@
+---
+description: Regole deploy Cloudflare Workers e branch management
+globs: .github/workflows/**,wrangler.jsonc,scripts/**
+---
+
+# Deploy Cloudflare Workers — regole
+
+## Schema branch
+
+| Branch | Build | Come |
+|---|---|---|
+| `main` | produzione automatica | Workers Builds ad ogni push |
+| `dev` | preview (Version, non deploy) | GitHub Action `preview-dev.yml` |
+| altri | niente | checkbox "non-prod builds" OFF |
+
+## Regola d'oro: mai `wrangler deploy` per preview
+
+Il preview di `dev` usa **`wrangler versions upload`** — non `wrangler deploy`. La differenza:
+- `versions upload` → crea una Version con preview URL, **non tocca il traffico live**
+- `deploy` → promuove al 100% del traffico → **va in produzione**
+
+## `wrangler.jsonc` e blocchi `env`
+
+`@astrojs/cloudflare` rigenera `dist/server/wrangler.json` ad ogni build con `name` preso **sempre dal top-level**. I blocchi `env.beta` vengono ignorati. Per deployare su un nome diverso: `wrangler deploy --config dist/server/wrangler.json --name <nome>`.
+
+## Branch protection su `dev`
+
+`dev` è protetto — nessun push diretto, nemmeno da admin. Serve sempre una PR:
+
+```bash
+git push origin HEAD:refs/heads/feat/mia-feature
+gh pr create --base dev --head feat/mia-feature
+gh pr merge --merge
+```
+
+## Build prima di deploy
+
+```bash
+# Fermare i dev server prima del build
+pkill -f "tinacms dev"; npx astro dev stop
+# Build corretto (non solo astro build — manca il codegen Tina)
+npx tinacms build -c "astro build" --skip-cloud-checks --skip-search-index
+```
+
+## Diagnosi pagina bianca sul Worker deployato
+
+1. **Env Tina non risolte** (`.env` con `op://`): testare `/robots.txt` (sempre 200) e homepage — se homepage è bianca e robots.txt è 200, è un problema Tina client
+2. **Schema Tina Cloud su `main` ma branch ha blocchi nuovi**: riprodurre in locale con `HEAD=dev npx tinacms build ...` + `npx wrangler dev --local`
+3. **Cartella content vuota mai committata**: `git ls-files src/content/<nuova-collection>/` — se vuoto, aggiungere `.gitkeep`

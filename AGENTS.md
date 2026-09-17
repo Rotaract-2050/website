@@ -1,6 +1,18 @@
 ## Agent instructions location
 
-This repo keeps agent skills and instructions centrally in `.claude/` (Claude Code's config dir). To ensure Gemini and other agents can use them automatically, shared skills are symlinked from `.claude/skills/` into `.agents/skills/`. Since your environment automatically loads `.agents/`, you will pick them up through the symlinks without needing to manually read `.claude/`.
+This repo keeps agent skills and instructions centrally in `.claude/skills/` (Claude Code's config dir).
+
+Per-agent config locations:
+
+| Agent | Config dir | Format |
+|---|---|---|
+| **Claude Code** | `CLAUDE.md` (root) + `.claude/hooks/` | Markdown + shell hooks |
+| **Kiro** | `.kiro/steering/` + `.kiro/hooks/` | Markdown steering + JSON hooks |
+| **Cursor** | `.cursor/rules/` | `.mdc` files with `globs` frontmatter |
+| **Antigravity** | `.agent/rules/`, `.agent/skills/`, `.agent/workflows/` | Markdown flat files |
+| **Gemini/others** | `.agents/skills/` (symlinks → `.claude/skills/`) | Markdown SKILL.md |
+
+Shared skills (the authoritative copy) live in `.claude/skills/rotaract2050-site/` and `.claude/skills/rotaract2050-design-system/`. All other agent configs reference or symlink these rather than duplicating content.
 
 ## Development
 
