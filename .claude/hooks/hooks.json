@@ -1,0 +1,34 @@
+{
+  "hooks": [
+    {
+      "name": "astro-check-on-save",
+      "description": "Runs astro check after writing .astro/.ts/.tsx files to catch TypeScript errors early (including TinaCMS Collection annotation gotcha).",
+      "event": "PostToolUse",
+      "matcher": {
+        "tool": ["Write", "Edit", "MultiEdit"],
+        "file_pattern": "\\.(astro|ts|tsx)$"
+      },
+      "command": "bash .claude/hooks/post-write-astro-check.sh"
+    },
+    {
+      "name": "tina-annotation-reminder",
+      "description": "Reminds about required TypeScript annotation and unique field names when editing Tina config files.",
+      "event": "PostToolUse",
+      "matcher": {
+        "tool": ["Write", "Edit", "MultiEdit"],
+        "file_pattern": "tina/(collections|blocks|config)\\.(ts|tsx?)$"
+      },
+      "prompt": "A Tina config file was just written. Before continuing, confirm:\n1. Every exported Collection/Template object has an explicit type annotation: `import type { Collection } from 'tinacms'; export const x: Collection = {...}`. Without this, astro check fails with a misleading error.\n2. Any new field name is unique across all templates in the same collection (different type on same name = GraphQL conflict). Run: `grep -rn \"name: '<fieldname>'\" tina/blocks/`\n3. No hyphens in collection `name` property (alphanumeric/underscore only)."
+    },
+    {
+      "name": "astro-component-checklist",
+      "description": "Runs the quality checklist after writing Astro component files.",
+      "event": "PostToolUse",
+      "matcher": {
+        "tool": ["Write", "Edit", "MultiEdit"],
+        "file_pattern": "src/components/.*\\.astro$"
+      },
+      "prompt": "An Astro component was just written. Verify these rules from astro-standards.md before marking done:\n- No `set:html` on unsanitized Tina content (use TinaMarkdown renderer)\n- No scattered inline `style=\"...\"` attributes for repeated values\n- Interactive elements use `<a href>` or `<button>`, never `<div onClick>`\n- Images use `<Image>`/`<Picture>` from `astro:assets` with required `alt`\n- Props declared with `interface Props`, no untyped Astro.props, no `any`\n- Toggleable element CSS: `.selector:not([hidden]) { display: flex }` NOT `.selector { display: flex }` (otherwise JS `el.hidden = true` won't work)\n- If using motion.ts for animation: ensure cleanup of inline style.transform/style.opacity after animation finishes\n- If block has per-element scroll animation: add its typename to the exclusion list in BlockItem.astro"
+    }
+  ]
+}

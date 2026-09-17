@@ -1,0 +1,73 @@
+---
+description: Design system Rotaract 2050 — colori, tipografia, layout, animazioni
+globs: src/**/*.{astro,css,ts}
+---
+
+# Design System Rotaract Distretto 2050
+
+## Estetica: premium / glassmorphism
+
+### Card e superfici
+
+```css
+/* Mai background: #f0f0f0 — sempre glassmorphism con --tint */
+.card {
+  background: color-mix(in srgb, var(--tint) 14%, white);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--tint) 35%, transparent);
+  border-radius: var(--shape-large);
+  padding: 32px 24px;
+}
+
+/* Hover lift obbligatorio su elementi interattivi */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--elevation-2);
+}
+
+/* Watermark decorativo */
+.watermark {
+  font-size: 140px;
+  font-weight: 900;
+  color: rgba(0, 0, 0, 0.03);
+  position: absolute;
+  right: -20px;
+  bottom: -20px;
+}
+```
+
+## Colori — SEMPRE variabili CSS, mai hex hardcoded
+
+| Ruolo | Variabile | Hex | Note |
+|---|---|---|---|
+| Primario scuro | `var(--color-navy)` | `#0B2545` | Scelta definitiva utente — NON cambiare |
+| Accent / CTA / link | `var(--color-pink)` | `#D41367` | Cranberry ufficiale Rotaract |
+| Accent secondario su scuro | `var(--color-gold)` | `#F7A81B` | Rotary Gold |
+| Interact accent | `#00A2E0` | letterale | Sky Blue — fuori scope `[data-theme]` |
+| Testo body | `var(--color-text)` | `#54565A` | Charcoal ufficiale Rotary |
+
+Le variabili complete sono in `src/styles/global.css`. Non inventare colori.
+
+## Tipografia
+
+- **Heading / Nav**: Open Sans — `text-transform: uppercase; font-weight: 600/700`
+- **Body**: Georgia — solo per paragrafi e long-form
+- **Niente Barlow o altri font** — non conformi al brand Rotary
+
+## Grid
+
+```css
+/* CSS Grid con auto-fit — mai Flexbox per griglie di card */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  max-width: var(--content-max);
+  margin: 0 auto;
+}
+```
+
+## Tema Interact
+
+Il tema Interact cambia colori via `[data-theme="interact"]` scoped — attivato da `BaseLayout` con `theme="interact"`. I componenti non vanno modificati se leggono `var(--color-*)` — cambia il tema, non il componente.
+
+Hardcode da cercare dopo una modifica: `grep -rniE "d41367|f7a81b|17458f" src/components/`

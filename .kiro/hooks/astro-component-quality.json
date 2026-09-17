@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Astro component quality checklist",
+      "trigger": "PostFileSave",
+      "description": "When a component .astro file is saved, reminds the agent to verify the quality checklist before marking the component done.",
+      "matcher": "src/components/.*\\.astro$",
+      "action": {
+        "type": "agent",
+        "prompt": "A component .astro file was just saved. Before marking it done, verify these non-negotiable rules from `references/astro-standards.md`:\n\n- **No `set:html` on unsanitized content** — use `<TinaMarkdown>` or the official renderer for Tina rich-text fields, never raw `set:html`.\n- **No inline `style=\"...\"` attributes** for values that repeat — use CSS custom properties or scoped `<style>`.\n- **Interactive elements use semantic tags**: `<a href>` for navigation, `<button>` for actions — never `<div onClick>`.\n- **Images use `<Image>` or `<Picture>` from `astro:assets`**, never bare `<img>`. `alt` must be present and descriptive.\n- **Props declared with `interface Props`** — no untyped `Astro.props`, no `any`.\n- **Toggleable elements via JS** (`el.hidden = true/false`): CSS rule must be on `.selector:not([hidden])`, NOT `.selector { display: flex }` — otherwise `hidden` attribute won't actually hide the element (browser UA rule loses to author rule).\n- **Hover + animation**: if using `motion.ts` helpers, ensure inline `style.transform`/`style.opacity` are cleaned up after animation (the helpers do this automatically; custom animations must do it manually).\n- **Excluded from `data-reveal`** in `BlockItem.astro` if the block has its own per-element scroll animation."
+      }
+    }
+  ]
+}
