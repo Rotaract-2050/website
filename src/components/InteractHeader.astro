@@ -72,10 +72,7 @@ const distrettoActive = (['interactStoria', 'interactAlbo', 'interactSquadra'] a
 
 <header class="main-nav">
 	<a href={href('interactHome')} class="brand">
-		{/* Wordmark placeholder — swap for the official Interact logo (Rotary Brand Center) once
-		    supplied; keep the link/markup shape, only the visual mark changes. */}
-		<span class="brand-mark">INTERACT</span>
-		<span class="brand-sub">Distretto 2050</span>
+		<img src="/uploads/loghi/interact-logo-nav.png" alt="Interact Distretto 2050" class="brand-logo" />
 	</a>
 
 	<button
@@ -232,20 +229,9 @@ const distrettoActive = (['interactStoria', 'interactAlbo', 'interactSquadra'] a
 		justify-content: center;
 	}
 
-	.brand-mark {
-		font-family: var(--font-heading);
-		font-weight: 700;
-		font-size: 24px;
-		letter-spacing: 0.5px;
-		color: var(--color-pink);
-	}
-
-	.brand-sub {
-		font-family: var(--font-heading);
-		font-weight: 600;
-		font-size: 12px;
-		letter-spacing: 0.5px;
-		color: var(--color-navy);
+	.brand-logo {
+		height: 48px;
+		width: auto;
 	}
 
 	.menu-toggle {
@@ -477,8 +463,8 @@ const distrettoActive = (['interactStoria', 'interactAlbo', 'interactSquadra'] a
 			padding: 8px 20px;
 		}
 
-		.brand-mark {
-			font-size: 20px;
+		.brand-logo {
+			height: 38px;
 		}
 
 		.menu-toggle {
