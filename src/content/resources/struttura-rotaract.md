@@ -4,37 +4,44 @@ titleEn: 'Rotaract Structure'
 tags:
   - Struttura & Governance
 order: 17
-excerpt: "L'organizzazione piramidale di Rotary International, gli organi di club e le principali cariche di un Rotaract Club."
-excerptEn: "Rotary International's pyramidal organization, a club's collegial bodies, and the main offices of a Rotaract Club."
+excerpt: "L'organizzazione del Distretto Rotaract e dei Club: le cariche, le commissioni distrettuali e le riunioni principali."
+excerptEn: "The organization of the Rotaract District and Clubs: offices, district committees, and main meetings."
 bodyEn: |
-  Rotary International (RI) is the centralized structure responsible for managing the various bodies connected to it. Rotary promotes the development of leadership, maintaining a democratically-based rotation for access to leadership positions. A pyramidal order of offices exists for organizational purposes, but the base of the pyramid cannot be defined as "low level", nor its apex as "high level".
+  All Rotaract offices are elected annually according to the Bylaws and remain in office from July 1st to June 30th of the following year (the so-called Social Year).
 
-  RI's members are Rotary, Rotaract and Interact clubs.
+  ## General Organization of the District
 
-  A club's typical structure is made up of 2 collegial bodies:
+  The **District Representative** (RRD) is the highest Rotaract office at the district level for the social year. They are the Legal Representative of the District, representing all Rotaract Clubs, coordinating Club Presidents, convening District Assemblies, and maintaining institutional relations with the Rotary District.
 
-  * **Members' Assembly:** the body of all regularly enrolled members
-  * **Board of Directors:** made up of the club's officers
+  The District Representative is assisted by the **District Executive**, which includes:
+  * **Vice District Representative**: supports the RRD and steps in if necessary
+  * **Past District Representative**: the RRD of the previous year, acting as an advisor
+  * **District Representative Elect**: the RRD for the following year
+  * **District Secretary**: drafts minutes and handles official communications
+  * **District Treasurer**: manages the District's finances
+  * **District Prefects**: handle the organizational aspects and ceremonial duties of district events
+  * **Zone Delegates**: coordinate the Clubs in their area and facilitate communication
 
-  The main offices found in a Rotaract Club are:
+  The RRD is also supported by **District Committees**, each focusing on specific areas such as Club Service, Vocational Service, Community Service, International Service, Youth Service, Public Image, Culture, and Dispute Resolution.
+  
+  Completing the district structure are specific Delegates (E.R.I.C., Rotary, Interact, Youth Exchange, Rotary Foundation, and IT).
 
-  1. **President:** the club's legal representative
-  2. **Past President:** the outgoing president
-  3. **President-elect:** the president for the immediately following year
-  4. **Vice President:** stands in for the president in their absence
-  5. **Secretary:** keeps the club's records and drafts the minutes
-  6. **Treasurer:** manages the club's finances
-  7. **Prefect:** oversees the organization of events
+  During the year, the district organizes 5 **District Assemblies**, the **S.I.D.E.** (Informational Seminar for Incoming Boards), and the **District Handover** at the end of the year.
 
-  Besides the roles listed above, committee chairs and councillors may also be present.
+  ## Organization of the Club
 
-  Every level of the pyramid answers to the one before it: it is the members who express their vision and ensure that the people involved in the various processes carry it out. It would be pointless for a president to issue directions to the levels below that are not broadly shared.
+  The club is made up of **Members**, who annually elect their **Board of Directors**:
+  1. **President**: the club's legal representative who coordinates activities
+  2. **Vice President**: supports and replaces the president when necessary
+  3. **Past President**: outgoing president ensuring continuity
+  4. **Incoming President**: elected for the following year
+  5. **Secretary**: handles organizational and administrative tasks
+  6. **Treasurer**: manages club finances
+  7. **Prefect**: organizes meetings and events according to Rotaract etiquette
 
-  ## Rotaract activities
+  Committees and Councillors may also be present.
 
-  Rotaract's core activity is service — projects that support the local, national or international community.
-
-  Clubs are the RI bodies responsible for conceiving, planning and carrying out service projects. Rotaract members can take part in various activities proposed by other clubs, by districts and by Rotary International, ranging from social gatherings to more specific activities.
+  All members undergo an **Aspirant** period before officially joining the club through the Pinning ceremony. Members participate in various meetings: Club Convivials (formal, often with guest speakers), Fireside chats (informal), Club Assemblies (for voting), and Board Meetings.
 
   ### See also
 
@@ -44,34 +51,49 @@ bodyEn: |
   * [[ruolo-del-segretario]]
 ---
 
-Il Rotary International (RI) è la struttura centralizzata che si occupa della gestione dei vari enti a lui collegati. Il Rotary promuove lo sviluppo della leadership, mantenendo un avvicendamento a base democratica per l'accesso alle cariche dirigenziali. Esiste un ordine piramidale delle cariche per esigenze organizzative, ma non è possibile definire la base della piramide come "basso livello", tantomeno l'apice come "alto livello".
+Tutte le cariche Rotaract sono elette annualmente secondo il Regolamento e rimangono in carica dall’1 Luglio al 30 Giugno dell’anno successivo (cosiddetto Anno Sociale).
 
-Sono membri del RI i club Rotary, Rotaract e Interact.
+## Organizzazione generale del Distretto
 
-La struttura tipica di un club si compone di 2 organi collegiali:
+Il **Rappresentante Distrettuale (RRD)** è la massima carica del Rotaract a livello distrettuale per l’anno sociale. Egli è il Legale Rappresentante del Distretto:
+* Rappresenta tutti i Club Rotaract del Distretto;
+* Coordina e motiva i Presidenti di Club;
+* Convoca e presiede le Assemblee Distrettuali;
+* Mantiene i rapporti istituzionali con il Distretto Rotary e supporta il Governatore Rotary;
+* Nomina i componenti del proprio esecutivo, delle commissioni ed i Delegati di Zona.
 
-* **Assemblea dei soci:** l'insieme dei soci regolarmente iscritti
-* **Consiglio direttivo:** composto dai dirigenti del club
+Il Rappresentante Distrettuale è coadiuvato dall’**Esecutivo Distrettuale**, di cui fanno parte:
+* **Vice Rappresentante Distrettuale**: supporta il RRD e ne fa le veci se necessario;
+* **Past Rappresentante Distrettuale**: il RRD dell’anno precedente, con ruolo di consigliere;
+* **Rappresentante Distrettuale Eletto**: il RRD dell'anno successivo;
+* **Segretario Distrettuale**: redige i verbali e si occupa delle comunicazioni ufficiali;
+* **Tesoriere Distrettuale**: si occupa delle finanze e dei bilanci del Distretto;
+* **Prefetti Distrettuali**: curano gli aspetti organizzativi e cerimoniali degli eventi;
+* **Delegati di Zona**: coordinano i Club della propria area, facilitando la comunicazione con il Distretto.
 
-Le principali cariche presenti in un Rotaract Club sono:
+Il Rappresentante Distrettuale è affiancato dalle **Commissioni Distrettuali** (Azione Interna, Professionale, Pubblico Interesse, Internazionale, Giovani, Immagine Pubblica, Cultura, Risoluzione controversie) e da alcune figure specifiche come i **Delegati** (E.R.I.C., Rotary, Interact, Scambio Giovani, Rotary Foundation, I.T.).
 
-1. **Presidente:** rappresentante legale del club
-2. **Past President:** presidente uscente
-3. **Presidente eletto:** presidente dell'anno immediatamente successivo
-4. **Vicepresidente:** supplente del presidente in caso di sua assenza
-5. **Segretario:** conserva la documentazione del club e redige i verbali
-6. **Tesoriere:** gestisce le finanze di club
-7. **Prefetto:** cura l'organizzazione di eventi
+Durante l’anno sociale il distretto organizza 5 **Assemblee Distrettuali** (composte da lavori distrettuali e conviviale), il **S.I.D.E.** (Seminario Informativo Direttivi Eletti) per la formazione dei direttivi entranti, e il **Passaggio di Consegne Distrettuale** a fine anno.
 
-Oltre ai ruoli citati sopra possono essere presenti dei presidenti di commissione e dei consiglieri.
+## Organizzazione del Club
 
-Tutti i livelli della piramide rispondono al precedente: sono i soci che esprimono la loro visione e fanno sì che le persone facenti parte dei vari processi la implementino. Sarebbe inutile se un presidente desse disposizioni ampiamente non condivise ai livelli sottostanti.
+Il club è composto da **Soci**, che eleggono annualmente il proprio **Direttivo**, composto da:
+1. **Presidente**: Legale Rappresentante, coordina le attività e rappresenta il club;
+2. **Vice presidente**: supporta il presidente e lo sostituisce all'occorrenza;
+3. **Past president**: presidente uscente, garantisce la continuità;
+4. **Presidente Incoming**: presidente eletto per l’anno successivo;
+5. **Segretario**: cura la parte organizzativa e amministrativa;
+6. **Tesoriere**: gestisce le finanze e le quote associative;
+7. **Prefetto**: si occupa dell'organizzazione pratica delle riunioni e del cerimoniale.
 
-## Attività Rotaract
+Oltre ai ruoli sopracitati, possono essere presenti dei **Presidenti di commissione** e dei **Consiglieri**.
+Prima di far parte effettivamente del Club, si affronta un periodo di aspirantato: gli **Aspiranti** partecipano alle attività con i medesimi doveri dei soci, e al termine entrano a far parte del Club con la cerimonia della Spillatura.
 
-Il Rotaract ha come attività cardine i service, progetti che vanno a sostenere la comunità locale, nazionale o internazionale.
-
-I club sono gli enti del RI che si occupano di ideare, pianificare e realizzare i service. I soci Rotaract possono prendere parte a diverse attività proposte dagli altri club, dai distretti e da Rotary International, passando da attività conviviali ad attività più specifiche.
+Durante l’anno, i Soci partecipano a diversi incontri:
+* **Conviviali di Club**: momenti formali, spesso con Relatori;
+* **Caminetti**: eventi più informali e riservati a Soci ed Aspiranti;
+* **Assemblee di Club**: occasioni di votazione;
+* **Riunioni del Direttivo**: riservate all'organizzazione delle attività.
 
 ### Vedi anche
 
@@ -79,4 +101,3 @@ I club sono gli enti del RI che si occupano di ideare, pianificare e realizzare 
 * [[club-interact]]
 * [[ruolo-del-prefetto]]
 * [[ruolo-del-segretario]]
-

@@ -7,50 +7,69 @@ order: 14
 excerpt: "Dalla prima riunione del 1905 a Chicago alla nascita del Distretto 2050: le tappe fondamentali della storia del Rotary."
 excerptEn: "From the first 1905 meeting in Chicago to the birth of District 2050: the key milestones in Rotary's history."
 bodyEn: |
-  Rotary was founded in 1905 by Paul Percy Harris, with the idea of forming a club of "the best" who, through their own commitment, could inspire and improve a Chicago that had recently been rebuilt and was made up of pioneers.
+  Everything begins on February 23, 1905 in Chicago, from an idea of lawyer Paul Percy Harris: to bring together professionals from different fields, who normally wouldn't have the chance to meet, to build friendship and exchange ideas. He called three friends: Gustavus Loehr, Silvester Schiele and Hiram Shorey, and from that meeting the first Rotary Club was born.
 
-  19th-century Chicago was a frontier city, full of vice and lacking laws, which returned to splendour thanks to the initiative of great figures who fought decay and mismanagement. On the evening of 23 February 1905, at the Unity Building, right in the city centre, a Rotary Club met for the first time.
+  The idea spread quickly and within a few years Rotary crossed the borders of Chicago and the United States. In 1912 the first Rotary Club outside North America was founded, and since then the movement has continued to expand to become an international reality. Alongside fellowship, members developed a growing focus on concrete service to the community: as early as 1907, the Rotary Club of Chicago carried out its first service project: the construction of public toilets.
 
-  The first meeting was attended by mining engineer Gustavus Loehr (owner of the office), tailor Hiram Shorey, coal merchant Silvester Schiele, and Paul Harris.
+  A key moment came in 1917, when President Arch C. Klumph proposed the creation of a fund to "do good in the world". This was the beginning of what would become the Rotary Foundation, today one of the main tools through which Rotary carries out its humanitarian commitment.
 
-  Paul Harris himself stated that *"the object of Rotary is to bring together businessmen and professionals of different social standing, religion and nationality, so that they may understand each other, and be more supportive, cordial and of service to one another."*
+  Rotary arrived in Italy on November 20, 1923, when the first Italian Rotary Club was inaugurated in Milan, in the Sala Manzoni of the Caffè Cova. In the territory of the current District 2050, the first Club to be founded was the Rotary Club Cremona, in 1926, today recognized as the oldest Club in the District.
 
-  It was only at the third meeting that the fledgling club of friends was named Rotary. Paul Harris was not the first president, but the third. As a symbol, he chose a wheel, from the idea of "rotation" — the logo underwent slight graphic variations but has remained the same since 1923.
+  Throughout the 20th century the movement continued to grow, tackling the great social and humanitarian challenges of its time. Today Rotary brings together over 1.2 million members in more than 46,000 Clubs across over 200 countries and geographical areas, united by the same idea: building connections, developing leadership and transforming friendship into concrete service.
 
-  A little over three years after the first meeting, on 12 November 1908 the second Rotary Club was founded in San Francisco; the first Canadian Rotary Club was founded that same year, and the first in Dublin in 1911.
+  In District 2050, which includes southern Lombardy and the province of Piacenza, the network today counts 85 Rotary Clubs and 3,379 members. A reality that continues to grow and renew itself, keeping the principle of "Service Above Self" at its core.
 
-  Paul Harris had always wanted to expand this idea of his, but his fellow members were initially opposed. In 1912 the name International Association of Rotary Clubs was adopted, which became Rotary International in 1922.
-
-  The first Italian club was founded on 20 November 1923 in Milan, in the Sala Manzoni of the Caffè Cova. In the following two years, 12 more clubs were founded. In 1926 the first Rotary Club of Cremona was founded, which would become the centre of District 2050.
-
-  Rotary activity was suspended during the Second World War. A first territorial division into districts emerged in the 1980s, and in 1992 our district received its official name as District 2050.
+  ### Key Milestones
+  * **1905:** Paul P. Harris founds the first Rotary Club in Chicago
+  * **1907:** The first service project is carried out
+  * **1917:** Arch C. Klumph proposes the fund that will give birth to the Rotary Foundation
+  * **1923:** The first Italian Rotary Club is born in Milan
+  * **1926:** The Rotary Club Cremona is born, the oldest Club of the current District 2050
+  * **Today:** over 1.2 million members and more than 46,000 Clubs worldwide; in District 2050, 85 Clubs and 3,379 members.
 
   ### See also
 
   * [[storia-del-rotaract]]
+  * [[storia-dell-interact]]
   * [[il-distretto-rotaract]]
 ---
 
-Il Rotary viene fondato nel 1905 da Paul Percy Harris, con l'idea di formare un club di "migliori" che con il proprio impegno potessero ispirare e migliorare una Chicago recentemente ricostruita e composta da pionieri.
+**La storia del Rotary**
 
-La Chicago dell'800 era una città di frontiera, piena di vizi e priva di leggi, che tornò a splendere proprio grazie all'iniziativa di grandi personalità per contrastare la decadenza e la mala gestio. La sera del 23 febbraio 1905, presso lo Unity Building, in pieno centro, si riuniva per la prima volta un Rotary Club.
+Tutto comincia il 23 febbraio 1905 a Chicago, con un’idea dell’avvocato Paul Percy Harris: riunire persone di professioni diverse, che normalmente non avrebbero avuto occasione di incontrarsi, per creare amicizia e confronto.
+Convoca tre amici: Gustavus Loehr, Silvester Schiele e Hiram Shorey, e da quell’incontro nasce il primo Rotary club.
 
-Alla prima riunione parteciparono l'ingegnere minerario Gustavus Loehr (proprietario dello studio), il sarto Hiram Shorey, il commerciante di carbone Silvester Schiele e Paul Harris.
+**Da Chicago al mondo**
 
-Lo stesso Paul Harris affermò che *"lo scopo del Rotary è quello di riunire uomini d'affari e professionisti di diverso stato sociale, religione e nazionalità, affinché possano comprendersi a vicenda, ed essere più solidali, cordiali e al servizio gli uni degli altri."*
+L’idea si diffonde rapidamente e nel giro di pochi anni il Rotary supera i confini di Chicago e degli Stati Uniti.
+Nel 1912 nasce il primo Rotary Club fuori dal Nord America e, da allora, il movimento continua a espandersi fino a diventare una realtà internazionale.
+Insieme alla fellowship, tra i soci cresce l’attenzione per il servizio concreto alla comunità: già nel 1907 il Rotary Club di Chicago realizza il primo service: la costruzione di stazioni di servizio igienico pubbliche.
 
-Soltanto al terzo incontro si decise di chiamare il neonato club di amici Rotary. Paul Harris non fu il primo presidente, ma il terzo. Come simbolo scelse una ruota, dall'idea di "rotazione": il logo ha subito leggere variazioni grafiche ma è rimasto lo stesso dal 1923.
+**La nascita della Fondazione Rotary**
 
-Poco più di tre anni dopo il primo incontro, il 12 novembre 1908 a San Francisco viene fondato il secondo Rotary Club; nello stesso anno viene fondato il primo Rotary Club canadese, e nel 1911 il primo a Dublino.
+Un momento chiave arriva nel 1917, quando il presidente Arch C. Klumph propone di creare un fondo per “fare del bene nel mondo”. È l’inizio di quella che diventerà la Fondazione Rotary, oggi uno dei principali strumenti attraverso cui il Rotary realizza il proprio impegno umanitario. 
 
-Paul Harris aveva da sempre il desiderio di espandere questa sua idea, ma i suoi consoci inizialmente si dimostrarono contrari. Nel 1912 venne adottato il nome di Associazione Internazionale dei Rotary Club, che diventerà nel 1922 Rotary International.
+**Il Rotary in Italia**
 
-Il primo club italiano nasce il 20 novembre 1923 a Milano, nella sala Manzoni del caffè Cova. Nei due anni successivi furono fondati altri 12 club. Nel 1926 viene fondato il primo Rotary Club di Cremona, che sarà il centro del Distretto 2050.
+Il Rotary arriva in Italia il 20 novembre 1923, quando viene inaugurato a Milano, nella Sala Manzoni del Caffè Cova, il primo Rotary Club italiano.
+Nel territorio dell’attuale Distretto 2050, il primo Club a essere fondato è il Rotary Club Cremona, nel 1926, oggi riconosciuto come il Club decano del Distretto.
 
-Durante la Seconda Guerra Mondiale l'attività rotariana venne sospesa. Negli anni '80 nasce una prima divisione territoriale in distretti e, nel 1992, il nostro distretto riceve il suo nome ufficiale come Distretto 2050.
+**Il Rotary oggi**
+
+Nel corso del Novecento il movimento continua a crescere, affrontando le grandi sfide sociali e umanitario del suo tempo. Oggi il Rotary riunisce oltre 1,2 milioni di soci in più di 46.000 Club distribuiti in oltre 200 Paesi e aree geografiche, uniti dalla stessa idea: costruire connessioni, sviluppare leadership e trasformare l’amicizia in servizio concreto.
+Nel Distretto 2050, che comprende la Lombardia meridionale e la Provincia di Piacenza, la rete conta oggi 85 Rotary Club e 3.379 soci. Una realtà che continua a crescere e a rinnovarsi, mantenendo al centro il principio del “Servire al di sopra di ogni interesse personale”.
+
+**Le tappe principali**
+
+* **1905:** Paul P. Harris fonda a Chicago il primo Rotary Club;
+* **1907:** Viene realizzato il primo service;
+* **1917:** Arch C. Klumph propone il fondo che darà vita alla Fondazione Rotary;
+* **1923:** nasce a Milano il primo Rotary Club Italiano;
+* **1926:** nasce il Rotary Club Cremona, il più antico Club dell’attuale Distretto 2050;
+* **Oggi:** oltre 1,2 milioni di soci e più di 46.000 Club nel mondo; nel Distretto 2050, 85 Club e 3.379 soci.
 
 ### Vedi anche
 
 * [[storia-del-rotaract]]
+* [[storia-dell-interact]]
 * [[il-distretto-rotaract]]
-

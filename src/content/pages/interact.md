@@ -63,12 +63,15 @@ blocks:
         color: '#00A2E0'
     _template: FamilyGrid
   - items:
-      - value: '14.500'
-        label: CLUB INTERACT NEL MONDO
-        labelEn: INTERACT CLUBS WORLDWIDE
-      - value: 330.000+
+      - value: '14.911'
+        label: CLUB NEL MONDO
+        labelEn: CLUBS WORLDWIDE
+      - value: '342.953'
         label: SOCI NEL MONDO
         labelEn: MEMBERS WORLDWIDE
+      - value: '12'
+        label: CLUB NEL DISTRETTO
+        labelEn: CLUBS IN THE DISTRICT
       - value: 12-18
         label: ANNI
         labelEn: YEARS OLD
