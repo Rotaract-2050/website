@@ -10,9 +10,10 @@ import SocialIcon from './SocialIcon.astro';
 interface Props {
 	lang: Lang;
 	settings: SettingsQuery['settings'];
+	isInteract?: boolean;
 }
 
-const { lang, settings } = Astro.props;
+const { lang, settings, isInteract = false } = Astro.props;
 const t = uiStrings[lang];
 const href = (page: PageKey) => getRelativeLocaleUrl(lang, pageSlugs[page]);
 
@@ -28,16 +29,30 @@ const addressFieldName = isEn && settings.addressEn ? 'addressEn' : 'address';
 <footer class="site-footer">
 	<div class="footer-grid">
 		<div>
-			<div class="footer-title">ROTARACT DISTRETTO 2050</div>
+			<div class="footer-title">{isInteract ? t.interact.footerTitle : 'ROTARACT DISTRETTO 2050'}</div>
 			<p class="footer-about" data-tina-field={tinaField(settings, aboutFieldName)}>{about}</p>
 		</div>
 		<div>
 			<div class="footer-heading">{t.footer.linksTitle}</div>
 			<div class="footer-links">
-				<a href={href('home')}>{t.nav.home}</a>
-				<a href={href('distretto')}>{t.nav.distrettoMenu}</a>
-				<a href={href('club')}>{t.nav.club}</a>
-				<a href={href('squadra')}>{t.nav.squadra}</a>
+				{isInteract && (
+					<>
+						<a href={href('interactHome')}>{t.interact.navHome}</a>
+						<a href={href('interactStoria')}>{t.interact.navStoria}</a>
+						<a href={href('interactSquadra')}>{t.interact.navSquadra}</a>
+						<a href={href('interactClub')}>{t.interact.navClub}</a>
+						<a href={href('interactAlbo')}>{t.interact.navAlbo}</a>
+						<a href={href('interactEventi')}>{t.interact.navEventi}</a>
+					</>
+				)}
+				{!isInteract && (
+					<>
+						<a href={href('home')}>{t.nav.home}</a>
+						<a href={href('distretto')}>{t.nav.distrettoMenu}</a>
+						<a href={href('club')}>{t.nav.club}</a>
+						<a href={href('squadra')}>{t.nav.squadra}</a>
+					</>
+				)}
 				<a href={href('privacy')}>{t.footer.privacyLink}</a>
 			</div>
 		</div>
@@ -87,11 +102,14 @@ const addressFieldName = isEn && settings.addressEn ? 'addressEn' : 'address';
 		</div>
 		<div>{t.footer.underRotary}</div>
 	</div>
+	<div class="footer-credit">
+		Fatto con il cuore da Alessandro Gorla
+	</div>
 </footer>
 
 <style>
 	.site-footer {
-		background: var(--color-navy);
+		background: #0b2545; /* var(--color-navy) in rotaract context, hardcoded to keep uniform in interact context */
 		color: #fff;
 		padding: 60px 40px 0;
 	}
@@ -239,5 +257,15 @@ const addressFieldName = isEn && settings.addressEn ? 'addressEn' : 'address';
 		.footer-grid {
 			grid-template-columns: 1fr;
 		}
+	}
+
+	.footer-credit {
+		max-width: var(--content-max);
+		margin: 0 auto;
+		padding: 10px 0 20px;
+		font-size: 11px;
+		color: rgba(255, 255, 255, 0.3);
+		text-align: center;
+		letter-spacing: 0.5px;
 	}
 </style>

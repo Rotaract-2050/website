@@ -4,7 +4,7 @@ zone: src/content/zones/navigli.md
 foundationYear: 2023
 lat: 45.3170942
 lng: 8.858603
-photo: /uploads/Loghi-Club/vigevano-castello.jpeg
+photo: /uploads/loghi-club/vigevano-castello.jpeg
 email: segreteriartcvigevanocastello@gmail.com
 website: 'https://www.rotaractvigevanocastello.org/'
 instagram: 'https://www.instagram.com/rotaract_vigevano_castello/'

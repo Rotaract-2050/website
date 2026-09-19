@@ -4,7 +4,7 @@ zone: src/content/zones/padana.md
 foundationYear: 1969
 lat: 44.9863857
 lng: 10.4153504
-photo: /uploads/Loghi-Club/casalmaggiore-viadana-sabbioneta.jpeg
+photo: /uploads/loghi-club/casalmaggiore-viadana-sabbioneta.jpeg
 photoFocalX: 56
 photoFocalY: 51
 email: segreteriartccasalma@gmail.com

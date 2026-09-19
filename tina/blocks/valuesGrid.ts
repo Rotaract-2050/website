@@ -1,0 +1,65 @@
+export const valuesGridTemplate = {
+	name: 'ValuesGrid',
+	label: 'Griglia valori',
+	ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
+	fields: [
+		{ type: 'string' as const, name: 'title', label: 'Titolo sezione (IT)', required: true },
+		{ type: 'string' as const, name: 'titleEn', label: 'Titolo sezione (EN)' },
+		{ type: 'string' as const, name: 'intro', label: 'Testo introduttivo (IT, opzionale)', ui: { component: 'textarea' } },
+		{ type: 'string' as const, name: 'introEn', label: 'Testo introduttivo (EN, opzionale)', ui: { component: 'textarea' } },
+		{
+			type: 'string' as const,
+			name: 'accent',
+			label: 'Colore accento sezione (per differenziare più griglie sulla stessa pagina)',
+			options: [
+				{ value: '#D41367', label: 'Cranberry (default)' },
+				{ value: '#F7A81B', label: 'Rotary Gold' },
+				{ value: '#0067C8', label: 'Azure' },
+				{ value: '#00A2E0', label: 'Sky Blue' },
+				{ value: '#657F99', label: 'Slate' },
+			],
+		},
+		{
+			type: 'string' as const,
+			name: 'layout',
+			label: 'Stile card',
+			description:
+				'Badge: cerchio col contorno, per valori/principi astratti. Percorso: cerchi pieni numerati collegati da una linea, per sequenze ordinate. Icona: pittogramma per voce, per elenchi di temi/cause distinti.',
+			options: [
+				{ value: 'badge', label: 'Badge (contorno)' },
+				{ value: 'path', label: 'Percorso collegato' },
+				{ value: 'icon', label: 'Icona personalizzata' },
+				{ value: 'statement', label: 'Dichiarazione Storica (scuro)' },
+			],
+		},
+		{
+			type: 'object' as const,
+			name: 'items',
+			label: 'Valori',
+			list: true,
+			ui: { itemProps: (item: { title?: string }) => ({ label: item.title }) },
+			fields: [
+				{ type: 'string' as const, name: 'letter', label: 'Lettera' },
+				{
+					type: 'string' as const,
+					name: 'icon',
+					label: 'Icona (solo per stile "Icona personalizzata")',
+					options: [
+						{ value: '', label: '— Nessuna —' },
+						{ value: 'peace', label: 'Pace (cerchi uniti)' },
+						{ value: 'health', label: 'Salute (croce)' },
+						{ value: 'water', label: 'Acqua (goccia)' },
+						{ value: 'family', label: 'Famiglia (cuore)' },
+						{ value: 'education', label: 'Istruzione (libro)' },
+						{ value: 'growth', label: 'Sviluppo (crescita)' },
+						{ value: 'leaf', label: 'Ambiente (foglia)' },
+					],
+				},
+				{ type: 'string' as const, name: 'title', label: 'Titolo (IT)' },
+				{ type: 'string' as const, name: 'titleEn', label: 'Titolo (EN)' },
+				{ type: 'string' as const, name: 'description', label: 'Descrizione (IT)', ui: { component: 'textarea' } },
+				{ type: 'string' as const, name: 'descriptionEn', label: 'Descrizione (EN)', ui: { component: 'textarea' } },
+			],
+		},
+	],
+};

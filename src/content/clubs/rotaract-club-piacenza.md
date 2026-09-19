@@ -4,7 +4,7 @@ zone: src/content/zones/francigena.md
 foundationYear: 1968
 lat: 45.0534751
 lng: 9.6947461
-photo: /uploads/Loghi-Club/piacenza.jpeg
+photo: /uploads/loghi-club/piacenza.jpeg
 photoFocalX: 52
 photoFocalY: 50
 instagram: 'https://www.instagram.com/rotaractpiacenza/'

@@ -1,3 +1,19 @@
+## Agent instructions location
+
+This repo keeps agent skills and instructions centrally in `.claude/skills/` (Claude Code's config dir).
+
+Per-agent config locations:
+
+| Agent | Config dir | Format |
+|---|---|---|
+| **Claude Code** | `CLAUDE.md` (root) + `.claude/hooks/` | Markdown + shell hooks |
+| **Kiro** | `.kiro/steering/` + `.kiro/hooks/` | Markdown steering + JSON hooks |
+| **Cursor** | `.cursor/rules/` | `.mdc` files with `globs` frontmatter |
+| **Antigravity** | `.agent/rules/`, `.agent/skills/`, `.agent/workflows/` | Markdown flat files |
+| **Gemini/others** | `.agents/skills/` (symlinks → `.claude/skills/`) | Markdown SKILL.md |
+
+Shared skills (the authoritative copy) live in `.claude/skills/rotaract2050-site/` and `.claude/skills/rotaract2050-design-system/`. All other agent configs reference or symlink these rather than duplicating content.
+
 ## Development
 
 Don't run plain `astro dev` — it skips the TinaCMS GraphQL/admin server (`:4001`) that the site's data layer depends on. Use the project's own script instead, in background mode:

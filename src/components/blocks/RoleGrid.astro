@@ -23,6 +23,7 @@ interface Props {
 		themeMotto?: string;
 		themeLogo?: string;
 		tinaFieldAttr?: string;
+		shape?: "circle" | "portrait";
 	}[];
 }
 
@@ -145,7 +146,7 @@ const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 		background-color: var(--color-bg);
 		background-image:
 			linear-gradient(rgba(250, 250, 251, 0.6), rgba(250, 250, 251, 0.6)),
-			url('/uploads/Squadra/2026-2027/sfondo.png');
+			url('/uploads/squadra/2026-2027/sfondo.png');
 		background-repeat: no-repeat, no-repeat;
 		background-size: 100% 100%, cover;
 		background-position: center, center;

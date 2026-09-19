@@ -52,6 +52,7 @@ const seoDescription = (isEn && page.seo?.descriptionEn) || page.seo?.descriptio
 			title={title}
 			breadcrumbCurrent={breadcrumbCurrent}
 			titleField={tinaField(page, titleFieldName)}
+			theme={slug === 'formazione' ? 'family' : 'default'}
 		/>
 	)}
 	<BlockRenderer lang={lang} blocks={page.blocks ?? []} />

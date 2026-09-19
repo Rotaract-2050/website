@@ -1,0 +1,54 @@
+---
+description: Regole TinaCMS per schema, blocchi e collection
+globs: tina/**/*.ts
+---
+
+# TinaCMS — regole schema
+
+## Annotazione TypeScript obbligatoria
+
+Ogni export da `tina/collections/*.ts` o `tina/blocks/*.ts` DEVE avere annotazione esplicita:
+
+```ts
+import type { Collection, Template } from 'tinacms';
+export const pagesCollection: Collection = { ... };
+export const heroTemplate: Template = { ... };
+```
+
+**Senza questa annotazione**: `astro check` fallisce con l'errore fuorviante `"Property 'templates' is missing in type TemplateCollection"` — non è il vero problema, ma TypeScript perde l'inferenza contestuale.
+
+## Nomi campo univoci tra template
+
+Prima di aggiungere un campo a un nuovo template, verificare che nessun altro template nella stessa collection usi lo stesso nome con tipo diverso:
+
+```bash
+grep -rn "name: '<fieldname>'" tina/blocks/
+```
+
+Esempio di conflitto: `body` come `type: 'string'` in `SplitSection` vs `body` come `type: 'rich-text'` in `LegalText` → GraphQL conflict, build Tina esplosa.
+
+## Layout file (split dal 2026-09-04)
+
+- `tina/config.ts` — solo orchestratore, importa da sotto
+- `tina/collections/*.ts` — una collection per file
+- `tina/blocks/*.ts` — un block template per file
+- `tina/routers.ts` — funzioni router
+
+## IT/EN: un file per pagina
+
+```
+src/content/pages/home.md        ← IT + EN nello stesso file
+# campi: title, titleEn, body, bodyEn, ecc.
+```
+NON creare `it/home.md` + `en/home.md`.
+
+## Nome collection: no trattini
+
+- ✅ `interactClubs`, `interactEvents`
+- ❌ `interact-clubs`, `interact-events`
+
+## Block typename
+
+Il match in `BlockRenderer.astro` usa `block.__typename`, generato come `<Collection>Blocks<TemplateName>`:
+- template `Hero` in collection `pages` → `PagesBlocksHero`
+- NON usare un campo `_template` custom

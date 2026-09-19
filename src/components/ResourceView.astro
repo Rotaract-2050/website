@@ -33,10 +33,10 @@ const bodyField = lang === 'en' && resource.bodyEn ? 'bodyEn' : 'body';
 const jsonLd = buildArticleJsonLd({
 	headline: localized.title,
 	description: localized.excerpt,
-	imageUrl: new URL('/uploads/Loghi/Logo-distretto.png', Astro.site).toString(),
+	imageUrl: new URL('/uploads/loghi/Logo-distretto.png', Astro.site).toString(),
 	url: new URL(Astro.url.pathname, Astro.site).toString(),
 	lang,
-	publisherLogoUrl: new URL('/uploads/Loghi/Logo-distretto.png', Astro.site).toString(),
+	publisherLogoUrl: new URL('/uploads/loghi/Logo-distretto.png', Astro.site).toString(),
 });
 // Fetched once for wikilink resolution ([[slug]] -> another card's URL/title, see
 // lib/resource-markdown.ts) — this is the whole collection, not just this one resource.

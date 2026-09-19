@@ -37,11 +37,11 @@ const bodyField = lang === 'en' && article.bodyEn ? 'bodyEn' : 'body';
 const jsonLd = buildNewsArticleJsonLd({
 	headline: localized.title,
 	description: localized.excerpt,
-	imageUrl: new URL(article.image || '/uploads/Loghi/Logo-distretto.png', Astro.site).toString(),
+	imageUrl: new URL(article.image || '/uploads/loghi/Logo-distretto.png', Astro.site).toString(),
 	datePublished: article.date,
 	url: new URL(Astro.url.pathname, Astro.site).toString(),
 	lang,
-	publisherLogoUrl: new URL('/uploads/Loghi/Logo-distretto.png', Astro.site).toString(),
+	publisherLogoUrl: new URL('/uploads/loghi/Logo-distretto.png', Astro.site).toString(),
 });
 const bodyHtml = renderTinaMarkdown(localized.body);
 ---

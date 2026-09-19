@@ -46,12 +46,21 @@ const eventSlugs = readdirSync(eventsDir, { recursive: true, encoding: 'utf8' })
 	.filter((file) => matter(readFileSync(join(eventsDir, file), 'utf-8')).data.visible !== false)
 	.map((file) => file.replace(/\.md$/, '').split(sep).join('/'));
 
+// Same pattern as `eventSlugs` above, for the isolated `interactEvents` collection
+// (src/content/interact-events, per-Rotary-year subfolders too).
+const interactEventsDir = fileURLToPath(new URL('./src/content/interact-events', import.meta.url));
+const interactEventSlugs = readdirSync(interactEventsDir, { recursive: true, encoding: 'utf8' })
+	.filter((file) => file.endsWith('.md'))
+	.filter((file) => matter(readFileSync(join(interactEventsDir, file), 'utf-8')).data.visible !== false)
+	.map((file) => file.replace(/\.md$/, '').split(sep).join('/'));
+
 const customPages = [
 	...PAGE_SLUGS.flatMap((slug) => [`${SITE}/${slug}`, `${SITE}/en/${slug}`]),
 	...newsSlugs.flatMap((slug) => [`${SITE}/news/${slug}`, `${SITE}/en/news/${slug}`]),
 	...clubSlugs.flatMap((slug) => [`${SITE}/club/${slug}`, `${SITE}/en/club/${slug}`]),
 	...eventSlugs.flatMap((slug) => [`${SITE}/eventi/${slug}`, `${SITE}/en/eventi/${slug}`]),
 	...resourceSlugs.flatMap((slug) => [`${SITE}/formazione/${slug}`, `${SITE}/en/formazione/${slug}`]),
+	...interactEventSlugs.flatMap((slug) => [`${SITE}/interact/eventi/${slug}`, `${SITE}/en/interact/eventi/${slug}`]),
 ];
 
 // @tinacms/astro ships its own dev-time auto-reload plugin, but it only watches

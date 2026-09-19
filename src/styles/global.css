@@ -65,6 +65,31 @@
 	--color-on-gold-container: #7a5300;
 	--color-royal-container: #e3e8f2;
 	--color-on-royal-container: var(--color-royal-blue);
+
+	/* Event-kind identity colors (calendar filter: Rotaract/Interact/Rotary) — deliberately
+	   NOT var()-references to --color-pink/--color-gold above. Those two get retinted under
+	   [data-theme="interact"] (interact-theme.css), but an event's organization color must
+	   stay the same regardless of which page's calendar shows it. Frozen literals instead,
+	   never redefined by any theme override. */
+	--color-kind-rotaract: #d41367;
+	--color-kind-rotaract-dark: #a80f53;
+	--color-kind-rotaract-container: #fae3ed;
+	--color-kind-rotaract-on-container: #a80f53;
+	--color-kind-interact: #00a2e0;
+	--color-kind-interact-dark: #076994;
+	--color-kind-interact-container: color-mix(in srgb, #00a2e0 12%, white);
+	--color-kind-interact-on-container: #076994;
+	--color-kind-rotary: #f7a81b;
+	--color-kind-rotary-dark: #7a5300;
+	--color-kind-rotary-container: #fef3df;
+	--color-kind-rotary-on-container: #7a5300;
+
+	/* Deadline overlay (calendar "scadenza" tag) — Rotary Cardinal 485C, the official red normally
+	   reserved (see references/rotary-brand.md) for End Polio Now / Aree di Intervento artwork.
+	   Deliberate second exception here: a deadline is exactly the alert/urgency case that color is
+	   for. Frozen like the kind tokens above, for the same cross-theme reason. */
+	--color-danger: #e02927;
+	--color-danger-container: color-mix(in srgb, #e02927 12%, white);
 }
 
 *,

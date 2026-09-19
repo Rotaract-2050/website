@@ -51,9 +51,11 @@ export interface NewsTag {
 	label: string;
 	/** Zone brand color (hex) for club tags, so a club's pill reads as its zone's color. Unset for scope tags. */
 	color?: string | null;
+	/** Optional route path to the club's detail page */
+	urlPath?: string | null;
 }
 
-type ClubTagRef = { club?: { name: string; zone?: { color?: string | null } | null } | null } | null;
+type ClubTagRef = { club?: { name: string; __typename?: string; _sys?: { breadcrumbs: string[]; filename: string }; zone?: { color?: string | null } | null } | null } | null;
 
 /**
  * Badge labels for tagged clubs (colored by their zone) — shared shape between `news.clubs` and
@@ -63,7 +65,18 @@ export function clubTagLabels(clubs: ClubTagRef[] | null | undefined): NewsTag[]
 	return (clubs ?? [])
 		.map((entry) => entry?.club)
 		.filter((club): club is NonNullable<typeof club> => club != null)
-		.map((club) => ({ label: club.name, color: club.zone?.color ?? null }));
+		.map((club) => {
+			let urlPath: string | undefined = undefined;
+			if (club._sys) {
+				const slug = 'breadcrumbs' in club._sys && club._sys.breadcrumbs ? club._sys.breadcrumbs.join('/') : (club._sys as any).filename;
+				if (club.__typename === 'InteractClubs') {
+					urlPath = `interact/club/${slug}`;
+				} else if (club.__typename === 'Clubs') {
+					urlPath = `club/${slug}`;
+				}
+			}
+			return { label: club.name, color: club.zone?.color ?? null, urlPath };
+		});
 }
 
 /** Badge labels for a news card/detail page: tagged club names (colored by their zone), then scope tags (Distretto/MDIO/Service Distrettuale/Service Interdistrettuale/Service Nazionale). */

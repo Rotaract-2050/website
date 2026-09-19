@@ -23,6 +23,10 @@ import EventsArchive from './blocks/EventsArchive.astro';
 import NewsArchive from './blocks/NewsArchive.astro';
 import MaterialsGrid from './blocks/MaterialsGrid.astro';
 import ResourceArchive from './blocks/ResourceArchive.astro';
+import InteractClubDirectory from './blocks/InteractClubDirectory.astro';
+import InteractEventsCalendar from './blocks/InteractEventsCalendar.astro';
+import InteractEventsArchive from './blocks/InteractEventsArchive.astro';
+import FamilyGrid from './blocks/FamilyGrid.astro';
 
 function nonNull<T>(value: T | null | undefined): value is T {
 	return value != null;
@@ -59,9 +63,11 @@ function loc(itValue: string | null | undefined, enValue: string | null | undefi
 	data-reveal={[
 		'PagesBlocksHero',
 		'PagesBlocksRrdTimeline',
+		'PagesBlocksInteractDirTimeline',
 		'PagesBlocksStatsBar',
 		'PagesBlocksSplitSection',
 		'PagesBlocksCardGrid',
+		'PagesBlocksFamilyGrid',
 		'PagesBlocksNewsGrid',
 		'PagesBlocksEventsCalendar',
 	].includes(block.__typename) ? undefined : true}
@@ -121,6 +127,22 @@ function loc(itValue: string | null | undefined, enValue: string | null | undefi
 			imageFocalY={block.imageFocalY ?? undefined}
 			imageLabel={loc(block.imageLabel, block.imageLabelEn)}
 			imageSide={block.imageSide === 'left' ? 'left' : 'right'}
+			accent={block.accent}
+		/>
+	)}
+	{block.__typename === 'PagesBlocksFamilyGrid' && (
+		<FamilyGrid
+			lang={lang}
+			title={loc(block.title, block.titleEn)}
+			intro={loc(block.intro, block.introEn) || undefined}
+			items={(block.items ?? []).filter(nonNull).map((i) => ({
+				title: loc(i.title, i.titleEn),
+				body: loc(i.body, i.bodyEn) || undefined,
+				buttonLabel: loc(i.buttonLabel, i.buttonLabelEn) || undefined,
+				buttonHref: i.buttonHref ?? undefined,
+				color: i.color ?? undefined,
+				tinaFieldAttr: tinaField(i),
+			}))}
 		/>
 	)}
 	{block.__typename === 'PagesBlocksCardGrid' && (
@@ -234,6 +256,7 @@ function loc(itValue: string | null | undefined, enValue: string | null | undefi
 			body={loc(block.body, block.bodyEn)}
 			buttonLabel={loc(block.buttonLabel, block.buttonLabelEn)}
 			buttonHref={block.buttonHref ?? ''}
+			accent={block.accent}
 		/>
 	)}
 	{block.__typename === 'PagesBlocksPagePlaceholder' && <PagePlaceholder message={loc(block.message, block.messageEn)} />}
@@ -243,7 +266,36 @@ function loc(itValue: string | null | undefined, enValue: string | null | undefi
 	{block.__typename === 'PagesBlocksClubDirectory' && (
 		<ClubDirectory lang={lang} intro={loc(block.intro, block.introEn)} disclaimer={loc(block.disclaimer, block.disclaimerEn)} />
 	)}
+	{block.__typename === 'PagesBlocksInteractClubDirectory' && (
+		<InteractClubDirectory lang={lang} intro={loc(block.intro, block.introEn)} disclaimer={loc(block.disclaimer, block.disclaimerEn)} />
+	)}
+	{block.__typename === 'PagesBlocksInteractEventsCalendar' && (
+		<InteractEventsCalendar lang={lang} title={loc(block.title, block.titleEn)} calendarId={block.calendarId ?? undefined} />
+	)}
+	{block.__typename === 'PagesBlocksInteractEventsArchive' && (
+		<InteractEventsArchive lang={lang} emptyMessage={loc(block.emptyMessage, block.emptyMessageEn) || undefined} />
+	)}
 	{block.__typename === 'PagesBlocksRrdTimeline' && (
+		<RrdTimeline
+			title={loc(block.title, block.titleEn)}
+			showDisclaimer={block.showDisclaimer ?? false}
+			disclaimerText={loc(block.disclaimerText, block.disclaimerTextEn) || undefined}
+			items={(block.items ?? []).filter(nonNull).map((i) => ({
+				yearRange: i.yearRange ?? '',
+				name: i.name ?? '',
+				surname: i.surname ?? '',
+				clubName: i.clubName ?? undefined,
+				motto: loc(i.motto, i.mottoEn),
+				mottoDistretto: loc(i.mottoDistretto, i.mottoDistrettoEn) || undefined,
+				eraLabel: loc(i.eraLabel, i.eraLabelEn) || undefined,
+				tinaFieldAttr: tinaField(i),
+			}))}
+		/>
+	)}
+	{block.__typename === 'PagesBlocksInteractDirTimeline' && (
+		// Reuses RrdTimeline.astro unmodified (pure props-in, no Rotaract-specific logic) — only
+		// the Tina template differs (see interactDirTimelineTemplate in tina/config.ts), because
+		// the RRD template's own label says "RRD" in the block picker, which would be wrong here.
 		<RrdTimeline
 			title={loc(block.title, block.titleEn)}
 			showDisclaimer={block.showDisclaimer ?? false}

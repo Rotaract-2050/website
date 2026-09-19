@@ -38,7 +38,7 @@ Uso nel sito: **Turquoise, Violet, Orange, Grass** sono i 4 colori scelti per i 
 
 ### Icone ufficiali "Aree di Intervento" (Areas of Focus)
 
-`public/uploads/Aree-Azione/` contiene l'artwork ufficiale delle 7 Aree di Intervento Rotary, scaricato dal Brand Center: tre varianti colore (`black`/`color`/`white`) × quattro layout (`no_title`, `bottom_title`, `side_title`, `bottom_title_rev`/`side_title_rev` solo su `color`). Il sito usa solo `color/no_title/AOF_<area>_color_no_title.png` — titolo e descrizione sono già testo HTML separato (vedi `ValuesGrid.astro`, layout `icon`, usato in `distretto.md` per "Le 7 aree di intervento"), non serve la versione con titolo incorporato nel PNG.
+`public/uploads/aree-azione/` contiene l'artwork ufficiale delle 7 Aree di Intervento Rotary, scaricato dal Brand Center: tre varianti colore (`black`/`color`/`white`) × quattro layout (`no_title`, `bottom_title`, `side_title`, `bottom_title_rev`/`side_title_rev` solo su `color`). Il sito usa solo `color/no_title/AOF_<area>_color_no_title.png` — titolo e descrizione sono già testo HTML separato (vedi `ValuesGrid.astro`, layout `icon`, usato in `distretto.md` per "Le 7 aree di intervento"), non serve la versione con titolo incorporato nel PNG.
 
 Ogni icona porta già il proprio colore ufficiale, che ValuesGrid legge in `AOF_ICON_COLOR` per tingere la card (stesso pattern tonale delle card zona in Home) — non un colore scelto da noi:
 

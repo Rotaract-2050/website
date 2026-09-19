@@ -92,11 +92,11 @@ const { lang, title, items } = Astro.props;
 	}
 
 	.card-row {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		max-width: 760px;
+		margin: 10px auto 0;
 		gap: 24px;
-		padding-top: 10px;
 	}
 
 	/* Big M3 tonal container per card, tinted by the item's own color (--tint) instead of
@@ -104,8 +104,7 @@ const { lang, title, items } = Astro.props;
 	.card {
 		--tint: var(--color-navy);
 		position: relative;
-		flex: 0 0 auto;
-		width: 300px;
+		width: 100%;
 		background: color-mix(in srgb, var(--tint) 14%, white);
 		border-radius: var(--shape-extra-large);
 		box-shadow: 0 8px 24px color-mix(in srgb, var(--tint) 35%, transparent);
@@ -172,7 +171,8 @@ const { lang, title, items } = Astro.props;
 
 		.card {
 			width: 100%;
-			max-width: 320px;
+			max-width: 400px;
+			margin: 0 auto;
 			padding: 32px 24px;
 		}
 	}

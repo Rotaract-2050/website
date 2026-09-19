@@ -1,34 +1,47 @@
 import type { Lang } from '../data/ui-strings';
-import { SITE_NAME, SOCIAL_LINKS } from '../data/ui-strings';
+import { SITE_NAME } from '../data/ui-strings';
 
-interface SettingsForJsonLd {
+interface OrganizationGraphInput {
+	/** Rotaract Distretto 2050 and Interact Distretto 2050 are two distinct entities under Rotary
+	 * International, not one organization with a different color scheme — never default this to
+	 * SITE_NAME, every caller must say which entity the current page actually belongs to. */
+	name: string;
+	/** Distinct `@id`/`@id`-suffix per entity so the two graphs never collide when a crawler sees
+	 * them on different pages of the same domain (default: the site's main organization). */
+	idSuffix?: string;
+	/** The entity's own homepage — the domain root for Rotaract, `/interact` for Interact. Defaults to `siteUrl`. */
+	url?: string;
 	about?: string | null;
 	logo?: string | null; // già risolto a URL assoluto dal chiamante
 	fiscalCode?: string | null;
+	sameAs?: string[];
 }
 
-/** Grafo sitewide Organization + WebSite, renderizzato una volta da BaseLayout. */
-export function buildOrganizationGraph(settings: SettingsForJsonLd, siteUrl: string) {
+/** Grafo sitewide Organization + WebSite, renderizzato una volta da BaseLayout — un nodo distinto per
+ * entità (vedi il commento su `name` sopra), non un solo grafo Rotaract riusato ovunque. */
+export function buildOrganizationGraph(input: OrganizationGraphInput, siteUrl: string) {
+	const idSuffix = input.idSuffix ?? 'organization';
+	const url = input.url ?? siteUrl;
 	return {
 		'@context': 'https://schema.org',
 		'@graph': [
 			{
 				'@type': 'Organization',
-				'@id': `${siteUrl}#organization`,
-				name: SITE_NAME,
-				url: siteUrl,
-				logo: settings.logo,
-				description: settings.about || undefined,
-				taxID: settings.fiscalCode || undefined,
-				sameAs: SOCIAL_LINKS.map((s) => s.href),
+				'@id': `${siteUrl}#${idSuffix}`,
+				name: input.name,
+				url,
+				logo: input.logo || undefined,
+				description: input.about || undefined,
+				taxID: input.fiscalCode || undefined,
+				sameAs: input.sameAs,
 			},
 			{
 				'@type': 'WebSite',
-				'@id': `${siteUrl}#website`,
-				name: SITE_NAME,
-				url: siteUrl,
+				'@id': `${siteUrl}#${idSuffix}-website`,
+				name: input.name,
+				url,
 				inLanguage: ['it', 'en'],
-				publisher: { '@id': `${siteUrl}#organization` },
+				publisher: { '@id': `${siteUrl}#${idSuffix}` },
 			},
 		],
 	};
@@ -103,6 +116,10 @@ export function buildEventJsonLd(p: {
 	imageUrl: string;
 	url: string;
 	siteUrl: string;
+	/** Chi organizza l'evento secondo schema.org — Rotaract Distretto 2050 e Interact Distretto 2050
+	 * sono due entità diverse, va sempre passato esplicitamente dal chiamante (mai un default a
+	 * SITE_NAME: un evento Interact non è organizzato dal Rotaract). */
+	organizerName: string;
 	locationName?: string | null;
 	ticketsUrl?: string | null;
 	ticketsOpen?: boolean;
@@ -127,7 +144,7 @@ export function buildEventJsonLd(p: {
 		// reusing the same string is the only genuine address data we actually have; not fabricating
 		// a PostalAddress out of nothing.
 		location: { '@type': 'Place', name: p.locationName, address: p.locationName },
-		organizer: { '@type': 'Organization', name: SITE_NAME, url: p.siteUrl },
+		organizer: { '@type': 'Organization', name: p.organizerName, url: p.siteUrl },
 		// Only emit `offers` when there's a real ticket link — a bare Offer with no url would be
 		// worse than none. We don't have a structured price (external Ticket Tailor page owns
 		// that), so `price`/`priceCurrency` stay unset; Google may start flagging those as their own

@@ -7,13 +7,13 @@ order: 22
 excerpt: "Le 5 vie d'azione del Rotary: interna, professionale, di interesse pubblico, internazionale e per i giovani."
 excerptEn: "Rotary's 5 avenues of service: Club Service, Vocational Service, Community Service, International Service, and Youth Service."
 bodyEn: |
-  Rotary has 5 avenues of service:
+  Rotary's avenues of service are the main areas on which Rotaract and Rotary activities are based, and they are five:
 
-  1. **Club Service:** covers the activities every Rotarian and Rotaractor must undertake within their own club to ensure it runs well.
-  2. **Vocational Service:** requires every member to act with integrity, to make their skills available to the club, and to recognize the dignity of every occupation useful to spreading the value of service.
-  3. **Community Service:** identifies and meets local communities' needs through concrete projects, and encourages members to take part in initiatives undertaken by clubs.
-  4. **International Service:** covers the activities carried out by Rotarians to promote understanding, tolerance and peace among peoples through cooperation, and the international initiatives and projects their clubs promote in support of communities in other nations.
-  5. **Youth Service:** allows Rotarians and their clubs to leave a positive mark on children and young adults through leadership-development activities, such as taking part in projects and activities.
+  1. **Club Service:** covers the activities every member must undertake to ensure the club runs well. It aims to strengthen the club through the promotion of friendship, active participation, and the training of members on the fundamental elements of the association.
+  2. **Vocational Service:** promotes professional ethics, the value of work, and the use of one's skills for the benefit of others. It commits to providing opportunities for professional and personal development, also by organizing training activities, visits, and meetings with companies.
+  3. **Community Service:** identifies the needs of the local community and develops them into concrete projects.
+  4. **International Service:** covers international projects and collaborations, with a particular focus on tolerance and peace among peoples.
+  5. **Youth Service:** supports new generations through educational, leadership, and exchange programs, such as Rotaract, Interact, and the Youth Exchange program.
 
   ### See also
 
@@ -21,16 +21,15 @@ bodyEn: |
   * [[le-aree-dintervento]]
 ---
 
-Le vie d'azione del Rotary sono 5:
+Le vie d’azione del Rotary sono i principali ambiti su cui si fonda l’attività Rotaractiana e sono cinque:
 
-1. **Azione interna:** riguarda le attività che ogni Rotariano e Rotaractiano deve intraprendere nel proprio club per assicurarne il buon funzionamento.
-2. **Azione professionale:** richiede a ogni socio di operare con integrità, mettere a disposizione del club le sue competenze e riconoscere la dignità di ogni occupazione utile a diffondere il valore del servire.
-3. **Azione di interesse pubblico:** identifica e soddisfa le necessità delle comunità locali con progetti concreti, e incoraggia i soci a partecipare alle iniziative intraprese dai club.
-4. **Azione internazionale:** comprende le attività svolte dai Rotariani per promuovere la comprensione, la tolleranza e la pace tra i popoli tramite la cooperazione, e le iniziative e i progetti internazionali promossi dai loro club a favore di comunità di altre nazioni.
-5. **Azione per i giovani:** permette ai Rotariani e ai loro club di lasciare un'impronta positiva nei ragazzi e nei giovani adulti tramite attività di sviluppo della leadership, quali la partecipazione a progetti e attività.
+1. **Azione Interna:** riguarda le attività che ogni socio intraprende per garantire la vita e il buon funzionamento del Club. Mira perciò al rafforzamento del club attraverso la promozione dell'amicizia, della partecipazione attiva e della formazione dei soci sugli elementi fondamentali dell’associazione;
+2. **Azione Professionale:** promuove l’etica professionale, il valore del lavoro e l’utilizzo delle proprie competenze per il bene degli altri. Si impegna a fornire occasioni e opportunità di sviluppo professionale e personale, organizzando anche attività formative o visite e incontri con aziende;
+3. **Azione di Interesse Pubblico:** identifica i bisogni della comunità locale e li sviluppa in progetti concreti;
+4. **Azione Internazionale:** riguarda i progetti e le collaborazioni internazionali, con particolare attenzione alla tolleranza e alla pace tra i popoli;
+5. **Azione per i Giovani:** sostiene le nuove generazioni attraverso programmi educativi, di leadership e di scambio, come Rotaract, Interact e il programma Scambio Giovani.
 
 ### Vedi anche
 
 * [[il-ryla]]
 * [[le-aree-dintervento]]
-

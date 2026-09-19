@@ -6,15 +6,25 @@ const slug = Astro.params.slug ?? 'home';
 // same routing issue affects /en/news/<article> and /en/formazione/<resource> too.
 const newsSlug = slug.startsWith('news/') ? slug.slice('news/'.length) : null;
 const resourceSlug = slug.startsWith('formazione/') ? slug.slice('formazione/'.length) : null;
+// The Interact sub-section ('interact', 'interact/storia', ...) never collides with
+// interact/eventi/<year>/<slug> — that two-segment shape is already caught by the dedicated
+// src/pages/en/interact/eventi/[year]/[slug].astro route before Astro falls back to this
+// catch-all (same safe shape as the Rotaract eventi/[year]/[slug].astro route, which needs no
+// guard here either — only single-segment nested dynamic routes like news/formazione do).
+const interactSlug = slug === 'interact' || slug.startsWith('interact/') ? slug : null;
 const NewsArticleView = newsSlug !== null ? (await import('../../components/NewsArticleView.astro')).default : null;
 const ResourceView = resourceSlug !== null ? (await import('../../components/ResourceView.astro')).default : null;
-const GenericPageView = newsSlug === null && resourceSlug === null ? (await import('../../components/GenericPageView.astro')).default : null;
+const InteractPageView = interactSlug !== null ? (await import('../../components/InteractPageView.astro')).default : null;
+const GenericPageView =
+	newsSlug === null && resourceSlug === null && interactSlug === null ? (await import('../../components/GenericPageView.astro')).default : null;
 ---
 
 {NewsArticleView && newsSlug !== null ? (
 	<NewsArticleView lang={lang} slug={newsSlug} />
 ) : ResourceView && resourceSlug !== null ? (
 	<ResourceView lang={lang} slug={resourceSlug} />
+) : InteractPageView && interactSlug !== null ? (
+	<InteractPageView lang={lang} slug={interactSlug} />
 ) : GenericPageView ? (
 	<GenericPageView lang={lang} slug={slug} />
 ) : null}

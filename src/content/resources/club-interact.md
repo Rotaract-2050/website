@@ -13,7 +13,7 @@ bodyEn: |
 
   Interact clubs organize at least two projects a year: one benefiting the school or community, and the other to promote international understanding.
 
-  Today there are 14,500 Interact clubs, for a total of 330,000 members worldwide.
+  Today there are 14,911 Interact clubs, for a total of 342,953 members worldwide.
 
   To start an Interact club, having a Rotary club willing to sponsor it is essential. An Interact advisor will need to be identified within the sponsoring Rotary or Rotaract club, or else a teacher, parent or community volunteer.
 
@@ -51,7 +51,7 @@ Accoglie ragazzi e ragazze dai 12 ai 18 anni con l'obiettivo di aiutarli a svilu
 
 I club Interact organizzano almeno due progetti annuali: uno volto a beneficio della scuola o della comunità, e l'altro per promuovere la comprensione internazionale.
 
-Ad oggi esistono 14.500 club Interact per un totale di 330.000 soci a livello globale.
+Ad oggi esistono 14.911 club Interact per un totale di 342.953 soci a livello globale.
 
 Per avviare un club Interact è fondamentale avere un club Rotary disposto a patrocinarlo. Sarà necessario individuare un consulente Interact all'interno del Rotary o Rotaract padrino, oppure un insegnante, genitore o volontario della comunità.
 

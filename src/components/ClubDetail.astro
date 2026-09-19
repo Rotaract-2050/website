@@ -3,13 +3,13 @@ import { Image } from 'astro:assets';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { tinaField } from '@tinacms/astro';
 import ImageSlot from './ImageSlot.astro';
-import type { ClubsQuery } from '../../tina/__generated__/types';
+import type { ClubsQuery, InteractClubsQuery } from '../../tina/__generated__/types';
 import type { Lang } from '../data/ui-strings';
 import { uiStrings } from '../data/ui-strings';
 
 interface Props {
 	lang: Lang;
-	club: ClubsQuery['clubs'];
+	club: ClubsQuery['clubs'] | InteractClubsQuery['interactClubs'];
 }
 
 const { lang, club } = Astro.props;
