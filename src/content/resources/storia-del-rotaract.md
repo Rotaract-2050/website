@@ -1,11 +1,11 @@
 ---
-title: 'Storia del Rotaract'
-titleEn: 'History of Rotaract'
+title: Storia del Rotaract
+titleEn: History of Rotaract
 tags:
   - Storia & Valori
 order: 15
-excerpt: "Le origini del Rotaract negli anni '60, il riconoscimento ufficiale con \"Elevate Rotaract\" nel 2019, e la sua diffusione in Italia."
-excerptEn: "Rotaract's origins in the 1960s, its official recognition through \"Elevate Rotaract\" in 2019, and its spread across Italy."
+excerpt: 'Le origini del Rotaract negli anni ''60, il riconoscimento ufficiale con "Elevate Rotaract" nel 2019, e la sua diffusione in Italia.'
+excerptEn: 'Rotaract''s origins in the 1960s, its official recognition through "Elevate Rotaract" in 2019, and its spread across Italy.'
 bodyEn: |
   ## Rotaract's origins, its evolution and its values
 
@@ -39,6 +39,7 @@ bodyEn: |
   * [[club-interact]]
 ---
 
+
 ## Le origini del Rotaract, la sua evoluzione e i suoi valori
 
 Il Rotaract è un'organizzazione internazionale affiliata a Rotary International, composta da giovani adulti di età compresa tra i 18 e i 35 anni. È un club di servizio, promuove l'amicizia, lo sviluppo personale e professionale insieme con il servizio alla comunità. Il nome nasce dalla combinazione di "ROTAry" e "ACTion", sottolineando il legame con il Rotary.
@@ -57,7 +58,7 @@ I club Rotaract sono diventati così equiparati ai club Rotary e, a partire dal 
 
 ## Il Rotaract in Italia
 
-Il primo Rotaract Club italiano è stato il Rotaract Club di Milano, fondato nel 1968.
+Il primo Rotaract Club italiano è stato il Rotaract Club di Firenze, fondato il 18 marzo 1968.
 
 Il Rotaract in Italia si è strutturato in distretti, coordinati ciascuno dal proprio Rappresentante Distrettuale (R.R.D.), figura eletta annualmente dai membri dei club appartenenti al distretto.
 
