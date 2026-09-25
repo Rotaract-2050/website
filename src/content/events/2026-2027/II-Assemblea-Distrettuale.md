@@ -43,6 +43,6 @@ schedule:
   - time: '20:00'
     title: Inizio della conviviale
 ticketsOpen: true
-ticketsUrl: 'https://rotaract2050.org/eventi?utm_source=gemini'
+ticketsUrl: "https://www.tickettailor.com/events/distrettorotaract2050/2436548"
 ---
 
