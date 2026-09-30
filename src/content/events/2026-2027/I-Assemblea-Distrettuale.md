@@ -47,7 +47,7 @@ schedule:
     title: Chiusura dell'Assemblea Distrettuale
   - time: '13:30'
     title: Inizio delle conviviali
-ticketsOpen: true
+ticketsOpen: false
 ticketsUrl: 'https://www.tickettailor.com/events/distrettorotaract2050/2139571?a=MDIO'
 photoAlbumUrl: 'https://drive.google.com/drive/u/2/folders/1EtkIZEVBZZZqIOkgeCeKuHilhyo29109'
 ---
