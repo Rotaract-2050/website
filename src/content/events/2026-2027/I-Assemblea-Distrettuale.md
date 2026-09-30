@@ -49,5 +49,6 @@ schedule:
     title: Inizio delle conviviali
 ticketsOpen: true
 ticketsUrl: 'https://www.tickettailor.com/events/distrettorotaract2050/2139571?a=MDIO'
+photoAlbumUrl: 'https://drive.google.com/drive/u/2/folders/1EtkIZEVBZZZqIOkgeCeKuHilhyo29109'
 ---
 
