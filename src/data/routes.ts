@@ -10,6 +10,7 @@ export type PageKey =
 	| 'materiali'
 	| 'formazione'
 	| 'privacy'
+	| 'contattaci'
 	| 'interactHome'
 	| 'interactStoria'
 	| 'interactSquadra'
@@ -30,6 +31,7 @@ export const pageSlugs: Record<PageKey, string> = {
 	materiali: 'materiali',
 	formazione: 'formazione',
 	privacy: 'privacy',
+	contattaci: 'contattaci',
 	// Interact sub-section — nested `pages` documents (src/content/pages/interact/*.md),
 	// served by the same catch-all + pageRouter mechanism as every other `pages` entry (see
 	// tina/config.ts's pageRouter and the interactSlug guard in src/pages/[...slug].astro).

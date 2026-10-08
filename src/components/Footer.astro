@@ -71,7 +71,7 @@ const addressFieldName = isEn && settings.addressEn ? 'addressEn' : 'address';
 				<br />
 				<a href={`mailto:${settings.email}`} class="footer-email" data-tina-field={tinaField(settings, 'email')}>{settings.email}</a>
 			</p>
-			<a href="/test-contatti" class="footer-btn">Contatta il Distretto</a>
+			<a href={href('contattaci')} class="footer-btn">{t.footer.contactBtn}</a>
 		</div>
 		<div>
 			<div class="footer-heading">{t.footer.socialTitle}</div>

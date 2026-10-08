@@ -35,6 +35,7 @@ export interface UiStrings {
 	footer: {
 		linksTitle: string;
 		contactTitle: string;
+		contactBtn: string;
 		socialTitle: string;
 		copyright: string;
 		underRotary: string;
@@ -225,6 +226,7 @@ const IT: UiStrings = {
 	footer: {
 		linksTitle: 'LINK UTILI',
 		contactTitle: 'CONTATTI',
+		contactBtn: 'Contatta il Distretto',
 		socialTitle: 'SEGUICI',
 		copyright: '© Rotaract Distretto 2050',
 		underRotary: 'Sostenuto dal Rotary Distretto 2050',
@@ -402,6 +404,7 @@ const EN: UiStrings = {
 	footer: {
 		linksTitle: 'QUICK LINKS',
 		contactTitle: 'CONTACT',
+		contactBtn: 'Contact the District',
 		socialTitle: 'FOLLOW US',
 		copyright: '© Rotaract District 2050',
 		underRotary: 'Sponsored by Rotary District 2050',
