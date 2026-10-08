@@ -76,21 +76,26 @@ export function yearLabelSlug(yearLabel: string): string {
  * (EventsCalendar.astro / src/lib/calendar.ts), which stays the lightweight upcoming-agenda widget.
  */
 export async function getArchiveEvents(): Promise<DistrictEvent[]> {
-	const result = await requestWithMetadata(client.queries.eventsConnection({ sort: 'date' }));
-	const edges = result.data.eventsConnection.edges ?? [];
+	try {
+		const result = await requestWithMetadata(client.queries.eventsConnection({ sort: 'date' }));
+		const edges = result.data.eventsConnection.edges ?? [];
 
-	const events = edges
-		.map((edge) => edge?.node)
-		.filter((node): node is DistrictEvent => node != null)
-		// `visible` defaults to shown — only an explicit "Mostra evento" = off hides a draft event.
-		.filter((node) => node.visible ?? true);
+		const events = edges
+			.map((edge) => edge?.node)
+			.filter((node): node is DistrictEvent => node != null)
+			// `visible` defaults to shown — only an explicit "Mostra evento" = off hides a draft event.
+			.filter((node) => node.visible ?? true);
 
-	const upcoming = events.filter((event) => isUpcomingEvent(event.date)).sort((a, b) => a.date.localeCompare(b.date));
-	const past = events
-		.filter((event) => !isUpcomingEvent(event.date))
-		.sort((a, b) => b.date.localeCompare(a.date));
+		const upcoming = events.filter((event) => isUpcomingEvent(event.date)).sort((a, b) => a.date.localeCompare(b.date));
+		const past = events
+			.filter((event) => !isUpcomingEvent(event.date))
+			.sort((a, b) => b.date.localeCompare(a.date));
 
-	return [...upcoming, ...past];
+		return [...upcoming, ...past];
+	} catch (error) {
+		console.error("Error fetching archive events:", error);
+		return [];
+	}
 }
 
 export interface EventYearGroup {

@@ -23,11 +23,16 @@ interface Props {
 const { lang, intro, disclaimer } = Astro.props;
 const t = uiStrings[lang].clubDetail;
 
-const { data: zonesData } = await requestWithMetadata(client.queries.zonesConnection());
-const { data: clubsData } = await requestWithMetadata(client.queries.interactClubsConnection());
+let zonesData, clubsData;
+try {
+	zonesData = (await requestWithMetadata(client.queries.zonesConnection())).data;
+	clubsData = (await requestWithMetadata(client.queries.interactClubsConnection())).data;
+} catch (e) {
+	console.error('Error fetching interact clubs directory:', e);
+}
 
-const zones = (zonesData.zonesConnection.edges ?? []).map((edge) => edge?.node).filter((z) => z != null);
-const clubs = (clubsData.interactClubsConnection.edges ?? []).map((edge) => edge?.node).filter((c) => c != null);
+const zones = (zonesData?.zonesConnection?.edges ?? []).map((edge) => edge?.node).filter((z) => z != null);
+const clubs = (clubsData?.interactClubsConnection?.edges ?? []).map((edge) => edge?.node).filter((c) => c != null);
 
 const zoneGroups = zones.map((zone) => ({
 	name: zone.name,
