@@ -7,8 +7,8 @@ eventType: Distrettuale
 locationLavori: 'Palazzo Gonzaga, Via Beata Paola Montaldi 15A - Volta Mantovana (MN)'
 clubs:
   - club: src/content/clubs/rotaract-club-castiglione-delle-stiviere-e-alto-mantovano.md
-excerpt: 'II Assemblea Distrettuale del Rotaract Distretto 2050, in collaborazione con il Rotaract Club Castiglione delle Stiviere e Alto Mantovano.'
-excerptEn: 'II District Assembly of Rotaract District 2050, in collaboration with Rotaract Club Castiglione delle Stiviere e Alto Mantovano.'
+excerpt: ''
+excerptEn: ''
 image: /uploads/events/2026-2027/ii-assemblea-distrettuale.jpg
 imageLabel: Volta Mantovana
 imageLabelEn: Volta Mantovana
