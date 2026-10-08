@@ -38,11 +38,11 @@ schedule:
     title: Leadership senza confini. Verso il CWMUN 2027
     speaker: Alessio Alberti - Presidente Commissione Azione Internazionale A.R. 2026-2027 / Benedetta Romani - Membro Commissione Azione Internazionale A.R. 2026-2027
   - time: '18:05'
-    title: Oltre lo stigma, verso il dono. Campagna distrettuale sulla tipizzazione
+    title: 'Oltre lo stigma, verso il dono. Campagna distrettuale sulla tipizzazione'
     speaker: Riccardo Galanti - Presidente Rotaract Club Brescia Vittoria Alata A.R. 2026-2027
   - time: '18:10'
-    title: Note di rinascita. Il Concerto per pianoforte e orchestra n. 2 in do minore, Op. 18, di Rachmaninov
-    speaker: Francesco Pietro Locatelli - membro Commissione Cultura A.R. 2026-2027
+    title: 'Note di rinascita. Il Concerto per pianoforte e orchestra n. 2 in do minore, Op. 18, di Rachmaninov'
+    speaker: Francesco Pietro Locatelli - Membro Commissione Cultura A.R. 2026-2027
   - time: '18:20'
     title: Varie ed eventuali
   - time: '18:25'
@@ -52,6 +52,6 @@ schedule:
   - time: '20:00'
     title: Inizio della conviviale
 ticketsOpen: true
-ticketsUrl: "https://www.tickettailor.com/events/distrettorotaract2050/2436548"
+ticketsUrl: 'https://www.tickettailor.com/events/distrettorotaract2050/2436548'
 ---
 
