@@ -25,6 +25,7 @@ import { interactClubDirectoryTemplate } from './interactClubDirectory';
 import { interactEventsCalendarTemplate } from './interactEventsCalendar';
 import { interactEventsArchiveTemplate } from './interactEventsArchive';
 import { familyGridTemplate } from './familyGrid';
+import { contactFormTemplate } from './contactForm';
 
 export const pageBlockTemplates = [
 	heroTemplate,
@@ -52,4 +53,5 @@ export const pageBlockTemplates = [
 	interactEventsCalendarTemplate,
 	interactEventsArchiveTemplate,
 	familyGridTemplate,
+	contactFormTemplate,
 ];

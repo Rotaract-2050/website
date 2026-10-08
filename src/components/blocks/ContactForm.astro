@@ -1,0 +1,392 @@
+---
+import type { Lang } from '../../data/ui-strings';
+
+interface FormField {
+	name: string;
+	label: string;
+	labelEn?: string;
+	type: string;
+	required?: boolean;
+	options?: string;
+}
+
+interface Props {
+	lang: Lang;
+	block: {
+		heading?: string;
+		headingEn?: string;
+		description?: string;
+		descriptionEn?: string;
+		submitLabel?: string;
+		submitLabelEn?: string;
+		fields?: FormField[];
+	};
+}
+
+const { lang, block } = Astro.props;
+
+const heading = lang === 'en' && block.headingEn ? block.headingEn : block.heading;
+const description = lang === 'en' && block.descriptionEn ? block.descriptionEn : block.description;
+const submitLabel = lang === 'en' && block.submitLabelEn ? block.submitLabelEn : (block.submitLabel || (lang === 'en' ? 'Send Message' : 'Invia Messaggio'));
+
+const errorText = lang === 'en' ? 'An error occurred. Please try again.' : 'Si è verificato un errore. Riprova.';
+const successText = lang === 'en' ? 'Message sent successfully!' : 'Messaggio inviato con successo!';
+
+const fields = block.fields && block.fields.length > 0 ? block.fields : [
+    { name: 'name', label: 'Nome', labelEn: 'Name', type: 'text', required: true },
+    { name: 'email', label: 'Email', labelEn: 'Email', type: 'email', required: true },
+    { name: 'message', label: 'Messaggio', labelEn: 'Message', type: 'textarea', required: true },
+];
+---
+
+<section class="contact-section">
+	<div class="contact-container">
+		<div class="contact-header">
+			{heading && <h2 class="contact-title">{heading}</h2>}
+			{description && <p class="contact-desc">{description}</p>}
+		</div>
+
+		<form class="contact-form" id="contact-form" data-success={successText} data-error={errorText}>
+			<div class="form-grid">
+				{fields.map((field) => {
+					const fieldLabel = lang === 'en' && field.labelEn ? field.labelEn : field.label;
+					const isFullWidth = field.type === 'textarea' || field.type === 'select';
+					
+					return (
+						<div class={`form-group ${isFullWidth ? 'full-width' : ''}`}>
+							<label for={field.name}>{fieldLabel} {field.required && <span class="req">*</span>}</label>
+							{field.type === 'textarea' ? (
+								<textarea id={field.name} name={field.name} rows="5" required={field.required} placeholder={fieldLabel}></textarea>
+							) : field.type === 'select' ? (
+								<div class="select-wrapper">
+									<select id={field.name} name={field.name} required={field.required}>
+										<option value="" disabled selected>{lang === 'en' ? 'Select an option' : 'Seleziona un\'opzione'}</option>
+										{field.options?.split(',').map(opt => <option value={opt.trim()}>{opt.trim()}</option>)}
+									</select>
+									<svg class="select-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+								</div>
+							) : (
+								<input type={field.type} id={field.name} name={field.name} required={field.required} placeholder={fieldLabel} />
+							)}
+						</div>
+					)
+				})}
+			</div>
+
+			<!-- Honeypot -->
+			<div class="form-group honeypot" aria-hidden="true" style="display: none;">
+				<label for="bot-field">Non compilare se sei umano</label>
+				<input type="text" id="bot-field" name="bot-field" tabindex="-1" />
+			</div>
+			
+			<div class="form-status" id="form-status" style="display: none;"></div>
+
+			<div class="form-footer">
+				<button type="submit" class="button" id="submit-button">
+					<span class="button-text">{submitLabel}</span>
+					<span class="button-spinner" style="display: none;">
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="spinner">
+							<path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+						</svg>
+					</span>
+				</button>
+			</div>
+		</form>
+	</div>
+</section>
+
+<style>
+	.contact-section {
+		padding: 80px 24px;
+		background: linear-gradient(180deg, var(--color-background, #ffffff) 0%, color-mix(in srgb, var(--color-navy) 2%, white) 100%);
+	}
+	
+	.contact-container {
+		max-width: 720px;
+		margin: 0 auto;
+		background: rgba(255, 255, 255, 0.8);
+		backdrop-filter: blur(20px);
+		-webkit-backdrop-filter: blur(20px);
+		padding: 48px;
+		border-radius: 24px;
+		border: 1px solid rgba(255, 255, 255, 0.5);
+		box-shadow: 
+			0 20px 40px -10px color-mix(in srgb, var(--color-navy) 8%, transparent),
+			0 0 0 1px color-mix(in srgb, var(--color-navy) 3%, transparent);
+	}
+
+	.contact-header {
+		text-align: center;
+		margin-bottom: 40px;
+	}
+
+	.contact-title {
+		font-family: var(--font-heading);
+		font-size: clamp(2rem, 5vw, 2.5rem);
+		font-weight: 800;
+		color: var(--color-navy);
+		margin-bottom: 16px;
+		letter-spacing: -0.02em;
+	}
+
+	.contact-desc {
+		font-family: var(--font-body);
+		font-size: 1.125rem;
+		color: color-mix(in srgb, var(--color-navy) 70%, transparent);
+		line-height: 1.6;
+		max-width: 500px;
+		margin: 0 auto;
+	}
+
+	.form-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 24px;
+	}
+
+	.form-group {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.form-group.full-width {
+		grid-column: 1 / -1;
+	}
+
+	@media (max-width: 600px) {
+		.form-grid {
+			grid-template-columns: 1fr;
+		}
+		.form-group {
+			grid-column: 1 / -1;
+		}
+		.contact-container {
+			padding: 32px 20px;
+			border-radius: 20px;
+		}
+	}
+
+	.form-group label {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 0.875rem;
+		color: var(--color-navy);
+		margin-left: 4px;
+	}
+
+	.req {
+		color: var(--color-pink);
+	}
+
+	.form-group input,
+	.form-group textarea,
+	.form-group select {
+		width: 100%;
+		padding: 16px 20px;
+		border: 1px solid color-mix(in srgb, var(--color-navy) 15%, transparent);
+		border-radius: 12px;
+		font-family: var(--font-body);
+		font-size: 1rem;
+		background: rgba(255, 255, 255, 0.9);
+		color: var(--color-navy);
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		box-sizing: border-box;
+		appearance: none;
+	}
+
+	.form-group input::placeholder,
+	.form-group textarea::placeholder {
+		color: color-mix(in srgb, var(--color-navy) 40%, transparent);
+	}
+
+	.form-group input:hover,
+	.form-group textarea:hover,
+	.form-group select:hover {
+		border-color: color-mix(in srgb, var(--color-navy) 25%, transparent);
+	}
+
+	.form-group input:focus,
+	.form-group textarea:focus,
+	.form-group select:focus {
+		outline: none;
+		border-color: var(--color-pink);
+		background: white;
+		box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-pink) 15%, transparent);
+	}
+
+	.select-wrapper {
+		position: relative;
+		width: 100%;
+	}
+
+	.select-icon {
+		position: absolute;
+		right: 16px;
+		top: 50%;
+		transform: translateY(-50%);
+		pointer-events: none;
+		color: color-mix(in srgb, var(--color-navy) 50%, transparent);
+		transition: color 0.2s;
+	}
+
+	.select-wrapper:hover .select-icon {
+		color: var(--color-navy);
+	}
+
+	.form-footer {
+		margin-top: 32px;
+		display: flex;
+		justify-content: center;
+	}
+
+	.button {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 16px 40px;
+		background: var(--color-pink);
+		color: white;
+		font-family: var(--font-heading);
+		font-size: 1.125rem;
+		font-weight: 700;
+		border: none;
+		border-radius: 100px;
+		cursor: pointer;
+		overflow: hidden;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		box-shadow: 0 4px 14px color-mix(in srgb, var(--color-pink) 40%, transparent);
+	}
+
+	.button::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+		transform: translateX(-100%);
+	}
+
+	.button:hover:not(:disabled) {
+		transform: translateY(-2px);
+		background: color-mix(in srgb, var(--color-pink) 90%, black);
+		box-shadow: 0 8px 24px color-mix(in srgb, var(--color-pink) 50%, transparent);
+	}
+
+	.button:hover:not(:disabled)::after {
+		animation: shine 1.5s ease-out;
+	}
+
+	@keyframes shine {
+		100% { transform: translateX(100%); }
+	}
+	
+	.button:disabled {
+		opacity: 0.7;
+		cursor: not-allowed;
+		transform: none;
+	}
+
+	.form-status {
+		margin-top: 24px;
+		padding: 16px;
+		border-radius: 12px;
+		font-family: var(--font-body);
+		text-align: center;
+		font-weight: 600;
+		animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+	}
+
+	@keyframes slideUp {
+		from { opacity: 0; transform: translateY(10px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+
+	.form-status.success {
+		background: color-mix(in srgb, #10b981 10%, white);
+		color: #059669;
+		border: 1px solid color-mix(in srgb, #10b981 20%, transparent);
+	}
+
+	.form-status.error {
+		background: color-mix(in srgb, #ef4444 10%, white);
+		color: #dc2626;
+		border: 1px solid color-mix(in srgb, #ef4444 20%, transparent);
+	}
+
+	.spinner {
+		animation: spin 1s linear infinite;
+	}
+
+	@keyframes spin {
+		to { transform: rotate(360deg); }
+	}
+</style>
+
+<script>
+	const form = document.getElementById('contact-form') as HTMLFormElement;
+	const statusDiv = document.getElementById('form-status');
+	const submitBtn = document.getElementById('submit-button') as HTMLButtonElement;
+	const btnText = submitBtn?.querySelector('.button-text');
+	const btnSpinner = submitBtn?.querySelector('.button-spinner') as HTMLElement;
+
+	if (form) {
+		form.addEventListener('submit', async (e) => {
+			e.preventDefault();
+			
+			const botField = form.querySelector('input[name="bot-field"]') as HTMLInputElement;
+			if (botField && botField.value !== '') {
+				return;
+			}
+
+			const formData = new FormData(form);
+			const data = Object.fromEntries(formData.entries());
+			
+			submitBtn.disabled = true;
+			if (btnText) (btnText as HTMLElement).style.display = 'none';
+			if (btnSpinner) btnSpinner.style.display = 'inline-block';
+			
+			if (statusDiv) {
+				statusDiv.style.display = 'none';
+				statusDiv.className = 'form-status';
+			}
+
+			try {
+				const response = await fetch('/api/contact', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(data),
+				});
+
+				const result = await response.json();
+
+				if (response.ok && result.success) {
+					form.reset();
+					if (statusDiv) {
+						statusDiv.textContent = form.dataset.success || 'Success';
+						statusDiv.classList.add('success');
+						statusDiv.style.display = 'block';
+					}
+				} else {
+					throw new Error(result.error || 'API Error');
+				}
+			} catch (error) {
+				console.error(error);
+				if (statusDiv) {
+					statusDiv.textContent = form.dataset.error || 'Error';
+					statusDiv.classList.add('error');
+					statusDiv.style.display = 'block';
+				}
+			} finally {
+				submitBtn.disabled = false;
+				if (btnText) (btnText as HTMLElement).style.display = 'inline';
+				if (btnSpinner) btnSpinner.style.display = 'none';
+			}
+		});
+	}
+</script>

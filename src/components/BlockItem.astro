@@ -27,6 +27,7 @@ import InteractClubDirectory from './blocks/InteractClubDirectory.astro';
 import InteractEventsCalendar from './blocks/InteractEventsCalendar.astro';
 import InteractEventsArchive from './blocks/InteractEventsArchive.astro';
 import FamilyGrid from './blocks/FamilyGrid.astro';
+import ContactForm from './blocks/ContactForm.astro';
 
 function nonNull<T>(value: T | null | undefined): value is T {
 	return value != null;
@@ -323,5 +324,8 @@ function loc(itValue: string | null | undefined, enValue: string | null | undefi
 	)}
 	{block.__typename === 'PagesBlocksResourceArchive' && (
 		<ResourceArchive lang={lang} emptyMessage={loc(block.emptyMessage, block.emptyMessageEn) || undefined} />
+	)}
+	{block.__typename === 'PagesBlocksContactForm' && (
+		<ContactForm block={block} />
 	)}
 </div>

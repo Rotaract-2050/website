@@ -112,6 +112,10 @@ export interface UiStrings {
 		photoAltPrefix: string;
 		photoMissing: string;
 		seoDescriptionPrefix: string;
+		servicesTitle: string;
+		servicesEmpty: string;
+		newsTitle: string;
+		newsEmpty: string;
 	};
 	clubMap: {
 		title: string;
@@ -311,6 +315,10 @@ const IT: UiStrings = {
 		photoAltPrefix: 'Foto di',
 		photoMissing: 'Foto non disponibile',
 		seoDescriptionPrefix: 'Scheda del club Rotaract Distretto 2050:',
+		servicesTitle: 'I nostri service',
+		servicesEmpty: 'Nessun service pubblicato al momento.',
+		newsTitle: 'Le nostre news',
+		newsEmpty: 'Nessuna news pubblicata al momento.',
 	},
 	clubMap: {
 		title: 'I club sulla mappa',
@@ -484,6 +492,10 @@ const EN: UiStrings = {
 		photoAltPrefix: 'Photo of',
 		photoMissing: 'Photo not available',
 		seoDescriptionPrefix: 'Rotaract District 2050 club page:',
+		servicesTitle: 'Our services',
+		servicesEmpty: 'No services published yet.',
+		newsTitle: 'Our news',
+		newsEmpty: 'No news published yet.',
 	},
 	clubMap: {
 		title: 'Clubs on the map',
