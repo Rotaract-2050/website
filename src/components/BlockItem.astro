@@ -326,6 +326,6 @@ function loc(itValue: string | null | undefined, enValue: string | null | undefi
 		<ResourceArchive lang={lang} emptyMessage={loc(block.emptyMessage, block.emptyMessageEn) || undefined} />
 	)}
 	{block.__typename === 'PagesBlocksContactForm' && (
-		<ContactForm block={block} />
+		<ContactForm block={block as any} />
 	)}
 </div>
