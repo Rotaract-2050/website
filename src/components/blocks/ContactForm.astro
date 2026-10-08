@@ -66,7 +66,7 @@ const fields = block.fields && block.fields.length > 0 ? block.fields : [
 									<svg class="select-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
 								</div>
 							) : (
-								<input type={field.type} id={field.name} name={field.name} required={field.required} placeholder={fieldLabel} />
+								<input type={field.type as any} id={field.name} name={field.name} required={field.required} placeholder={fieldLabel} />
 							)}
 						</div>
 					)
@@ -363,7 +363,7 @@ const fields = block.fields && block.fields.length > 0 ? block.fields : [
 					body: JSON.stringify(data),
 				});
 
-				const result = await response.json();
+				const result = (await response.json()) as { success?: boolean; error?: string };
 
 				if (response.ok && result.success) {
 					form.reset();

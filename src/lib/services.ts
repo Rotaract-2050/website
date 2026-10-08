@@ -40,18 +40,23 @@ export function serviceTagLabels(article: Pick<ServiceArticle, 'clubs' | 'scope'
 }
 
 export async function getClubServices(clubFilename: string): Promise<ServiceArticle[]> {
-	const result = await requestWithMetadata(client.queries.servicesConnection({ sort: 'date' }));
-	const edges = result.data.servicesConnection.edges ?? [];
-	const articles = edges
-		.map((edge) => edge?.node)
-		.filter((node): node is ServiceArticle => node != null)
-		.filter((node) => node.clubs?.some(c => {
-			if (!c?.club?._sys) return false;
-			// check if it's the right club
-			const slug = 'breadcrumbs' in c.club._sys && c.club._sys.breadcrumbs ? c.club._sys.breadcrumbs.join('/') : (c.club._sys as any).filename;
-			return slug === clubFilename;
-		}))
-		.reverse();
+	try {
+		const result = await requestWithMetadata(client.queries.servicesConnection({ sort: 'date' }));
+		const edges = result.data.servicesConnection.edges ?? [];
+		const articles = edges
+			.map((edge) => edge?.node)
+			.filter((node): node is ServiceArticle => node != null)
+			.filter((node) => node.clubs?.some(c => {
+				if (!c?.club?._sys) return false;
+				// check if it's the right club
+				const slug = 'breadcrumbs' in c.club._sys && c.club._sys.breadcrumbs ? c.club._sys.breadcrumbs.join('/') : (c.club._sys as any).filename;
+				return slug === clubFilename;
+			}))
+			.reverse();
 
-	return articles;
+		return articles;
+	} catch (error) {
+		console.error("Error fetching club services:", error);
+		return [];
+	}
 }

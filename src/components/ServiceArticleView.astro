@@ -31,6 +31,12 @@ if (!article) {
 }
 
 const tags = serviceTagLabels(article as any);
+
+const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-US', {
+	day: 'numeric',
+	month: 'short',
+	year: 'numeric',
+});
 const localized = localizeService(article, lang);
 const titleField = lang === 'en' && article.titleEn ? 'titleEn' : 'title';
 const bodyField = lang === 'en' && article.bodyEn ? 'bodyEn' : 'body';
@@ -74,7 +80,7 @@ const bodyHtml = renderTinaMarkdown(localized.body);
 					</div>
 				)}
 				<span class="article-date" data-tina-field={tinaField(article, 'date')}>
-					{serviceDateLabel(article, lang)}
+					{serviceDateLabel(article, dateFormatter)}
 				</span>
 			</div>
 			<div data-tina-field={tinaField(article, 'image')}>

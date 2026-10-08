@@ -1,9 +1,9 @@
-import { getEntry } from 'astro:content';
 import type { APIRoute } from 'astro';
+import client from '../../../tina/__generated__/client';
 
-export const POST: APIRoute = async ({ request, env, locals }) => {
+export const POST: APIRoute = async ({ request }) => {
 	try {
-		const data = await request.json();
+		const data = (await request.json()) as Record<string, any>;
 		
 		if (Object.keys(data).length === 0) {
 			return new Response(JSON.stringify({ error: 'Nessun dato fornito.' }), {
@@ -23,8 +23,8 @@ export const POST: APIRoute = async ({ request, env, locals }) => {
 		}
 
 		// Fetch global settings from TinaCMS content collections
-		const settings = await getEntry('settings', 'settings');
-		const defaultTo = settings?.data?.contactFormEmail || settings?.data?.email || 'info@rotaract2050.org';
+		const settings = await client.queries.settings({ relativePath: 'settings.json' });
+		const defaultTo = settings?.data?.settings?.contactFormEmail || settings?.data?.settings?.email || 'info@rotaract2050.org';
 
 		// Try to identify email and name for specific use cases (Reply-To, Subject)
 		const replyToEmail = data.email || data.Email || data.mail || Object.values(data).find(v => typeof v === 'string' && v.includes('@')) || undefined;
