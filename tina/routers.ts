@@ -37,3 +37,8 @@ export const interactEventsRouter = ({ document }: { document: { _sys: { breadcr
 	const slug = document._sys.breadcrumbs.join('/');
 	return `/interact/eventi/${slug}`;
 };
+
+export const servicesRouter = ({ document }: { document: { _sys: { breadcrumbs: string[] } } }) => {
+	const slug = document._sys.breadcrumbs.join('/');
+	return `/service/${slug}`;
+};

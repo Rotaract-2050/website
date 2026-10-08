@@ -4,7 +4,7 @@ import ImageSlot from './ImageSlot.astro';
 import { tagPillStyle, type NewsTag } from '../lib/news';
 
 interface Props {
-	href: string;
+	href?: string;
 	image?: string | null;
 	imageFocalX?: number | null;
 	imageFocalY?: number | null;
@@ -21,10 +21,11 @@ interface Props {
 
 const { href, image, imageFocalX, imageFocalY, imageLabel, tags = [], title, excerpt, dateLabel, yearLabel, showDate = true, showYear = true, tinaFieldAttr } = Astro.props;
 const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 50}%;`;
+const Tag = href ? 'a' : 'div';
 ---
 
 <article class="news-card" data-tina-field={tinaFieldAttr}>
-	<a href={href} class="news-link">
+	<Tag href={href} class="news-link">
 		<div class="news-media">
 			{image ? (
 				<Image src={image} alt={imageLabel} width={400} height={170} quality="high" class="news-image" style={focalStyle} />
@@ -51,7 +52,7 @@ const focalStyle = `--focal-x:${imageFocalX ?? 50}%;--focal-y:${imageFocalY ?? 5
 				</div>
 			)}
 		</div>
-	</a>
+	</Tag>
 </article>
 
 <style>

@@ -71,6 +71,7 @@ const addressFieldName = isEn && settings.addressEn ? 'addressEn' : 'address';
 				<br />
 				<a href={`mailto:${settings.email}`} class="footer-email" data-tina-field={tinaField(settings, 'email')}>{settings.email}</a>
 			</p>
+			<a href="/test-contatti" class="footer-btn">Contatta il Distretto</a>
 		</div>
 		<div>
 			<div class="footer-heading">{t.footer.socialTitle}</div>
@@ -174,6 +175,26 @@ const addressFieldName = isEn && settings.addressEn ? 'addressEn' : 'address';
 
 	.footer-email:hover {
 		color: #fff;
+	}
+
+	.footer-btn {
+		display: inline-block;
+		margin-top: 16px;
+		padding: 10px 20px;
+		background: var(--color-pink);
+		color: white;
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 14px;
+		text-transform: uppercase;
+		border-radius: 6px;
+		text-decoration: none;
+		transition: background 0.2s, transform 0.2s;
+	}
+	.footer-btn:hover {
+		background: color-mix(in srgb, var(--color-pink) 80%, black);
+		color: white;
+		transform: translateY(-2px);
 	}
 
 	.footer-social {

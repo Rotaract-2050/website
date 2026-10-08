@@ -1,13 +1,13 @@
 import type { Collection } from 'tinacms';
 import { focalImageFields } from '../fields/focalPointImage';
-import { newsRouter } from '../routers';
+import { servicesRouter } from '../routers';
 
-export const newsCollection: Collection = {
-	name: 'news',
-	label: 'News dal distretto',
-	path: 'src/content/news',
+export const servicesCollection: Collection = {
+	name: 'services',
+	label: 'Service',
+	path: 'src/content/services',
 	format: 'md',
-	ui: { router: newsRouter },
+	ui: { router: servicesRouter },
 	fields: [
 		{ type: 'string', name: 'title', label: 'Titolo (IT)', isTitle: true, required: true },
 		{ type: 'string', name: 'titleEn', label: 'Titolo (EN)' },
@@ -16,10 +16,8 @@ export const newsCollection: Collection = {
 			name: 'scope',
 			label: 'Ambito',
 			list: true,
-			options: ['Distretto', 'MDIO', 'Service Distrettuale', 'Service Interdistrettuale', 'Service Nazionale'],
+			options: ['Distretto', 'MDIO', 'Service Distrettuale', 'Service Interdistrettuale', 'Service Nazionale', 'Club'],
 		},
-		// Tina's `reference` field doesn't support `list: true` directly (tina.io/docs/r/content-fields/#list-fields):
-		// wrap each reference in a repeatable object, one club per row, as the documented workaround.
 		{
 			type: 'object',
 			name: 'clubs',
@@ -29,13 +27,13 @@ export const newsCollection: Collection = {
 		},
 		{ type: 'string', name: 'excerpt', label: 'Estratto (IT)', ui: { component: 'textarea' }, required: true },
 		{ type: 'string', name: 'excerptEn', label: 'Estratto (EN)', ui: { component: 'textarea' } },
-		{ type: 'datetime', name: 'date', label: 'Data pubblicazione', required: true, ui: { dateFormat: 'DD MMMM YYYY' } },
+		{ type: 'datetime', name: 'date', label: 'Data', required: true, ui: { dateFormat: 'DD MMMM YYYY' } },
 		{
 			type: 'string',
 			name: 'displayDate',
 			label: 'Data mostrata sulla card (opzionale)',
 			description:
-				'Se compilata, sostituisce la Data pubblicazione SOLO nel testo mostrato sulla card (es. "Estate 2026"). L\'ordinamento delle news e l\'anno rotariano (AR) restano calcolati dalla Data pubblicazione qui sopra, non da questo campo.',
+				'Se compilata, sostituisce la Data SOLO nel testo mostrato sulla card (es. "Estate 2026").',
 		},
 		...focalImageFields('image', 'Immagine'),
 		{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine (IT)', required: true },
