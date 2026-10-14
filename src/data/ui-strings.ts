@@ -35,6 +35,7 @@ export interface UiStrings {
 	footer: {
 		linksTitle: string;
 		contactTitle: string;
+		contactBtn: string;
 		socialTitle: string;
 		copyright: string;
 		underRotary: string;
@@ -48,6 +49,14 @@ export interface UiStrings {
 		accept: string;
 		reject: string;
 		policyLink: string;
+	};
+	notFound: {
+		eyebrow: string;
+		title: string;
+		breadcrumbCurrent: string;
+		body: string;
+		homeCta: string;
+		seoTitle: string;
 	};
 	calendar: {
 		agendaTab: string;
@@ -112,6 +121,10 @@ export interface UiStrings {
 		photoAltPrefix: string;
 		photoMissing: string;
 		seoDescriptionPrefix: string;
+		servicesTitle: string;
+		servicesEmpty: string;
+		newsTitle: string;
+		newsEmpty: string;
 	};
 	clubMap: {
 		title: string;
@@ -221,6 +234,7 @@ const IT: UiStrings = {
 	footer: {
 		linksTitle: 'LINK UTILI',
 		contactTitle: 'CONTATTI',
+		contactBtn: 'Contatta il Distretto',
 		socialTitle: 'SEGUICI',
 		copyright: '© Rotaract Distretto 2050',
 		underRotary: 'Sostenuto dal Rotary Distretto 2050',
@@ -234,6 +248,14 @@ const IT: UiStrings = {
 		accept: 'Accetta',
 		reject: 'Rifiuta',
 		policyLink: 'Maggiori informazioni',
+	},
+	notFound: {
+		eyebrow: 'Errore 404',
+		title: 'Pagina non trovata',
+		breadcrumbCurrent: '404',
+		body: "La pagina che cerchi non esiste o è stata spostata. Controlla l'indirizzo oppure torna alla home.",
+		homeCta: 'Torna alla home',
+		seoTitle: 'Pagina non trovata',
 	},
 	calendar: {
 		agendaTab: 'Agenda',
@@ -311,6 +333,10 @@ const IT: UiStrings = {
 		photoAltPrefix: 'Foto di',
 		photoMissing: 'Foto non disponibile',
 		seoDescriptionPrefix: 'Scheda del club Rotaract Distretto 2050:',
+		servicesTitle: 'I nostri service',
+		servicesEmpty: 'Nessun service pubblicato al momento.',
+		newsTitle: 'Le nostre news',
+		newsEmpty: 'Nessuna news pubblicata al momento.',
 	},
 	clubMap: {
 		title: 'I club sulla mappa',
@@ -394,6 +420,7 @@ const EN: UiStrings = {
 	footer: {
 		linksTitle: 'QUICK LINKS',
 		contactTitle: 'CONTACT',
+		contactBtn: 'Contact the District',
 		socialTitle: 'FOLLOW US',
 		copyright: '© Rotaract District 2050',
 		underRotary: 'Sponsored by Rotary District 2050',
@@ -407,6 +434,14 @@ const EN: UiStrings = {
 		accept: 'Accept',
 		reject: 'Reject',
 		policyLink: 'Learn more',
+	},
+	notFound: {
+		eyebrow: 'Error 404',
+		title: 'Page not found',
+		breadcrumbCurrent: '404',
+		body: 'The page you are looking for does not exist or has been moved. Check the address or go back to the home page.',
+		homeCta: 'Back to home',
+		seoTitle: 'Page not found',
 	},
 	calendar: {
 		agendaTab: 'Agenda',
@@ -484,6 +519,10 @@ const EN: UiStrings = {
 		photoAltPrefix: 'Photo of',
 		photoMissing: 'Photo not available',
 		seoDescriptionPrefix: 'Rotaract District 2050 club page:',
+		servicesTitle: 'Our services',
+		servicesEmpty: 'No services published yet.',
+		newsTitle: 'Our news',
+		newsEmpty: 'No news published yet.',
 	},
 	clubMap: {
 		title: 'Clubs on the map',

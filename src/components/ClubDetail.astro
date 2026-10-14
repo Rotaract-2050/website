@@ -6,6 +6,9 @@ import ImageSlot from './ImageSlot.astro';
 import type { ClubsQuery, InteractClubsQuery } from '../../tina/__generated__/types';
 import type { Lang } from '../data/ui-strings';
 import { uiStrings } from '../data/ui-strings';
+import NewsCard from './NewsCard.astro';
+import { getClubServices, localizeService, serviceSlug, serviceTagLabels, serviceDateLabel, rotaryYearLabel } from '../lib/services';
+import { getClubNews, localizeNews, newsSlug, newsTagLabels, newsDateLabel } from '../lib/news';
 
 interface Props {
 	lang: Lang;
@@ -17,7 +20,18 @@ const t = uiStrings[lang].clubDetail;
 const backHref = getRelativeLocaleUrl(lang, 'club');
 const story = lang === 'en' ? club.storyEn || club.story : club.story;
 const storyFieldName = lang === 'en' && club.storyEn ? 'storyEn' : 'story';
+const trackClub = (channel: string) => JSON.stringify({ club_name: club.name, channel });
 const focalStyle = `--focal-x:${club.photoFocalX ?? 50}%;--focal-y:${club.photoFocalY ?? 50}%;`;
+
+const clubFilename = 'breadcrumbs' in club._sys && club._sys.breadcrumbs ? club._sys.breadcrumbs.join('/') : (club._sys as any).filename;
+const services = await getClubServices(clubFilename);
+const news = await getClubNews(clubFilename);
+const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-US', {
+	day: 'numeric',
+	month: 'short',
+	year: 'numeric',
+});
+
 ---
 
 <section class="club-detail">
@@ -47,7 +61,7 @@ const focalStyle = `--focal-x:${club.photoFocalX ?? 50}%;--focal-y:${club.photoF
 				{club.email && (
 					<div class="info-row">
 						<span class="info-label">{t.emailLabel}</span>
-						<a class="info-value link" href={`mailto:${club.email}`}>{club.email}</a>
+						<a class="info-value link" href={`mailto:${club.email}`} data-track="club_contact_click" data-track-params={trackClub('email')}>{club.email}</a>
 					</div>
 				)}
 
@@ -61,7 +75,7 @@ const focalStyle = `--focal-x:${club.photoFocalX ?? 50}%;--focal-y:${club.photoF
 				{(club.website || club.instagram || club.facebook) && (
 					<div class="club-social">
 						{club.website && (
-							<a class="social-btn" href={club.website} target="_blank" rel="noopener noreferrer" aria-label={t.websiteLabel} data-tina-field={tinaField(club, 'website')}>
+							<a class="social-btn" href={club.website} target="_blank" rel="noopener noreferrer" aria-label={t.websiteLabel} data-track="club_contact_click" data-track-params={trackClub('website')} data-tina-field={tinaField(club, 'website')}>
 								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
 									<circle cx="12" cy="12" r="9" />
 									<ellipse cx="12" cy="12" rx="4" ry="9" />
@@ -70,7 +84,7 @@ const focalStyle = `--focal-x:${club.photoFocalX ?? 50}%;--focal-y:${club.photoF
 							</a>
 						)}
 						{club.instagram && (
-							<a class="social-btn" href={club.instagram} target="_blank" rel="noopener noreferrer" aria-label={t.instagramLabel} data-tina-field={tinaField(club, 'instagram')}>
+							<a class="social-btn" href={club.instagram} target="_blank" rel="noopener noreferrer" aria-label={t.instagramLabel} data-track="club_contact_click" data-track-params={trackClub('instagram')} data-tina-field={tinaField(club, 'instagram')}>
 								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
 									<rect x="3.5" y="3.5" width="17" height="17" rx="5" />
 									<circle cx="12" cy="12" r="4.2" />
@@ -79,7 +93,7 @@ const focalStyle = `--focal-x:${club.photoFocalX ?? 50}%;--focal-y:${club.photoF
 							</a>
 						)}
 						{club.facebook && (
-							<a class="social-btn" href={club.facebook} target="_blank" rel="noopener noreferrer" aria-label={t.facebookLabel} data-tina-field={tinaField(club, 'facebook')}>
+							<a class="social-btn" href={club.facebook} target="_blank" rel="noopener noreferrer" aria-label={t.facebookLabel} data-track="club_contact_click" data-track-params={trackClub('facebook')} data-tina-field={tinaField(club, 'facebook')}>
 								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
 									<circle cx="12" cy="12" r="9" />
 									<path d="M13.8 21v-7.2h2.4l.4-2.8h-2.8v-1.8c0-.8.2-1.4 1.4-1.4h1.5V5.1c-.3 0-1.1-.1-2.1-.1-2.1 0-3.5 1.3-3.5 3.6v2.4H8.7v2.8h2.4V21" />
@@ -90,6 +104,60 @@ const focalStyle = `--focal-x:${club.photoFocalX ?? 50}%;--focal-y:${club.photoF
 				)}
 			</div>
 		</div>
+
+		{services.length > 0 && (
+			<div class="club-services">
+				<h2 class="services-title">{t.servicesTitle}</h2>
+				<div class="services-grid">
+					{services.map((service) => {
+						const localized = localizeService(service, lang);
+						return (
+							<NewsCard
+								href={getRelativeLocaleUrl(lang, `service/${serviceSlug(service)}`)}
+								image={service.image}
+								imageFocalX={service.imageFocalX}
+								imageFocalY={service.imageFocalY}
+								imageLabel={localized.imageLabel}
+								tags={serviceTagLabels(service)}
+								title={localized.title}
+								excerpt={localized.excerpt}
+								dateLabel={serviceDateLabel(service, dateFormatter)}
+								yearLabel={rotaryYearLabel(service.date)}
+								showDate={true}
+								showYear={true}
+							/>
+						);
+					})}
+				</div>
+			</div>
+		)}
+
+		{news.length > 0 && (
+			<div class="club-services">
+				<h2 class="services-title">{t.newsTitle}</h2>
+				<div class="services-grid">
+					{news.map((item) => {
+						const localized = localizeNews(item, lang);
+						return (
+							<NewsCard
+								href={getRelativeLocaleUrl(lang, `news/${newsSlug(item)}`)}
+								image={item.image}
+								imageFocalX={item.imageFocalX}
+								imageFocalY={item.imageFocalY}
+								imageLabel={localized.imageLabel}
+								tags={newsTagLabels(item)}
+								title={localized.title}
+								excerpt={localized.excerpt}
+								dateLabel={newsDateLabel(item, dateFormatter)}
+								yearLabel={rotaryYearLabel(item.date)}
+								showDate={true}
+								showYear={true}
+							/>
+						);
+					})}
+				</div>
+			</div>
+		)}
 	</div>
 </section>
 
@@ -126,6 +194,25 @@ const focalStyle = `--focal-x:${club.photoFocalX ?? 50}%;--focal-y:${club.photoF
 		object-fit: contain;
 		object-position: top center;
 		order: 2;
+	}
+
+	.club-services {
+		margin-top: 60px;
+		padding-top: 40px;
+		border-top: 1px solid rgba(11, 37, 69, 0.08);
+	}
+
+	.services-title {
+		font-family: var(--font-heading);
+		font-size: 24px;
+		color: var(--color-navy);
+		margin: 0 0 30px;
+	}
+
+	.services-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 28px;
 	}
 
 	.club-info {
@@ -211,6 +298,12 @@ const focalStyle = `--focal-x:${club.photoFocalX ?? 50}%;--focal-y:${club.photoF
 	.social-btn:hover {
 		background: var(--tint, var(--color-pink));
 		color: #ffffff;
+	}
+
+	@media (max-width: 900px) {
+		.services-grid {
+			grid-template-columns: 1fr;
+		}
 	}
 
 	@media (max-width: 720px) {

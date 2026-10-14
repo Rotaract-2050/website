@@ -44,6 +44,13 @@ Per restare generici su **tutte** le pagine (non solo le 7 del mockup) e permett
 
 Questo sostituisce l'approccio del mockup (una pagina fissa per `isHome`/`isDistretto`/`isClub`/...): i **blocchi** del mockup (hero carousel, stats bar, split mission, values grid, role grid, events list, news grid, cta banner, empty placeholder) diventano i **template Tina + componenti Astro** riusabili su qualunque pagina futura (nuova pagina evento, nuovo comitato, nuova zona) senza toccare codice.
 
+## Collection "Services" (Progetti/Eventi Passati)
+
+I Service (o progetti passati) vivono nella collection Tina `services` (file Markdown in `src/content/services/`). Un Service rappresenta un progetto concluso o un evento di particolare importanza di un Club, di una Zona o del Distretto.
+- I service supportano una serie di **ambiti** (`scope`: es. Distretto, Club, Service Nazionale).
+- È possibile **taggare uno o più club** (`clubs`) referenziando i file Markdown della collection `clubs` o `interactClubs`. In questo modo un singolo service può apparire sulle pagine dei rispettivi club (sia Rotaract che Interact).
+- I service utilizzano il componente `<ServiceArticleView>` per la renderizzazione della pagina di dettaglio e compaiono in archivi dedicati.
+
 ## Riferimenti — leggere prima di agire sul tema specifico
 
 Il dettaglio non sta in questo file: leggere la reference pertinente **prima** di scrivere codice o contenuti sul relativo tema, non fidarsi della memoria.

@@ -6,6 +6,7 @@ import { zonesCollection } from './zones';
 import { clubsCollection } from './clubs';
 import { interactClubsCollection } from './interactClubs';
 import { newsCollection } from './news';
+import { servicesCollection } from './services';
 import { resourcesCollection } from './resources';
 import { eventsCollection } from './events';
 import { interactEventsCollection } from './interactEvents';
@@ -17,6 +18,7 @@ export const collections = [
 	clubsCollection,
 	interactClubsCollection,
 	newsCollection,
+	servicesCollection,
 	resourcesCollection,
 	eventsCollection,
 	interactEventsCollection,

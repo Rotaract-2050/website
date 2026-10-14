@@ -23,10 +23,10 @@ bodyEn: |
   * Support: instill hope and a strong sense of closeness in those facing the delicate path of recovery and rebuilding self-esteem.
 ---
 
-Promosso dal Distretto 2050 e adottato a livello nazionale, Disegna il tuo FUTURO è un service ideato per sensibilizzare l'opinione pubblica sul tema dei disturbi del comportamento alimentare (DCA). Il progetto prende vita attraverso il confronto con medici ed esperti, testimonianze dirette di percorsi di guarigione, campagne digitali e un laboratorio artistico culminante in un'esposizione pubblica delle opere dei ragazzi coinvolti.
+Promosso dal Distretto 2050 e adottato a livello nazionale, Disegna il tuo FUTURO è un service ideato per sensibilizzare l'opinione pubblica sul tema dei disturbi della nutrizione e dell'alimentazione (DNA). Il progetto prende vita attraverso il confronto con medici ed esperti, testimonianze dirette di percorsi di guarigione, campagne digitali e un laboratorio artistico culminante in un'esposizione pubblica delle opere dei ragazzi coinvolti.
 
 Le finalità perseguite sono:
 
-* Informare: promuovere una conoscenza rigorosa, chiara e accessibile sui DCA.
+* Informare: promuovere una conoscenza rigorosa, chiara e accessibile sui DNA.
 * Sensibilizzare: far emergere la profonda vulnerabilità emotiva causata dalle dinamiche di body shaming.
 * Sostenere: infondere speranza e un forte senso di vicinanza in chi affronta il delicato percorso di cura e rinascita della propria autostima.

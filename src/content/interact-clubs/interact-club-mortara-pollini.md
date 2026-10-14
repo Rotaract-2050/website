@@ -2,7 +2,7 @@
 name: Interact Club Mortara Pollini
 zone: src/content/zones/navigli.md
 presidentName: Martina Sfragano
-photo: '/uploads/loghi-Club/interact-club-mortara-pollini.png'
+photo: '/uploads/loghi-club/interact-club-mortara-pollini.png'
 foundationYear: 2022
 story: 'Dato non ancora confermato dal distretto Interact — zona dedotta per corrispondenza geografica con i club Rotaract della Lomellina.'
 storyEn: 'Not yet confirmed by the Interact district — zone inferred by geographic match with Rotaract clubs in the Lomellina area.'

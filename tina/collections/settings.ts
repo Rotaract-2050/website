@@ -12,6 +12,12 @@ export const settingsCollection: Collection = {
 		{ type: 'string', name: 'addressEn', label: 'Indirizzo (EN)' },
 		{ type: 'string', name: 'fiscalCode', label: 'Codice Fiscale' },
 		{ type: 'string', name: 'email', label: 'Email' },
+		{
+			type: 'string',
+			name: 'contactFormEmail',
+			label: 'Email destinatario form contatti',
+			description: "A quale indirizzo inviare i messaggi ricevuti dal modulo di contatto. Se vuoto, viene usata l'Email generale.",
+		},
 		{ type: 'image', name: 'logo', label: 'Logo distretto (dati strutturati / social)' },
 		{
 			type: 'image',

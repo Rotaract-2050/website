@@ -4,7 +4,7 @@ zone: src/content/zones/francigena.md
 foundationYear: 2006
 lat: 44.9280841
 lng: 9.9107218
-photo: /uploads/loghi-Club/fiorenzuola-d-arda.jpeg
+photo: /uploads/loghi-club/fiorenzuola-d-arda.jpeg
 photoFocalX: 48
 photoFocalY: 52
 instagram: 'https://www.instagram.com/rac.fiorenzuola/'

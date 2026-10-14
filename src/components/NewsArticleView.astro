@@ -86,6 +86,11 @@ const bodyHtml = renderTinaMarkdown(localized.body);
 				)}
 			</div>
 			<div class="article-body" data-tina-field={tinaField(article, bodyField)} set:html={bodyHtml} />
+			<span
+				aria-hidden="true"
+				data-track-sentinel="news_read_complete"
+				data-track-params={JSON.stringify({ article_title: localized.title })}
+			/>
 		</div>
 	</article>
 	<JsonLd data={jsonLd} />

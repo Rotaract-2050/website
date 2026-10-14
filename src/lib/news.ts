@@ -123,12 +123,38 @@ export function customClubColor(label?: string | null): string | undefined {
  * returned (e.g. for the homepage teaser); omit it for the full archive.
  */
 export async function getDistrictNews(limit?: number): Promise<NewsArticle[]> {
-	const result = await requestWithMetadata(client.queries.newsConnection({ sort: 'date' }));
-	const edges = result.data.newsConnection.edges ?? [];
-	const articles = edges
-		.map((edge) => edge?.node)
-		.filter((node): node is NewsArticle => node != null)
-		.reverse();
+	try {
+		const result = await requestWithMetadata(client.queries.newsConnection({ sort: 'date' }));
+		const edges = result.data.newsConnection.edges ?? [];
+		const articles = edges
+			.map((edge) => edge?.node)
+			.filter((node): node is NewsArticle => node != null)
+			.reverse();
 
-	return typeof limit === 'number' ? articles.slice(0, limit) : articles;
+		return typeof limit === 'number' ? articles.slice(0, limit) : articles;
+	} catch (error) {
+		console.error("Error fetching district news:", error);
+		return [];
+	}
+}
+
+export async function getClubNews(clubFilename: string): Promise<NewsArticle[]> {
+	try {
+		const result = await requestWithMetadata(client.queries.newsConnection({ sort: 'date' }));
+		const edges = result.data.newsConnection.edges ?? [];
+		const articles = edges
+			.map((edge) => edge?.node)
+			.filter((node): node is NewsArticle => node != null)
+			.filter((node) => node.clubs?.some(c => {
+				if (!c?.club?._sys) return false;
+				const slug = 'breadcrumbs' in c.club._sys && c.club._sys.breadcrumbs ? c.club._sys.breadcrumbs.join('/') : (c.club._sys as any).filename;
+				return slug === clubFilename;
+			}))
+			.reverse();
+
+		return articles;
+	} catch (error) {
+		console.error("Error fetching club news:", error);
+		return [];
+	}
 }

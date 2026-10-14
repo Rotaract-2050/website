@@ -55,7 +55,7 @@ export const eventsCollection: Collection = {
 			name: 'clubs',
 			label: 'Club Host',
 			list: true,
-			fields: [{ type: 'reference', name: 'club', label: 'Club', collections: ['clubs'], required: true }],
+			fields: [{ type: 'reference', name: 'club', label: 'Club', collections: ['clubs', 'interactClubs'], required: true }],
 		},
 		{ type: 'string', name: 'excerpt', label: 'Descrizione (IT)', ui: { component: 'textarea' } },
 		{ type: 'string', name: 'excerptEn', label: 'Descrizione (EN)', ui: { component: 'textarea' } },

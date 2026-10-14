@@ -83,21 +83,26 @@ export function interactYearLabelSlug(yearLabel: string): string {
  * Order: upcoming events first (soonest first), then past events (most recent first).
  */
 export async function getInteractArchiveEvents(): Promise<InteractEvent[]> {
-	const result = await requestWithMetadata(client.queries.interactEventsConnection({ sort: 'date' }));
-	const edges = result.data.interactEventsConnection.edges ?? [];
+	try {
+		const result = await requestWithMetadata(client.queries.interactEventsConnection({ sort: 'date' }));
+		const edges = result.data.interactEventsConnection.edges ?? [];
 
-	const events = edges
-		.map((edge) => edge?.node)
-		.filter((node): node is InteractEvent => node != null)
-		// `visible` defaults to shown — only an explicit "Mostra evento" = off hides a draft event.
-		.filter((node) => node.visible ?? true);
+		const events = edges
+			.map((edge) => edge?.node)
+			.filter((node): node is InteractEvent => node != null)
+			// `visible` defaults to shown — only an explicit "Mostra evento" = off hides a draft event.
+			.filter((node) => node.visible ?? true);
 
-	const upcoming = events.filter((event) => isUpcomingInteractEvent(event.date)).sort((a, b) => a.date.localeCompare(b.date));
-	const past = events
-		.filter((event) => !isUpcomingInteractEvent(event.date))
-		.sort((a, b) => b.date.localeCompare(a.date));
+		const upcoming = events.filter((event) => isUpcomingInteractEvent(event.date)).sort((a, b) => a.date.localeCompare(b.date));
+		const past = events
+			.filter((event) => !isUpcomingInteractEvent(event.date))
+			.sort((a, b) => b.date.localeCompare(a.date));
 
-	return [...upcoming, ...past];
+		return [...upcoming, ...past];
+	} catch (error) {
+		console.error("Error fetching interact events:", error);
+		return [];
+	}
 }
 
 export interface InteractEventYearGroup {

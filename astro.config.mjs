@@ -35,6 +35,10 @@ const resourceSlugs = readdirSync(fileURLToPath(new URL('./src/content/resources
 	.filter((file) => file.endsWith('.md'))
 	.map((file) => file.replace(/\.md$/, ''));
 
+const serviceSlugs = readdirSync(fileURLToPath(new URL('./src/content/services', import.meta.url)))
+	.filter((file) => file.endsWith('.md'))
+	.map((file) => file.replace(/\.md$/, ''));
+
 // `visible: false` events (drafts) are excluded from the archive list (see getArchiveEvents() in
 // src/lib/events.ts) and must stay out of the sitemap for the same reason.
 // `recursive: true` (Node >=20) walks the per-Rotary-year subfolders (2025-2026, 2026-2027, ...)
@@ -60,6 +64,7 @@ const customPages = [
 	...clubSlugs.flatMap((slug) => [`${SITE}/club/${slug}`, `${SITE}/en/club/${slug}`]),
 	...eventSlugs.flatMap((slug) => [`${SITE}/eventi/${slug}`, `${SITE}/en/eventi/${slug}`]),
 	...resourceSlugs.flatMap((slug) => [`${SITE}/formazione/${slug}`, `${SITE}/en/formazione/${slug}`]),
+	...serviceSlugs.flatMap((slug) => [`${SITE}/service/${slug}`, `${SITE}/en/service/${slug}`]),
 	...interactEventSlugs.flatMap((slug) => [`${SITE}/interact/eventi/${slug}`, `${SITE}/en/interact/eventi/${slug}`]),
 ];
 
@@ -150,7 +155,7 @@ export default defineConfig({
 			noExternal: ['node-ical', 'rrule-temporal', 'temporal-polyfill', 'temporal-spec', 'temporal-utils'],
 		},
 		optimizeDeps: {
-			exclude: ['@tinacms/astro'],
+			exclude: ['@tinacms/astro', '@astrojs/cloudflare'],
 		},
 		plugins: [tinaReloadOnContentChangePlugin()],
 	},
