@@ -75,6 +75,9 @@ const privacyHref = getRelativeLocaleUrl(lang, pageSlugs.privacy);
 				};
 				window.gtag('js', new Date());
 				window.gtag('config', gaMeasurementId, { content_group: contentGroup });
+				// Lets bundled scripts (BaseLayout: web-vitals, 404 tracking) react to consent given
+				// on this very page — see whenGaReady() in src/lib/ga-ready.ts.
+				window.dispatchEvent(new Event('ga:ready'));
 			}
 
 			const stored = readConsent();

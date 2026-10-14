@@ -172,6 +172,9 @@ const organizationGraph =
 </style>
 
 <script>
+	import { whenGaReady } from '../lib/ga-ready';
+	import { reportWebVitals } from '../lib/web-vitals';
+
 	console.log(
 		'%c ROTARACT %c DISTRETTO 2050 %c\n\nConfezionato con cura da Alessandro Gorla & Gabriele Groppo',
 		'background:#d41367;color:#fff;font-weight:700;padding:6px 12px;border-radius:6px 0 0 6px;font-family:"Open Sans",sans-serif;font-size:13px;',
@@ -258,6 +261,12 @@ const organizationGraph =
 
 		els.forEach((el) => observer.observe(el));
 	}
+
+	// Web Vitals: only after consent (gtag defined); the dynamic import inside reportWebVitals keeps the
+	// library out of the download for visitors who never accept.
+	whenGaReady(() => {
+		void reportWebVitals();
+	});
 
 	initScrollReveal();
 	initClickTracking();
