@@ -34,6 +34,12 @@ Definito in `BaseLayout.astro` (script principale, non `is:inline` — TypeScrip
 | `lang_switch_click` | Header, switch IT/EN | `to_lang` | `data-track` |
 | `social_link_click` | Header + Footer, icone social | `network` | `data-track` |
 | `utility_link_click` | Header, barra utility (Rotary Distretto/International/My Rotary/Brand Center) | `link_label` | `data-track` |
+| `interact_link_click` | Header, link "Interact" nel dropdown (`.dropdown-interact-link`) | — | `data-track` |
+| `family_card_click` | `blocks/FamilyGrid.astro`, bottone della card (solo se ha `buttonLabel` + href) | `family_org` | `data-track` |
+| `club_contact_click` | `ClubDetail.astro`, email / sito / Instagram / Facebook del club | `club_name`, `channel` (`email`/`website`/`instagram`/`facebook`) | `data-track` — è la conversione principale del sito (aspirante socio → club) |
+| `news_read_complete` | `NewsArticleView.astro`, sentinel dopo `.article-body` | `article_title` | `data-track-sentinel` |
+| `formazione_chat_message` | `FormazioneChatWidget.astro`, a ogni domanda inviata (dopo i guard input vuoto/rate-limit) | `message_index` (1, 2, 3… per caricamento pagina) — **mai il testo della domanda** (privacy) | chiamata diretta a `window.trackEvent?.(...)` |
+| `formazione_chat_error` | idem, su errore | `error_type` (`turnstile` / status HTTP / `network`) | chiamata diretta a `window.trackEvent?.(...)` |
 | `web_vitals` | Ogni pagina, dopo il consenso (`src/lib/web-vitals.ts`) | `metric_name` (LCP/INP/CLS), `metric_value` (ms arrotondati; CLS x1000), `metric_rating` (good/needs-improvement/poor) | `whenGaReady()` + import dinamico di `web-vitals` |
 | `page_not_found` | `NotFoundView.astro` (`/404`, `/en/404`) | `page_path`, `page_referrer` (stringa vuota se assente) | `whenGaReady()` nello script della pagina |
 
@@ -42,6 +48,8 @@ Definito in `BaseLayout.astro` (script principale, non `is:inline` — TypeScrip
 **`whenGaReady(cb)`** (`src/lib/ga-ready.ts`) — per codice bundled che deve partire solo dopo il consenso, anche se questo arriva sulla pagina corrente: esegue subito se `window.gtag` esiste, altrimenti al window event `ga:ready` che `loadGa()` emette alla fine. Se l'utente non accetta non parte mai (zero download per chi rifiuta). Usarlo invece di code accodate: `trackEvent` pre-consenso resta un no-op voluto, nessun evento viene ritardato e sparato retroattivamente.
 
 **Web Vitals** — LCP/INP/CLS via pacchetto `web-vitals` (versione esatta in `package.json`), importato dinamicamente da `reportWebVitals()` dentro `whenGaReady`, quindi in un chunk a parte scaricato solo dopo il consenso.
+
+**Parametri invisibili finché non registrati**: ogni parametro custom (`club_name`, `channel`, `content_group`, `metric_name`…) va registrato in GA4 come dimensione personalizzata a livello di evento (Amministrazione → Definizioni personalizzate), altrimenti non compare né nei report né via API/MCP. Nuovo parametro nel codice = nuova dimensione nel pannello.
 
 **404** — `src/pages/404.astro` + `src/pages/en/404.astro` (status 404, `noindex`, link alla home) rendono `NotFoundView.astro`. `GenericPageView.astro` (catch-all, slug sconosciuto) fa `Astro.rewrite` a `/404` o `/en/404` invece del vecchio redirect 302 alla home, così l'URL richiesto resta nel browser e `page_not_found` riporta il path reale. Gli slug mancanti di news/club/eventi/formazione/service continuano a redirigere (indice della sezione, o home per service) e non generano né 404 né `page_not_found`.
 
