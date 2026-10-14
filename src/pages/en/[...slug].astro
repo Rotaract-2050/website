@@ -1,4 +1,7 @@
 ---
+import { requestWithMetadata } from '@tinacms/astro';
+import client from '../../../tina/__generated__/client';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 const lang = 'en' as const;
 const slug = Astro.params.slug ?? 'home';
 
@@ -15,8 +18,23 @@ const interactSlug = slug === 'interact' || slug.startsWith('interact/') ? slug 
 const NewsArticleView = newsSlug !== null ? (await import('../../components/NewsArticleView.astro')).default : null;
 const ResourceView = resourceSlug !== null ? (await import('../../components/ResourceView.astro')).default : null;
 const InteractPageView = interactSlug !== null ? (await import('../../components/InteractPageView.astro')).default : null;
-const GenericPageView =
-	newsSlug === null && resourceSlug === null && interactSlug === null ? (await import('../../components/GenericPageView.astro')).default : null;
+const isGeneric = newsSlug === null && resourceSlug === null && interactSlug === null;
+const GenericPageView = isGeneric ? (await import('../../components/GenericPageView.astro')).default : null;
+
+// Existence check for generic pages lives HERE, not in GenericPageView: Astro.rewrite() (like status/headers)
+// only works from a page's frontmatter, before the response starts streaming. Called from inside a component
+// it yields a blank 200. The fetched result is passed down so GenericPageView doesn't query again.
+let pageResult: Awaited<ReturnType<typeof requestWithMetadata<any>>> | null = null;
+if (isGeneric) {
+	try {
+		const r = await requestWithMetadata(client.queries.pages({ relativePath: `${slug}.md` }), { priority: 'primary' });
+		pageResult = r?.data?.pages ? r : null;
+	} catch {
+		// requestWithMetadata normally logs a warning and returns undefined for a missing doc (handled above); catch covers a throw.
+		pageResult = null;
+	}
+	if (!pageResult) return Astro.rewrite(getRelativeLocaleUrl(lang, '404'));
+}
 ---
 
 {NewsArticleView && newsSlug !== null ? (
@@ -25,6 +43,6 @@ const GenericPageView =
 	<ResourceView lang={lang} slug={resourceSlug} />
 ) : InteractPageView && interactSlug !== null ? (
 	<InteractPageView lang={lang} slug={interactSlug} />
-) : GenericPageView ? (
-	<GenericPageView lang={lang} slug={slug} />
+) : GenericPageView && pageResult ? (
+	<GenericPageView lang={lang} slug={slug} result={pageResult} />
 ) : null}
