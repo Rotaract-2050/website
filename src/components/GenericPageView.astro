@@ -20,8 +20,10 @@ const relativePath = `${slug}.md`;
 const result = await requestWithMetadata(client.queries.pages({ relativePath }), { priority: 'primary' });
 const page = result.data.pages;
 
+// Unknown slug: render the real 404 view (status 404, URL kept) instead of a 302 to home, so the miss is
+// visible to crawlers and to the `page_not_found` GA4 event with the originally requested path.
 if (!page) {
-	return Astro.redirect(getRelativeLocaleUrl(lang, ''));
+	return Astro.rewrite(getRelativeLocaleUrl(lang, '404'));
 }
 
 const current = slug as PageKey;
