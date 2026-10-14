@@ -14,6 +14,7 @@ import { SITE_NAME, DEFAULT_OG_IMAGE, SOCIAL_LINKS } from '../data/ui-strings';
 import { pageSlugs, type PageKey } from '../data/routes';
 import { buildOrganizationGraph } from '../lib/jsonld';
 import { isProdHost } from '../lib/env';
+import { resolveContentGroup, type ContentGroup } from '../lib/analytics';
 import '../styles/global.css';
 import '../styles/interact-theme.css';
 
@@ -35,6 +36,9 @@ interface Props {
 	/** "<title> | X" suffix override — the Interact sub-section uses its own site name instead
 	 * of SITE_NAME ("Rotaract Distretto 2050"). */
 	siteName?: string;
+	/** GA4 `content_group` override. Normally derived from the URL path (see src/lib/analytics.ts); pass it only when
+	 * the path doesn't describe the page, e.g. the 404 view rendered through a rewrite. */
+	contentGroup?: ContentGroup;
 }
 
 const {
@@ -49,7 +53,9 @@ const {
 	noindex = false,
 	theme = 'rotaract',
 	siteName = SITE_NAME,
+	contentGroup: contentGroupProp,
 } = Astro.props;
+const contentGroup = contentGroupProp ?? resolveContentGroup(Astro.url.pathname);
 const otherLang: Lang = lang === 'it' ? 'en' : 'it';
 const alternateHref = alternateHrefProp ?? getRelativeLocaleUrl(otherLang, pageSlugs[current]);
 
@@ -154,7 +160,7 @@ const organizationGraph =
 			<Footer lang={lang} settings={settings} isInteract={theme === 'interact'} />
 			<FormazioneChatWidget lang={lang} chatSettings={settings.chatAssistant} />
 		</div>
-		<CookieConsent lang={lang} gaMeasurementId={onProdHost ? settings.gaMeasurementId : null} />
+		<CookieConsent lang={lang} gaMeasurementId={onProdHost ? settings.gaMeasurementId : null} contentGroup={contentGroup} />
 	</body>
 </html>
 

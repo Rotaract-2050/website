@@ -2,14 +2,17 @@
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { uiStrings, type Lang } from '../data/ui-strings';
 import { pageSlugs } from '../data/routes';
+import type { ContentGroup } from '../lib/analytics';
 
 interface Props {
 	lang: Lang;
 	/** Google Analytics 4 Measurement ID from settings. When empty, no banner/script is rendered at all. */
 	gaMeasurementId?: string | null;
+	/** Site section sent to GA4 as `content_group` on every page view — computed once in BaseLayout. */
+	contentGroup: ContentGroup;
 }
 
-const { lang, gaMeasurementId } = Astro.props;
+const { lang, gaMeasurementId, contentGroup } = Astro.props;
 const t = uiStrings[lang].cookieConsent;
 const privacyHref = getRelativeLocaleUrl(lang, pageSlugs.privacy);
 ---
@@ -34,7 +37,7 @@ const privacyHref = getRelativeLocaleUrl(lang, pageSlugs.privacy);
 
 {
 	gaMeasurementId && (
-		<script is:inline define:vars={{ gaMeasurementId }}>
+		<script is:inline define:vars={{ gaMeasurementId, contentGroup }}>
 			const STORAGE_KEY = 'cookie-consent';
 			const banner = document.getElementById('cookie-consent');
 
@@ -71,7 +74,7 @@ const privacyHref = getRelativeLocaleUrl(lang, pageSlugs.privacy);
 					window.dataLayer.push(arguments);
 				};
 				window.gtag('js', new Date());
-				window.gtag('config', gaMeasurementId);
+				window.gtag('config', gaMeasurementId, { content_group: contentGroup });
 			}
 
 			const stored = readConsent();
