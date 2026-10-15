@@ -31,6 +31,12 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-US',
 	year: 'numeric',
 });
 
+const rawClub = club as any;
+const presidentName = rawClub.presidentName;
+const school = rawClub.school;
+const sponsorRotary = rawClub.sponsorRotary;
+const sponsorRotaract = rawClub.sponsorRotaract;
+const tiktok = rawClub.tiktok;
 ---
 
 <section class="club-detail">
@@ -49,6 +55,40 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-US',
 					<div class="info-row">
 						<span class="info-label">{t.zoneLabel}</span>
 						<span class="info-value">{club.zone.name}</span>
+					</div>
+				)}
+				{presidentName && (
+					<div class="info-row" data-tina-field={tinaField(club, 'presidentName')}>
+						<span class="info-label">{t.presidentLabel}</span>
+						<span class="info-value">{presidentName}</span>
+					</div>
+				)}
+				{school && (
+					<div class="info-row" data-tina-field={tinaField(club, 'school')}>
+						<span class="info-label">{t.schoolLabel}</span>
+						<span class="info-value">{school}</span>
+					</div>
+				)}
+				{sponsorRotary && (
+					<div class="info-row" data-tina-field={tinaField(club, 'sponsorRotary')}>
+						<span class="info-label">{t.sponsorRotaryLabel}</span>
+						<span class="info-value">{sponsorRotary}</span>
+					</div>
+				)}
+				{sponsorRotaract && (
+					<div class="info-row" data-tina-field={tinaField(club, 'sponsorRotaract')}>
+						<span class="info-label">{t.sponsorRotaractLabel}</span>
+						{typeof sponsorRotaract === 'object' && sponsorRotaract?.name ? (
+							<a class="info-value link" href={getRelativeLocaleUrl(lang, `club/${sponsorRotaract._sys?.filename || ''}`)}>
+								{sponsorRotaract.name}
+							</a>
+						) : typeof sponsorRotaract === 'string' && sponsorRotaract.includes('src/content/clubs/') ? (
+							<a class="info-value link" href={getRelativeLocaleUrl(lang, `club/${sponsorRotaract.replace(/^src\/content\/clubs\//, '').replace(/\.md$/, '')}`)}>
+								{sponsorRotaract.replace(/^src\/content\/clubs\//, '').replace(/\.md$/, '').split('-').map((s: string) => s.charAt(0).toUpperCase() + s.slice(1)).join(' ')}
+							</a>
+						) : (
+							<span class="info-value">{sponsorRotaract}</span>
+						)}
 					</div>
 				)}
 				{club.foundationYear && (
@@ -71,7 +111,7 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-US',
 					</div>
 				)}
 
-				{(club.website || club.instagram || club.facebook) && (
+				{(club.website || club.instagram || club.facebook || tiktok) && (
 					<div class="club-social">
 						{club.website && (
 							<a class="social-btn" href={club.website} target="_blank" rel="noopener noreferrer" aria-label={t.websiteLabel} data-tina-field={tinaField(club, 'website')}>
@@ -96,6 +136,13 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'it' ? 'it-IT' : 'en-US',
 								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
 									<circle cx="12" cy="12" r="9" />
 									<path d="M13.8 21v-7.2h2.4l.4-2.8h-2.8v-1.8c0-.8.2-1.4 1.4-1.4h1.5V5.1c-.3 0-1.1-.1-2.1-.1-2.1 0-3.5 1.3-3.5 3.6v2.4H8.7v2.8h2.4V21" />
+								</svg>
+							</a>
+						)}
+						{tiktok && (
+							<a class="social-btn" href={tiktok} target="_blank" rel="noopener noreferrer" aria-label={t.tiktokLabel} data-tina-field={tinaField(club, 'tiktok')}>
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+									<path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
 								</svg>
 							</a>
 						)}
