@@ -35,7 +35,7 @@ export const interactClubsCollection: Collection = {
 		...focalImageFields('photo', 'Foto club'),
 		{ type: 'string', name: 'school', label: 'Scuola (se club scolastico)' },
 		{ type: 'string', name: 'sponsorRotary', label: 'Padrino Rotary' },
-		{ type: 'reference', name: 'sponsorRotaract', label: 'Padrino Rotaract', collections: ['clubs'] },
+		{ type: 'string', name: 'sponsorRotaract', label: 'Padrino Rotaract (path file club)' },
 		{ type: 'string', name: 'email', label: 'Email' },
 		{ type: 'string', name: 'website', label: 'Sito web' },
 		{ type: 'string', name: 'instagram', label: 'Instagram' },
