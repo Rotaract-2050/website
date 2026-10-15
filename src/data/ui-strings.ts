@@ -112,10 +112,14 @@ export interface UiStrings {
 		zoneLabel: string;
 		foundationYearLabel: string;
 		presidentLabel: string;
+		schoolLabel: string;
+		sponsorRotaryLabel: string;
+		sponsorRotaractLabel: string;
 		emailLabel: string;
 		websiteLabel: string;
 		instagramLabel: string;
 		facebookLabel: string;
+		tiktokLabel: string;
 		storyTitle: string;
 		backToList: string;
 		photoAltPrefix: string;
@@ -324,10 +328,14 @@ const IT: UiStrings = {
 		zoneLabel: 'Zona',
 		foundationYearLabel: 'Anno di fondazione',
 		presidentLabel: 'Presidente',
+		schoolLabel: 'Scuola',
+		sponsorRotaryLabel: 'Padrino Rotary',
+		sponsorRotaractLabel: 'Padrino Rotaract',
 		emailLabel: 'Email',
 		websiteLabel: 'Sito web',
 		instagramLabel: 'Instagram',
 		facebookLabel: 'Facebook',
+		tiktokLabel: 'TikTok',
 		storyTitle: 'La nostra storia',
 		backToList: '← Tutti i club',
 		photoAltPrefix: 'Foto di',
@@ -510,10 +518,14 @@ const EN: UiStrings = {
 		zoneLabel: 'Zone',
 		foundationYearLabel: 'Founded in',
 		presidentLabel: 'President',
+		schoolLabel: 'School',
+		sponsorRotaryLabel: 'Rotary Sponsor',
+		sponsorRotaractLabel: 'Rotaract Sponsor',
 		emailLabel: 'Email',
 		websiteLabel: 'Website',
 		instagramLabel: 'Instagram',
 		facebookLabel: 'Facebook',
+		tiktokLabel: 'TikTok',
 		storyTitle: 'Our story',
 		backToList: '← All clubs',
 		photoAltPrefix: 'Photo of',
