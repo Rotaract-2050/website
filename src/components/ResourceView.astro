@@ -1,6 +1,6 @@
 ---
-import { requestWithMetadata, tinaField } from '@tinacms/astro';
-import client from '../../tina/__generated__/client';
+import { tinaField } from '@tinacms/astro';
+import type { TinaDocResult } from '../lib/tina-doc';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageBanner from './PageBanner.astro';
 import { uiStrings, type Lang } from '../data/ui-strings';
@@ -14,18 +14,18 @@ interface Props {
 	lang: Lang;
 	/** Resource slug, e.g. `tavolo-presidenziale-visita-rd` — never a multi-segment path. */
 	slug: string;
+	/** Result of the Tina query, fetched and null-checked by the page frontmatter (see lib/tina-doc.ts). */
+	result: TinaDocResult;
 }
 
-const { lang, slug } = Astro.props;
+const { lang, slug, result } = Astro.props;
 const t = uiStrings[lang];
-const relativePath = `${slug}.md`;
 
-const result = await requestWithMetadata(client.queries.resources({ relativePath }), { priority: 'primary' });
 const resource = result.data.resources;
 
-if (!resource) {
-	return Astro.redirect(getRelativeLocaleUrl(lang, 'formazione'));
-}
+// Defensive only: the page frontmatter already rewrote to the 404 view if the doc was missing (rewrite/status can't
+// work from a component). Render nothing.
+if (!resource) return;
 
 const localized = localizeResource(resource, lang);
 const titleField = lang === 'en' && resource.titleEn ? 'titleEn' : 'title';

@@ -1,0 +1,76 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageBanner from './PageBanner.astro';
+import { uiStrings, type Lang } from '../data/ui-strings';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = uiStrings[lang].notFound;
+const homeHref = getRelativeLocaleUrl(lang, '');
+---
+
+<BaseLayout lang={lang} current="home" title={t.seoTitle} description={t.body} noindex contentGroup="404">
+	<PageBanner lang={lang} eyebrow={t.eyebrow} title={t.title} breadcrumbCurrent={t.breadcrumbCurrent} />
+	<section class="not-found">
+		<p class="not-found__body">{t.body}</p>
+		<a class="not-found__cta" href={homeHref}>{t.homeCta}</a>
+	</section>
+</BaseLayout>
+
+<script>
+	import { whenGaReady } from '../lib/ga-ready';
+
+	// trackEvent is a no-op before consent, so wait for gtag: fires immediately if consent was already
+	// stored, or right after the visitor accepts on this page. Never fires for non-consenting visitors.
+	whenGaReady(() => {
+		window.trackEvent?.('page_not_found', {
+			page_path: location.pathname,
+			page_referrer: document.referrer,
+		});
+	});
+</script>
+
+<style>
+	.not-found {
+		max-width: var(--content-max);
+		margin: 0 auto;
+		padding: 16px 40px 72px;
+	}
+
+	.not-found__body {
+		max-width: 60ch;
+		margin: 0 0 24px;
+		font-family: var(--font-body);
+		font-size: 18px;
+		line-height: 1.6;
+	}
+
+	.not-found__cta {
+		display: inline-block;
+		padding: 12px 28px;
+		border-radius: 999px;
+		background: var(--color-pink);
+		color: #fff;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		text-transform: uppercase;
+		text-decoration: none;
+		box-shadow: var(--elevation-1);
+		transition: transform 0.2s ease, box-shadow 0.2s ease;
+	}
+
+	.not-found__cta:hover {
+		transform: translateY(-4px);
+		box-shadow: var(--elevation-2);
+	}
+
+	@media (max-width: 640px) {
+		.not-found {
+			padding: 8px 20px 56px;
+		}
+	}
+</style>
