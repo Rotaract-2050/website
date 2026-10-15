@@ -1,6 +1,6 @@
 ---
-import { requestWithMetadata, tinaField } from '@tinacms/astro';
-import client from '../../tina/__generated__/client';
+import { tinaField } from '@tinacms/astro';
+import type { TinaDocResult } from '../lib/tina-doc';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageBanner from './PageBanner.astro';
 import BlockRenderer from './BlockRenderer.astro';
@@ -12,7 +12,7 @@ interface Props {
 	/** Page slug, e.g. `distretto` or `home` — never a reserved section prefix like `news/...`. */
 	slug: string;
 	/** Result of the `pages` query, already fetched (and null-checked) by the catch-all page. */
-	result: Awaited<ReturnType<typeof requestWithMetadata<any>>>;
+	result: TinaDocResult;
 }
 
 const { lang, slug, result } = Astro.props;
