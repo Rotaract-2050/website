@@ -906,6 +906,8 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 			}
 		}
 
+		let messageIndex = 0;
+
 		form.addEventListener('submit', async (event) => {
 			event.preventDefault();
 			const question = input.value.trim().slice(0, MAX_MESSAGE_LENGTH);
@@ -918,6 +920,10 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 			input.value = '';
 			sendBtn.disabled = true;
 			input.disabled = true;
+
+			// Privacy: only the ordinal is sent to analytics, never the question text.
+			messageIndex += 1;
+			window.trackEvent?.('formazione_chat_message', { message_index: messageIndex });
 
 			appendMessage('user', question);
 			history.push({ role: 'user', text: question });
@@ -932,6 +938,7 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 				if (widgetId !== null) window.turnstile?.reset(widgetId);
 				pendingBubble.remove();
 				appendMessage('error', strings.errorTurnstile);
+				window.trackEvent?.('formazione_chat_error', { error_type: 'turnstile' });
 				sendBtn.disabled = false;
 				input.disabled = false;
 				input.focus();
@@ -954,10 +961,12 @@ const TURNSTILE_SITEKEY = '0x4AAAAAAERu2A-bW7ooqBy6';
 					saveHistory();
 				} else {
 					appendMessage('error', data.error || strings.errorGeneric);
+					window.trackEvent?.('formazione_chat_error', { error_type: String(response.status) });
 				}
 			} catch {
 				pendingBubble.remove();
 				appendMessage('error', strings.errorGeneric);
+				window.trackEvent?.('formazione_chat_error', { error_type: 'network' });
 			} finally {
 				// Reset only after the request has actually completed (success or failure) — per
 				// Cloudflare's own guidance, resetting a widget right after obtaining a token but

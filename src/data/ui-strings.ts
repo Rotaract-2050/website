@@ -50,6 +50,14 @@ export interface UiStrings {
 		reject: string;
 		policyLink: string;
 	};
+	notFound: {
+		eyebrow: string;
+		title: string;
+		breadcrumbCurrent: string;
+		body: string;
+		homeCta: string;
+		seoTitle: string;
+	};
 	calendar: {
 		agendaTab: string;
 		monthTab: string;
@@ -241,6 +249,14 @@ const IT: UiStrings = {
 		reject: 'Rifiuta',
 		policyLink: 'Maggiori informazioni',
 	},
+	notFound: {
+		eyebrow: 'Errore 404',
+		title: 'Pagina non trovata',
+		breadcrumbCurrent: '404',
+		body: "La pagina che cerchi non esiste o è stata spostata. Controlla l'indirizzo oppure torna alla home.",
+		homeCta: 'Torna alla home',
+		seoTitle: 'Pagina non trovata',
+	},
 	calendar: {
 		agendaTab: 'Agenda',
 		monthTab: 'Mese',
@@ -418,6 +434,14 @@ const EN: UiStrings = {
 		accept: 'Accept',
 		reject: 'Reject',
 		policyLink: 'Learn more',
+	},
+	notFound: {
+		eyebrow: 'Error 404',
+		title: 'Page not found',
+		breadcrumbCurrent: '404',
+		body: 'The page you are looking for does not exist or has been moved. Check the address or go back to the home page.',
+		homeCta: 'Back to home',
+		seoTitle: 'Page not found',
 	},
 	calendar: {
 		agendaTab: 'Agenda',

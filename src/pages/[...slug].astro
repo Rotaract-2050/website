@@ -1,4 +1,7 @@
 ---
+import client from '../../tina/__generated__/client';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { fetchTinaDoc } from '../lib/tina-doc';
 const lang = 'it' as const;
 const slug = Astro.params.slug ?? 'home';
 
@@ -27,6 +30,20 @@ const resourceSlug = slug.startsWith('formazione/') ? slug.slice('formazione/'.l
 // (same safe shape as the Rotaract eventi/[year]/[slug].astro route, which needs no guard here
 // either — only single-segment nested dynamic routes like news/formazione do, see above).
 const interactSlug = slug === 'interact' || slug.startsWith('interact/') ? slug : null;
+
+// The "does this doc exist?" decision lives HERE, in the page frontmatter, for every branch: Astro.rewrite() (like
+// status/headers) only works before the response starts streaming. Called from inside a view component it yields
+// a blank 200 (0 bytes). The fetched result is passed down as the `result` prop, so the views don't query again.
+// Unknown slug -> real 404 view (URL kept, status 404) instead of a redirect to the section index.
+const doc =
+	newsSlug !== null
+		? { query: client.queries.news({ relativePath: `${newsSlug}.md` }), key: 'news' }
+		: resourceSlug !== null
+			? { query: client.queries.resources({ relativePath: `${resourceSlug}.md` }), key: 'resources' }
+			: { query: client.queries.pages({ relativePath: `${slug}.md` }), key: 'pages' }; // generic + interact
+const pageResult = await fetchTinaDoc(doc.query, doc.key);
+if (!pageResult) return Astro.rewrite(getRelativeLocaleUrl(lang, '404'));
+
 const NewsArticleView = newsSlug !== null ? (await import('../components/NewsArticleView.astro')).default : null;
 const ResourceView = resourceSlug !== null ? (await import('../components/ResourceView.astro')).default : null;
 const InteractPageView = interactSlug !== null ? (await import('../components/InteractPageView.astro')).default : null;
@@ -35,11 +52,11 @@ const GenericPageView =
 ---
 
 {NewsArticleView && newsSlug !== null ? (
-	<NewsArticleView lang={lang} slug={newsSlug} />
+	<NewsArticleView lang={lang} slug={newsSlug} result={pageResult} />
 ) : ResourceView && resourceSlug !== null ? (
-	<ResourceView lang={lang} slug={resourceSlug} />
+	<ResourceView lang={lang} slug={resourceSlug} result={pageResult} />
 ) : InteractPageView && interactSlug !== null ? (
-	<InteractPageView lang={lang} slug={interactSlug} />
+	<InteractPageView lang={lang} slug={interactSlug} result={pageResult} />
 ) : GenericPageView ? (
-	<GenericPageView lang={lang} slug={slug} />
+	<GenericPageView lang={lang} slug={slug} result={pageResult} />
 ) : null}

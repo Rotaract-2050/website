@@ -1,7 +1,15 @@
 ---
+import client from '../../../tina/__generated__/client';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import ResourceView from '../../components/ResourceView.astro';
+import { fetchTinaDoc } from '../../lib/tina-doc';
 
+const lang = 'it' as const;
 const slug = Astro.params.slug ?? '';
+
+// Existence check in the page frontmatter (rewrite/status don't work from a component, see lib/tina-doc.ts).
+const result = await fetchTinaDoc(client.queries.resources({ relativePath: `${slug}.md` }), 'resources');
+if (!result) return Astro.rewrite(getRelativeLocaleUrl(lang, '404'));
 ---
 
-<ResourceView lang="it" slug={slug} />
+<ResourceView lang={lang} slug={slug} result={result} />
