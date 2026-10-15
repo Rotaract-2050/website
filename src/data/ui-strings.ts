@@ -57,6 +57,16 @@ export interface UiStrings {
 		body: string;
 		homeCta: string;
 		seoTitle: string;
+		requestedPathLabel: string;
+		shortcutsTitle: string;
+		shortcuts: {
+			distretto: string;
+			club: string;
+			eventi: string;
+			news: string;
+			formazione: string;
+			materiali: string;
+		};
 	};
 	calendar: {
 		agendaTab: string;
@@ -253,9 +263,19 @@ const IT: UiStrings = {
 		eyebrow: 'Errore 404',
 		title: 'Pagina non trovata',
 		breadcrumbCurrent: '404',
-		body: "La pagina che cerchi non esiste o è stata spostata. Controlla l'indirizzo oppure torna alla home.",
+		body: "Ops, qui non c'è niente: il link potrebbe essere vecchio o l'indirizzo digitato con un errore. Nessun problema, ti aiutiamo a ritrovare la strada.",
 		homeCta: 'Torna alla home',
 		seoTitle: 'Pagina non trovata',
+		requestedPathLabel: 'Indirizzo richiesto',
+		shortcutsTitle: 'Oppure scegli da dove ripartire',
+		shortcuts: {
+			distretto: 'Scopri chi siamo e cosa facciamo per il territorio.',
+			club: 'Trova il club più vicino a te ed entra nel Rotaract.',
+			eventi: 'Service, incontri e serate: il calendario del distretto.',
+			news: 'Le ultime notizie dal distretto e dai club.',
+			formazione: 'Guide e percorsi per crescere come rotaractiano.',
+			materiali: 'Loghi, documenti e risorse da scaricare.',
+		},
 	},
 	calendar: {
 		agendaTab: 'Agenda',
@@ -439,9 +459,19 @@ const EN: UiStrings = {
 		eyebrow: 'Error 404',
 		title: 'Page not found',
 		breadcrumbCurrent: '404',
-		body: 'The page you are looking for does not exist or has been moved. Check the address or go back to the home page.',
+		body: 'Oops, there is nothing here: the link may be old or the address mistyped. No worries, we will help you find your way back.',
 		homeCta: 'Back to home',
 		seoTitle: 'Page not found',
+		requestedPathLabel: 'Requested address',
+		shortcutsTitle: 'Or pick where to start over',
+		shortcuts: {
+			distretto: 'Find out who we are and what we do for our community.',
+			club: 'Find the club nearest to you and join Rotaract.',
+			eventi: 'Service projects, meetings and evenings: the district calendar.',
+			news: 'The latest news from the district and its clubs.',
+			formazione: 'Guides and learning paths to grow as a Rotaractor.',
+			materiali: 'Logos, documents and resources to download.',
+		},
 	},
 	calendar: {
 		agendaTab: 'Agenda',
