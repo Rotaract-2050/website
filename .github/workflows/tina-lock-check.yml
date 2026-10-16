@@ -1,0 +1,50 @@
+name: Tina lock check
+
+# Tina Cloud non legge tina/collections/*.ts: indicizza tina/tina-lock.json, che viene
+# rigenerato solo da `tinacms dev`. Se si cambia lo schema e si committa senza il lock
+# aggiornato, il client generato in build chiede campi che Tina Cloud non conosce e ogni
+# query che li tocca fallisce in produzione (i loader la trasformano in una lista vuota).
+# Incidente 2026-10-16: eventi, news e formazione vuoti dopo #90. Questo job rigenera il
+# lock in modalità locale (nessuna credenziale Tina necessaria) e fallisce se differisce
+# da quello committato.
+
+on:
+  pull_request:
+    paths:
+      - 'tina/**'
+      - 'package.json'
+      - 'package-lock.json'
+  push:
+    branches: [main, dev]
+    paths:
+      - 'tina/**'
+      - 'package.json'
+      - 'package-lock.json'
+  workflow_dispatch: {}
+
+jobs:
+  lock-in-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Regenerate tina-lock.json
+        # `-c true`: tinacms dev scrive il lock all'avvio, poi lancia il comando "web" e si
+        # chiude quando questo termina.
+        run: npx tinacms dev --datalayer-port 9433 -c "true"
+
+      - name: Fail if lock is out of date
+        run: |
+          if ! git diff --quiet -- tina/tina-lock.json; then
+            echo "::error file=tina/tina-lock.json::tina-lock.json non è allineato allo schema in tina/. Avvia 'bash scripts/dev.sh' (o 'npx tinacms dev'), poi committa tina/tina-lock.json."
+            git diff --stat -- tina/tina-lock.json
+            exit 1
+          fi
