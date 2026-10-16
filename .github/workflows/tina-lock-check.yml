@@ -14,12 +14,14 @@ on:
       - 'tina/**'
       - 'package.json'
       - 'package-lock.json'
+      - '.github/workflows/tina-lock-check.yml'
   push:
     branches: [main, dev]
     paths:
       - 'tina/**'
       - 'package.json'
       - 'package-lock.json'
+      - '.github/workflows/tina-lock-check.yml'
   workflow_dispatch: {}
 
 jobs:
