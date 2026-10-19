@@ -60,6 +60,45 @@ const privacyHref = getRelativeLocaleUrl(lang, pageSlugs.privacy);
 				}
 			}
 
+			// UTM-tagged links (Instagram bio, WhatsApp, convocazioni — see the "Link UTM" field in
+			// the Tina events editor) only get attributed if gtag sees the utm_* params. gtag reads
+			// them from the current URL, which is lost when the visitor accepts the banner on a
+			// later page than the one they landed on. So the landing page's utm_* values are kept
+			// in sessionStorage (this tab only, nothing sent anywhere) and handed to gtag on consent.
+			const UTM_KEY = 'utm-landing';
+			// utm_* query param → gtag config field (GA4 names utm_campaign "campaign_name").
+			const UTM_FIELDS = {
+				utm_source: 'campaign_source',
+				utm_medium: 'campaign_medium',
+				utm_campaign: 'campaign_name',
+				utm_content: 'campaign_content',
+				utm_term: 'campaign_term',
+			};
+			function captureUtm() {
+				const params = new URLSearchParams(location.search);
+				if (!params.has('utm_source')) return;
+				const utm = {};
+				for (const [param, field] of Object.entries(UTM_FIELDS)) {
+					const value = params.get(param);
+					if (value) utm[field] = value;
+				}
+				try {
+					sessionStorage.setItem(UTM_KEY, JSON.stringify(utm));
+				} catch {
+					/* no-op: attribution then only works if consent is given on the landing page */
+				}
+			}
+			function takeUtm() {
+				try {
+					const raw = sessionStorage.getItem(UTM_KEY);
+					sessionStorage.removeItem(UTM_KEY);
+					return raw ? JSON.parse(raw) : {};
+				} catch {
+					return {};
+				}
+			}
+			captureUtm();
+
 			// GA is never requested from Google until the visitor explicitly accepts — no
 			// gtag.js fetch, no cookie, no request of any kind happens pre-consent.
 			function loadGa() {
@@ -74,7 +113,7 @@ const privacyHref = getRelativeLocaleUrl(lang, pageSlugs.privacy);
 					window.dataLayer.push(arguments);
 				};
 				window.gtag('js', new Date());
-				window.gtag('config', gaMeasurementId, { content_group: contentGroup });
+				window.gtag('config', gaMeasurementId, { content_group: contentGroup, ...takeUtm() });
 				// Lets bundled scripts (BaseLayout: web-vitals, 404 tracking) react to consent given
 				// on this very page — see whenGaReady() in src/lib/ga-ready.ts.
 				window.dispatchEvent(new Event('ga:ready'));
