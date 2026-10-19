@@ -3,6 +3,8 @@ title: II Assemblea Distrettuale
 titleEn: II Assemblea Distrettuale
 visible: true
 date: 2026-10-24T12:00:00.000Z
+endDate: 2026-10-19T20:53:53.184Z
+calendarDate: 2026-10-24T20:53:53.278Z
 eventType: Distrettuale
 locationLavori: 'Palazzo Gonzaga, Via Beata Paola Montaldi 15A - Volta Mantovana (MN)'
 clubs:
