@@ -4,8 +4,11 @@ zone: src/content/zones/padana.md
 presidentName: Laura Boldrini
 photo: '/uploads/loghi-club/interact-club-oglio-po.png'
 foundationYear: 2023
-story: 'Dato non ancora confermato dal distretto Interact — nome e zona provengono dal riferimento già presente su La Squadra.'
-storyEn: 'Not yet confirmed by the Interact district — name and zone come from the existing reference on the Team page.'
+school: 'I.I.S. Giovanni Romani (Casalmaggiore)'
+sponsorRotary: 'Marzio Somenzi'
+instagram: 'https://www.instagram.com/interactpoloromani/'
+story: 'L''Interact Club Casalmaggiore Oglio Po è un club a base scolastica attivo presso l''I.I.S. Giovanni Romani di Casalmaggiore, con padrino Marzio Somenzi, ed è guidato dalla presidente Laura Boldrini.'
+storyEn: 'Interact Club Casalmaggiore Oglio Po is a school-based club active at I.I.S. Giovanni Romani in Casalmaggiore, sponsored by Marzio Somenzi, and led by President Laura Boldrini.'
 lat: 44.985
 lng: 10.416
 ---
