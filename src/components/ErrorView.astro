@@ -15,9 +15,9 @@ const homeHref = getRelativeLocaleUrl(lang, '');
 
 <BaseLayout lang={lang} current="home" title={t.seoTitle} description={t.body} noindex contentGroup="404">
 	<PageBanner lang={lang} eyebrow={t.eyebrow} title={t.title} breadcrumbCurrent={t.breadcrumbCurrent} />
-	<section class="not-found">
-		<p class="not-found__body">{t.body}</p>
-		<a class="not-found__cta" href={homeHref}>{t.homeCta}</a>
+	<section class="error-page">
+		<p class="error-page__body">{t.body}</p>
+		<a class="error-page__cta" href={homeHref}>{t.homeCta}</a>
 	</section>
 </BaseLayout>
 
@@ -35,13 +35,13 @@ const homeHref = getRelativeLocaleUrl(lang, '');
 </script>
 
 <style>
-	.not-found {
+	.error-page {
 		max-width: var(--content-max);
 		margin: 0 auto;
 		padding: 16px 40px 72px;
 	}
 
-	.not-found__body {
+	.error-page__body {
 		max-width: 60ch;
 		margin: 0 0 24px;
 		font-family: var(--font-body);
@@ -49,7 +49,7 @@ const homeHref = getRelativeLocaleUrl(lang, '');
 		line-height: 1.6;
 	}
 
-	.not-found__cta {
+	.error-page__cta {
 		display: inline-block;
 		padding: 12px 28px;
 		border-radius: 999px;
@@ -63,13 +63,13 @@ const homeHref = getRelativeLocaleUrl(lang, '');
 		transition: transform 0.2s ease, box-shadow 0.2s ease;
 	}
 
-	.not-found__cta:hover {
+	.error-page__cta:hover {
 		transform: translateY(-4px);
 		box-shadow: var(--elevation-2);
 	}
 
 	@media (max-width: 640px) {
-		.not-found {
+		.error-page {
 			padding: 8px 20px 56px;
 		}
 	}
