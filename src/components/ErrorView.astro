@@ -6,18 +6,23 @@ import { uiStrings, type Lang } from '../data/ui-strings';
 
 interface Props {
 	lang: Lang;
+	error?: 'notFound' | 'teapot';
 }
 
-const { lang } = Astro.props;
-const t = uiStrings[lang].notFound;
+const { lang, error = 'notFound' } = Astro.props;
+const t = uiStrings[lang][error];
 const homeHref = getRelativeLocaleUrl(lang, '');
+const donate = error === 'teapot' ? uiStrings[lang].teapot : null;
 ---
 
-<BaseLayout lang={lang} current="home" title={t.seoTitle} description={t.body} noindex contentGroup="404">
+<BaseLayout lang={lang} current="home" title={t.seoTitle} description={t.body} noindex contentGroup={error === 'notFound' ? '404' : undefined}>
 	<PageBanner lang={lang} eyebrow={t.eyebrow} title={t.title} breadcrumbCurrent={t.breadcrumbCurrent} />
-	<section class="error-page">
+	<section class="error-page" data-error={error}>
 		<p class="error-page__body">{t.body}</p>
-		<a class="error-page__cta" href={homeHref}>{t.homeCta}</a>
+		<div class="error-page__actions">
+			{donate && <a class="error-page__cta" href={donate.donateHref} target="_blank" rel="noopener">{donate.donateCta}</a>}
+			<a class:list={['error-page__cta', { 'error-page__cta--secondary': donate }]} href={homeHref}>{t.homeCta}</a>
+		</div>
 	</section>
 </BaseLayout>
 
@@ -26,12 +31,14 @@ const homeHref = getRelativeLocaleUrl(lang, '');
 
 	// trackEvent is a no-op before consent, so wait for gtag: fires immediately if consent was already
 	// stored, or right after the visitor accepts on this page. Never fires for non-consenting visitors.
-	whenGaReady(() => {
-		window.trackEvent?.('page_not_found', {
-			page_path: location.pathname,
-			page_referrer: document.referrer,
+	if (document.querySelector('.error-page[data-error="notFound"]')) {
+		whenGaReady(() => {
+			window.trackEvent?.('page_not_found', {
+				page_path: location.pathname,
+				page_referrer: document.referrer,
+			});
 		});
-	});
+	}
 </script>
 
 <style>
@@ -47,6 +54,12 @@ const homeHref = getRelativeLocaleUrl(lang, '');
 		font-family: var(--font-body);
 		font-size: 18px;
 		line-height: 1.6;
+	}
+
+	.error-page__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
 	}
 
 	.error-page__cta {
@@ -66,6 +79,13 @@ const homeHref = getRelativeLocaleUrl(lang, '');
 	.error-page__cta:hover {
 		transform: translateY(-4px);
 		box-shadow: var(--elevation-2);
+	}
+
+	.error-page__cta--secondary {
+		background: transparent;
+		color: var(--color-pink);
+		outline: 2px solid var(--color-pink);
+		outline-offset: -2px;
 	}
 
 	@media (max-width: 640px) {

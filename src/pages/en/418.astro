@@ -1,0 +1,7 @@
+---
+import ErrorView from '../../components/ErrorView.astro';
+
+Astro.response.status = 418;
+---
+
+<ErrorView lang="en" error="teapot" />
