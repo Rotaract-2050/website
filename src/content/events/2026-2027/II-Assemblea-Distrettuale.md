@@ -53,7 +53,8 @@ schedule:
     title: Apertura delle registrazioni per la conviviale
   - time: '20:00'
     title: Inizio della conviviale
-ticketsOpen: true
+ticketsOpen: false
 ticketsUrl: 'https://www.tickettailor.com/events/distrettorotaract2050/2436548'
+photoAlbumUrl: 'https://drive.google.com/drive/u/2/folders/1B6cn2AOv5gMc3O-3ueTp14K7V_g86xz6'
 ---
 
