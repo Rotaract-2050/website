@@ -58,6 +58,7 @@ export interface UiStrings {
 		homeCta: string;
 		seoTitle: string;
 	};
+	teapot: UiStrings['notFound'] & { donateCta: string; donateHref: string };
 	calendar: {
 		agendaTab: string;
 		monthTab: string;
@@ -253,6 +254,16 @@ const IT: UiStrings = {
 		reject: 'Rifiuta',
 		policyLink: 'Maggiori informazioni',
 	},
+	teapot: {
+		eyebrow: 'Errore 418',
+		title: 'Sono una teiera',
+		breadcrumbCurrent: '418',
+		body: "Ci dispiace: questo sito web non supporta HTCPCP-TEA (RFC 7168), l'evoluzione del protocollo che controlla le teiere, quindi da qui non uscirà nemmeno una goccia. Il prezzo della tazza però l'hai appena risparmiato: che ne dici di offrirlo a chi ne ha più bisogno?",
+		homeCta: 'Torna alla home',
+		seoTitle: 'Sono una teiera',
+		donateCta: 'Offri un tè alla Rotary Foundation',
+		donateHref: 'https://my.rotary.org/donate',
+	},
 	notFound: {
 		eyebrow: 'Errore 404',
 		title: 'Pagina non trovata',
@@ -442,6 +453,16 @@ const EN: UiStrings = {
 		accept: 'Accept',
 		reject: 'Reject',
 		policyLink: 'Learn more',
+	},
+	teapot: {
+		eyebrow: 'Error 418',
+		title: "I'm a teapot",
+		breadcrumbCurrent: '418',
+		body: 'Sorry: this website does not support HTCPCP-TEA (RFC 7168), the protocol evolution that controls teapots, so not a single drop will come out of here. You did just save the price of a cup, though: how about passing it on to someone who needs it more?',
+		homeCta: 'Back to home',
+		seoTitle: "I'm a teapot",
+		donateCta: 'Buy The Rotary Foundation a tea',
+		donateHref: 'https://my.rotary.org/donate',
 	},
 	notFound: {
 		eyebrow: 'Error 404',
