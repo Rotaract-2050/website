@@ -11,6 +11,7 @@ import { getRelativeLocaleUrl } from 'astro:i18n';
 import { localizeEvent, eventTypeTag, isUpcomingEvent } from '../../../../lib/events';
 import { tagPillStyle, clubTagLabels } from '../../../../lib/news';
 import { buildEventJsonLd } from '../../../../lib/jsonld';
+import { renderTinaMarkdown } from '../../../../lib/tina-rich-text';
 
 const lang = 'en' as const;
 const t = uiStrings[lang];
@@ -35,6 +36,8 @@ const dateFormatter = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 
 const typeTags = eventTypeTag(event);
 const clubTags = clubTagLabels(event.clubs);
 const localized = localizeEvent(event, lang);
+const bodyHtml = renderTinaMarkdown((lang === 'en' && event.bodyEn) || event.body);
+const bodyAfterHtml = renderTinaMarkdown((lang === 'en' && event.bodyAfterEn) || event.bodyAfter);
 const titleField = event.titleEn ? 'titleEn' : 'title';
 // `ticketsOpen` gates the ticket button/widget only, independent from `visible` (which controls
 // the whole event page): a socio can prep the link/snippet in advance and open it only once
@@ -64,7 +67,7 @@ const jsonLd = buildEventJsonLd({
 	title={localized.title}
 	description={localized.excerpt || t.events.empty}
 	alternateHref={getRelativeLocaleUrl('it', `eventi/${eventSlug}`)}
-	image={event.image}
+	image={event.ogImage || event.image}
 	type="article"
 	publishedTime={event.date}
 >
@@ -156,6 +159,7 @@ const jsonLd = buildEventJsonLd({
 					)}
 				</div>
 			)}
+			{bodyHtml && <div class="event-detail-body" data-tina-field={tinaField(event, lang === 'en' && event.bodyEn ? 'bodyEn' : 'body')} set:html={bodyHtml} />}
 			{event.schedule && event.schedule.length > 0 && (
 				<div class="event-schedule" data-tina-field={tinaField(event, 'schedule')}>
 					<h2 class="event-schedule-title">{t.events.scheduleTitle}</h2>
@@ -174,6 +178,7 @@ const jsonLd = buildEventJsonLd({
 					</ol>
 				</div>
 			)}
+			{bodyAfterHtml && <div class="event-detail-body" data-tina-field={tinaField(event, lang === 'en' && event.bodyAfterEn ? 'bodyAfterEn' : 'bodyAfter')} set:html={bodyAfterHtml} />}
 			{showTicketWidget && (
 				<div class="event-detail-ticket-widget" set:html={event.ticketWidgetEmbed} />
 			)}
@@ -291,6 +296,45 @@ const jsonLd = buildEventJsonLd({
 		color: var(--color-text);
 		line-height: 1.75;
 		margin: 0 0 24px;
+	}
+
+	.event-detail-body {
+		font-size: 16px;
+		color: var(--color-text);
+		line-height: 1.75;
+		margin: 0 0 24px;
+	}
+
+	.event-detail-body :global(p) {
+		margin: 0 0 16px;
+	}
+
+	.event-detail-body :global(h2),
+	.event-detail-body :global(h3) {
+		font-family: var(--font-heading);
+		color: var(--color-navy);
+		margin: 32px 0 12px;
+	}
+
+	.event-detail-body :global(ul) {
+		margin: 0 0 16px;
+		padding-left: 1.25em;
+	}
+
+	.event-detail-body :global(li) {
+		margin: 0 0 6px;
+	}
+
+	.event-detail-body :global(img) {
+		display: block;
+		width: 100%;
+		height: auto;
+		margin: 8px 0 24px;
+		border-radius: 16px;
+	}
+
+	.event-detail-body :global(a) {
+		color: var(--color-pink);
 	}
 
 	.event-detail-actions {
