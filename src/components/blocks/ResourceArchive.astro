@@ -72,6 +72,7 @@ const itemListJsonLd = buildItemListJsonLd(
 								tags={localized.tags}
 								tagKeys={(resource.tags ?? []).filter((tag): tag is string => Boolean(tag))}
 								title={localized.title}
+								subtitle={localized.subtitle}
 								excerpt={localized.excerpt}
 								bodyText={extractResourcePlainText(localized.body, resolveWikilink)}
 								readMoreLabel={t.resources.readMore}

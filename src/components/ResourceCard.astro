@@ -9,6 +9,7 @@ interface Props {
 	/** Canonical (Italian) tag values — drive color, filter slug and pill styling regardless of display language. */
 	tagKeys: string[];
 	title: string;
+	subtitle?: string;
 	excerpt: string;
 	/** Plain-text article body, not rendered — carried only as `data-search` so the archive's search box can match inside the full article, not just the card's visible excerpt. */
 	bodyText: string;
@@ -16,7 +17,7 @@ interface Props {
 	tinaFieldAttr?: string;
 }
 
-const { href, tags, tagKeys, title, excerpt, bodyText, readMoreLabel, tinaFieldAttr } = Astro.props;
+const { href, tags, tagKeys, title, subtitle, excerpt, bodyText, readMoreLabel, tinaFieldAttr } = Astro.props;
 const primaryTag = tagKeys[0];
 const iconColor = tagColor(primaryTag);
 
@@ -54,6 +55,7 @@ const hiddenTags = tags.slice(MAX_VISIBLE_TAGS);
 			</div>
 		)}
 		<h3 class="resource-title">{title}</h3>
+		{subtitle && <p class="resource-subtitle">{subtitle}</p>}
 		<p class="resource-excerpt">{excerpt}</p>
 		<span class="resource-read-more">{readMoreLabel}</span>
 	</a>
@@ -342,6 +344,14 @@ const hiddenTags = tags.slice(MAX_VISIBLE_TAGS);
 
 	.resource-card:hover .resource-title {
 		color: var(--color-pink);
+	}
+
+	.resource-subtitle {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 15px;
+		color: var(--color-pink);
+		margin: -6px 0 10px;
 	}
 
 	.resource-excerpt {

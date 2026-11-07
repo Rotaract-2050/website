@@ -13,7 +13,7 @@ excerptEn: >-
   kitchen in Vigevano.
 date: 2026-06-30T00:00:00.000Z
 displayDate: AR 2025/2026
-image: /uploads/interact-vigevano-mensa-frati.jpeg
+image: /uploads/services/mensa-frati-vigevano/copertina.jpeg
 imageLabel: Mensa dei Frati di Vigevano
 imageLabelEn: Friars' soup kitchen in Vigevano
 bodyEn: |

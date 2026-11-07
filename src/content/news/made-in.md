@@ -6,7 +6,7 @@ scope:
 excerpt: 'Il Distretto 2090 lancia MADE-IN, tra aperitivi formativi, visite aziendali e networking per valorizzare il Made in Italy.'
 excerptEn: 'District 2090 launches MADE-IN, mixing training aperitifs, company visits and networking to celebrate Made in Italy.'
 date: 2026-08-05T11:00:00.000Z
-image: /uploads/news/2026-2027/Madein.jpeg
+image: /uploads/news/2026-2027/made-in/copertina.jpeg
 imageFocalX: 49
 imageFocalY: 23
 imageLabel: Foto di MADE-IN

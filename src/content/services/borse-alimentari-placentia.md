@@ -12,7 +12,7 @@ excerptEn: >-
   On Saturday 21 March Interact Placentia joined Rotary Valtidone in preparing
   food parcels.
 date: 2026-03-21T00:00:00.000Z
-image: /uploads/interact-placentia-borse-alimentari.jpeg
+image: /uploads/services/borse-alimentari-placentia/copertina.jpeg
 imageLabel: Borse alimentari con il Rotary Valtidone
 imageLabelEn: Food parcels with Rotary Valtidone
 bodyEn: |

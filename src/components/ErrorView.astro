@@ -3,6 +3,7 @@ import { getRelativeLocaleUrl } from 'astro:i18n';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageBanner from './PageBanner.astro';
 import { uiStrings, type Lang } from '../data/ui-strings';
+import { pageSlugs, type PageKey } from '../data/routes';
 
 interface Props {
 	lang: Lang;
@@ -11,27 +12,76 @@ interface Props {
 
 const { lang, error = 'notFound' } = Astro.props;
 const t = uiStrings[lang][error];
-const homeHref = getRelativeLocaleUrl(lang, '');
+const isNotFound = error === 'notFound';
 const donate = error === 'teapot' ? uiStrings[lang].teapot : null;
+const nav = uiStrings[lang].nav;
+const homeHref = getRelativeLocaleUrl(lang, '');
+
+type ShortcutKey = keyof typeof uiStrings.it.notFound.shortcuts;
+// "Entra nel Rotaract" has no page of its own: the header join button points to the club
+// directory, so the club shortcut carries that role and reuses the same destination.
+const shortcutDefs: { key: ShortcutKey; page: PageKey; label: string }[] = [
+	{ key: 'club', page: 'club', label: nav.club },
+	{ key: 'eventi', page: 'eventi', label: nav.eventi },
+	{ key: 'news', page: 'news', label: nav.news },
+	{ key: 'formazione', page: 'formazione', label: nav.formazione },
+	{ key: 'distretto', page: 'distretto', label: nav.distrettoSub },
+	{ key: 'materiali', page: 'materiali', label: nav.materials },
+];
+const shortcuts = shortcutDefs.map(({ key, page, label }) => ({
+	label,
+	description: uiStrings[lang].notFound.shortcuts[key],
+	href: getRelativeLocaleUrl(lang, pageSlugs[page]),
+	params: JSON.stringify({ target: key }),
+}));
 ---
 
-<BaseLayout lang={lang} current="home" title={t.seoTitle} description={t.body} noindex contentGroup={error === 'notFound' ? '404' : undefined}>
+<BaseLayout lang={lang} current="home" title={t.seoTitle} description={t.body} noindex contentGroup={isNotFound ? '404' : undefined}>
 	<PageBanner lang={lang} eyebrow={t.eyebrow} title={t.title} breadcrumbCurrent={t.breadcrumbCurrent} />
-	<section class="error-page" data-error={error}>
-		<p class="error-page__body">{t.body}</p>
-		<div class="error-page__actions">
-			{donate && <a class="error-page__cta" href={donate.donateHref} target="_blank" rel="noopener">{donate.donateCta}</a>}
-			<a class:list={['error-page__cta', { 'error-page__cta--secondary': donate }]} href={homeHref}>{t.homeCta}</a>
+	<section class="not-found" data-error={error}>
+		<p class="not-found__body">{t.body}</p>
+		{/* Filled client-side: the page is reached via Astro.rewrite, so the server may only see /404. */}
+		{isNotFound && (
+			<p class="not-found__path" data-not-found-path hidden>
+				<span>{uiStrings[lang].notFound.requestedPathLabel}:</span> <code></code>
+			</p>
+		)}
+		<div class="not-found__actions">
+			{donate && <a class="not-found__cta" href={donate.donateHref} target="_blank" rel="noopener">{donate.donateCta}</a>}
+			<a class:list={['not-found__cta', { 'not-found__cta--secondary': donate }]} href={homeHref}>{t.homeCta}</a>
 		</div>
+
+		{isNotFound && (
+			<nav class="not-found__shortcuts" aria-labelledby="not-found-shortcuts-title">
+				<h2 id="not-found-shortcuts-title" class="not-found__shortcuts-title">{uiStrings[lang].notFound.shortcutsTitle}</h2>
+				<ul class="not-found__grid">
+					{shortcuts.map((s) => (
+						<li>
+							<a class="shortcut" href={s.href} data-track="not_found_shortcut_click" data-track-params={s.params}>
+								<span class="shortcut__label">{s.label}</span>
+								<span class="shortcut__desc">{s.description}</span>
+							</a>
+						</li>
+					))}
+				</ul>
+			</nav>
+		)}
 	</section>
 </BaseLayout>
 
 <script>
 	import { whenGaReady } from '../lib/ga-ready';
 
+	const pathEl = document.querySelector<HTMLElement>('[data-not-found-path]');
+	const code = pathEl?.querySelector('code');
+	if (pathEl && code && location.pathname !== '/404' && location.pathname !== '/en/404') {
+		code.textContent = location.pathname;
+		pathEl.hidden = false;
+	}
+
 	// trackEvent is a no-op before consent, so wait for gtag: fires immediately if consent was already
 	// stored, or right after the visitor accepts on this page. Never fires for non-consenting visitors.
-	if (document.querySelector('.error-page[data-error="notFound"]')) {
+	if (document.querySelector('.not-found[data-error="notFound"]')) {
 		whenGaReady(() => {
 			window.trackEvent?.('page_not_found', {
 				page_path: location.pathname,
@@ -42,30 +92,42 @@ const donate = error === 'teapot' ? uiStrings[lang].teapot : null;
 </script>
 
 <style>
-	.error-page {
+	.not-found {
 		max-width: var(--content-max);
 		margin: 0 auto;
 		padding: 16px 40px 72px;
 	}
 
-	.error-page__body {
+	.not-found__body {
 		max-width: 60ch;
-		margin: 0 0 24px;
+		margin: 0 0 16px;
 		font-family: var(--font-body);
 		font-size: 18px;
 		line-height: 1.6;
 	}
 
-	.error-page__actions {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 12px;
+	.not-found__path:not([hidden]) {
+		display: block;
+		margin: 0 0 24px;
+		font-family: var(--font-heading);
+		font-size: 14px;
+		overflow-wrap: anywhere;
 	}
 
-	.error-page__cta {
-		display: inline-block;
+	.not-found__path code {
+		padding: 2px 8px;
+		border-radius: var(--shape-small);
+		background: var(--color-navy-container);
+		color: var(--color-on-navy-container);
+		font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+	}
+
+	.not-found__cta {
+		display: inline-flex;
+		align-items: center;
+		min-height: 48px;
 		padding: 12px 28px;
-		border-radius: 999px;
+		border-radius: var(--shape-full);
 		background: var(--color-pink);
 		color: #fff;
 		font-family: var(--font-heading);
@@ -73,24 +135,112 @@ const donate = error === 'teapot' ? uiStrings[lang].teapot : null;
 		text-transform: uppercase;
 		text-decoration: none;
 		box-shadow: var(--elevation-1);
-		transition: transform 0.2s ease, box-shadow 0.2s ease;
+		transition:
+			transform var(--motion-duration-medium) var(--motion-easing-standard),
+			box-shadow var(--motion-duration-medium) var(--motion-easing-standard);
 	}
 
-	.error-page__cta:hover {
-		transform: translateY(-4px);
-		box-shadow: var(--elevation-2);
+	.not-found__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
 	}
 
-	.error-page__cta--secondary {
+	.not-found__cta--secondary {
 		background: transparent;
 		color: var(--color-pink);
 		outline: 2px solid var(--color-pink);
 		outline-offset: -2px;
 	}
 
+	.not-found__cta:hover {
+		transform: translateY(-4px);
+		box-shadow: var(--elevation-2);
+	}
+
+	.not-found__shortcuts {
+		margin-top: 56px;
+	}
+
+	.not-found__shortcuts-title {
+		margin: 0 0 20px;
+		font-family: var(--font-heading);
+		font-size: 22px;
+		font-weight: 700;
+		color: var(--color-navy);
+	}
+
+	.not-found__grid {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+		gap: 20px;
+	}
+
+	.shortcut {
+		--tint: var(--color-pink);
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		box-sizing: border-box;
+		height: 100%;
+		min-height: 44px;
+		padding: 24px;
+		border-radius: var(--shape-large);
+		background: color-mix(in srgb, var(--tint) 10%, white);
+		box-shadow: 0 8px 24px color-mix(in srgb, var(--tint) 25%, transparent);
+		color: inherit;
+		text-decoration: none;
+		transition:
+			transform var(--motion-duration-medium) var(--motion-easing-standard),
+			box-shadow var(--motion-duration-medium) var(--motion-easing-standard);
+	}
+
+	.shortcut:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 12px 28px color-mix(in srgb, var(--tint) 35%, transparent);
+	}
+
+	.shortcut:focus-visible,
+	.not-found__cta:focus-visible {
+		outline: 3px solid var(--color-navy);
+		outline-offset: 3px;
+	}
+
+	.shortcut__label {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		text-transform: uppercase;
+		color: var(--color-navy);
+	}
+
+	.shortcut__desc {
+		font-family: var(--font-body);
+		font-size: 15px;
+		line-height: 1.5;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.shortcut,
+		.not-found__cta {
+			transition: none;
+		}
+
+		.shortcut:hover,
+		.not-found__cta:hover {
+			transform: none;
+		}
+	}
+
 	@media (max-width: 640px) {
-		.error-page {
-			padding: 8px 20px 56px;
+		.not-found {
+			padding: 8px 16px 56px;
+		}
+
+		.not-found__grid {
+			grid-template-columns: 1fr;
 		}
 	}
 </style>

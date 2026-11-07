@@ -12,6 +12,13 @@ export const resourcesCollection: Collection = {
 		{ type: 'string', name: 'titleEn', label: 'Titolo (EN)' },
 		{
 			type: 'string',
+			name: 'subtitle',
+			label: 'Sottotitolo (IT, opzionale)',
+			description: 'Mostrato sotto il titolo, nella pagina e nella card. Non entra nell\'URL: tieni il titolo breve e metti qui la parte descrittiva.',
+		},
+		{ type: 'string', name: 'subtitleEn', label: 'Sottotitolo (EN, opzionale)' },
+		{
+			type: 'string',
 			name: 'tags',
 			label: 'Tag',
 			list: true,

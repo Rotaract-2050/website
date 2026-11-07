@@ -12,7 +12,7 @@ excerptEn: >-
   Collection and donation of toys and board games for children hospitalized in
   pediatric oncology departments across Lombardy.
 date: 2025-12-18T00:00:00.000Z
-image: /uploads/interact-valtenesi-maclodio-sorriso-matteo-ettore.jpeg
+image: /uploads/services/un-sorriso-a-matteo-ed-ettore/copertina.jpeg
 imageLabel: Donazione di giochi nei reparti di oncologia pediatrica
 imageLabelEn: Donation of toys to pediatric oncology wards
 bodyEn: |

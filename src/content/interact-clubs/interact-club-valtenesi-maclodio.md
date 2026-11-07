@@ -2,7 +2,7 @@
 name: Interact Club Valtenesi-Maclodio
 zone: src/content/zones/leonessa.md
 presidentName: Cecilia Russo
-photo: '/uploads/loghi-club/interact-club-valtenesi-maclodio.png'
+photo: '/uploads/clubs/interact/valtenesi-maclodio.png'
 foundationYear: 2018
 sponsorRotary: Rotary Club Brescia Valtenesi-Maclodio
 instagram: 'https://www.instagram.com/Interact_Maclodio.Valtenesi/'

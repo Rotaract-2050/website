@@ -12,7 +12,7 @@ excerptEn: >-
   Interact Club Valtenesi-Maclodio organized the sale of charity calendars in
   local schools to support the San Rocco dog shelter in Calcinatello.
 date: 2026-01-20T00:00:00.000Z
-image: /uploads/interact-valtenesi-maclodio-calendario-canile.jpeg
+image: /uploads/services/vendita-calendari-canile-calcinatello/copertina.jpeg
 imageLabel: Calendario 2026 per il Canile San Rocco
 imageLabelEn: 2026 Calendar for San Rocco Dog Shelter
 bodyEn: |

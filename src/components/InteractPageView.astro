@@ -50,6 +50,7 @@ const siteName = INTERACT_SITE_NAME[lang];
 	description={seoDescription}
 	image={page.seo?.ogImage}
 	noindex={page.seo?.noindex ?? false}
+	alternateHref={getRelativeLocaleUrl(lang === 'it' ? 'en' : 'it', slug)}
 	theme="interact"
 	siteName={siteName}
 >

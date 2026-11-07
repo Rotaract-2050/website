@@ -12,7 +12,7 @@ excerptEn: >-
   On the occasion of the National Food Collection Day, the youth of
   Interact Leonessa went to the Conad supermarket in Brescia.
 date: 2025-11-15T00:00:00.000Z
-image: /uploads/interact-leonessa-2.jpeg
+image: /uploads/services/colletta-alimentare-leonessa/copertina.jpeg
 imageLabel: Colletta Alimentare
 imageLabelEn: Food Collection
 ---

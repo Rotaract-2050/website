@@ -2,7 +2,7 @@
 name: Interact Leonessa
 zone: src/content/zones/leonessa.md
 presidentName: Beatrice Amoroso
-photo: '/uploads/loghi-club/interact-club-leonessa.png'
+photo: '/uploads/clubs/interact/leonessa.png'
 foundationYear: 2023
 sponsorRotary: 'Rotary Club Brescia Veronica Gambara (co-padrini: Rotary Club Brescia Vittoria Alata e Rotary Club Brescia Moretto)'
 email: 'interactleonessa@gmail.com'
