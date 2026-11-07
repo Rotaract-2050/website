@@ -73,3 +73,7 @@ PRs written with AI assistance (Claude, Copilot, ChatGPT, etc.) are welcome — 
 - Content/block structure, brand palette, Tina/Astro best practices → [`.claude/skills/rotaract2050-site/`](.claude/skills/rotaract2050-site/)
 - Tina Cloud project (user management, tokens) → https://app.tina.io/projects/45ced600-56cb-4e98-a4eb-26f93b147dcf
 - Cloudflare Pages config → [`wrangler.jsonc`](wrangler.jsonc)
+
+---
+
+<sub>🫖 Psst: this website is secretly [a teapot](https://rotaract2050.org/418).</sub>

@@ -7,14 +7,17 @@ import { pageSlugs, type PageKey } from '../data/routes';
 
 interface Props {
 	lang: Lang;
+	error?: 'notFound' | 'teapot';
 }
 
-const { lang } = Astro.props;
-const t = uiStrings[lang].notFound;
+const { lang, error = 'notFound' } = Astro.props;
+const t = uiStrings[lang][error];
+const isNotFound = error === 'notFound';
+const donate = error === 'teapot' ? uiStrings[lang].teapot : null;
 const nav = uiStrings[lang].nav;
 const homeHref = getRelativeLocaleUrl(lang, '');
 
-type ShortcutKey = keyof typeof t.shortcuts;
+type ShortcutKey = keyof typeof uiStrings.it.notFound.shortcuts;
 // "Entra nel Rotaract" has no page of its own: the header join button points to the club
 // directory, so the club shortcut carries that role and reuses the same destination.
 const shortcutDefs: { key: ShortcutKey; page: PageKey; label: string }[] = [
@@ -27,35 +30,42 @@ const shortcutDefs: { key: ShortcutKey; page: PageKey; label: string }[] = [
 ];
 const shortcuts = shortcutDefs.map(({ key, page, label }) => ({
 	label,
-	description: t.shortcuts[key],
+	description: uiStrings[lang].notFound.shortcuts[key],
 	href: getRelativeLocaleUrl(lang, pageSlugs[page]),
 	params: JSON.stringify({ target: key }),
 }));
 ---
 
-<BaseLayout lang={lang} current="home" title={t.seoTitle} description={t.body} noindex contentGroup="404">
+<BaseLayout lang={lang} current="home" title={t.seoTitle} description={t.body} noindex contentGroup={isNotFound ? '404' : undefined}>
 	<PageBanner lang={lang} eyebrow={t.eyebrow} title={t.title} breadcrumbCurrent={t.breadcrumbCurrent} />
-	<section class="not-found">
+	<section class="not-found" data-error={error}>
 		<p class="not-found__body">{t.body}</p>
-		<!-- Filled client-side: the page is reached via Astro.rewrite, so the server may only see /404. -->
-		<p class="not-found__path" data-not-found-path hidden>
-			<span>{t.requestedPathLabel}:</span> <code></code>
-		</p>
-		<a class="not-found__cta" href={homeHref}>{t.homeCta}</a>
+		{isNotFound && (
+			<!-- Filled client-side: the page is reached via Astro.rewrite, so the server may only see /404. -->
+			<p class="not-found__path" data-not-found-path hidden>
+				<span>{uiStrings[lang].notFound.requestedPathLabel}:</span> <code></code>
+			</p>
+		)}
+		<div class="not-found__actions">
+			{donate && <a class="not-found__cta" href={donate.donateHref} target="_blank" rel="noopener">{donate.donateCta}</a>}
+			<a class:list={['not-found__cta', { 'not-found__cta--secondary': donate }]} href={homeHref}>{t.homeCta}</a>
+		</div>
 
-		<nav class="not-found__shortcuts" aria-labelledby="not-found-shortcuts-title">
-			<h2 id="not-found-shortcuts-title" class="not-found__shortcuts-title">{t.shortcutsTitle}</h2>
-			<ul class="not-found__grid">
-				{shortcuts.map((s) => (
-					<li>
-						<a class="shortcut" href={s.href} data-track="not_found_shortcut_click" data-track-params={s.params}>
-							<span class="shortcut__label">{s.label}</span>
-							<span class="shortcut__desc">{s.description}</span>
-						</a>
-					</li>
-				))}
-			</ul>
-		</nav>
+		{isNotFound && (
+			<nav class="not-found__shortcuts" aria-labelledby="not-found-shortcuts-title">
+				<h2 id="not-found-shortcuts-title" class="not-found__shortcuts-title">{uiStrings[lang].notFound.shortcutsTitle}</h2>
+				<ul class="not-found__grid">
+					{shortcuts.map((s) => (
+						<li>
+							<a class="shortcut" href={s.href} data-track="not_found_shortcut_click" data-track-params={s.params}>
+								<span class="shortcut__label">{s.label}</span>
+								<span class="shortcut__desc">{s.description}</span>
+							</a>
+						</li>
+					))}
+				</ul>
+			</nav>
+		)}
 	</section>
 </BaseLayout>
 
@@ -71,12 +81,14 @@ const shortcuts = shortcutDefs.map(({ key, page, label }) => ({
 
 	// trackEvent is a no-op before consent, so wait for gtag: fires immediately if consent was already
 	// stored, or right after the visitor accepts on this page. Never fires for non-consenting visitors.
-	whenGaReady(() => {
-		window.trackEvent?.('page_not_found', {
-			page_path: location.pathname,
-			page_referrer: document.referrer,
+	if (document.querySelector('.not-found[data-error="notFound"]')) {
+		whenGaReady(() => {
+			window.trackEvent?.('page_not_found', {
+				page_path: location.pathname,
+				page_referrer: document.referrer,
+			});
 		});
-	});
+	}
 </script>
 
 <style>
@@ -126,6 +138,19 @@ const shortcuts = shortcutDefs.map(({ key, page, label }) => ({
 		transition:
 			transform var(--motion-duration-medium) var(--motion-easing-standard),
 			box-shadow var(--motion-duration-medium) var(--motion-easing-standard);
+	}
+
+	.not-found__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+	}
+
+	.not-found__cta--secondary {
+		background: transparent;
+		color: var(--color-pink);
+		outline: 2px solid var(--color-pink);
+		outline-offset: -2px;
 	}
 
 	.not-found__cta:hover {

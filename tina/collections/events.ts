@@ -1,5 +1,6 @@
 import type { Collection } from 'tinacms';
 import { focalImageFields } from '../fields/focalPointImage';
+import { UtmLinkBuilder } from '../fields/utmLinkBuilder';
 import { eventsRouter } from '../routers';
 
 export const eventsCollection: Collection = {
@@ -106,6 +107,16 @@ export const eventsCollection: Collection = {
 			ui: { component: 'textarea' },
 			description:
 				'Incolla qui l\'intero snippet HTML fornito dal servizio di biglietteria (es. Ticket Tailor, "Paste this into your website"), tag <script> compreso: verrà inserito così com\'è nella pagina evento (se "Biglietti in vendita" è attivo). Lascia vuoto per non mostrare nessun widget. Usare solo snippet copiati direttamente dal fornitore di biglietteria, mai testo incollato da altre fonti.',
+		},
+		// UI-only helper, never written: see tina/fields/utmLinkBuilder.tsx. The cast bridges the
+		// same gap in Tina's public `ui.component` type documented in focalPointImage.tsx.
+		{
+			type: 'string',
+			name: 'utmLinks',
+			label: 'Link tracciati per la condivisione',
+			description:
+				'Copia il link del canale dove condividi l\'evento: in Google Analytics (Acquisizione → Campagna sessione) vedrai quante visite arrivano da ciascun canale. Non serve salvare nulla qui.',
+			ui: { component: UtmLinkBuilder as any },
 		},
 	],
 };

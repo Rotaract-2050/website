@@ -64,13 +64,18 @@ const zoneGroups = zones.map((zone) => ({
 								<a class="club-link" href={getRelativeLocaleUrl(lang, `interact/club/${club._sys.filename}`)}>
 									<div class="club-name">{club.name}</div>
 									<div class="club-zone">{zone.name}</div>
+									{(club as any).school && (
+										<div class="club-school" data-tina-field={tinaField(club, 'school')}>
+											{(club as any).school}
+										</div>
+									)}
 									{club.presidentName && (
 										<div class="club-president" data-tina-field={tinaField(club, 'presidentName')}>
 											{t.presidentLabel}: {club.presidentName}
 										</div>
 									)}
 								</a>
-								{(club.website || club.instagram || club.facebook) && (
+								{(club.website || club.instagram || club.facebook || (club as any).tiktok) && (
 									<div class="club-social">
 										{club.website && (
 											<a class="social-btn" href={club.website} target="_blank" rel="noopener noreferrer" aria-label={t.websiteLabel} data-tina-field={tinaField(club, 'website')}>
@@ -95,6 +100,13 @@ const zoneGroups = zones.map((zone) => ({
 												<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
 													<circle cx="12" cy="12" r="9" />
 													<path d="M13.8 21v-7.2h2.4l.4-2.8h-2.8v-1.8c0-.8.2-1.4 1.4-1.4h1.5V5.1c-.3 0-1.1-.1-2.1-.1-2.1 0-3.5 1.3-3.5 3.6v2.4H8.7v2.8h2.4V21" />
+												</svg>
+											</a>
+										)}
+										{(club as any).tiktok && (
+											<a class="social-btn" href={(club as any).tiktok} target="_blank" rel="noopener noreferrer" aria-label={t.tiktokLabel} data-tina-field={tinaField(club, 'tiktok')}>
+												<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+													<path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
 												</svg>
 											</a>
 										)}
@@ -200,7 +212,8 @@ const zoneGroups = zones.map((zone) => ({
 		color: var(--color-text);
 	}
 
-	.club-president {
+	.club-president,
+	.club-school {
 		font-size: 13px;
 		color: var(--color-text);
 		margin-top: 4px;
