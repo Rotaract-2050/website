@@ -23,7 +23,7 @@ bodyEn: |
   * **Zone Delegates**: coordinate the Clubs in their area and facilitate communication
 
   The RRD is also supported by **District Committees**, each focusing on specific areas such as Club Service, Vocational Service, Community Service, International Service, Youth Service, Public Image, Culture, and Dispute Resolution.
-  
+
   Completing the district structure are specific Delegates (E.R.I.C., Rotary, Interact, Youth Exchange, Rotary Foundation, and IT).
 
   During the year, the district organizes 5 **District Assemblies**, the **S.I.D.E.** (Informational Seminar for Incoming Boards), and the **District Handover** at the end of the year.
@@ -35,9 +35,9 @@ bodyEn: |
   2. **Vice President**: supports and replaces the president when necessary
   3. **Past President**: outgoing president ensuring continuity
   4. **Incoming President**: elected for the following year
-  5. **Secretary**: handles organizational and administrative tasks
+  5. **[[ruolo-del-segretario|Secretary]]**: handles organizational and administrative tasks
   6. **Treasurer**: manages club finances
-  7. **Prefect**: organizes meetings and events according to Rotaract etiquette
+  7. **[[ruolo-del-prefetto|Prefect]]**: organizes meetings and events according to Rotaract etiquette
 
   Committees and Councillors may also be present.
 
@@ -68,7 +68,7 @@ Il Rappresentante Distrettuale è coadiuvato dall’**Esecutivo Distrettuale**, 
 * **Rappresentante Distrettuale Eletto**: il RRD dell'anno successivo;
 * **Segretario Distrettuale**: redige i verbali e si occupa delle comunicazioni ufficiali;
 * **Tesoriere Distrettuale**: si occupa delle finanze e dei bilanci del Distretto;
-* **Prefetti Distrettuali**: curano gli aspetti organizzativi e cerimoniali degli eventi;
+* **[[ruolo-del-prefetto|Prefetti]] Distrettuali**: curano gli aspetti organizzativi e cerimoniali degli eventi;
 * **Delegati di Zona**: coordinano i Club della propria area, facilitando la comunicazione con il Distretto.
 
 Il Rappresentante Distrettuale è affiancato dalle **Commissioni Distrettuali** (Azione Interna, Professionale, Pubblico Interesse, Internazionale, Giovani, Immagine Pubblica, Cultura, Risoluzione controversie) e da alcune figure specifiche come i **Delegati** (E.R.I.C., Rotary, Interact, Scambio Giovani, Rotary Foundation, I.T.).
@@ -82,9 +82,9 @@ Il club è composto da **Soci**, che eleggono annualmente il proprio **Direttivo
 2. **Vice presidente**: supporta il presidente e lo sostituisce all'occorrenza;
 3. **Past president**: presidente uscente, garantisce la continuità;
 4. **Presidente Incoming**: presidente eletto per l’anno successivo;
-5. **Segretario**: cura la parte organizzativa e amministrativa;
+5. **[[ruolo-del-segretario|Segretario]]**: cura la parte organizzativa e amministrativa;
 6. **Tesoriere**: gestisce le finanze e le quote associative;
-7. **Prefetto**: si occupa dell'organizzazione pratica delle riunioni e del cerimoniale.
+7. **[[ruolo-del-prefetto|Prefetto]]**: si occupa dell'organizzazione pratica delle riunioni e del cerimoniale.
 
 Oltre ai ruoli sopracitati, possono essere presenti dei **Presidenti di commissione** e dei **Consiglieri**.
 Prima di far parte effettivamente del Club, si affronta un periodo di aspirantato: gli **Aspiranti** partecipano alle attività con i medesimi doveri dei soci, e al termine entrano a far parte del Club con la cerimonia della Spillatura.

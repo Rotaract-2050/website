@@ -9,7 +9,7 @@ excerptEn: "What a Rotaract district is, the birth of District 2050 in 1968, its
 bodyEn: |
   Rotary and Rotaract have always set the development of professional skills, and the promotion of values such as respect for others' rights and support for the local community, as their primary goals.
 
-  At the heart of this is the idea of service: the activities carried out by Rotaract are not mere charity, but involve acting on the ground. As the unofficial motto puts it: "Friendship through service".
+  At the heart of this is the idea of service: the activities carried out by Rotaract are not mere charity, but involve acting on the ground. As the unofficial motto puts it: **"Friendship through service"**.
 
   The District's real function is to strengthen and support its clubs.
 
@@ -26,9 +26,13 @@ bodyEn: |
 
   Each zone is led by a Zone Delegate, whose task is to coordinate the activities carried out jointly by the clubs under their guidance.
 
+  ## How the district works
+
   The District Representative stands at the head of the entire district; however, given the size of the area covered by our District 2050, the District Representative needs to be supported by a district executive, by committees, and by zone delegates. Specifically, the district executive is the team chosen by the R.R.D. and acts as their right hand.
 
   Committees are led by a chair and carry forward projects in specific areas consistent with Rotary International's avenues of service.
+
+  ## District events
 
   During the Rotary year, the district organizes the so-called district assemblies — gatherings aimed at member training and at promoting fellowship. District assemblies consist of district sessions, during which various topics related to service activities are covered, followed by a dinner, during which members of the various clubs have the opportunity to get to know each other better and build possible working relationships. Two other important events are SIDE (the Informational Seminar for Elected Officers) and the Handover Ceremony, which marks the end of the Rotary year.
 
@@ -42,7 +46,7 @@ bodyEn: |
 
 Da sempre Rotary e Rotaract si pongono come obiettivi primari lo sviluppo delle capacità professionali e la promozione di valori quali il rispetto dei diritti altrui e il sostegno alla comunità locale.
 
-Al centro di questa realtà vi è l'idea di service: le attività poste in essere dal Rotaract non sono di mera beneficenza, ma comportano l'agire sul campo. Come dice il motto non ufficiale: "Amicizia attraverso il servizio".
+Al centro di questa realtà vi è l'idea di service: le attività poste in essere dal Rotaract non sono di mera beneficenza, ma comportano l'agire sul campo. Come dice il motto non ufficiale: **"Amicizia attraverso il servizio"**.
 
 La vera funzione del Distretto è rafforzare e sostenere i vari club.
 
@@ -59,9 +63,13 @@ Il Distretto 2050 è costituito da una trentina di club e ricopre tutta la Lomba
 
 Ogni zona è guidata da un Delegato di Zona, che ha il compito di coordinare le attività svolte congiuntamente dai club sotto la sua guida.
 
+## Come funziona il distretto
+
 A capo dell'intero distretto vi è il Rappresentante Distrettuale; tuttavia, data la vastità dell'area ricoperta dal nostro Distretto 2050, è necessario che il Rappresentante Distrettuale sia affiancato da un esecutivo distrettuale, da commissioni e da delegati di zona. Nello specifico, l'esecutivo distrettuale è la squadra scelta dal R.R.D. e rappresenta il suo braccio destro.
 
 Le commissioni sono guidate da un presidente e portano avanti progetti in specifici ambiti coerenti con le vie d'azione del Rotary International.
+
+## Gli eventi del distretto
 
 Durante l'anno sociale il distretto organizza le cosiddette assemblee distrettuali, incontri volti alla formazione dei soci e alla promozione della convivialità. Le distrettuali sono composte da lavori distrettuali, durante i quali si trattano vari temi inerenti le attività di service, e successivamente una cena, durante la quale i soci dei vari club hanno l'opportunità di conoscersi a fondo e instaurare possibili rapporti collaborativi. Altri due eventi importanti sono rappresentati dal SIDE (Seminario Informativo Direttivi Eletti) e dal passaggio di consegne, che segna la fine dell'anno sociale.
 
@@ -71,4 +79,3 @@ Durante l'anno sociale il distretto organizza le cosiddette assemblee distrettua
 * [[struttura-rotaract]]
 * [[vie-di-azione]]
 * [[tavolo-presidenziale]]
-
