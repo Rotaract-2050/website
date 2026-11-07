@@ -7,6 +7,7 @@ Questo progetto tiene tutta la documentazione per gli agenti in `.claude/skills/
 - `.claude/skills/rotaract2050-site/SKILL.md` — regole generali del sito (stack, TinaCMS, deploy, i18n, pattern a blocchi)
 - `.claude/skills/rotaract2050-design-system/SKILL.md` — design system (colori, font, glassmorphism, griglia, animazioni)
 - `.claude/skills/rotaract2050-site/references/` — reference dettagliate per aree specifiche (leggere PRIMA di agire)
+- `.claude/skills/subagent-model-choice/SKILL.md` — quale modello (haiku/sonnet/opus) usare quando si delega a un subagent, e cosa mettere nel prompt
 
 **Leggi entrambi i SKILL.md all'inizio di ogni sessione.** Le reference vanno lette quando si lavora sull'area specifica.
 

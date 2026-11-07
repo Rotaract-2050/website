@@ -3,6 +3,8 @@ title: II Assemblea Distrettuale
 titleEn: II Assemblea Distrettuale
 visible: true
 date: 2026-10-24T12:00:00.000Z
+endDate: 2026-10-19T20:53:53.184Z
+calendarDate: 2026-10-24T20:53:53.278Z
 eventType: Distrettuale
 locationLavori: 'Palazzo Gonzaga, Via Beata Paola Montaldi 15A - Volta Mantovana (MN)'
 clubs:
@@ -51,7 +53,8 @@ schedule:
     title: Apertura delle registrazioni per la conviviale
   - time: '20:00'
     title: Inizio della conviviale
-ticketsOpen: true
+ticketsOpen: false
 ticketsUrl: 'https://www.tickettailor.com/events/distrettorotaract2050/2436548'
+photoAlbumUrl: 'https://drive.google.com/drive/u/2/folders/1B6cn2AOv5gMc3O-3ueTp14K7V_g86xz6'
 ---
 

@@ -68,6 +68,7 @@ export interface UiStrings {
 			materiali: string;
 		};
 	};
+	teapot: Pick<UiStrings['notFound'], 'eyebrow' | 'title' | 'breadcrumbCurrent' | 'body' | 'homeCta' | 'seoTitle'> & { donateCta: string; donateHref: string };
 	calendar: {
 		agendaTab: string;
 		monthTab: string;
@@ -122,10 +123,14 @@ export interface UiStrings {
 		zoneLabel: string;
 		foundationYearLabel: string;
 		presidentLabel: string;
+		schoolLabel: string;
+		sponsorRotaryLabel: string;
+		sponsorRotaractLabel: string;
 		emailLabel: string;
 		websiteLabel: string;
 		instagramLabel: string;
 		facebookLabel: string;
+		tiktokLabel: string;
 		storyTitle: string;
 		backToList: string;
 		photoAltPrefix: string;
@@ -259,6 +264,16 @@ const IT: UiStrings = {
 		reject: 'Rifiuta',
 		policyLink: 'Maggiori informazioni',
 	},
+	teapot: {
+		eyebrow: 'Errore 418',
+		title: 'Sono una teiera',
+		breadcrumbCurrent: '418',
+		body: "Ci dispiace: questo sito web non supporta HTCPCP-TEA (RFC 7168), l'evoluzione del protocollo che controlla le teiere, quindi da qui non uscirà nemmeno una goccia. Il prezzo della tazza però l'hai appena risparmiato: che ne dici di offrirlo a chi ne ha più bisogno?",
+		homeCta: 'Torna alla home',
+		seoTitle: 'Sono una teiera',
+		donateCta: 'Offri un tè alla Rotary Foundation',
+		donateHref: 'https://my.rotary.org/donate',
+	},
 	notFound: {
 		eyebrow: 'Errore 404',
 		title: 'Pagina non trovata',
@@ -344,10 +359,14 @@ const IT: UiStrings = {
 		zoneLabel: 'Zona',
 		foundationYearLabel: 'Anno di fondazione',
 		presidentLabel: 'Presidente',
+		schoolLabel: 'Scuola',
+		sponsorRotaryLabel: 'Padrino Rotary',
+		sponsorRotaractLabel: 'Padrino Rotaract',
 		emailLabel: 'Email',
 		websiteLabel: 'Sito web',
 		instagramLabel: 'Instagram',
 		facebookLabel: 'Facebook',
+		tiktokLabel: 'TikTok',
 		storyTitle: 'La nostra storia',
 		backToList: '← Tutti i club',
 		photoAltPrefix: 'Foto di',
@@ -455,6 +474,16 @@ const EN: UiStrings = {
 		reject: 'Reject',
 		policyLink: 'Learn more',
 	},
+	teapot: {
+		eyebrow: 'Error 418',
+		title: "I'm a teapot",
+		breadcrumbCurrent: '418',
+		body: 'Sorry: this website does not support HTCPCP-TEA (RFC 7168), the protocol evolution that controls teapots, so not a single drop will come out of here. You did just save the price of a cup, though: how about passing it on to someone who needs it more?',
+		homeCta: 'Back to home',
+		seoTitle: "I'm a teapot",
+		donateCta: 'Buy The Rotary Foundation a tea',
+		donateHref: 'https://my.rotary.org/donate',
+	},
 	notFound: {
 		eyebrow: 'Error 404',
 		title: 'Page not found',
@@ -540,10 +569,14 @@ const EN: UiStrings = {
 		zoneLabel: 'Zone',
 		foundationYearLabel: 'Founded in',
 		presidentLabel: 'President',
+		schoolLabel: 'School',
+		sponsorRotaryLabel: 'Rotary Sponsor',
+		sponsorRotaractLabel: 'Rotaract Sponsor',
 		emailLabel: 'Email',
 		websiteLabel: 'Website',
 		instagramLabel: 'Instagram',
 		facebookLabel: 'Facebook',
+		tiktokLabel: 'TikTok',
 		storyTitle: 'Our story',
 		backToList: '← All clubs',
 		photoAltPrefix: 'Photo of',

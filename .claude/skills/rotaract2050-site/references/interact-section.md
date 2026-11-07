@@ -101,3 +101,21 @@ Vedi la sezione "Avviare il sito in locale" in questo stesso file (`SKILL.md`) p
 - `src/content/pages/interact.md`, `interact/{storia,albo,club,eventi}.md`.
 - `src/content/interact-clubs/*.md`, `src/content/interact-events/<anno>/*.md`.
 - `src/data/routes.ts` — 5 `PageKey` Interact. `src/data/ui-strings.ts` — blocco `interact` (nav/footer Interact) + `nav.interactLink` (pillola Rotaract).
+
+## Schede Club Interact — Campi e Standard Informativo
+
+Per ogni club Interact (`interactClubs`, path `src/content/interact-clubs/`), le informazioni standard da raccogliere e compilare sono:
+
+1. **Nome del presidente** (`presidentName`): stringa con nome e cognome.
+2. **Contatti**:
+   - `email`: email ufficiale del club.
+   - `instagram`: URL profilo Instagram.
+   - `facebook`: URL profilo Facebook.
+   - `tiktok`: URL profilo TikTok.
+3. **Scuola di appartenenza** (`school`): solo per club a base scolastica (es. `IIS Alessandrini Abbiategrasso`).
+4. **Nomi dei club padrini**:
+   - `sponsorRotary`: stringa con il nome del club Rotary padrino (es. `Rotary Club Abbiategrasso`).
+   - `sponsorRotaract`: `reference` che punta al file del club Rotaract padrino già presente sul sito (es. `src/content/clubs/rotaract-club-abbiategrasso.md`).
+5. **Coordinate e zona**: latitudine (`lat`) e longitudine (`lng`) per la mappa dei club, collegate alla corretta `zone` (le stesse 4 zone del Rotaract).
+6. **Storia bilingue**: `story` e `storyEn` che descrivono le attività, la scuola (se presente), i padrini e la presidenza in carica.
+

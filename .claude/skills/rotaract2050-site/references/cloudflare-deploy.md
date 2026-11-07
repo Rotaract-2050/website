@@ -21,6 +21,8 @@ Risultato: `main` → build produzione automatica ad ogni push. Commit con `[pre
 
 **Corollario pratico, facile da dimenticare**: lavoro pushato/committato su `dev` (anche verificato/completo in locale) **non arriva mai in produzione da solo** — serve una PR `dev` → `main` mergiata. Non basta nemmeno che qualcosa venga pushato direttamente su `main` fuori da una PR: i commit di auto-save di TinaCMS Cloud (`TinaCMS content update` / `Update from TinaCMS`) finiscono dritti su `main` ma **non** triggerano una build (solo contenuto, `src/content/`/`public/uploads/` — in questa architettura il contenuto è letto a runtime via client GraphQL Tina, non serve un rebuild). Prima di dire "il deploy non è partito" controllare `workers_builds_list_builds` per il commit hash *esatto* dell'ultima build riuscita e confrontarlo con `main` corrente (`gh api repos/.../compare/<hash>...main`), non fidarsi della data dell'ultimo commit visibile in `git log`.
 
+**Eccezione: le foto nuove (verificato 2026-10-28).** "Non serve un rebuild" vale per il testo, non per le immagini: i file in `public/uploads/` sono asset statici del Worker e danno **404 in produzione finché non parte una build**. Caso reale: PR #95 (solo `src/content/` + 5 foto in `public/uploads/`) mergiata, testi subito online, foto 404 per ore perché nessuna build era partita. Dopo un merge di soli contenuti con foto nuove: `curl -I https://rotaract2050.org/uploads/<file>`, e se 404 lanciare una build di `main` (dashboard Worker → Deployments, o un merge che tocchi codice).
+
 ## Se serve cambiare branch/pattern in futuro
 
 - Cambiare quale branch builda il Deploy Hook: dashboard Worker → Settings → Build → Deploy Hooks → modifica "Branch to build" dell'hook esistente (non serve toccare secret o workflow).
