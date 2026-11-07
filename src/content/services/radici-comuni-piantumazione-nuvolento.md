@@ -12,7 +12,7 @@ excerptEn: >-
   Planting new trees in the municipality of Nuvolento to support environmental
   sustainability and care for public green spaces.
 date: 2026-03-21T00:00:00.000Z
-image: /uploads/interact-valtenesi-maclodio-radici-comuni.jpeg
+image: /uploads/services/radici-comuni-piantumazione-nuvolento/copertina.jpeg
 imageLabel: Piantumazione alberi per il progetto Radici Comuni
 imageLabelEn: Tree planting for the Common Roots project
 bodyEn: |

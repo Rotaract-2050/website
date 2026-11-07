@@ -14,7 +14,7 @@ excerptEn: >-
   residents of La Primula family home, playing games, chatting and joining a
   Pet Therapy session.
 date: 2026-05-30T00:00:00.000Z
-image: /uploads/interact-placentia-casa-famiglia-primula.jpeg
+image: /uploads/services/casa-famiglia-la-primula-placentia/copertina.jpeg
 imageLabel: Casa Famiglia La Primula
 imageLabelEn: La Primula Family Home
 bodyEn: |

@@ -12,7 +12,7 @@ excerptEn: >-
   Fellowship, team building, and cultural discovery for Interact members with
   trips to Venice and Bologna.
 date: 2026-05-10T00:00:00.000Z
-image: /uploads/interact-valtenesi-maclodio-gite.jpeg
+image: /uploads/services/gite-culturali-venezia-bologna/copertina.jpeg
 imageLabel: Gite culturali a Venezia e Bologna
 imageLabelEn: Cultural trips to Venice and Bologna
 bodyEn: |

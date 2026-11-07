@@ -2,7 +2,7 @@
 name: Interact Club Piacenza
 zone: src/content/zones/francigena.md
 presidentName: Ludovico Sforza Fogliani
-photo: '/uploads/loghi-club/interact-club-placentia.png'
+photo: '/uploads/clubs/interact/piacenza.png'
 foundationYear: 2020
 sponsorRotary: 'Rotary Club Valtidone e Rotary Club Valli Nure e Trebbia'
 sponsorRotaract: src/content/clubs/rotaract-club-piacenza.md
