@@ -11,7 +11,7 @@ clubs:
   - club: src/content/clubs/rotaract-club-castiglione-delle-stiviere-e-alto-mantovano.md
 excerpt: ''
 excerptEn: ''
-image: /uploads/events/2026-2027/ii-assemblea-distrettuale.jpg
+image: /uploads/events/2026-2027/ii-assemblea-distrettuale/copertina.jpg
 imageLabel: Volta Mantovana
 imageLabelEn: Volta Mantovana
 schedule:

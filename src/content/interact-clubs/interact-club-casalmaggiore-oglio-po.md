@@ -2,7 +2,7 @@
 name: Interact Club Casalmaggiore Oglio Po
 zone: src/content/zones/padana.md
 presidentName: Laura Boldrini
-photo: '/uploads/loghi-club/interact-club-oglio-po.png'
+photo: '/uploads/clubs/interact/casalmaggiore-oglio-po.png'
 foundationYear: 2023
 school: 'I.I.S. Giovanni Romani (Casalmaggiore)'
 sponsorRotary: 'Marzio Somenzi'

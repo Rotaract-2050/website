@@ -2,7 +2,7 @@
 name: Interact Club Vigevano Lomellina
 zone: src/content/zones/navigli.md
 presidentName: Carlotta Parrino
-photo: '/uploads/loghi-club/interact-club-vigevano-lomellina.png'
+photo: '/uploads/clubs/interact/vigevano-lomellina.png'
 foundationYear: 2018
 school: 'Liceo Benedetto Cairoli Vigevano'
 sponsorRotary: 'Rotary Club Vigevano-Mortara e Rotary Club Lomellina'

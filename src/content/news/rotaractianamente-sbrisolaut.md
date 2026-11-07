@@ -6,7 +6,7 @@ scope:
 excerpt: Sostieni un progetto ad alto valore sociale ordinando i deliziosi prodotti di SbrisolAut per il tuo Club.
 excerptEn: Support a project with high social value by ordering delicious SbrisolAut products for your Club.
 date: 2026-10-07T08:00:00.000Z
-image: /uploads/news/2026-2027/RotaractianaMente_Heart.png
+image: /uploads/news/2026-2027/rotaractianamente-sbrisolaut/copertina.png
 imageLabel: Logo RotaractianaMente
 imageLabelEn: RotaractianaMente Logo
 bodyEn: |

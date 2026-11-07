@@ -8,7 +8,7 @@ scope:
 excerpt: 'Il Distretto 2050 lancia un service, ora adottato a livello nazionale, per sensibilizzare sui disturbi del comportamento alimentare.'
 excerptEn: 'District 2050 launches a service on eating disorder awareness, now adopted nationwide.'
 date: 2026-08-05T09:00:00.000Z
-image: /uploads/news/2026-2027/Disegna-il-tuo-futuro-(logo).jpeg
+image: /uploads/news/2026-2027/disegna-il-tuo-futuro/copertina.jpeg
 imageFocalX: 78
 imageFocalY: 82
 imageLabel: Foto news

@@ -6,7 +6,7 @@ scope:
 excerpt: 'Il Distretto 2102 raccoglie fondi per la struttura Il Donnino''s a Kilombero, in Tanzania, che accoglie 85 bambini con disabilità.'
 excerptEn: 'District 2102 fundraises for the Il Donnino''s centre in Kilombero, Tanzania, home to 85 children with disabilities.'
 date: 2026-08-05T12:00:00.000Z
-image: /uploads/news/2026-2027/tumaini.png
+image: /uploads/news/2026-2027/tumaini-kilombero/copertina.png
 imageLabel: Foto news
 imageLabelEn: News photo
 bodyEn: |

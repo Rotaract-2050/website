@@ -12,7 +12,7 @@ excerptEn: >-
   Interact Leonessa celebrated the end of the social year at Reverso Tower,
   donating the proceeds to Young Caritas for a kindergarten in Albania and to Casa Gabriella.
 date: 2026-06-11T00:00:00.000Z
-image: /uploads/interact-leonessa-1.jpeg
+image: /uploads/services/serata-al-reverso-tower-leonessa/copertina.jpeg
 imageLabel: Serata al Reverso Tower
 imageLabelEn: Evening at Reverso Tower
 ---
