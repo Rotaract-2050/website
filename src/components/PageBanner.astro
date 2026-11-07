@@ -12,6 +12,8 @@ interface Props {
 	title: string;
 	breadcrumbCurrent: string;
 	titleField?: string;
+	subtitle?: string;
+	subtitleField?: string;
 	theme?: 'default' | 'family';
 	/** Which page the breadcrumb's "Home" points to — Interact pages must link back to the Interact
 	 * home (`interactHome`), never the Rotaract root: two distinct entities under Rotary
@@ -19,7 +21,7 @@ interface Props {
 	homeSlug?: PageKey;
 }
 
-const { lang, eyebrow, title, breadcrumbCurrent, titleField, theme = 'default', homeSlug = 'home' } = Astro.props;
+const { lang, eyebrow, title, breadcrumbCurrent, titleField, subtitle, subtitleField, theme = 'default', homeSlug = 'home' } = Astro.props;
 const t = uiStrings[lang];
 const homeHref = getRelativeLocaleUrl(lang, pageSlugs[homeSlug]);
 const breadcrumbJsonLd = buildBreadcrumbList([
@@ -37,6 +39,7 @@ const breadcrumbJsonLd = buildBreadcrumbList([
 		</div>
 		<div class="eyebrow">{eyebrow}</div>
 		<h1 class="title" data-tina-field={titleField}>{title}</h1>
+		{subtitle && <p class="subtitle" data-tina-field={subtitleField}>{subtitle}</p>}
 	</div>
 </div>
 
@@ -131,6 +134,15 @@ const breadcrumbJsonLd = buildBreadcrumbList([
 		margin: 0;
 	}
 
+	.subtitle {
+		position: relative;
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 26px;
+		color: rgba(255, 255, 255, 0.85);
+		margin: 8px 0 0;
+	}
+
 	@media (max-width: 720px) {
 		.page-banner {
 			padding: 16px 16px 0;
@@ -143,6 +155,10 @@ const breadcrumbJsonLd = buildBreadcrumbList([
 
 		.title {
 			font-size: 34px;
+		}
+
+		.subtitle {
+			font-size: 20px;
 		}
 	}
 </style>

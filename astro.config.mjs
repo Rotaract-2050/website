@@ -59,7 +59,7 @@ const interactEventSlugs = readdirSync(interactEventsDir, { recursive: true, enc
 	.map((file) => file.replace(/\.md$/, '').split(sep).join('/'));
 
 const customPages = [
-	...PAGE_SLUGS.flatMap((slug) => [`${SITE}/${slug}`, `${SITE}/en/${slug}`]),
+	...PAGE_SLUGS.flatMap((slug) => [`${SITE}/${slug}`, `${SITE}/en/${slug}`.replace(/\/$/, '')]),
 	...newsSlugs.flatMap((slug) => [`${SITE}/news/${slug}`, `${SITE}/en/news/${slug}`]),
 	...clubSlugs.flatMap((slug) => [`${SITE}/club/${slug}`, `${SITE}/en/club/${slug}`]),
 	...eventSlugs.flatMap((slug) => [`${SITE}/eventi/${slug}`, `${SITE}/en/eventi/${slug}`]),
