@@ -29,9 +29,12 @@ if (!resource) return;
 
 const localized = localizeResource(resource, lang);
 const titleField = lang === 'en' && resource.titleEn ? 'titleEn' : 'title';
+const subtitleField = lang === 'en' && resource.subtitleEn ? 'subtitleEn' : 'subtitle';
+// Subtitle goes in <title>/headline for search, never in the slug.
+const fullTitle = localized.subtitle ? `${localized.title}: ${localized.subtitle}` : localized.title;
 const bodyField = lang === 'en' && resource.bodyEn ? 'bodyEn' : 'body';
 const jsonLd = buildArticleJsonLd({
-	headline: localized.title,
+	headline: fullTitle,
 	description: localized.excerpt,
 	imageUrl: new URL('/uploads/loghi/Logo-distretto.png', Astro.site).toString(),
 	url: new URL(Astro.url.pathname, Astro.site).toString(),
@@ -49,7 +52,7 @@ const tagKeys = (resource.tags ?? []).filter((tag): tag is string => Boolean(tag
 <BaseLayout
 	lang={lang}
 	current="formazione"
-	title={localized.title}
+	title={fullTitle}
 	description={localized.excerpt}
 	alternateHref={getRelativeLocaleUrl(lang === 'it' ? 'en' : 'it', `formazione/${slug}`)}
 	type="article"
@@ -60,6 +63,8 @@ const tagKeys = (resource.tags ?? []).filter((tag): tag is string => Boolean(tag
 		title={localized.title}
 		breadcrumbCurrent={t.nav.formazione}
 		titleField={tinaField(resource, titleField)}
+		subtitle={localized.subtitle}
+		subtitleField={tinaField(resource, subtitleField)}
 	/>
 	<article class="resource-article">
 		<div class="article-inner">
@@ -75,7 +80,7 @@ const tagKeys = (resource.tags ?? []).filter((tag): tag is string => Boolean(tag
 			<span
 				aria-hidden="true"
 				data-track-sentinel="formazione_read_complete"
-				data-track-params={JSON.stringify({ resource_title: localized.title })}
+				data-track-params={JSON.stringify({ resource_title: fullTitle })}
 			/>
 		</div>
 	</article>
