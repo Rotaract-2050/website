@@ -23,56 +23,65 @@ bodyEn: |
 
   ## Welcome order with District Council members present
 
-  * District Representative (if absent, the Vice DR is welcomed first)
-  * Past DR
-  * DR-elect
-  * DR nominee
-  * Vice DR
-  * District Secretary
-  * District Treasurer
-  * District Prefect
-  * District Councillor
-  * Zone Delegates
-  * Rotaract Presidents (if absent, their Vice President)
-  * District Committee members
+  | Order | Office |
+  | --- | --- |
+  | 1 | District Representative (if absent, the Vice DR is welcomed first) |
+  | 2 | Past DR |
+  | 3 | DR-elect |
+  | 4 | DR nominee |
+  | 5 | Vice DR |
+  | 6 | District Secretary |
+  | 7 | District Treasurer |
+  | 8 | District Prefect |
+  | 9 | District Councillor |
+  | 10 | Zone Delegates |
+  | 11 | Rotaract Presidents (if absent, their Vice President) |
+  | 12 | District Committee members |
 
   ## Welcome order at an interclub event with a Rotary Club
 
-  * Rotary Club President + spouse/partner (if present)
-  * Presidents of the other clubs
-  * Past Presidents (in order of seniority in office)
-  * President-elect
-  * Vice President
-  * Secretary
-  * Treasurer
-  * Prefect
-  * Councillor
+  | Order | Office |
+  | --- | --- |
+  | 1 | Rotary Club President + spouse/partner (if present) |
+  | 2 | Presidents of the other clubs |
+  | 3 | Past Presidents (in order of seniority in office) |
+  | 4 | President-elect |
+  | 5 | Vice President |
+  | 6 | Secretary |
+  | 7 | Treasurer |
+  | 8 | Prefect |
+  | 9 | Councillor |
 
   > There's no need to name every single member individually: a formula such as *"...and the club members present..."* can be used instead.
 
   ## Welcome order with district, international and interdistrict officers present
 
-  * DR (if absent, the Vice DR is welcomed first)
-  * Past DR
-  * DR-elect
-  * DR nominee
-  * MDIO Chair
-  * Country Representative
-  * Vice DR
-  * District Secretary
-  * District Treasurer
-  * District Prefect
-  * District Councillors
-  * Zone Delegates
-  * District Committee Chairs
-  * Rotaract Presidents (if absent, their respective Vice President)
-  * District Committee members
+  | Order | Office |
+  | --- | --- |
+  | 1 | DR (if absent, the Vice DR is welcomed first) |
+  | 2 | Past DR |
+  | 3 | DR-elect |
+  | 4 | DR nominee |
+  | 5 | MDIO Chair |
+  | 6 | Country Representative |
+  | 7 | Vice DR |
+  | 8 | District Secretary |
+  | 9 | District Treasurer |
+  | 10 | District Prefect |
+  | 11 | District Councillors |
+  | 12 | Zone Delegates |
+  | 13 | District Committee Chairs |
+  | 14 | Rotaract Presidents (if absent, their respective Vice President) |
+  | 15 | District Committee members |
 
   > **Note:** this list applies when Rotaract officers are present. If the corresponding Rotary and Interact officers are also present, the order of precedence is: Rotaract, Rotary, Interact.
 
   ### See also
 
   * [[ruolo-del-prefetto]]
+  * [[tavolo-presidenziale]]
+  * [[il-distretto-rotaract]]
+  * [[struttura-rotaract]]
 ---
 
 ## Regole generali
@@ -91,53 +100,62 @@ Regole generali per l'ordine dei saluti:
 
 ## Saluti in presenza di membri del Consiglio Distrettuale
 
-* Rappresentante Distrettuale (se assente, si saluta per primo il Vice RD)
-* Past RD
-* RD eletto
-* RD nominato
-* Vice RD
-* Segretario Distrettuale
-* Tesoriere Distrettuale
-* Prefetto Distrettuale
-* Consigliere Distrettuale
-* Delegati di Zona
-* Presidenti dei Rotaract (se assenti, il Vice)
-* Componenti Commissioni Distrettuali
+| Ordine | Carica |
+| --- | --- |
+| 1 | Rappresentante Distrettuale (se assente, si saluta per primo il Vice RD) |
+| 2 | Past RD |
+| 3 | RD eletto |
+| 4 | RD nominato |
+| 5 | Vice RD |
+| 6 | Segretario Distrettuale |
+| 7 | Tesoriere Distrettuale |
+| 8 | Prefetto Distrettuale |
+| 9 | Consigliere Distrettuale |
+| 10 | Delegati di Zona |
+| 11 | Presidenti dei Rotaract (se assenti, il Vice) |
+| 12 | Componenti Commissioni Distrettuali |
 
 ## Saluti durante interclub con Rotary Club
 
-* Presidente Club Rotary + moglie/marito (se presenti)
-* Presidenti degli altri club
-* Past President (in ordine di anzianità di carica)
-* Presidente eletto
-* Vice Presidente
-* Segretario
-* Tesoriere
-* Prefetto
-* Consigliere
+| Ordine | Carica |
+| --- | --- |
+| 1 | Presidente Club Rotary + moglie/marito (se presenti) |
+| 2 | Presidenti degli altri club |
+| 3 | Past President (in ordine di anzianità di carica) |
+| 4 | Presidente eletto |
+| 5 | Vice Presidente |
+| 6 | Segretario |
+| 7 | Tesoriere |
+| 8 | Prefetto |
+| 9 | Consigliere |
 
 > Non è necessario citare singolarmente ogni socio: si può usare la formula *"...e i soci del club presenti..."* o simile.
 
 ## Saluti in presenza di cariche distrettuali, internazionali e interdistrettuali
 
-* RD (se assente, si saluta per primo il Vice RD)
-* Past RD
-* RD eletto
-* RD nominato
-* Presidente MDIO
-* Country Representative
-* Vice RD
-* Segretario Distrettuale
-* Tesoriere Distrettuale
-* Prefetto Distrettuale
-* Consiglieri Distrettuali
-* Delegati di Zona
-* Presidenti Commissioni Distrettuali
-* Presidenti Rotaract (se assenti, il rispettivo Vice)
-* Componenti Commissioni Distrettuali
+| Ordine | Carica |
+| --- | --- |
+| 1 | RD (se assente, si saluta per primo il Vice RD) |
+| 2 | Past RD |
+| 3 | RD eletto |
+| 4 | RD nominato |
+| 5 | Presidente MDIO |
+| 6 | Country Representative |
+| 7 | Vice RD |
+| 8 | Segretario Distrettuale |
+| 9 | Tesoriere Distrettuale |
+| 10 | Prefetto Distrettuale |
+| 11 | Consiglieri Distrettuali |
+| 12 | Delegati di Zona |
+| 13 | Presidenti Commissioni Distrettuali |
+| 14 | Presidenti Rotaract (se assenti, il rispettivo Vice) |
+| 15 | Componenti Commissioni Distrettuali |
 
 > **N.B.** Questo elenco vale in presenza di cariche rotaractiane. Se sono presenti anche le rispettive cariche rotariane e interactiane, l'ordine di precedenza è: Rotaract, Rotary, Interact.
 
 ### Vedi anche
 
 * [[ruolo-del-prefetto]]
+* [[tavolo-presidenziale]]
+* [[il-distretto-rotaract]]
+* [[struttura-rotaract]]

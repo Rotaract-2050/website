@@ -14,16 +14,18 @@ bodyEn: |
 
   Head table seating order for a regular club meeting:
 
-  1. Rotaract Club President
-  2. Guest speaker
-  3. District Representative
-  4. Speaker's spouse/partner
-  5. Partner Rotary Club President
-  6. Partner Rotary Club President's spouse/partner
-  7. Partner Rotary Club's Rotaract liaison officer
-  8. District Secretary
-  9. Other officers
-  10. Other officers
+  | Seat | Who |
+  | --- | --- |
+  | 1 | Rotaract Club President |
+  | 2 | Guest speaker |
+  | 3 | District Representative |
+  | 4 | Speaker's spouse/partner |
+  | 5 | Partner Rotary Club President |
+  | 6 | Partner Rotary Club President's spouse/partner |
+  | 7 | Partner Rotary Club's Rotaract liaison officer |
+  | 8 | District Secretary |
+  | 9 | Other officers |
+  | 10 | Other officers |
 
   *(set up secondary "tables of honour" where needed)*
 
@@ -35,26 +37,28 @@ bodyEn: |
 
   ## District Representative's visit
 
-  The District Representative's official visit is one of the most important moments for a Club.
+  The District Representative's official visit is **one of the most important moments** for a Club.
 
   * It is usually preceded by a meeting between the Club Board and the District Representative;
   * The Prefect may buy a small gift for the District Representative, on the Club's behalf and at its expense;
   * Club and District pennants are exchanged between the District Representative and the Club President;
-  * At the head table, the District Representative sits to the President's right.
+  * At the head table, the District Representative sits **to the President's right**.
 
   ### Head table seating order
 
-  1. Rotaract Club President
-  2. District Representative
-  3. Partner Rotary Club President
-  4. Partner Rotary Club President's spouse/partner
-  5. Youth Action Committee Chair
-  6. Youth Action Committee Chair's spouse/partner
-  7. Rotary Liaison Officer for Rotaract
-  8. Partner Rotary Club's Rotaract Advisor
-  9. District Secretary
-  10. District Treasurer
-  11. Zone Delegate
+  | Seat | Who |
+  | --- | --- |
+  | 1 | Rotaract Club President |
+  | 2 | District Representative |
+  | 3 | Partner Rotary Club President |
+  | 4 | Partner Rotary Club President's spouse/partner |
+  | 5 | Youth Action Committee Chair |
+  | 6 | Youth Action Committee Chair's spouse/partner |
+  | 7 | Rotary Liaison Officer for Rotaract |
+  | 8 | Partner Rotary Club's Rotaract Advisor |
+  | 9 | District Secretary |
+  | 10 | District Treasurer |
+  | 11 | Zone Delegate |
 
   > **Note:** when the authorities present outnumber the head table's seats, set up secondary "tables of honour", or seat them in the front row and call on them individually for a welcome. Each table of honour should have someone representing the Club present (e.g. a Past President or Vice President).
 
@@ -69,16 +73,18 @@ bodyEn: |
 
   ### Head table seating order
 
-  1. Rotaract Club President (host)
-  2. Interclub partner club President
-  3. Other Rotaract Club Presidents present
-  4. District Representative
-  5. District Secretary
-  6. District Treasurer
-  7. District Prefect
-  8. Zone Delegate
-  9. Other officers
-  10. Other officers
+  | Seat | Who |
+  | --- | --- |
+  | 1 | Rotaract Club President (host) |
+  | 2 | Interclub partner club President |
+  | 3 | Other Rotaract Club Presidents present |
+  | 4 | District Representative |
+  | 5 | District Secretary |
+  | 6 | District Treasurer |
+  | 7 | District Prefect |
+  | 8 | Zone Delegate |
+  | 9 | Other officers |
+  | 10 | Other officers |
 
   ## Handover Ceremony
 
@@ -86,20 +92,22 @@ bodyEn: |
 
   * The outgoing President takes the central seat at the head table; the incoming President sits to their right, and the other officers follow in order of precedence;
   * After receiving the collar from the outgoing President, the incoming President speaks and introduces their team;
-  * At the end of the gathering, the bell's gavel is held by both Presidents together.
+  * At the end of the gathering, the [[campana-e-martelletto|bell's]] gavel is held by **both Presidents** together.
 
   ### Head table seating order
 
-  1. Outgoing Rotaract Club President
-  2. Incoming Rotaract Club President
-  3. Outgoing District Representative
-  4. Incoming District Representative
-  5. Outgoing Vice District Representative
-  6. Incoming Vice District Representative
-  7. Past District Representative
-  8. District Representative-elect
-  9. Outgoing Zone Delegate
-  10. Incoming Zone Delegate
+  | Seat | Who |
+  | --- | --- |
+  | 1 | Outgoing Rotaract Club President |
+  | 2 | Incoming Rotaract Club President |
+  | 3 | Outgoing District Representative |
+  | 4 | Incoming District Representative |
+  | 5 | Outgoing Vice District Representative |
+  | 6 | Incoming Vice District Representative |
+  | 7 | Past District Representative |
+  | 8 | District Representative-elect |
+  | 9 | Outgoing Zone Delegate |
+  | 10 | Incoming Zone Delegate |
 
   ### See also
 
@@ -108,6 +116,8 @@ bodyEn: |
   * [[stendardo-e-guidoncino]]
   * [[campana-e-martelletto]]
   * [[il-distretto-rotaract]]
+  * [[ruota-libro-firme]]
+  * [[saluti]]
 ---
 
 L'ordine di disposizione del tavolo presidenziale cambia in base al tipo di evento. Di seguito le quattro situazioni previste dal Cerimoniale.
@@ -116,16 +126,18 @@ L'ordine di disposizione del tavolo presidenziale cambia in base al tipo di even
 
 Ordine di disposizione del tavolo presidenziale in occasione di una conviviale:
 
-1. Presidente del Club Rotaract
-2. Relatore
-3. Rappresentante Distrettuale
-4. Consorte del relatore
-5. Presidente del Rotary Club Partner
-6. Consorte del Presidente del Rotary Club Partner
-7. Responsabile Rotaract del Rotary Club Partner
-8. Segretario Distrettuale
-9. Altre cariche
-10. Altre cariche
+| Posto | Chi |
+| --- | --- |
+| 1 | Presidente del Club Rotaract |
+| 2 | Relatore |
+| 3 | Rappresentante Distrettuale |
+| 4 | Consorte del relatore |
+| 5 | Presidente del Rotary Club Partner |
+| 6 | Consorte del Presidente del Rotary Club Partner |
+| 7 | Responsabile Rotaract del Rotary Club Partner |
+| 8 | Segretario Distrettuale |
+| 9 | Altre cariche |
+| 10 | Altre cariche |
 
 *(prevedere tavoli di rispetto ove necessario)*
 
@@ -137,26 +149,28 @@ Il tavolo presidenziale rettangolare va disposto in modo che i commensali non di
 
 ## Visita del Rappresentante Distrettuale
 
-La visita ufficiale del Rappresentante Distrettuale è uno dei momenti più importanti per il Club.
+La visita ufficiale del Rappresentante Distrettuale è **uno dei momenti più importanti** per il Club.
 
 * È di solito preceduta da una riunione del Consiglio Direttivo di Club con il Rappresentante Distrettuale;
 * Il Prefetto può acquistare, a nome e spese del Club, un piccolo dono per il Rappresentante Distrettuale;
 * È previsto lo scambio di gagliardetti/guidoncini tra il Rappresentante Distrettuale e il Presidente di Club;
-* Al tavolo presidenziale, il Rappresentante Distrettuale siede alla destra del Presidente.
+* Al tavolo presidenziale, il Rappresentante Distrettuale siede **alla destra del Presidente**.
 
 ### Disposizione del tavolo presidenziale
 
-1. Presidente del Club Rotaract
-2. Rappresentante Distrettuale
-3. Presidente del Rotary Club Partner
-4. Consorte del Presidente del Rotary Club Partner
-5. Presidente Commissione Azione Giovani
-6. Consorte del Presidente Commissione Azione Giovani
-7. Delegato Rotary per il Rotaract
-8. Consulente Rotaract del Rotary Club Partner
-9. Segretario Distrettuale
-10. Tesoriere Distrettuale
-11. Delegato di Zona
+| Posto | Chi |
+| --- | --- |
+| 1 | Presidente del Club Rotaract |
+| 2 | Rappresentante Distrettuale |
+| 3 | Presidente del Rotary Club Partner |
+| 4 | Consorte del Presidente del Rotary Club Partner |
+| 5 | Presidente Commissione Azione Giovani |
+| 6 | Consorte del Presidente Commissione Azione Giovani |
+| 7 | Delegato Rotary per il Rotaract |
+| 8 | Consulente Rotaract del Rotary Club Partner |
+| 9 | Segretario Distrettuale |
+| 10 | Tesoriere Distrettuale |
+| 11 | Delegato di Zona |
 
 > **N.B.** Quando le autorità presenti superano i posti disponibili al tavolo presidenziale, prevedere dei tavoli di rispetto, oppure farle sedere in prima fila e chiamarle singolarmente per un saluto. Ad ogni tavolo di rispetto deve essere presente una persona che rappresenti il Club (es. Past President o Vice Presidente).
 
@@ -171,16 +185,18 @@ Il Prefetto del club ospitante è il principale responsabile dell'organizzazione
 
 ### Disposizione del tavolo presidenziale
 
-1. Presidente del Club Rotaract (organizzatore)
-2. Presidente del Club in interclub
-3. Altri Presidenti Rotaract Club presenti
-4. Rappresentante Distrettuale
-5. Segretario Distrettuale
-6. Tesoriere Distrettuale
-7. Prefetto Distrettuale
-8. Delegato di Zona
-9. Altre cariche
-10. Altre cariche
+| Posto | Chi |
+| --- | --- |
+| 1 | Presidente del Club Rotaract (organizzatore) |
+| 2 | Presidente del Club in interclub |
+| 3 | Altri Presidenti Rotaract Club presenti |
+| 4 | Rappresentante Distrettuale |
+| 5 | Segretario Distrettuale |
+| 6 | Tesoriere Distrettuale |
+| 7 | Prefetto Distrettuale |
+| 8 | Delegato di Zona |
+| 9 | Altre cariche |
+| 10 | Altre cariche |
 
 ## Passaggio delle consegne
 
@@ -188,20 +204,22 @@ Il Passaggio delle Consegne è l'ultima conviviale dell'anno sociale, durante la
 
 * Il Presidente uscente occupa il posto centrale al tavolo presidenziale; alla sua destra siede il Presidente entrante, e le altre cariche seguono secondo le precedenze;
 * Dopo aver ricevuto il collare dal Presidente uscente, il Presidente entrante prende la parola e presenta la squadra;
-* Al termine della conviviale, il martelletto della campana viene impugnato da entrambi i Presidenti.
+* Al termine della conviviale, il martelletto della [[campana-e-martelletto|campana]] viene impugnato da **entrambi i Presidenti**.
 
 ### Disposizione del tavolo presidenziale
 
-1. Presidente del Club Rotaract uscente
-2. Presidente del Club Rotaract entrante
-3. Rappresentante Distrettuale uscente
-4. Rappresentante Distrettuale entrante
-5. Vice Rappresentante Distrettuale uscente
-6. Vice Rappresentante Distrettuale entrante
-7. Past Rappresentante Distrettuale
-8. Rappresentante Distrettuale nominato
-9. Delegato di Zona uscente
-10. Delegato di Zona entrante
+| Posto | Chi |
+| --- | --- |
+| 1 | Presidente del Club Rotaract uscente |
+| 2 | Presidente del Club Rotaract entrante |
+| 3 | Rappresentante Distrettuale uscente |
+| 4 | Rappresentante Distrettuale entrante |
+| 5 | Vice Rappresentante Distrettuale uscente |
+| 6 | Vice Rappresentante Distrettuale entrante |
+| 7 | Past Rappresentante Distrettuale |
+| 8 | Rappresentante Distrettuale nominato |
+| 9 | Delegato di Zona uscente |
+| 10 | Delegato di Zona entrante |
 
 ### Vedi anche
 
@@ -210,3 +228,5 @@ Il Passaggio delle Consegne è l'ultima conviviale dell'anno sociale, durante la
 * [[stendardo-e-guidoncino]]
 * [[campana-e-martelletto]]
 * [[il-distretto-rotaract]]
+* [[ruota-libro-firme]]
+* [[saluti]]
