@@ -9,9 +9,11 @@ eventType: Distrettuale
 locationLavori: "Ex Convento dell'Annunciata, Abbiategrasso (MI), 20081"
 clubs:
   - club: src/content/clubs/rotaract-club-abbiategrasso.md
-excerpt: "Programma dettagliato in via di definizione."
-excerptEn: "Detailed programme to be announced."
+excerpt: "Assemblea prenatalizia con grandi sorprese!"
+excerptEn: "A pre-Christmas assembly full of great surprises!"
 bodyEn: |
+  *Detailed programme to be announced.*
+
   ## Useful information
 
   **Parking**
@@ -47,6 +49,8 @@ schedule:
 ticketsOpen: true
 ticketsUrl: 'https://buytickets.at/distrettorotaract2050/2482979/r/website'
 ---
+
+*Programma dettagliato in via di definizione.*
 
 ## Informazioni utili
 
