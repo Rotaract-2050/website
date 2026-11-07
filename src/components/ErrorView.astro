@@ -40,8 +40,8 @@ const shortcuts = shortcutDefs.map(({ key, page, label }) => ({
 	<PageBanner lang={lang} eyebrow={t.eyebrow} title={t.title} breadcrumbCurrent={t.breadcrumbCurrent} />
 	<section class="not-found" data-error={error}>
 		<p class="not-found__body">{t.body}</p>
+		{/* Filled client-side: the page is reached via Astro.rewrite, so the server may only see /404. */}
 		{isNotFound && (
-			<!-- Filled client-side: the page is reached via Astro.rewrite, so the server may only see /404. -->
 			<p class="not-found__path" data-not-found-path hidden>
 				<span>{uiStrings[lang].notFound.requestedPathLabel}:</span> <code></code>
 			</p>
