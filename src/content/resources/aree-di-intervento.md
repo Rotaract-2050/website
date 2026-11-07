@@ -109,7 +109,7 @@ bodyEn: |
 
   ### See also
 
-  * [[le-vie-dazione]]
+  * [[vie-di-azione]]
   * [[la-rotary-foundation]]
   * [[il-ryla]]
 ---
@@ -220,6 +220,6 @@ Alcuni esempi di service:
 
 ### Vedi anche
 
-* [[le-vie-dazione]]
+* [[vie-di-azione]]
 * [[la-rotary-foundation]]
 * [[il-ryla]]

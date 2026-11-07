@@ -36,7 +36,7 @@ bodyEn: |
   ### See also
 
   * [[il-ryla]]
-  * [[le-aree-dintervento]]
+  * [[aree-di-intervento]]
 ---
 
 La Rotary Foundation è un'associazione senza fini di lucro. La sua missione consiste nell'aiutare i Rotariani a promuovere la comprensione, la buona volontà e la pace nel mondo attraverso il finanziamento di progetti per il miglioramento della salute, il sostegno all'istruzione e l'alleviamento della povertà.
@@ -68,5 +68,5 @@ Questi fondi vengono poi investiti e ridistribuiti come Global Grants e District
 ### Vedi anche
 
 * [[il-ryla]]
-* [[le-aree-dintervento]]
+* [[aree-di-intervento]]
 

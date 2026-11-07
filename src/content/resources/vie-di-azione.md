@@ -18,7 +18,7 @@ bodyEn: |
   ### See also
 
   * [[il-ryla]]
-  * [[le-aree-dintervento]]
+  * [[aree-di-intervento]]
 ---
 
 Le vie d’azione del Rotary sono i principali ambiti su cui si fonda l’attività Rotaractiana e sono cinque:
@@ -32,4 +32,4 @@ Le vie d’azione del Rotary sono i principali ambiti su cui si fonda l’attivi
 ### Vedi anche
 
 * [[il-ryla]]
-* [[le-aree-dintervento]]
+* [[aree-di-intervento]]

@@ -36,7 +36,7 @@ bodyEn: |
 
   * [[storia-del-rotaract]]
   * [[struttura-rotaract]]
-  * [[le-vie-dazione]]
+  * [[vie-di-azione]]
   * [[tavolo-presidenziale]]
 ---
 
@@ -69,6 +69,6 @@ Durante l'anno sociale il distretto organizza le cosiddette assemblee distrettua
 
 * [[storia-del-rotaract]]
 * [[struttura-rotaract]]
-* [[le-vie-dazione]]
+* [[vie-di-azione]]
 * [[tavolo-presidenziale]]
 

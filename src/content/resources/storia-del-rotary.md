@@ -30,7 +30,7 @@ bodyEn: |
   ### See also
 
   * [[storia-del-rotaract]]
-  * [[storia-dell-interact]]
+  * [[storia-interact]]
   * [[il-distretto-rotaract]]
 ---
 
@@ -71,5 +71,5 @@ Nel Distretto 2050, che comprende la Lombardia meridionale e la Provincia di Pia
 ### Vedi anche
 
 * [[storia-del-rotaract]]
-* [[storia-dell-interact]]
+* [[storia-interact]]
 * [[il-distretto-rotaract]]

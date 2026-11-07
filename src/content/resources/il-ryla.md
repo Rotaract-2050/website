@@ -31,7 +31,7 @@ bodyEn: |
 
   ### See also
 
-  * [[le-vie-dazione]]
+  * [[vie-di-azione]]
   * [[la-rotary-foundation]]
 ---
 
@@ -59,6 +59,6 @@ Ogni edizione ha un proprio tema, luogo, date e scadenze: per l'edizione in cors
 
 ### Vedi anche
 
-* [[le-vie-dazione]]
+* [[vie-di-azione]]
 * [[la-rotary-foundation]]
 
