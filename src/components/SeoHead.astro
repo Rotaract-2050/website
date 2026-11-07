@@ -16,8 +16,10 @@ interface Props {
 
 const { lang, title, description, alternateHref, image, type = 'website', publishedTime, noindex = false, twitterHandle } = Astro.props;
 
-const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
-const alternateUrl = new URL(alternateHref, Astro.site);
+// Forma canonica senza slash finale (come la sitemap); solo la root "/" lo mantiene.
+const noSlash = (path: string) => (path.length > 1 ? path.replace(/\/+$/, '') : path);
+const canonicalUrl = new URL(noSlash(Astro.url.pathname), Astro.site);
+const alternateUrl = new URL(noSlash(alternateHref), Astro.site);
 const otherLang: Lang = lang === 'it' ? 'en' : 'it';
 // x-default deve puntare alla versione IT (locale di default) della pagina corrente, non sempre alla home.
 const defaultLocaleUrl = lang === 'it' ? canonicalUrl : alternateUrl;
