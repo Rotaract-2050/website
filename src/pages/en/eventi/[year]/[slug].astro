@@ -36,8 +36,8 @@ const dateFormatter = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 
 const typeTags = eventTypeTag(event);
 const clubTags = clubTagLabels(event.clubs);
 const localized = localizeEvent(event, lang);
-const bodyHtml = renderTinaMarkdown((lang === 'en' && event.bodyEn) || event.body);
-const bodyAfterHtml = renderTinaMarkdown((lang === 'en' && event.bodyAfterEn) || event.bodyAfter);
+const bodyHtml = renderTinaMarkdown(event.bodyEn || event.body);
+const bodyAfterHtml = renderTinaMarkdown(event.bodyAfterEn || event.bodyAfter);
 const titleField = event.titleEn ? 'titleEn' : 'title';
 // `ticketsOpen` gates the ticket button/widget only, independent from `visible` (which controls
 // the whole event page): a socio can prep the link/snippet in advance and open it only once
@@ -159,7 +159,7 @@ const jsonLd = buildEventJsonLd({
 					)}
 				</div>
 			)}
-			{bodyHtml && <div class="event-detail-body" data-tina-field={tinaField(event, lang === 'en' && event.bodyEn ? 'bodyEn' : 'body')} set:html={bodyHtml} />}
+			{bodyHtml && <div class="event-detail-body" data-tina-field={tinaField(event, event.bodyEn ? 'bodyEn' : 'body')} set:html={bodyHtml} />}
 			{event.schedule && event.schedule.length > 0 && (
 				<div class="event-schedule" data-tina-field={tinaField(event, 'schedule')}>
 					<h2 class="event-schedule-title">{t.events.scheduleTitle}</h2>
@@ -178,7 +178,7 @@ const jsonLd = buildEventJsonLd({
 					</ol>
 				</div>
 			)}
-			{bodyAfterHtml && <div class="event-detail-body" data-tina-field={tinaField(event, lang === 'en' && event.bodyAfterEn ? 'bodyAfterEn' : 'bodyAfter')} set:html={bodyAfterHtml} />}
+			{bodyAfterHtml && <div class="event-detail-body" data-tina-field={tinaField(event, event.bodyAfterEn ? 'bodyAfterEn' : 'bodyAfter')} set:html={bodyAfterHtml} />}
 			{showTicketWidget && (
 				<div class="event-detail-ticket-widget" set:html={event.ticketWidgetEmbed} />
 			)}
