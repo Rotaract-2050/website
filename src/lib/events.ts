@@ -108,22 +108,31 @@ function isSideEvent(title: string): boolean {
 	return title.replace(/[.\s]/g, '').toUpperCase().startsWith('SIDE');
 }
 
-/** Shifts a `rotaryYearLabel` output ("AR 2024/2025") one Rotary year forward ("AR 2025/2026"). */
-function nextRotaryYearLabel(label: string): string {
+/** True for Passaggio delle Consegne events ("Passaggio delle Consegne 2025", "PDC 2026", ...), matched on title like S.I.D.E. */
+function isHandoverEvent(title: string): boolean {
+	return /^(passaggio delle consegne|pdc)\b/i.test(title.trim());
+}
+
+/** Shifts a `rotaryYearLabel` output ("AR 2024/2025") by `delta` Rotary years ("AR 2025/2026" for +1). */
+function shiftRotaryYearLabel(label: string, delta: number): string {
 	const match = label.match(/^AR (\d{4})\/(\d{4})$/);
 	if (!match) return label;
-	const startYear = Number(match[1]) + 1;
+	const startYear = Number(match[1]) + delta;
 	return `AR ${startYear}/${startYear + 1}`;
 }
 
 /**
- * An event's Rotary-year bucket, normally the plain `rotaryYearLabel` of its date — except
- * S.I.D.E., which trains incoming officers and so counts as the opening event of the *next*
- * Rotary year even though it's held in May, before the 1 July cutoff.
+ * An event's Rotary-year bucket, normally the plain `rotaryYearLabel` of its date — except:
+ * - S.I.D.E. trains incoming officers, so it opens the *next* Rotary year though held in May;
+ * - Passaggio delle Consegne closes the Rotary year that's ending, so one held just after the
+ *   1 July cutoff (e.g. 5 July 2025) still belongs to the year before.
  */
 function eventYearLabel(event: Pick<DistrictEvent, 'date' | 'title'>): string {
 	const label = rotaryYearLabel(event.date);
-	return isSideEvent(event.title) ? nextRotaryYearLabel(label) : label;
+	if (isSideEvent(event.title)) return shiftRotaryYearLabel(label, 1);
+	// Held in the second half of the calendar year = past the 1 July cutoff, so step back to the ending year.
+	if (isHandoverEvent(event.title) && new Date(event.date).getUTCMonth() >= 6) return shiftRotaryYearLabel(label, -1);
+	return label;
 }
 
 /** Start year parsed out of a `rotaryYearLabel`/`eventYearLabel` output ("AR 2025/2026" -> 2025). */
