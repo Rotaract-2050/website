@@ -25,7 +25,7 @@ bodyEn: |
 
   ## Rotaract in Italy
 
-  The first Italian Rotaract club was the Rotaract Club of Milan, founded in 1968.
+  The first Italian Rotaract club was the Rotaract Club of Florence, founded on 18 March 1968.
 
   Rotaract in Italy is organized into districts, each coordinated by its own District Representative (R.R.D.), a position elected annually by the members of the clubs belonging to the district.
 

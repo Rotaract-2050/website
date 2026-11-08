@@ -68,7 +68,7 @@ Nel territorio dell’attuale Distretto 2050, il primo Club a essere fondato è 
 
 ## Il Rotary oggi
 
-Nel corso del Novecento il movimento continua a crescere, affrontando le grandi sfide sociali e umanitario del suo tempo. Oggi il Rotary riunisce oltre 1,2 milioni di soci in più di 46.000 Club distribuiti in oltre 200 Paesi e aree geografiche, uniti dalla stessa idea: costruire connessioni, sviluppare leadership e trasformare l’amicizia in servizio concreto.
+Nel corso del Novecento il movimento continua a crescere, affrontando le grandi sfide sociali e umanitarie del suo tempo. Oggi il Rotary riunisce oltre 1,2 milioni di soci in più di 46.000 Club distribuiti in oltre 200 Paesi e aree geografiche, uniti dalla stessa idea: costruire connessioni, sviluppare leadership e trasformare l’amicizia in servizio concreto.
 Nel Distretto 2050, che comprende la Lombardia meridionale e la Provincia di Piacenza, la rete conta oggi 85 Rotary Club e 3.379 soci. Una realtà che continua a crescere e a rinnovarsi, mantenendo al centro il principio del “Servire al di sopra di ogni interesse personale”.
 
 ## Le tappe principali

@@ -48,7 +48,7 @@ Il primo Club Interact venne fondato nel 1962 alla Melbourne High School, in Flo
 
 ## Uno spazio per crescere
 
-L’obbiettivo è chiaro fin dalle origini: dare ai giovani un contesto in cui allenare leadership, lavoro di squadra e spirito di servizio. Nei Club Interact sono i soci stessi a occuparsi di tutto: dall’ideazione alla realizzazione delle attività, imparando a leggere i bisogni della propria comunità e a trasformarli in progetti concreti.
+L’obiettivo è chiaro fin dalle origini: dare ai giovani un contesto in cui allenare leadership, lavoro di squadra e spirito di servizio. Nei Club Interact sono i soci stessi a occuparsi di tutto: dall’ideazione alla realizzazione delle attività, imparando a leggere i bisogni della propria comunità e a trasformarli in progetti concreti.
 
 Ogni Club porta avanti almeno due attività di servizio all’anno: una dedicata alla scuola o al territorio di appartenenza, l’altra pensata per promuovere la comprensione tra culture diverse. Ad accompagnare i giovani in questo percorso ci sono i Club Rotary e/o Rotaract padrini, che mettono a disposizione formazione, supporto e mentorship.
 
