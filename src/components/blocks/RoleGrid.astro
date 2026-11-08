@@ -38,8 +38,11 @@ const hasTheme = Boolean(featured?.themeMotto || featured?.themeLogo);
 		{showDisclaimer && disclaimerText && <p class="disclaimer">{disclaimerText}</p>}
 		{highlightFirst && featured && (
 			<div class="featured-row" data-themed={hasTheme}>
+				{/* SVG skips the image service: /_image rejects f=svg with a 400. */}
 				{hasTheme && featured.themeLogo && (
-					<Image src={featured.themeLogo} alt={`Logo del tema distrettuale — ${featured.themeMotto ?? title}`} width={520} height={520} quality="high" class="theme-logo" />
+					featured.themeLogo.endsWith('.svg')
+						? <img src={featured.themeLogo} alt={`Logo del tema distrettuale — ${featured.themeMotto ?? title}`} width={520} height={520} class="theme-logo" loading="lazy" decoding="async" />
+						: <Image src={featured.themeLogo} alt={`Logo del tema distrettuale — ${featured.themeMotto ?? title}`} width={520} height={520} quality="high" class="theme-logo" />
 				)}
 				<PersonCard
 					lang={lang}
