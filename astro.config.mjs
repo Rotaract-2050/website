@@ -110,6 +110,15 @@ function tinaReloadOnContentChangePlugin() {
 export default defineConfig({
 	site: SITE,
 	output: 'server',
+	// 301s for formazione cards whose slugs were shortened (PR #106); old URLs are indexed and shared.
+	redirects: {
+		'/formazione/le-aree-dintervento': '/formazione/aree-di-intervento',
+		'/formazione/le-vie-dazione': '/formazione/vie-di-azione',
+		'/formazione/storia-dell-interact': '/formazione/storia-interact',
+		'/en/formazione/le-aree-dintervento': '/en/formazione/aree-di-intervento',
+		'/en/formazione/le-vie-dazione': '/en/formazione/vie-di-azione',
+		'/en/formazione/storia-dell-interact': '/en/formazione/storia-interact',
+	},
 	// Default 'auto' only inlines a page's CSS below ~4KB; GenericPageView/PageBanner sit
 	// above that, so they were shipped as separate render-blocking <link> requests (each an
 	// extra round trip before first paint — flagged directly by Lighthouse). Inlining

@@ -11,6 +11,8 @@ excerptEn: "The administrative deadlines the President and Secretary must meet d
 bodyEn: |
   Meeting these deadlines is a shared responsibility: the Secretary is usually the one who monitors and carries them out day to day (see [[ruolo-del-segretario]]), but the President remains ultimately accountable for the Club fulfilling them.
 
+  ## The calendar
+
   | Deadline | Obligation |
   | --- | --- |
   | 30 June | Update membership records on MyRotary |
@@ -32,6 +34,8 @@ bodyEn: |
 ---
 
 Il rispetto di queste scadenze è una responsabilità condivisa: il Segretario è di norma chi le monitora e le esegue nella quotidianità (vedi [[ruolo-del-segretario]]), ma il Presidente resta il responsabile ultimo del fatto che il Club le rispetti.
+
+## Il calendario
 
 | Scadenza | Adempimento |
 | --- | --- |

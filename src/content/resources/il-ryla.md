@@ -7,9 +7,11 @@ order: 21
 excerpt: 'Il RYLA (Rotary Youth Leadership Awards): programma di leadership per i giovani finanziato dalla Rotary Foundation.'
 excerptEn: 'RYLA (Rotary Youth Leadership Awards): a youth leadership programme funded by the Rotary Foundation.'
 bodyEn: |
-  RYLA, short for *Rotary Youth Leadership Awards*, is a leadership programme created by Rotary Clubs and districts, in which each participant can develop their own leadership skills while enjoying themselves. The programme is funded by the Rotary Foundation, which supports not only educational projects like this one but also humanitarian ones.
+  ## What RYLA is
 
-  The Foundation covers grants for the professional training of younger generations, allowing clubs to put the fifth avenue of service into practice: "new generations".
+  RYLA, short for *Rotary Youth Leadership Awards*, is a leadership programme created by Rotary Clubs and districts, in which each participant can develop their own leadership skills while enjoying themselves. The programme is funded by the [[la-rotary-foundation|Rotary Foundation]], which supports not only educational projects like this one but also humanitarian ones.
+
+  The Foundation covers grants for the professional training of younger generations, allowing clubs to put the fifth [[vie-di-azione|avenue of service]] into practice: "new generations".
 
   RYLA was created in 1971 as an official Rotary International programme, with the goal of training younger generations according to leadership principles and Rotarian values.
 
@@ -17,7 +19,7 @@ bodyEn: |
 
   RYLA events are organized locally by Rotary clubs and districts each year. Young people aged 18 to 30 can take part, nominated by a Rotary club.
 
-  ### The District 2050 RYLA
+  ## The District 2050 RYLA
 
   District 2050 organizes its own RYLA every year and has an official website, with the programme, how to take part, FAQ and contacts: [ryla.rotary2050.org](https://ryla.rotary2050.org/).
 
@@ -31,13 +33,15 @@ bodyEn: |
 
   ### See also
 
-  * [[le-vie-dazione]]
+  * [[vie-di-azione]]
   * [[la-rotary-foundation]]
 ---
 
-Il RYLA, ovvero *Rotary Youth Leadership Awards*, è un programma di leadership creato dai Rotary Club e dai vari distretti, in cui ogni partecipante può sviluppare le proprie doti di leadership divertendosi. Il programma è sovvenzionato dalla Rotary Foundation, che sostiene progetti non solo educativi come questo, ma anche umanitari.
+## Cos'è il RYLA
 
-La fondazione si fa carico delle sovvenzioni per la formazione professionale delle nuove generazioni, consentendo ai club di mettere in pratica la quinta via d'azione: "nuove generazioni".
+Il RYLA, ovvero *Rotary Youth Leadership Awards*, è un programma di leadership creato dai Rotary Club e dai vari distretti, in cui ogni partecipante può sviluppare le proprie doti di leadership divertendosi. Il programma è sovvenzionato dalla [[la-rotary-foundation|Rotary Foundation]], che sostiene progetti non solo educativi come questo, ma anche umanitari.
+
+La fondazione si fa carico delle sovvenzioni per la formazione professionale delle nuove generazioni, consentendo ai club di mettere in pratica la quinta [[vie-di-azione|via d'azione]]: "nuove generazioni".
 
 Il RYLA nasce nel 1971 come programma ufficiale di Rotary International, con l'obiettivo di formare le nuove generazioni secondo i principi di leadership e i valori rotariani.
 
@@ -45,7 +49,7 @@ L'obiettivo ultimo di questo programma è lo sviluppo di una buona comunicazione
 
 Gli eventi RYLA sono organizzati a livello locale da club e distretti Rotary annualmente. Possono partecipare giovani tra i 18 e i 30 anni, candidati da un club Rotary.
 
-### Il RYLA del Distretto 2050
+## Il RYLA del Distretto 2050
 
 Il Distretto 2050 organizza ogni anno un proprio RYLA e ha un sito ufficiale dedicato, con programma, modalità di partecipazione, FAQ e contatti: [ryla.rotary2050.org](https://ryla.rotary2050.org/).
 
@@ -59,6 +63,5 @@ Ogni edizione ha un proprio tema, luogo, date e scadenze: per l'edizione in cors
 
 ### Vedi anche
 
-* [[le-vie-dazione]]
+* [[vie-di-azione]]
 * [[la-rotary-foundation]]
-
