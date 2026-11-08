@@ -11,7 +11,7 @@ bodyEn: |
 
   Rotaract is an international organization affiliated with Rotary International, made up of young adults between 18 and 35 years old. It is a service club that promotes friendship, personal and professional development, together with service to the community. The name comes from combining "ROTAry" and "ACTion", underscoring the bond with Rotary.
 
-  Rotaract's history begins in the 1960s, when Rotary recognized the importance of involving younger generations to address emerging social challenges. Before Rotaract, other youth initiatives already existed: the "Paul Harris Circles" and Interact clubs.
+  Rotaract's history begins in the 1960s, when Rotary recognized the importance of involving younger generations to address emerging social challenges. Before Rotaract, other youth initiatives already existed: the "Paul Harris Circles" and [[club-interact|Interact]] clubs.
 
   The first Rotaract club was founded on 13 March 1968 at the University of North Carolina, sponsored by the Rotary Club of North Charlotte.
 
@@ -25,7 +25,7 @@ bodyEn: |
 
   ## Rotaract in Italy
 
-  The first Italian Rotaract club was the Rotaract Club of Milan, founded in 1968.
+  The first Italian Rotaract club was the Rotaract Club of Florence, founded on 18 March 1968.
 
   Rotaract in Italy is organized into districts, each coordinated by its own District Representative (R.R.D.), a position elected annually by the members of the clubs belonging to the district.
 
@@ -39,12 +39,11 @@ bodyEn: |
   * [[club-interact]]
 ---
 
-
 ## Le origini del Rotaract, la sua evoluzione e i suoi valori
 
 Il Rotaract è un'organizzazione internazionale affiliata a Rotary International, composta da giovani adulti di età compresa tra i 18 e i 35 anni. È un club di servizio, promuove l'amicizia, lo sviluppo personale e professionale insieme con il servizio alla comunità. Il nome nasce dalla combinazione di "ROTAry" e "ACTion", sottolineando il legame con il Rotary.
 
-La storia del Rotaract inizia negli anni '60, quando il Rotary riconobbe l'importanza di coinvolgere le giovani generazioni per affrontare sfide sociali emergenti. Prima del Rotaract esistevano altre iniziative giovanili: i "Paul Harris Circles" e i club Interact.
+La storia del Rotaract inizia negli anni '60, quando il Rotary riconobbe l'importanza di coinvolgere le giovani generazioni per affrontare sfide sociali emergenti. Prima del Rotaract esistevano altre iniziative giovanili: i "Paul Harris Circles" e i club [[club-interact|Interact]].
 
 La nascita del primo club Rotaract è avvenuta il 13 marzo 1968 presso la University of North Carolina, club sponsorizzato dal Rotary North Charlotte.
 

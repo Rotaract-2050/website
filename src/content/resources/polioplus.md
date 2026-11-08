@@ -126,7 +126,7 @@ bodyEn: |
   ### See also
 
   * [[la-rotary-foundation]]
-  * [[le-aree-dintervento]]
+  * [[aree-di-intervento]]
   * [[storia-del-rotary]]
 
   ---
@@ -250,7 +250,7 @@ Nel 1979 qualcuno ha scritto la prima pagina senza sapere come sarebbe finita. R
 ### Vedi anche
 
 * [[la-rotary-foundation]]
-* [[le-aree-dintervento]]
+* [[aree-di-intervento]]
 * [[storia-del-rotary]]
 
 ---
