@@ -4,7 +4,7 @@ zone: src/content/zones/leonessa.md
 foundationYear: 1969
 lat: 45.5398022
 lng: 10.2200214
-photo: /uploads/loghi-club/brescia.jpeg
+photo: /uploads/clubs/rotaract/brescia.jpeg
 instagram: 'https://www.instagram.com/rotaractbrescia_phf/'
 facebook: 'https://www.facebook.com/rotaractclubbrescia'
 ---

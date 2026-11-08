@@ -13,7 +13,7 @@ excerptEn: >-
   leadership and teamwork activities.
 date: 2026-06-30T00:00:00.000Z
 displayDate: AR 2025/2026
-image: /uploads/interact-vigevano-ryla-junior-1.jpeg
+image: /uploads/services/ryla-junior-vigevano/copertina.jpeg
 imageLabel: RYLA Junior a Vigevano
 imageLabelEn: RYLA Junior in Vigevano
 bodyEn: |
@@ -21,11 +21,11 @@ bodyEn: |
 
   We, the members of Interact, join them and work alongside them.
 
-  ![RYLA Junior in Vigevano](/uploads/interact-vigevano-ryla-junior-2.jpeg)
+  ![RYLA Junior in Vigevano](/uploads/services/ryla-junior-vigevano/foto-2.jpeg)
 ---
 
 Nel corso di tre giorni ragazzi da tutta la Lombardia vengono a Vigevano e partecipano ad attività di leadership e lavoro in gruppo.
 
 Noi ragazzi dell'Interact ci uniamo a loro, lavorando con loro.
 
-![RYLA Junior a Vigevano](/uploads/interact-vigevano-ryla-junior-2.jpeg)
+![RYLA Junior a Vigevano](/uploads/services/ryla-junior-vigevano/foto-2.jpeg)

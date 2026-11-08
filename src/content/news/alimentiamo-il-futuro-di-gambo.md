@@ -6,7 +6,7 @@ scope:
 excerpt: 'I Distretti 2041, 2042 e 2050 uniti nell''MDIO Lombardia e Provincia di Piacenza per sostenere l''ospedale di Gambo, in Etiopia.'
 excerptEn: 'Districts 2041, 2042 and 2050, united in the MDIO Lombardia e Provincia di Piacenza, support the hospital in Gambo, Ethiopia.'
 date: 2026-08-05T13:00:00.000Z
-image: /uploads/news/2026-2027/Logo-service-MDIO_page-0001.jpeg
+image: /uploads/news/2026-2027/alimentiamo-il-futuro-di-gambo/copertina.jpeg
 imageFocalX: 50
 imageFocalY: 49
 imageLabel: Foto news

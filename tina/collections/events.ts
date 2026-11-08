@@ -60,7 +60,19 @@ export const eventsCollection: Collection = {
 		},
 		{ type: 'string', name: 'excerpt', label: 'Descrizione (IT)', ui: { component: 'textarea' } },
 		{ type: 'string', name: 'excerptEn', label: 'Descrizione (EN)', ui: { component: 'textarea' } },
+		// Testo formattato (titoli, elenchi, link, immagini) nella pagina evento, sopra e sotto il programma;
+		// `excerpt` resta testo semplice per card e SEO.
+		{ type: 'rich-text', name: 'body', label: 'Testo sopra il programma (IT)', isBody: true },
+		{ type: 'rich-text', name: 'bodyEn', label: 'Testo sopra il programma (EN)' },
+		{ type: 'rich-text', name: 'bodyAfter', label: 'Testo sotto il programma (IT)' },
+		{ type: 'rich-text', name: 'bodyAfterEn', label: 'Testo sotto il programma (EN)' },
 		...focalImageFields('image', 'Immagine'),
+		{
+			type: 'image',
+			name: 'ogImage',
+			label: 'Immagine social (condivisione)',
+			description: 'Anteprima mostrata quando si condivide il link dell\'evento (WhatsApp, Instagram, Facebook…). Formato consigliato 1200×630. Se vuota, usa l\'immagine dell\'evento.',
+		},
 		{ type: 'string', name: 'imageLabel', label: 'Didascalia segnaposto immagine (IT)', required: true },
 		{ type: 'string', name: 'imageLabelEn', label: 'Didascalia segnaposto immagine (EN)' },
 		{

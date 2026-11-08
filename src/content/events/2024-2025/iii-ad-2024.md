@@ -10,7 +10,7 @@ excerpt: >-
 excerptEn: >-
   Full-day schedule — rise at 10:00, lunch at 13:00, assembly at 15:00 (all at
   Palestra Ca' de mari), dinner at 19:30 at Villa Borghesi.
-image: /uploads/events/2024-2025/III-AD.png
+image: /uploads/events/2024-2025/iii-ad-2024/copertina.png
 imageLabel: Foto III AD 2024
 imageLabelEn: Photo of III AD 2024
 photoAlbumUrl: >-
