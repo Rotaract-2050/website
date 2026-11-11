@@ -6,11 +6,11 @@ date: 2026-12-12T13:00:00.000Z
 endDate: 2026-12-12T22:45:00.000Z
 calendarDate: 2026-12-12T13:00:00.000Z
 eventType: Distrettuale
-locationLavori: "Ex Convento dell'Annunciata, Abbiategrasso (MI), 20081"
+locationLavori: 'Ex Convento dell''Annunciata, Abbiategrasso (MI), 20081'
 clubs:
   - club: src/content/clubs/rotaract-club-abbiategrasso.md
-excerpt: "Assemblea prenatalizia con grandi sorprese!"
-excerptEn: "A pre-Christmas assembly full of great surprises!"
+excerpt: Assemblea prenatalizia con grandi sorprese!
+excerptEn: A pre-Christmas assembly full of great surprises!
 bodyEn: |
   *Detailed programme to be announced.*
 
@@ -47,7 +47,7 @@ schedule:
     title: Inizio della conviviale
     titleEn: Dinner begins
 ticketsOpen: true
-ticketsUrl: 'https://buytickets.at/distrettorotaract2050/2482979/r/website'
+ticketsUrl: 'https://buytickets.at/distrettorotaract2050/2482979'
 ---
 
 *Programma dettagliato in via di definizione.*
