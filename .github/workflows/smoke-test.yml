@@ -1,0 +1,42 @@
+name: Production smoke test
+
+# Il sito è `output: 'server'`: le query Tina girano a runtime, quindi una build verde non
+# dice se le pagine hanno contenuti. Questo job interroga il sito live e fallisce se eventi,
+# news, formazione o club risultano vuoti (vedi scripts/smoke-test.sh). Un run fallito
+# manda la notifica email standard di GitHub Actions.
+#
+# Trigger:
+# - check_run completato: parte quando Cloudflare Workers Builds finisce il build di `main`.
+#   Riprova per qualche minuto, perché deploy e re-indicizzazione di Tina Cloud arrivano
+#   poco dopo la fine del build.
+# - schedule: rete di sicurezza per rotture che non arrivano da un deploy (Tina Cloud,
+#   token scaduti, contenuti modificati dall'admin).
+
+on:
+  check_run:
+    types: [completed]
+  schedule:
+    - cron: '17 */3 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  smoke:
+    if: >-
+      github.event_name != 'check_run' ||
+      (startsWith(github.event.check_run.name, 'Workers Builds') &&
+       github.event.check_run.conclusion == 'success' &&
+       github.event.check_run.check_suite.head_branch == 'main')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run smoke test (with retries after deploy)
+        run: |
+          attempts=1
+          [ "${{ github.event_name }}" = "check_run" ] && attempts=6
+          for i in $(seq 1 "$attempts"); do
+            if bash scripts/smoke-test.sh https://rotaract2050.org; then exit 0; fi
+            [ "$i" -lt "$attempts" ] && { echo "Tentativo $i fallito, riprovo tra 60s..."; sleep 60; }
+          done
+          echo "::error::Smoke test fallito: pagine Tina vuote in produzione. Probabile query GraphQL in errore (es. tina-lock.json non allineato) — controlla i log Workers per 'Error fetching'."
+          exit 1
