@@ -9,8 +9,8 @@ eventType: Distrettuale
 locationLavori: "Ex Convento dell'Annunciata, Via Pontida 22, Abbiategrasso (MI), 20081"
 clubs:
   - club: src/content/clubs/rotaract-club-abbiategrasso.md
-excerpt: "Assemblea prenatalizia con grandi sorprese!"
-excerptEn: "A pre-Christmas assembly full of great surprises!"
+excerpt: Assemblea prenatalizia con grandi sorprese!
+excerptEn: A pre-Christmas assembly full of great surprises!
 bodyEn: |
   ## Useful information
 
@@ -89,7 +89,7 @@ schedule:
     title: Inizio della conviviale
     titleEn: Dinner begins
 ticketsOpen: true
-ticketsUrl: 'https://buytickets.at/distrettorotaract2050/2482979/r/website'
+ticketsUrl: 'https://buytickets.at/distrettorotaract2050/2482979'
 ---
 
 ## Informazioni utili
