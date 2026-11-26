@@ -1,6 +1,6 @@
 #!/bin/sh
 # Lifecycle of the Tina backend inside its container (cwd = the website checkout, REPO_DIR).
-#   run.sh start            sync checkout, install, full index, bundle, exec the server
+#   run.sh start            sync checkout, install, index (full only when needed), bundle, exec the server
 #   run.sh reindex [--full] sync checkout, partial (or full) reindex; exit 75 when the server must restart
 # Reindex is run by the server on the GitHub push webhook, and nightly with --full by a host timer
 # (`docker exec <container> sh cms-backend/run.sh reindex --full`), after auto-translate.yml's 01:00 UTC commits.
@@ -23,7 +23,9 @@ install() {
 }
 
 index() {
-	NODE_OPTIONS=--max-old-space-size=2048 npx tinacms build --skip-cloud-checks --skip-search-index "$@"
+	# Measured full index (2026-11-26, ~2550 entries): peak RSS ≈ heap limit + ~0.9 GB off-heap; 1 GB heap aborts,
+	# 1.5 GB → 2.4 GB RSS. The compose's NODE_OPTIONS wins when set.
+	NODE_OPTIONS="${NODE_OPTIONS:---max-old-space-size=1536}" npx tinacms build --skip-cloud-checks --skip-search-index "$@"
 }
 
 bundle() {
@@ -38,7 +40,9 @@ case "${1:-}" in
 start)
 	sync
 	install
-	index
+	# Partial: the CLI falls back to a full index by itself when there is no previous sha in Mongo or when
+	# tina/tina-lock.json (the schema) changed, so restarts after a code-only push stay cheap.
+	index --partial-reindex
 	bundle
 	exec node cms-backend/dist/server.mjs
 	;;
@@ -47,7 +51,7 @@ reindex)
 	sync
 	if [ "${2:-}" = "--full" ]; then index; else index --partial-reindex; fi
 	# Schema, backend code or dependencies changed: the running server is stale, let the container restart it
-	# (start does install + full index + bundle again).
+	# (start does install + index + bundle again).
 	git diff --quiet "$before" HEAD -- tina cms-backend package-lock.json || exit $RESTART
 	;;
 *)
