@@ -30,7 +30,7 @@ rm -rf node_modules/.vite && bash scripts/dev.sh
 
 2. **Un file per pagina, IT+EN insieme**: campi `titleEn`, `bodyEn`, ecc. — NON creare file separati per lingua.
 
-3. **Lettura dati sempre via client Tina**: `requestWithMetadata(client.queries.x(...))` — mai `getCollection()` di Astro.
+3. **Lettura dati sempre via client Tina**: `requestWithMetadata(client.queries.x(...))` con `client` importato da `src/lib/tina-client.ts` (non da `tina/__generated__/client`) — mai `getCollection()` di Astro. Backend Tina self-hosted: `references/tina.md`.
 
 4. **Nomi campo univoci tra template**: due template con stesso nome campo ma tipo diverso = build Tina esplosa. Fare `grep -rn "name: '<campo>'" tina/blocks/` prima di aggiungere.
 

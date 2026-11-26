@@ -19,15 +19,25 @@ Due percorsi ufficiali per integrare Tina in Astro (fonte: tina.io/docs/framewor
 
 **Ambiente beta live**: https://beta.rotaract2050.org/ (es. https://beta.rotaract2050.org/distretto/) — dominio Cloudflare Pages, deploy automatico da git push. Se qualcosa "funziona in locale ma non in beta/produzione" e coinvolge una chiamata a un'API esterna con key ristretta per referrer (es. Google Drive per il blocco Materiali, vedi `driveApiKey` in `tina/config.ts`), **controllare per primo che il dominio beta/prod sia nella whitelist referrer della key** su Google Cloud Console (Credentials → key → Application restrictions → Websites) — non è un problema di codice. Scoperto il 2026-08-14: dopo la migrazione a Cloudflare, `beta.rotaract2050.org` non era ancora in whitelist e il blocco Materiali mostrava "materiali momentaneamente non disponibile" (Google risponde 403 `API_KEY_HTTP_REFERRER_BLOCKED`), pur essendo la key/il folder ID/il codice del blocco tutti corretti.
 
-**Pipeline Tina verificata funzionante end-to-end** (storicamente su Netlify, stesso principio su Cloudflare Pages): dev locale → push GitHub (`Rotaract-2050/website`) → Tina Cloud (progetto `45ced600-56cb-4e98-a4eb-26f93b147dcf`, indicizza da GitHub) → hosting (deploy automatico a ogni push, env `TINA_CLIENT_ID`/`TINA_TOKEN` impostate). Login Tina Cloud e salvataggio con commit su GitHub vanno testati sul sito live — **non sul dev locale**: `tinacms dev` in locale gira sempre in "local mode" (nessun login, nessun account Tina Cloud, editing su filesystem locale) per design, il vero login esiste solo su un build che parla con Tina Cloud (sito deployato, o `npm run build && astro preview` in locale con `TINA_TOKEN` valido).
+## Backend Tina self-hosted (niente Tina Cloud)
 
-## Account Tina Cloud — vincolo utenti
+Dal ramo `feat/tina-selfhost` (2026-11) Tina non usa più Tina Cloud: indice dei contenuti in MongoDB e backend Node su un VPS del Distretto (`cms-backend/`, leggere il suo `README.md`). I dettagli d'infrastruttura (host, Access, backup, runbook) stanno nel repo privato `Rotaract-2050/documentazione`, **non qui** (questo repo è pubblico).
 
-Piano **Free** di Tina Cloud (tina.io/pricing): **2 utenti/editor**, 1 progetto, documenti illimitati, 100MB limite per asset. Prima di attivare l'account, confermare con l'utente quante persone del direttivo/comitati devono editare autonomamente da Tina:
-- se restano 1-2 persone → piano Free sufficiente, nessuna azione.
-- se servono più editor indipendenti → serve piano Team (da $24/mese, base 3 utenti espandibile a 10) fin dall'inizio, altrimenti si scontrerà il limite non appena si aggiunge un terzo account.
+```
+visitatore → Worker (src/lib/tina-client.ts, read token + service token Access) → cms backend → Mongo
+editor → /admin → /api/tina/* sul sito (proxy src/pages/api/tina/[...path].ts) → cms backend → commit su GitHub
+push su GitHub → webhook → reindex parziale del backend; reindex completo notturno (dopo auto-translate)
+```
 
-Non presumere il numero di editor: è una decisione dell'utente, non tecnica.
+- **Letture runtime**: importare sempre `client` da `src/lib/tina-client.ts`, **mai** da `tina/__generated__/client` (quello punta all'URL relativo `/api/tina/gql` per l'admin e non può aggiungere gli header di Access). Il wrapper segnala anche i guasti del backend al middleware (vedi sotto).
+- **Login editor**: Google Workspace via Auth.js (`cms-backend/auth.ts`, provider admin `tina/auth-provider.ts`). Con `EDITORS=domain` entra qualunque account verificato `@rotaract2050.org`; per togliere l'accesso si sospende l'account Workspace (sessione 1 giorno). Niente utenti né password nel repo. `tinacms-authjs` non è usato: richiede `next`/`next-auth` come peer.
+- **Media**: `media.tina` non funziona senza Tina Cloud. In produzione/preview l'admin usa `tina/media-store.ts` + `cms-backend/media.ts`: i file restano in `public/uploads/` (stesse cartelle, stessi path `/uploads/...` nei contenuti), upload e cancellazione sono commit su GitHub. Un'immagine nuova compare sul sito al deploy successivo (come prima); nel media manager si vede subito.
+- **Ricerca nell'admin**: tolta (era l'indice ospitato da Tina Cloud). La ricerca pubblica di `/formazione` non c'entra.
+- **Build**: `npm run build` usa `--skip-indexing` (l'indice sta sul VPS, la CI non lo vede). Il backend sul VPS fa la build completa: picco ~3 GB di RAM per circa un minuto, dovuto a codegen + build dell'admin, non all'indicizzazione.
+- **Schema che cambia**: un push che tocca `tina/` fa ripartire il backend (rigenera schema e client). Per una collection/campo nuovo, il backend del branch deve essere aggiornato prima che il Worker inizi a chiedere il campo.
+- **Backend giù**: `src/middleware.ts` salva l'ultima versione 200 di ogni pagina pubblica nella Cache API (7 giorni) e la serve con `X-Last-Good-Copy: 1` se una lettura Tina fallisce per un guasto (rete o non-2xx; un "documento non trovato" resta 404). Nei log Workers: `[last-good] ...`. Best effort: la Cache API è per data center e non funziona su `*.workers.dev`.
+
+**Dev locale**: invariato. `scripts/dev.sh` esporta `TINA_PUBLIC_IS_LOCAL=true`, che in `tina/config.ts` e `tina/database.ts` riporta Tina alla modalità locale (datalayer integrato su `:4001`, nessun login, media su filesystem) e in `src/lib/tina-client.ts` (via `import.meta.env.DEV`) fa leggere da `localhost:4001`.
 
 ## Convenzioni schema
 
@@ -60,7 +70,7 @@ Ogni route/blocco che legge contenuto Tina segue questo schema (vedi `src/pages/
 
 ```ts
 import { requestWithMetadata, tinaField } from '@tinacms/astro';
-import client from '.../tina/__generated__/client';
+import client from '.../lib/tina-client'; // non tina/__generated__/client, vedi "Backend Tina self-hosted"
 
 const result = await requestWithMetadata(client.queries.pages({ relativePath: `${slug}.md` }), { priority: 'primary' });
 const page = result.data.pages;
@@ -68,7 +78,7 @@ const page = result.data.pages;
 
 (`pages` è a file unico per lingua dal 2026-08-16, come `news`/`events`/`resources` — niente più prefisso `it/`/`en/` nel `relativePath`, la lingua si sceglie dopo la query con `loc(itValue, enValue)`, vedi sezione IT/EN sopra.)
 
-- `client` è generato da `tinacms dev`/`tinacms build` in `tina/__generated__/` (gitignored, va rigenerato ad ogni checkout con `npm run dev` o `npx tinacms build` — richiede `TINA_CLIENT_ID`/`TINA_TOKEN` in `.env` per il build di produzione, non per `tinacms dev` in locale).
+- `client` è generato da `tinacms dev`/`tinacms build` in `tina/__generated__/` (gitignored, va rigenerato ad ogni checkout con `npm run dev` o `npx tinacms build --skip-indexing`; nessun token Tina Cloud richiesto). Le pagine non lo importano direttamente: passano da `src/lib/tina-client.ts`.
 - `requestWithMetadata()` invece della chiamata diretta al client: abilita l'editing in-context.
 - `tinaField(obj, 'campo')` sull'elemento che deve diventare cliccabile in editing.
 - Relazioni Tina (club → zona) tramite campo schema `{ type: 'reference', collections: ['zones'] }`, risolte con due query separate (`zonesConnection`, `clubsConnection`) unite lato componente — non un'unica query annidata.
