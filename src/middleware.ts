@@ -10,14 +10,23 @@ const STALE_TTL = 7 * 24 * 60 * 60;
 // Query params that change what a page renders (events archive/calendar filters). Anything else (utm_*, fbclid…)
 // maps to the same copy, and only requests made of these params get saved, so random query strings can't fill
 // the cache with copies.
-const PAGE_PARAMS = ['anno', 'day', 'month', 'kind'];
+// Values validated with the same formats the blocks accept (EventsArchive, EventsCalendar), so `?anno=1`, `?anno=2`…
+// can't create copies either.
+const PAGE_PARAMS: Record<string, RegExp> = {
+	anno: /^\d{4}-\d{4}$/,
+	day: /^\d{4}-\d{2}-\d{2}$/,
+	month: /^\d{4}-\d{2}$/,
+	kind: /^(all|rotaract|interact|rotary|scadenze)$/,
+};
 const IGNORED_PARAMS = /^(utm_|mc_)|^(fbclid|gclid|msclkid|refresh)$/;
 function staleKey(url: URL): { key: Request; saveable: boolean } {
 	const kept = new URLSearchParams();
 	let saveable = true;
 	for (const [k, v] of [...url.searchParams].sort(([a], [b]) => a.localeCompare(b))) {
-		if (PAGE_PARAMS.includes(k)) kept.append(k, v);
-		else if (!IGNORED_PARAMS.test(k)) saveable = false;
+		if (Object.hasOwn(PAGE_PARAMS, k)) {
+			kept.append(k, v);
+			if (!PAGE_PARAMS[k].test(v)) saveable = false;
+		} else if (!IGNORED_PARAMS.test(k)) saveable = false;
 	}
 	const search = kept.size ? `?${kept}` : '';
 	return { key: new Request(`${url.origin}/__last-good${url.pathname}${search}`), saveable };
