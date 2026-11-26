@@ -76,7 +76,7 @@ npm ci
 # client Tina interroga sempre lo schema di main su Tina Cloud, e un
 # blocco/campo nuovo solo su dev fa fallire la query GraphQL (pagina
 # bianca, nessun errore visibile lato Worker deployato).
-NODE_OPTIONS=--max-old-space-size=4096 HEAD=dev npx tinacms build -c "astro build" --skip-cloud-checks --skip-search-index
+NODE_OPTIONS=--max-old-space-size=4096 HEAD=dev npx tinacms build -c "astro build" --skip-indexing --skip-cloud-checks --skip-search-index
 
 echo ""
 echo "=== wrangler versions upload (non promuove mai, nessun rischio produzione) ==="

@@ -7,8 +7,8 @@
   },
   "scripts": {
     "dev": "bash scripts/dev.sh",
-    "dev:raw": "tinacms dev -c \"astro dev\"",
-    "build": "NODE_OPTIONS=--max-old-space-size=4096 tinacms build -c \"astro build\"",
+    "dev:raw": "TINA_PUBLIC_IS_LOCAL=true tinacms dev -c \"astro dev\"",
+    "build": "NODE_OPTIONS=--max-old-space-size=4096 tinacms build --skip-indexing -c \"astro build\"",
     "preview": "astro preview",
     "astro": "astro",
     "fetch:zone-boundaries": "node scripts/fetch-zone-boundaries.mjs",
@@ -30,15 +30,20 @@
     "node-ical": "^0.27.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "tinacms": "^3.14.2",
+    "tinacms": "^3.15.2",
     "web-vitals": "6.2.2"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
-    "@tinacms/cli": "^4.0.1",
+    "@auth/core": "^0.41.3",
+    "@tinacms/cli": "^4.0.5",
+    "@tinacms/datalayer": "^3.0.0",
     "@turf/turf": "^7.4.0",
     "@types/leaflet": "^1.9.22",
     "gray-matter": "^4.0.3",
+    "mongodb": "^4.17.2",
+    "mongodb-level": "^0.0.4",
+    "tinacms-gitprovider-github": "^5.0.0",
     "typescript": "^6.0.3"
   },
   "overrides": {

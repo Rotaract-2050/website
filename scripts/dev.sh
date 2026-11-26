@@ -18,10 +18,9 @@ if [ ! -d node_modules ] || [ ! -f "$STAMP" ] || [ "$(cat "$STAMP" 2>/dev/null)"
   echo "$LOCK_HASH" > "$STAMP"
 fi
 
-if [ ! -f .env ]; then
-  echo "Attenzione: .env mancante. Il sito funziona comunque in modalita' locale," >&2
-  echo "ma senza TINA_CLIENT_ID l'ammin Tina non potra' collegarsi a Tina Cloud." >&2
-fi
+# Modalita' locale di Tina (tina/config.ts, tina/database.ts): datalayer integrato su :4001, nessun login,
+# salvataggi su filesystem. Senza questa variabile l'admin cercherebbe il backend self-hosted.
+export TINA_PUBLIC_IS_LOCAL=true
 
 echo "Libero le porte da eventuali sessioni precedenti..."
 npx astro dev stop >/dev/null 2>&1 || true
