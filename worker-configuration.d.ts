@@ -5,6 +5,10 @@ interface __BaseEnv_Env {
 	IMAGES: ImagesBinding;
 	TURNSTILE_SECRET_KEY: string;
 	GEMINI_API_KEY: string;
+	TINA_BACKEND_URL: string;
+	TINA_READ_TOKEN: string;
+	CF_ACCESS_CLIENT_ID: string;
+	CF_ACCESS_CLIENT_SECRET: string;
 }
 declare namespace Cloudflare {
 	interface Env extends __BaseEnv_Env {}

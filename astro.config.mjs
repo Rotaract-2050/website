@@ -149,15 +149,6 @@ export default defineConfig({
 		// Image transforms are deterministic per URL, so they can live much longer.
 		'/_image': { maxAge: 604800, swr: 86400 },
 	},
-	// Tina content stores image fields as absolute assets.tina.io URLs, not local imports —
-	// astro:assets treats any remote src as unoptimized pass-through unless its host is
-	// explicitly allow-listed here. Without this, <Image>/<Picture> silently emit the raw
-	// original-size JPEG straight from Tina's CDN (no resize, no webp/avif, no width/height
-	// props honored), which is exactly what Lighthouse was flagging as oversized/wrong-format
-	// LCP and card images.
-	image: {
-		domains: ['assets.tina.io'],
-	},
 	i18n: {
 		locales: ['it', 'en'],
 		defaultLocale: 'it',

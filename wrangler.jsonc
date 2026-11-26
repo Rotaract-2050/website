@@ -11,6 +11,11 @@
 		"binding": "IMAGES",
 		"remote": true
 	},
+	// Self-hosted Tina backend (cms-backend/ on the District VPS) for runtime reads and the /api/tina/* proxy.
+	// Not a secret; preview-dev.yml overrides it with --var so previews never touch main's backend.
+	"vars": {
+		"TINA_BACKEND_URL": "https://cms.rotaract2050.org"
+	},
 	"observability": {
 		"enabled": true,
 		"head_sampling_rate": 1,

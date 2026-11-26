@@ -1,7 +1,7 @@
 import { env } from 'cloudflare:workers';
 import type { APIRoute } from 'astro';
 import { requestWithMetadata } from '@tinacms/astro';
-import client from '../../../tina/__generated__/client';
+import client from '../../lib/tina-client';
 import { getKnowledgeResources } from '../../lib/resources';
 import {
 	buildSystemPrompt,

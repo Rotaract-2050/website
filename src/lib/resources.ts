@@ -1,6 +1,6 @@
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { requestWithMetadata } from '@tinacms/astro';
-import client from '../../tina/__generated__/client';
+import client from './tina-client';
 import type { ResourcesConnectionQuery } from '../../tina/__generated__/types';
 import type { Lang } from '../data/ui-strings';
 import type { WikilinkResolver } from './resource-markdown';

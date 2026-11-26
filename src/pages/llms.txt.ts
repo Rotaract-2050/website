@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { requestWithMetadata } from '@tinacms/astro';
-import client from '../../tina/__generated__/client';
+import client from '../lib/tina-client';
 import { pageSlugs } from '../data/routes';
 
 export const GET: APIRoute = async ({ site }) => {

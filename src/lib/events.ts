@@ -1,5 +1,5 @@
 import { requestWithMetadata } from '@tinacms/astro';
-import client from '../../tina/__generated__/client';
+import client from './tina-client';
 import type { EventsConnectionQuery } from '../../tina/__generated__/types';
 import type { Lang } from '../data/ui-strings';
 import { dateKeyEuropeRome } from './calendar';

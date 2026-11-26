@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import client from '../../../tina/__generated__/client';
+import client from '../../lib/tina-client';
 
 export const POST: APIRoute = async ({ request }) => {
 	try {

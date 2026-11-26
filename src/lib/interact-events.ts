@@ -4,7 +4,7 @@
 // into events.ts without losing type safety; the project already has a precedent for this
 // (resources got its own lib/resources.ts instead of being merged into lib/news.ts).
 import { requestWithMetadata } from '@tinacms/astro';
-import client from '../../tina/__generated__/client';
+import client from './tina-client';
 import type { InteractEventsConnectionQuery } from '../../tina/__generated__/types';
 import type { Lang } from '../data/ui-strings';
 import { dateKeyEuropeRome } from './calendar';

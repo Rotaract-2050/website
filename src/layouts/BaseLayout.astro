@@ -8,7 +8,7 @@ import FormazioneChatWidget from '../components/FormazioneChatWidget.astro';
 import CookieConsent from '../components/CookieConsent.astro';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { requestWithMetadata } from '@tinacms/astro';
-import client from '../../tina/__generated__/client';
+import client from '../lib/tina-client';
 import type { Lang } from '../data/ui-strings';
 import { SITE_NAME, DEFAULT_OG_IMAGE, SOCIAL_LINKS } from '../data/ui-strings';
 import { pageSlugs, type PageKey } from '../data/routes';
