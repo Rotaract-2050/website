@@ -10,7 +10,7 @@ blocks:
       - image: /uploads/pagine/paesaggio-4.jpeg
         eyebrow: ROTARACT DISTRETTO 2050
         eyebrowEn: ROTARACT DISTRICT 2050
-        title: GIOVANI CHE COSTRUISCONO IL CAMBIAMENTO
+        title: GIOVANI CHE COSTRUISCONO IL CAMBIAMENTO.
         titleEn: YOUNG PEOPLE BUILDING CHANGE
         subtitle: 'Lombardia meridionale e Provincia di Piacenza: 7 provincie, un solo distretto di giovani leader al servizio della comunità.'
         subtitleEn: 'Southern Lombardy and the Province of Piacenza: 7 provinces, one district of young leaders serving their communities.'
@@ -78,15 +78,15 @@ blocks:
     introEn: 'One path of service and leadership, in three stages: from age 12 for the rest of your life.'
     items:
       - title: ROTARY
-        body: L'organizzazione internazionale di persone d'azione che riunisce leader di comunità in tutto il mondo, dal 1905.
+        body: 'L''organizzazione internazionale di persone d''azione che riunisce leader di comunità in tutto il mondo, dal 1905.'
         bodyEn: The international organization of people of action bringing together community leaders worldwide since 1905.
         buttonLabel: SCOPRI ROTARY
         buttonLabelEn: DISCOVER ROTARY
         buttonHref: 'https://www.rotary2050.org/site/'
         color: '#F7A81B'
       - title: ROTARACT
-        body: La rete di giovani dai 18 anni in su che unisce crescita personale, amicizia e servizio alla comunità. Il distretto che stai visitando.
-        bodyEn: The network for young people aged 18 and up combining personal growth, fellowship and community service. The district you're on right now.
+        body: 'La rete di giovani dai 18 anni in su che unisce crescita personale, amicizia e servizio alla comunità. Il distretto che stai visitando.'
+        bodyEn: 'The network for young people aged 18 and up combining personal growth, fellowship and community service. The district you''re on right now.'
         buttonLabel: SCOPRI IL ROTARACT
         buttonLabelEn: DISCOVER ROTARACT
         buttonHref: distretto
