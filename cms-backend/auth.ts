@@ -17,6 +17,12 @@ const READ_TOKEN = required('TINA_READ_TOKEN', 32);
 // it; taken from config instead of request headers so nothing a client sends can redirect the OAuth flow.
 export const AUTH_URL = new URL(required('AUTH_URL')).origin;
 const ALLOWED_DOMAIN = (process.env.ALLOWED_GOOGLE_DOMAIN || 'rotaract2050.org').toLowerCase();
+// EDITORS=domain: every verified account of ALLOWED_DOMAIN may edit (District decision, 2026-11-26).
+// EDITORS=allowlist (default): only the emails in Mongo cms_editors, see editors.ts.
+const WHOLE_DOMAIN = process.env.EDITORS === 'domain';
+
+const inDomain = (email: string | null | undefined) => !!email && email.toLowerCase().endsWith(`@${ALLOWED_DOMAIN}`);
+const canEdit = async (email: string | null | undefined) => inDomain(email) && (WHOLE_DOMAIN || (await isEditor(email)));
 
 export const AUTH_BASE_PATH = '/api/tina/auth';
 
@@ -24,7 +30,9 @@ export const authConfig: AuthConfig = {
 	basePath: AUTH_BASE_PATH,
 	secret: required('AUTH_SECRET', 32),
 	trustHost: true, // requests are rebuilt on AUTH_URL in server.ts, so the "host" Auth.js sees is ours
-	session: { strategy: 'jwt', maxAge: 7 * 24 * 60 * 60 },
+	// Whole-domain mode has no list to remove someone from: access ends when their Workspace account is suspended,
+	// and a session outlives that by at most maxAge, so keep it to a day there.
+	session: { strategy: 'jwt', maxAge: (WHOLE_DOMAIN ? 1 : 7) * 24 * 60 * 60 },
 	providers: [
 		Google({
 			clientId: required('AUTH_GOOGLE_ID'),
@@ -39,7 +47,7 @@ export const authConfig: AuthConfig = {
 				account?.provider === 'google' &&
 				profile?.email_verified === true &&
 				String(profile.hd || '').toLowerCase() === ALLOWED_DOMAIN &&
-				(await isEditor(profile.email))
+				(await canEdit(profile.email))
 			);
 		},
 	},
@@ -87,10 +95,10 @@ export const authProvider: BackendAuthProvider = {
 				: { isAuthorized: false, errorCode: 403, errorMessage: 'read token cannot run mutations' };
 		}
 		// Editors in the admin: Google session cookie. Allowlist re-checked on every request, so removing an editor
-		// takes effect immediately instead of when their 7-day session expires.
+		// takes effect immediately instead of when their session expires.
 		const email = await sessionEmail(req);
 		if (!email) return { isAuthorized: false, errorCode: 401, errorMessage: 'Unauthorized' };
-		if (!(await isEditor(email))) return { isAuthorized: false, errorCode: 403, errorMessage: 'Forbidden' };
+		if (!(await canEdit(email))) return { isAuthorized: false, errorCode: 403, errorMessage: 'Forbidden' };
 		return { isAuthorized: true };
 	},
 };

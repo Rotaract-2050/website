@@ -34,6 +34,7 @@ only, no host mounts, its own volume and secrets.
 | `AUTH_SECRET` | Auth.js session secret, ≥ 32 chars, one per instance |
 | `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET` | Google OAuth web client; redirect URI `<AUTH_URL>/api/tina/auth/callback/google` |
 | `ALLOWED_GOOGLE_DOMAIN` | Workspace domain allowed to sign in (default `rotaract2050.org`) |
+| `EDITORS` | `domain`: every verified account of the domain can edit (sessions last 1 day; removing someone = suspending their Workspace account). `allowlist` (default): only the emails added with `editors.mjs` (sessions 7 days, removal immediate) |
 
 ## Commands (inside the container)
 
