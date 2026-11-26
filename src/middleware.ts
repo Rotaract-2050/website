@@ -7,7 +7,22 @@ import { trackTinaReads } from './lib/tina-health';
 // may evict, so this is best effort; Workers Cache (astro.config.mjs) still serves the 10-minute fresh copy first.
 // shortcut: per-colo Cache API, upgrade to KV if outages last longer than a colo keeps the copies.
 const STALE_TTL = 7 * 24 * 60 * 60;
-const staleKey = (url: URL) => new Request(`${url.origin}/__last-good${url.pathname}${url.search}`);
+// Query params that change what a page renders (events archive/calendar filters). Anything else (utm_*, fbclid…)
+// maps to the same copy, and only requests made of these params get saved, so random query strings can't fill
+// the cache with copies.
+const PAGE_PARAMS = ['anno', 'day', 'month', 'kind'];
+const IGNORED_PARAMS = /^(utm_|mc_)|^(fbclid|gclid|msclkid|refresh)$/;
+function staleKey(url: URL): { key: Request; saveable: boolean } {
+	const kept = new URLSearchParams();
+	let saveable = true;
+	for (const [k, v] of [...url.searchParams].sort(([a], [b]) => a.localeCompare(b))) {
+		if (PAGE_PARAMS.includes(k)) kept.append(k, v);
+		else if (!IGNORED_PARAMS.test(k)) saveable = false;
+	}
+	const search = kept.size ? `?${kept}` : '';
+	return { key: new Request(`${url.origin}/__last-good${url.pathname}${search}`), saveable };
+}
+let warnedNoWaitUntil = false;
 
 // Opt-outs from the Workers Cache route rules in astro.config.mjs, plus the last-good-copy fallback.
 export const onRequest = defineMiddleware(async (context, next) => {
@@ -31,24 +46,34 @@ export const onRequest = defineMiddleware(async (context, next) => {
 			}
 		});
 		const cache = (caches as unknown as { default: Cache }).default;
+		const { key, saveable } = staleKey(context.url);
 		if (backendFailed) {
 			context.cache.set(false);
-			const stale = await cache.match(staleKey(context.url)).catch(() => undefined);
+			const stale = await cache.match(key).catch(() => undefined);
+			// Logged so an outage (or an expired Access service token, which looks the same) shows up in Workers logs
+			// instead of hiding behind week-old pages.
 			if (stale) {
+				console.warn('[last-good] CMS unreachable, served last good copy', context.url.pathname);
 				const copy = new Response(stale.body, stale);
 				copy.headers.set('X-Last-Good-Copy', '1');
 				copy.headers.set('Cache-Control', 'no-store');
 				return copy;
 			}
+			console.error('[last-good] CMS unreachable, no copy to serve', context.url.pathname);
 		}
 		if (result instanceof Error) throw result; // no copy to fall back on: let Astro render its error page
 		response = result;
-		if (!backendFailed && response.status === 200 && !response.headers.has('Set-Cookie')) {
+		if (!backendFailed && saveable && response.status === 200 && !response.headers.has('Set-Cookie')) {
+			// The site sets no per-request headers (no CSP nonce, no cookies on pages), so the copy is safe to replay.
 			const copy = new Response(response.clone().body, response);
 			copy.headers.set('Cache-Control', `max-age=${STALE_TTL}`);
-			const saved = cache.put(staleKey(context.url), copy).catch(() => {});
+			const saved = cache.put(key, copy).catch(() => {});
 			if (context.locals.cfContext) context.locals.cfContext.waitUntil(saved);
-			else await saved;
+			else {
+				if (!warnedNoWaitUntil) console.warn('[last-good] no cfContext.waitUntil, saving copies inline');
+				warnedNoWaitUntil = true;
+				await saved;
+			}
 		}
 	} else {
 		response = await next();
