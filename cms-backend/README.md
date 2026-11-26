@@ -8,6 +8,7 @@ the admin. Operational details (hosts, Access, backups, runbook) live in the pri
 |---|---|
 | `server.ts` | `node:http` server: `/health`, Auth.js under `/api/tina/auth/*`, the GitHub webhook at `/api/hooks/github`, everything else goes to `TinaNodeBackend` |
 | `auth.ts` | who may call the backend: the read-only token for query documents, or a Google Workspace session in the editor allowlist |
+| `media.ts` | repo-backed media for the admin (`tina/media-store.ts`): list/preview from the checkout, upload/delete as commits to `public/uploads/` |
 | `editors-db.ts`, `editors.ts` | editor allowlist (Mongo `cms_editors`) and its CLI |
 | `reindex.ts`, `run.sh` | container lifecycle: start, webhook-driven partial reindex, nightly full reindex |
 | `Dockerfile`, `entrypoint.sh` | image: Node 22 + git; the website checkout lives in the `/srv/website` volume |

@@ -5,28 +5,20 @@ import { TinaNodeBackend } from '@tinacms/datalayer';
 import databaseClient from '../tina/__generated__/databaseClient';
 import { Auth } from '@auth/core';
 import { AUTH_BASE_PATH, AUTH_URL, authConfig, authProvider } from './auth';
+import { readBody as readRaw } from './body';
+import { mediaHandler } from './media';
 import { isOurPush, queueReindex, validSignature } from './reindex';
 
 const PORT = Number(process.env.PORT || 4001);
 const MAX_BODY = 10 * 1024 * 1024;
 
-const tina = TinaNodeBackend({ authProvider, databaseClient });
+// `media` rides on TinaNodeBackend's secure extra routes, so it gets the same isAuthorized gate as /gql.
+const tina = TinaNodeBackend({
+	authProvider: { ...authProvider, extraRoutes: { media: { secure: true, handler: mediaHandler } } },
+	databaseClient,
+});
 
-function readBody(req: IncomingMessage): Promise<string> {
-	return new Promise((resolve, reject) => {
-		let size = 0;
-		const chunks: Buffer[] = [];
-		req.on('data', (c: Buffer) => {
-			size += c.length;
-			if (size > MAX_BODY) {
-				reject(Object.assign(new Error('body too large'), { status: 413 }));
-				req.destroy();
-			} else chunks.push(c);
-		});
-		req.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
-		req.on('error', reject);
-	});
-}
+const readBody = async (req: IncomingMessage) => (await readRaw(req, MAX_BODY)).toString('utf8');
 
 // Auth.js speaks Web Request/Response: rebuild the request on the public site origin (AUTH_URL), answer, copy back.
 async function handleAuth(req: IncomingMessage, res: ServerResponse) {
