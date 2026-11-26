@@ -23,9 +23,10 @@ install() {
 }
 
 index() {
-	# Measured full index (2026-11-26, ~2550 entries): peak RSS ≈ heap limit + ~0.9 GB off-heap; 1 GB heap aborts,
-	# 1.5 GB → 2.4 GB RSS. The compose's NODE_OPTIONS wins when set.
-	NODE_OPTIONS="${NODE_OPTIONS:---max-old-space-size=1536}" npx tinacms build --skip-cloud-checks --skip-search-index "$@"
+	# Memory is dominated by codegen + the admin SPA build that `tinacms build` always runs, not by indexing: even
+	# with --skip-indexing it peaks near 3 GB RSS (measured 2026-11-26). 1.5 GB heap OOMs on the VPS; 2 GB in a 3 GB
+	# cgroup peaked at ~2.8 GB, also on a partial reindex. The compose's NODE_OPTIONS wins when set.
+	NODE_OPTIONS="${NODE_OPTIONS:---max-old-space-size=2048}" npx tinacms build --skip-cloud-checks --skip-search-index "$@"
 }
 
 bundle() {
