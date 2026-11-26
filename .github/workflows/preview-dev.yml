@@ -32,27 +32,18 @@ jobs:
 
       - run: npm ci
 
-      # Comando reale (stesso della CI di produzione) — a differenza dello
-      # script manuale locale, qui i secret Tina sono valori veri (secrets
-      # GitHub), non riferimenti 1Password non risolti, quindi non serve
-      # --skip-search-index.
+      # Comando reale (stesso della CI di produzione: `npm run build` include
+      # --skip-indexing, l'indice Tina vive nel Mongo del VPS e la CI non lo vede).
       #
       # HEAD=dev: tina/config.ts legge `branch` da WORKERS_CI_BRANCH (var
       # che solo Workers Builds inietta) o da HEAD, altrimenti cade su
       # "main". Bypassando Workers Builds abbiamo perso la prima, quindi
-      # va passata la seconda a mano — altrimenti il client Tina interroga
-      # sempre lo schema di main su Tina Cloud, e qualunque blocco/campo
-      # nuovo solo su dev fa fallire la query GraphQL (pagina bianca,
-      # nessun errore visibile lato Worker deployato — visto per la prima
-      # volta il 2026-09-05 dopo il merge di feature/interact-section).
+      # va passata la seconda a mano.
       - name: Build
         env:
           NODE_OPTIONS: --max-old-space-size=4096
           HEAD: dev
-          TINA_CLIENT_ID: ${{ secrets.TINA_CLIENT_ID }}
-          TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
-          TINA_SEARCH_TOKEN: ${{ secrets.TINA_SEARCH_TOKEN }}
-        run: npm run build -- --skip-cloud-checks
+        run: npm run build -- --skip-cloud-checks --skip-search-index
 
       # `deployments status` (non `deployments list`): mostra solo la
       # versione attiva al 100%, una riga sola. `deployments list` stampa
@@ -70,7 +61,15 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: da2b3eaf5dee7d1c080061936d1f7e17
-        run: npx wrangler versions upload --config dist/server/wrangler.json | tee /tmp/upload.log
+        # --preview-alias: URL fisso (https://tina-selfhost-website.curly-lake-2c63.workers.dev), l'unico che il
+        # client OAuth Google accetta come redirect per il login editor in preview.
+        # --var: le Version condividono i secret con produzione, ma l'URL del backend no: la
+        # preview legge e salva sul backend del branch di prova, mai su quello di main.
+        run: >-
+          npx wrangler versions upload --config dist/server/wrangler.json
+          --preview-alias tina-selfhost
+          --var TINA_BACKEND_URL:https://cms-preview.rotaract2050.org
+          | tee /tmp/upload.log
 
       - name: Verifica che produzione non si sia mossa
         env:
