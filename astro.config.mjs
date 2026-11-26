@@ -5,6 +5,7 @@ import { join, sep } from 'node:path';
 import matter from 'gray-matter';
 import { defineConfig } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
+import { cacheCloudflare } from '@astrojs/cloudflare/cache';
 import sitemap from '@astrojs/sitemap';
 import tina from '@tinacms/astro/integration';
 import react from '@astrojs/react';
@@ -135,6 +136,19 @@ export default defineConfig({
 	// transformations/month are free (Images Free plan), then $0.50/1,000 — see
 	// https://developers.cloudflare.com/images/pricing/.
 	adapter: cloudflare({ imageService: 'cloudflare-binding' }),
+	// Workers Cache in front of the Worker: a cache hit is served without running any of our
+	// code, so it costs no CPU. Without it every request re-renders the page and re-queries Tina,
+	// which pushed CPU past the 10 ms free-plan limit whenever a crawler swept the site (Meta's AI
+	// crawler, Nov 2026). Deploys reset the cache (the Worker version is in the cache key), but Tina
+	// Cloud content saves land on main without a deploy — so maxAge is how long an edit can take to
+	// show up. 10 min keeps edits near-live while a crawler sweep still hits the cache almost always.
+	// API routes, Tina edit mode and non-200 responses opt out in src/middleware.ts.
+	cache: { provider: cacheCloudflare() },
+	routeRules: {
+		'/[...path]': { maxAge: 600, swr: 3600 },
+		// Image transforms are deterministic per URL, so they can live much longer.
+		'/_image': { maxAge: 604800, swr: 86400 },
+	},
 	// Tina content stores image fields as absolute assets.tina.io URLs, not local imports —
 	// astro:assets treats any remote src as unoptimized pass-through unless its host is
 	// explicitly allow-listed here. Without this, <Image>/<Picture> silently emit the raw
