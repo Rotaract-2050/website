@@ -1,6 +1,7 @@
 import { env } from 'cloudflare:workers';
 import { createClient } from 'tinacms/dist/client';
 import { queries } from '../../tina/__generated__/types';
+import { noteTinaError } from './tina-health';
 
 // Server-side Tina client for the Worker. The generated tina/__generated__/client.ts points at the relative
 // '/api/tina/gql' (right for the admin in the browser, useless for a server-side fetch) and cannot add headers,
@@ -23,6 +24,9 @@ client.request = (args, options) =>
 	request(args, {
 		...options,
 		fetchOptions: { ...options?.fetchOptions, headers: { ...accessHeaders, ...options?.fetchOptions?.headers } },
+	}).catch((e) => {
+		noteTinaError(e); // lets middleware.ts serve the last good copy instead of a page rendered without content
+		throw e;
 	});
 
 export { client };
