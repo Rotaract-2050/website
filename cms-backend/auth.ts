@@ -71,7 +71,7 @@ async function sessionEmail(req: IncomingMessage): Promise<string | null> {
 		authConfig,
 	);
 	if (!res.ok) return null;
-	const session = await res.json().catch(() => null);
+	const session = (await res.json().catch(() => null)) as { user?: { email?: string } } | null;
 	return session?.user?.email || null;
 }
 

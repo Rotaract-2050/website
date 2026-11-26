@@ -5,6 +5,7 @@ import { TinaNodeBackend } from '@tinacms/datalayer';
 import databaseClient from '../tina/__generated__/databaseClient';
 import { Auth } from '@auth/core';
 import { AUTH_BASE_PATH, AUTH_URL, authConfig, authProvider } from './auth';
+import { isOurPush, queueReindex, validSignature } from './reindex';
 
 const PORT = Number(process.env.PORT || 4001);
 const MAX_BODY = 10 * 1024 * 1024;
@@ -55,6 +56,17 @@ const server = createServer(async (req, res) => {
 	const path = new URL(req.url || '/', 'http://localhost').pathname;
 	try {
 		if (path === '/health') return send(res, 200, { ok: true });
+		if (path === '/api/hooks/github' && req.method === 'POST') {
+			const raw = await readBody(req);
+			const signature = req.headers['x-hub-signature-256'];
+			if (!validSignature(raw, typeof signature === 'string' ? signature : undefined)) {
+				return send(res, 401, { error: 'bad signature' });
+			}
+			const event = req.headers['x-github-event'];
+			if (!isOurPush(typeof event === 'string' ? event : undefined, raw)) return send(res, 200, { ignored: true });
+			queueReindex();
+			return send(res, 202, { queued: true });
+		}
 		if (path.startsWith(`${AUTH_BASE_PATH}/`)) return await handleAuth(req, res);
 		if (!path.startsWith('/api/tina/')) return send(res, 404, { error: 'not found' });
 

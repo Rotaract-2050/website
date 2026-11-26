@@ -1,7 +1,7 @@
 // Manage the Tina editor allowlist. Inside the backend container:
-//   node cms-backend/dist/editors.cjs add nome.cognome@rotaract2050.org
-//   node cms-backend/dist/editors.cjs remove nome.cognome@rotaract2050.org
-//   node cms-backend/dist/editors.cjs list
+//   node cms-backend/dist/editors.mjs add nome.cognome@rotaract2050.org
+//   node cms-backend/dist/editors.mjs remove nome.cognome@rotaract2050.org
+//   node cms-backend/dist/editors.mjs list
 // Only Google Workspace accounts of ALLOWED_GOOGLE_DOMAIN can sign in at all; this list narrows it to editors.
 import { addEditor, closeEditorsDb, listEditors, normalizeEmail, removeEditor } from './editors-db';
 
@@ -19,7 +19,7 @@ async function main() {
 		else if (!(await removeEditor(email))) throw new Error(`${email} was not an editor`);
 		console.log(`${cmd === 'add' ? 'added' : 'removed'} ${normalizeEmail(email)}`);
 	} else {
-		console.error('usage: editors.cjs add|remove <email> | list');
+		console.error('usage: editors.mjs add|remove <email> | list');
 		process.exitCode = 2;
 	}
 }
